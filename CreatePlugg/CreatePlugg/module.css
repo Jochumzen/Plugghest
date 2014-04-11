@@ -1,0 +1,29 @@
+
+.dvRow {
+    clear: both;
+    width: 100%;
+}
+
+.CreatePluggBody {
+    width: 98%;
+    margin: auto;
+}
+
+.valcls {
+            color: #FF0000;
+            display: inline;
+            margin-left: 410px;
+        }
+
+.nodediv {
+          margin-left: 245px;
+          margin-bottom: 18px;
+     }
+
+.tree {
+    background-color: #D8CACC;
+     padding: 20px; 
+     width:300px;
+     float:left;
+    margin-bottom: 18px;
+}

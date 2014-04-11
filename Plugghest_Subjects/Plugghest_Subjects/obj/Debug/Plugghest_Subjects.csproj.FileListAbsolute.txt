@@ -1,0 +1,8 @@
+c:\users\cis\documents\visual studio 2012\Projects\bin\Plugghest_Subjects.dll
+c:\users\cis\documents\visual studio 2012\Projects\bin\Plugghest_Subjects.pdb
+c:\users\cis\documents\visual studio 2012\Projects\Plugghest_Subjects\Plugghest_Subjects\obj\Debug\Plugghest_Subjects.dll
+c:\users\cis\documents\visual studio 2012\Projects\Plugghest_Subjects\Plugghest_Subjects\obj\Debug\Plugghest_Subjects.pdb
+G:\MD\DemoApps\Dnn7TestApp\DesktopModules\bin\Plugghest_Subjects.dll
+G:\MD\DemoApps\Dnn7TestApp\DesktopModules\bin\Plugghest_Subjects.pdb
+G:\MD\DemoApps\Dnn7TestApp\DesktopModules\Plugghest_Subjects\Plugghest_Subjects\obj\Debug\Plugghest_Subjects.dll
+G:\MD\DemoApps\Dnn7TestApp\DesktopModules\Plugghest_Subjects\Plugghest_Subjects\obj\Debug\Plugghest_Subjects.pdb

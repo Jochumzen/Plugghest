@@ -1,0 +1,4 @@
+G:\MD\DemoApps\Dnn7TestApp\DesktopModules\bin\CreateCourse.dll
+G:\MD\DemoApps\Dnn7TestApp\DesktopModules\bin\CreateCourse.pdb
+G:\MD\DemoApps\Dnn7TestApp\DesktopModules\CreateCourse\CreateCourse\obj\Release\CreateCourse.dll
+G:\MD\DemoApps\Dnn7TestApp\DesktopModules\CreateCourse\CreateCourse\obj\Release\CreateCourse.pdb

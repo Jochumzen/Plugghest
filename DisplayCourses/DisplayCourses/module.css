@@ -1,0 +1,31 @@
+    .dispalyplug {
+    font-size: 17px;
+    margin-bottom: 8px;
+}
+
+ .Icon_1 {
+    background: url("http://plugghest.com/portals/_default/containers/20047-unlimitedcolorpack-033/images/quotationMarks.png") no-repeat scroll center center #FFFFFF;
+    display: block;
+    height: 36px;
+    margin: -18px auto 0;
+    width: 82px;
+}
+
+ 
+.title1 {
+    color: #666666;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    padding: 20px 0 0;
+    vertical-align: middle;
+    white-space: normal;
+    /*text-align:center !important*/
+}
+
+.begincourse {
+    cursor:pointer !important;
+}
+a:hover {
+    cursor:pointer !important;
+}

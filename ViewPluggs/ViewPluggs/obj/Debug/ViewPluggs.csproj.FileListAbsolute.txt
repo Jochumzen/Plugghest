@@ -1,0 +1,5 @@
+G:\MD\DemoApps\Dnn7TestApp\DesktopModules\bin\ViewPluggs.dll
+G:\MD\DemoApps\Dnn7TestApp\DesktopModules\bin\ViewPluggs.pdb
+G:\MD\DemoApps\Dnn7TestApp\DesktopModules\ViewPluggs\ViewPluggs\obj\Debug\ViewPluggs.csprojResolveAssemblyReference.cache
+G:\MD\DemoApps\Dnn7TestApp\DesktopModules\ViewPluggs\ViewPluggs\obj\Debug\ViewPluggs.dll
+G:\MD\DemoApps\Dnn7TestApp\DesktopModules\ViewPluggs\ViewPluggs\obj\Debug\ViewPluggs.pdb

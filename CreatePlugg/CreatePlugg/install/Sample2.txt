@@ -1,0 +1,12 @@
+\documentclass[]{article}
+\language{en-US}
+\pluggtitle{Independent events}
+\youtube{9CMrj0zuJGA}
+\edit{Me}
+\html{<H1>Independent events</H1>}
+\title{}
+\author{}
+\begin{document}
+\section{Section 1}
+Independent events
+\end{document}

@@ -1,0 +1,5 @@
+G:\MD\DemoApps\Dnn7TestApp\DesktopModules\bin\DNNModule8.dll
+G:\MD\DemoApps\Dnn7TestApp\DesktopModules\bin\DNNModule8.pdb
+G:\MD\DemoApps\Dnn7TestApp\DesktopModules\DNNModule8\DNNModule8\obj\Release\DNNModule8.dll
+G:\MD\DemoApps\Dnn7TestApp\DesktopModules\DNNModule8\DNNModule8\obj\Release\DNNModule8.pdb
+G:\MD\DemoApps\Dnn7TestApp\DesktopModules\DNNModule8\DNNModule8\obj\Release\DNNModule8.csprojResolveAssemblyReference.cache
