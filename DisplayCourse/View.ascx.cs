@@ -53,7 +53,7 @@ namespace Plugghest.Modules.DisplayCourse
                     {
                         int CourseId = Convert.ToInt32(CourseTitle);
 
-                        List<CourseInDisplayCourse> course = CourceCtrl.GetCourseDetail(CourseId);
+                        List<Course> course = CourceCtrl.GetCourseDetail(CourseId);
 
                         foreach (var item in course)
                         {
@@ -61,7 +61,7 @@ namespace Plugghest.Modules.DisplayCourse
                             lblDescription.Text = Server.HtmlDecode(item.Description); ;
                         }
 
-                        List<CourseInDisplayCourse> coursePluggs = CourceCtrl.GetPluggsByCourseID(CourseId);
+                        List<Course> coursePluggs = CourceCtrl.GetPluggsByCourseID(CourseId);
                         if (coursePluggs.Count > 0)
                         {
                             LnkBeginCourse.NavigateUrl = "/" + (Page as DotNetNuke.Framework.PageBase).PageCulture.Name.ToString().ToLower() + "/" + coursePluggs[0].PluggId + "?c=" + CourseId;
