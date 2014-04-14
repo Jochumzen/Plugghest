@@ -76,16 +76,16 @@ namespace Plugghest.Courses
         }
 
         //Get Course Detail.....
-        public List<CourseInDisplayCourse> GetCourseDetail(int CourseId)
+        public List<Course> GetCourseDetail(int CourseId)
         {
-            List<CourseInDisplayCourse> crs = new List<CourseInDisplayCourse>();
+            List<Course> crs = new List<Course>();
             using (IDataContext ctx = DataContext.Instance())
             {
                 var rec = ctx.ExecuteQuery<Course>(CommandType.TableDirect, @"select Title,description from Courses where CourseId=" + CourseId);
 
                 foreach (var item in rec)
                 {
-                    crs.Add(new CourseInDisplayCourse { CourseId = item.CourseId, Title = item.Title, Description = item.Description });
+                    crs.Add(new Course { CourseId = item.CourseId, Title = item.Title, Description = item.Description });
                 }
             }
 
@@ -93,15 +93,15 @@ namespace Plugghest.Courses
         }
 
 
-        public List<CourseInDisplayCourse> GetPluggsByCourseID(int CourseID)
+        public List<Course> GetPluggsByCourseID(int CourseID)
         {
-            List<CourseInDisplayCourse> plug = new List<CourseInDisplayCourse>();
+            List<Course> plug = new List<Course>();
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rec = ctx.ExecuteQuery<CourseInDisplayCourse>(CommandType.TableDirect, "select CourseId,Pluggs.PluggId,pluggs.Title as 'PluggName',Orders from CoursePlugg join Pluggs on CoursePlugg.PluggId=Pluggs.PluggId where CourseId=" + CourseID + "order by Orders");
+                var rec = ctx.ExecuteQuery<Course>(CommandType.TableDirect, "select CourseId,Pluggs.PluggId,pluggs.Title as 'PluggName',Orders from CoursePlugg join Pluggs on CoursePlugg.PluggId=Pluggs.PluggId where CourseId=" + CourseID + "order by Orders");
                 foreach (var item in rec)
                 {
-                    plug.Add(new CourseInDisplayCourse { CourseId = item.CourseId, PluggId = item.PluggId });
+                    plug.Add(new Course { CourseId = item.CourseId, PluggId = item.PluggId });
                 }
             }
             return plug;
@@ -119,31 +119,31 @@ namespace Plugghest.Courses
         }
 
 
-        public List<CourseInViewCourses> GetPluggRecords()
+        public List<Course> GetPluggRecords()
         {
-            List<CourseInViewCourses> plug = new List<CourseInViewCourses>();
+            List<Course> plug = new List<Course>();
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rec = ctx.ExecuteQuery<CourseInViewCourses>(CommandType.TableDirect, @"select CourseId,Title as 'CourseName',Courses.CreatedByUserId,Username from Courses join Users on users.UserID=Courses.CreatedByUserId ");
+                var rec = ctx.ExecuteQuery<Course>(CommandType.TableDirect, @"select CourseId,Title as 'CourseName',Courses.CreatedByUserId,Username from Courses join Users on users.UserID=Courses.CreatedByUserId ");
 
                 foreach (var item in rec)
                 {
-                    plug.Add(new CourseInViewCourses { CourseName = item.CourseName, CourseId = item.CourseId, CreatedByUserId = item.CreatedByUserId, UserName = item.UserName });
+                    plug.Add(new Course { CourseName = item.CourseName, CourseId = item.CourseId, CreatedByUserId = item.CreatedByUserId, UserName = item.UserName });
                 }
             }
 
             return plug;
         }
 
-        public List<CourseInCourseMenu> GetPluggsByCourseIDForMenu(int CourseID)
+        public List<Course> GetPluggsByCourseIDForMenu(int CourseID)
         {
-            List<CourseInCourseMenu> plug = new List<CourseInCourseMenu>();
+            List<Course> plug = new List<Course>();
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rec = ctx.ExecuteQuery<CourseInCourseMenu>(CommandType.TableDirect, "select CourseId,Pluggs.PluggId,pluggs.Title as 'PluggName',Orders from CoursePlugg join Pluggs on CoursePlugg.PluggId=Pluggs.PluggId where CourseId=" + CourseID + "order by Orders");
+                var rec = ctx.ExecuteQuery<Course>(CommandType.TableDirect, "select CourseId,Pluggs.PluggId,pluggs.Title as 'PluggName',Orders from CoursePlugg join Pluggs on CoursePlugg.PluggId=Pluggs.PluggId where CourseId=" + CourseID + "order by Orders");
                 foreach (var item in rec)
                 {
-                    plug.Add(new CourseInCourseMenu { CourseId = item.CourseId, PluggId = item.PluggId, PluggName = item.PluggName, Orders = item.Orders });
+                    plug.Add(new Course { CourseId = item.CourseId, PluggId = item.PluggId, PluggName = item.PluggName, Orders = item.Orders });
                 }
             }
             return plug;
