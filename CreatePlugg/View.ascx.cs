@@ -183,6 +183,8 @@ namespace Plugghest.Modules.CreatePlugg
             }
         }
 
+
+
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
             try
@@ -193,7 +195,7 @@ namespace Plugghest.Modules.CreatePlugg
                     if (ViewState["PID"] != null)
                     {
                         var plugc = new PluggController();
-                        Plugg plug = new Plugg();
+                       Plugghest.Pluggs.Plugg plug = new Plugg();
                         plug.PluggId = Convert.ToInt32(ViewState["PID"].ToString());
                         plug.Title = txtTitle.Text;
 
@@ -208,6 +210,7 @@ namespace Plugghest.Modules.CreatePlugg
                         plug.CreatedByUserId = this.UserId;
                         plug.ModifiedOnDate = DateTime.Now; ;
                         plug.ModifiedByUserId = this.UserId;
+                        
                         plugc.UpdatePlugg(plug);
                         //To get all Language
                         for (int i = 0; i < DDLanguage.Items.Count; i++)
@@ -234,6 +237,8 @@ namespace Plugghest.Modules.CreatePlugg
             }
         }
 
+
+
         protected int InsertPluggin()
         {
 
@@ -255,6 +260,10 @@ namespace Plugghest.Modules.CreatePlugg
             plug.CreatedByUserId = this.UserId;
             plug.ModifiedOnDate = DateTime.Now; ;
             plug.ModifiedByUserId = this.UserId;
+
+            if(!string.IsNullOrEmpty(hdnNodeSubjectId.Value))
+            plug.Subject = Convert.ToInt32(hdnNodeSubjectId.Value);
+
             plugc.CreatePlug(plug); //Create plugg
 
             //To get all Language
@@ -337,6 +346,7 @@ namespace Plugghest.Modules.CreatePlugg
 
         }
 
+
         protected void UpdatePlugginContent(int PluggId, string CultureCode)
         {
             var plugContent = new PluggContent();
@@ -404,6 +414,7 @@ namespace Plugghest.Modules.CreatePlugg
 
         }
 
+
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             try
@@ -415,6 +426,7 @@ namespace Plugghest.Modules.CreatePlugg
                 Exceptions.ProcessModuleLoadException(this, exc);
             }
         }
+
 
         protected void cusCustom_ServerValidate(object sender, ServerValidateEventArgs e)
         {

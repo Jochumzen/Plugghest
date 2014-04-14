@@ -60,10 +60,10 @@
             <ul class="dnnActions dnnClear">
                 <li>
                     <asp:LinkButton ID="btnSubmit" runat="server" OnClick="btnSubmit_Click"
-                        resourcekey="btnSubmit" CssClass="dnnPrimaryAction" Text="Submit" /></li>
+                        resourcekey="btnSubmit" CssClass="dnnPrimaryAction" Text="Submit" OnClientClick="return getsubjectid()" /></li>
                 <li>
                     <asp:LinkButton ID="btnCancel" runat="server" OnClick="btnCancel_Click"
-                        resourcekey="btnCancel" CssClass="dnnSecondaryAction" Text="Cancel" /></li>
+                        resourcekey="btnCancel" CssClass="dnnSecondaryAction" Text="Cancel"  /></li>
 
                 <li>
             </li>
@@ -72,7 +72,7 @@
     </fieldset>
 
 <asp:Label runat="server" ID="lblError" ForeColor="Red"></asp:Label>
-   
+ <asp:HiddenField ID="hdnNodeSubjectId" runat="server" />  
 </div>
 
 <script type="text/javascript">
@@ -88,4 +88,24 @@
         });
     });
 
-    </script>
+
+    function getsubjectid() {
+        var node = $('#tree2').tree('getSelectedNode');
+
+        var Error = "";
+
+        if (!node)
+            Error = 'Please Select Node \n';
+       
+        if (Error != "") {
+            alert(Error);
+            return false;
+        }
+        //alert(node.SubjectID);
+        $("#<%=hdnNodeSubjectId.ClientID%>").val(node.SubjectID);
+
+        //return false;
+    }
+
+
+ </script>
