@@ -53,37 +53,42 @@ namespace Plugghest.Courses
 
     }
 
-    public class CourseInDisplayCourse
-    {
-        public int CourseId { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public int PluggId { get; set; }
-    }
 
-    public class CourseInViewCourses
-    {
-        public int CourseId { get; set; }
 
-        public string CourseName { get; set; }
 
-        public int CreatedByUserId { get; set; }
+    //public class CourseInDisplayCourse
+    //{
+    //    public int CourseId { get; set; }
+    //    public string Title { get; set; }
+    //    public string Description { get; set; }
+    //    public int PluggId { get; set; }
+    //}
 
-        public string UserName { get; set; }
-    }
 
-    public class CourseInCourseMenu
-    {
+    //public class CourseInViewCourses
+    //{
+    //    public int CourseId { get; set; }
 
-        public int CourseId { get; set; }
+    //    public string CourseName { get; set; }
 
-        public string PluggId { get; set; }
+    //    public int CreatedByUserId { get; set; }
 
-        public string PluggName { get; set; }
+    //    public string UserName { get; set; }
+    //}
 
-        public int Orders { get; set; }
 
-    }
+
+    //public class CourseInCourseMenu
+    //{
+    //    public int CourseId { get; set; }
+
+    //    public string PluggId { get; set; }
+
+    //    public string PluggName { get; set; }
+
+    //    public int Orders { get; set; }
+
+    //}
 
     [TableName("CoursePlugg")]
     //setup the primary key for table
