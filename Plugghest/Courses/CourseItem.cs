@@ -40,6 +40,17 @@ namespace Plugghest.Courses
         public int ModifiedByUserId { get; set; }
 
         public string  Description { get; set; }
+
+        public int PluggId { get; set; }
+
+        public string CourseName { get; set; }
+
+        public string UserName { get; set; }
+
+        public string PluggName { get; set; }
+
+        public int Orders { get; set; }
+
     }
 
     public class CourseInDisplayCourse
