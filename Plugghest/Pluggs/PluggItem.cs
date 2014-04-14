@@ -41,13 +41,13 @@ namespace Plugghest.Pluggs
 
         public DateTime CreatedOnDate { get; set; }
 
-
         public int CreatedByUserId { get; set; }
-
 
         public DateTime ModifiedOnDate { get; set; }
 
         public int ModifiedByUserId { get; set; }
+
+        public int? Subject { get; set; }
 
     }
 
