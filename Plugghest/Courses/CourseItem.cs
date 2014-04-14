@@ -41,14 +41,19 @@ namespace Plugghest.Courses
 
         public string  Description { get; set; }
 
+        //P.J. This must go. A Plugg is not part of a course
         public int PluggId { get; set; }
 
+        //P.J. This must go. Title IS CourseName
         public string CourseName { get; set; }
 
+        //P.J. This must go. Unnecessary. You have "CreatedByUserId" -> UserName from DNN
         public string UserName { get; set; }
 
+        //P.J. This must go. A Plugg is not part of a course
         public string PluggName { get; set; }
 
+        //P.J. This must go. There is no Order roperty of a course
         public int Orders { get; set; }
 
     }
@@ -102,6 +107,8 @@ namespace Plugghest.Courses
         public int Orders { get; set; }
     }
 
+
+    //P.J. This must go. DO NOT USE DNN TABLES DIRECTLY. 
 
     [TableName("ModuleDefinitions")]
     [PrimaryKey("ModuleDefId", AutoIncrement = true)]

@@ -19,7 +19,7 @@ namespace Plugghest.Courses
     public class CourseController
     {
 
-        //For Insert Records into Coures
+        //For Insert Records into Course
         public Course CreateCourse(Course t)
         {
             using (IDataContext ctx = DataContext.Instance())
@@ -40,6 +40,19 @@ namespace Plugghest.Courses
             }
         }
 
+        //P.J. Remove this - DO not read DNN tables directly. Code will break when DNN updates. Instead, do something like:
+        //DesktopModuleInfo desktopModuleInfo = null;
+        //foreach (KeyValuePair<int, DesktopModuleInfo> kvp in DesktopModuleController.GetDesktopModules(portalId))
+        //{
+        //    DesktopModuleInfo mod = kvp.Value;
+        //    if (mod != null)
+        //        if (mod.FriendlyName == "DisplayPlugg")
+        //        {
+        //            desktopModuleInfo = mod;
+        //            break;
+        //        }
+        //}
+
         //To Get ModuleDefId....
         public int GetModuleDefId(string FriendlyName)
         {
@@ -56,6 +69,8 @@ namespace Plugghest.Courses
 
         }
 
+        //P.J.  Please explain below why GetPluggTitle is in the CourseController??
+        //
         public string GetPlugTitle(int PluggId)
         {
             string plugtitle = "";
@@ -92,7 +107,7 @@ namespace Plugghest.Courses
             return crs;
         }
 
-
+        //P.J. If this gets Pluggs it should be in the PluggController
         public List<Course> GetPluggsByCourseID(int CourseID)
         {
             List<Course> plug = new List<Course>();
@@ -118,7 +133,7 @@ namespace Plugghest.Courses
             return p;
         }
 
-
+        //Why is this called ..Plugg.. when it gets courses..
         public List<Course> GetPluggRecords()
         {
             List<Course> plug = new List<Course>();
@@ -135,6 +150,7 @@ namespace Plugghest.Courses
             return plug;
         }
 
+        //P.J. If this gets Pluggs it should be in the PluggController
         public List<Course> GetPluggsByCourseIDForMenu(int CourseID)
         {
             List<Course> plug = new List<Course>();
@@ -149,7 +165,7 @@ namespace Plugghest.Courses
             return plug;
         }
 
-
+        //P.J. This is an extremely strange way of checking if CourseID exists. Can you do better?
         public bool IsCourseIdExist(int CourseID)
         {
             List<IsExist> isexist = new List<IsExist>();
@@ -171,6 +187,7 @@ namespace Plugghest.Courses
 
         }
 
+        //P.J. This should go
         class IsExist
         {
             public Boolean isexist { get; set; }

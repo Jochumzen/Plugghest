@@ -18,3 +18,4 @@ C:\websites\dnndev.me\DesktopModules\Plugghest\bin\Debug\dotnetnuke.log4net.dll
 C:\websites\dnndev.me\DesktopModules\Plugghest\bin\Debug\ClientDependency.Core.dll
 C:\websites\dnndev.me\DesktopModules\Plugghest\obj\Debug\Plugghest.dll
 C:\websites\dnndev.me\DesktopModules\Plugghest\obj\Debug\Plugghest.pdb
+C:\websites\dnndev.me\DesktopModules\Plugghest\obj\Debug\Plugghest.csprojResolveAssemblyReference.cache

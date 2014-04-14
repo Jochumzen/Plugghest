@@ -51,6 +51,7 @@ namespace Plugghest.Pluggs
 
     }
 
+    //P.J. This class should go.
     public class PluggInView
     {
         public int PluggId { get; set; }
@@ -103,6 +104,7 @@ namespace Plugghest.Pluggs
         public string LatexTextInHtml { get; set; }
     }
 
+    //P.J. This class should go.
     public class PluggContentInDisplayPlugg
     {
         ///<summary>
@@ -142,6 +144,7 @@ namespace Plugghest.Pluggs
 
     }
 
+    //P.J. This class should go.
     [TableName("ModuleDefinitions")]
     [PrimaryKey("ModuleDefId", AutoIncrement = true)]
     class ModuleDef

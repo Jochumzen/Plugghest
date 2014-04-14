@@ -39,6 +39,7 @@ namespace Plugghest.Pluggs
             return p;
         }
 
+        //P.J. Rename CreatePluggContent
         public void CreatePlugginContent(PluggContent t)
         {
             using (IDataContext ctx = DataContext.Instance())
@@ -48,6 +49,7 @@ namespace Plugghest.Pluggs
             }
         }
 
+        //P.J. Remove. See comment in CourseController
         public int GetModuleDefId(string FriendlyName)
         {
             List<ModuleDef> plug = new List<ModuleDef>();
@@ -62,6 +64,7 @@ namespace Plugghest.Pluggs
             return plug[0].ModuleDefID;
         }
 
+        //P.J. GetAllPlugg_PageName is a very strange name for what method does
         public List<Plugg> GetAllPlugg_PageName()
         {
             List<Plugg> plug = new List<Plugg>();
@@ -94,7 +97,7 @@ namespace Plugghest.Pluggs
             }
         }
 
-
+        //P.J. Try to do better
         public Boolean CheckIsPlugExist(int PID)
         {
             IsExist objisexist = new IsExist();
@@ -114,6 +117,10 @@ namespace Plugghest.Pluggs
             public Boolean isexist { get; set; }
         }
 
+        //P.J. No no no! 
+        //This is truly HORRIBLE coding. 
+        //You cannot have one "public Plugg GetPlugg(int? plugid)" - see above - and one misspelled "public Plugg GetPlug(int PluggId)" with one g
+        //How would anyone have a chance to understand the difference????
 
         public Plugg GetPlug(int PluggId)
         {
