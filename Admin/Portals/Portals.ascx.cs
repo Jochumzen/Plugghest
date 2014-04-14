@@ -1,7 +1,7 @@
 #region Copyright
 // 
 // DotNetNuke® - http://www.dotnetnuke.com
-// Copyright (c) 2002-2012
+// Copyright (c) 2002-2014
 // by DotNetNuke Corporation
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -22,6 +22,7 @@
 
 using System;
 using System.Collections;
+using System.Linq;
 using System.Text;
 using System.Web;
 using System.Web.UI.WebControls;
@@ -30,6 +31,7 @@ using DotNetNuke.Common.Utilities;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Modules.Actions;
 using DotNetNuke.Entities.Portals;
+using DotNetNuke.Entities.Portals.Internal;
 using DotNetNuke.Security;
 using DotNetNuke.Services.Exceptions;
 using DotNetNuke.Services.Localization;
@@ -76,7 +78,7 @@ namespace DotNetNuke.Modules.Admin.Portals
 
 		    int totalRecords = 0;
 		    ArrayList portals;
-            if (Filter == Localization.GetString("Expired", LocalResourceFile))
+            if (Filter.Equals(Localization.GetString("Expired", LocalResourceFile), StringComparison.InvariantCultureIgnoreCase))
             {
                 portals = PortalController.GetExpiredPortals();
                 totalRecords = portals.Count;
@@ -183,20 +185,15 @@ namespace DotNetNuke.Modules.Admin.Portals
             var str = new StringBuilder();
             try
             {
-                var objPortalAliasController = new PortalAliasController();
-                var arr = objPortalAliasController.GetPortalAliasArrayByPortalID(portalID);
-                PortalAliasInfo objPortalAliasInfo;
-                int i;
-                for (i = 0; i <= arr.Count - 1; i++)
+                var arr = TestablePortalAliasController.Instance.GetPortalAliasesByPortalId(portalID).ToList();
+                foreach ( PortalAliasInfo portalAliasInfo in arr)
                 {
-                    objPortalAliasInfo = (PortalAliasInfo) arr[i];
-
-                    var httpAlias = Globals.AddHTTP(objPortalAliasInfo.HTTPAlias);
+                    var httpAlias = Globals.AddHTTP(portalAliasInfo.HTTPAlias);
                     var originalUrl = HttpContext.Current.Items["UrlRewrite:OriginalUrl"].ToString().ToLowerInvariant();
 
                     httpAlias = Globals.AddPort(httpAlias, originalUrl);
 
-                    str.Append("<a href=\"" + httpAlias + "\">" + objPortalAliasInfo.HTTPAlias + "</a>" + "<BR>");
+                    str.Append("<a href=\"" + httpAlias + "\">" + portalAliasInfo.HTTPAlias + "</a>" + "<BR>");
                 }
             }
             catch (Exception exc) //Module failed to load
@@ -233,8 +230,8 @@ namespace DotNetNuke.Modules.Admin.Portals
                     {
                         //so first create the format string with a dummy value and then
                         //replace the dummy value with the FormatString place holder
-                        var formatString = EditUrl("pid", "KEYFIELD", "Edit");
-                        formatString = formatString.Replace("KEYFIELD", "{0}");
+                        var formatString = EditUrl("pid", "keyfield", "Edit");
+                        formatString = formatString.Replace("keyfield", "{0}");
                         imageColumn.NavigateURLFormatString = formatString;
                     }
 					
@@ -274,7 +271,7 @@ namespace DotNetNuke.Modules.Admin.Portals
                 {
                     Filter = Request.QueryString["filter"];
                 }
-                if (Filter == Localization.GetString("All"))
+                if (Filter.Equals(Localization.GetString("All"), StringComparison.InvariantCultureIgnoreCase))
                 {
                     Filter = "";
                 }

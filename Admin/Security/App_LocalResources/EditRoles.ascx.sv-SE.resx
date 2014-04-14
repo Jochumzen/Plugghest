@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers && schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="BasicSettings.Text" xml:space="preserve">
+    <value>Grundinställningar</value>
+  </data>
+	<data name="BasicSettingsDescription.Text" xml:space="preserve">
+    <value>I det här avsnittet kan du konfigurera de grundläggande inställningarna för den här rollen.</value>
+  </data>
+	<data name="RoleName.Text" xml:space="preserve">
+    <value>Rollnamn</value>
+  </data>
+	<data name="RoleName.Help" xml:space="preserve">
+    <value>Ange namnet på rollen.</value>
+  </data>
+	<data name="Description.Text" xml:space="preserve">
+    <value>eskrivning</value>
+  </data>
+	<data name="Description.Help" xml:space="preserve">
+    <value>Ange en beskrivning av rollen.</value>
+  </data>
+	<data name="PublicRole.Text" xml:space="preserve">
+    <value>Offentlig roll:</value>
+  </data>
+	<data name="PublicRole.Help" xml:space="preserve">
+    <value>Är det här rollen en offentlig roll?</value>
+  </data>
+	<data name="AutoAssignment.Text" xml:space="preserve">
+    <value>Auto Tilldelning:</value>
+  </data>
+	<data name="AutoAssignment.Help" xml:space="preserve">
+    <value>Är den här rollen automatiskt tilldelad till användare?</value>
+  </data>
+	<data name="AdvancedSettings.Text" xml:space="preserve">
+    <value>Avancerade Inställningar</value>
+  </data>
+	<data name="AdvancedSettingsHelp.Text" xml:space="preserve">
+    <value>I det här avsnittet, kan du ställa in mer avancerade inställningar för den här rollen.</value>
+  </data>
+	<data name="ServiceFee.Text" xml:space="preserve">
+    <value>Serviceavgift</value>
+  </data>
+	<data name="ServiceFee.Help" xml:space="preserve">
+    <value>Ange avgift för användare i den här rollen.</value>
+  </data>
+	<data name="BillingPeriod.Text" xml:space="preserve">
+    <value>Faktureringsperiod (Varje)</value>
+  </data>
+	<data name="BillingPeriod.Help" xml:space="preserve">
+    <value>Dessa två fält används tillsammans för att ange en faktureringsperiod. t ex 2 veckor eller 1 månad</value>
+  </data>
+	<data name="TrialFee.Text" xml:space="preserve">
+    <value>Försöksavgift</value>
+  </data>
+	<data name="TrialFee.Help" xml:space="preserve">
+    <value>Ange avgift för försöksperioden till användare i denna roll</value>
+  </data>
+	<data name="TrialPeriod.Text" xml:space="preserve">
+    <value>Period För Försöksavgift (Varje)</value>
+  </data>
+	<data name="TrialPeriod.Help" xml:space="preserve">
+    <value>Dessa två fält används tillsammans för att ange en försöksperiod. t ex 2 veckor eller 1 månad</value>
+  </data>
+	<data name="cmdManage.Text" xml:space="preserve">
+    <value>Hantera användare i denna roll</value>
+  </data>
+	<data name="valRoleName.Text" xml:space="preserve">
+    <value>&lt;br&gt;Du måste ange ett giltigt namn</value>
+  </data>
+	<data name="valServiceFee1.Text" xml:space="preserve">
+    <value>&lt;br&gt;Värde som anges för serviceavgift är inte giltigt</value>
+  </data>
+	<data name="valServiceFee2.Text" xml:space="preserve">
+    <value>&lt;br&gt;Serviceavgiften måste vara större än eller lika med noll</value>
+  </data>
+	<data name="valBillingPeriod1.Text" xml:space="preserve">
+    <value>&lt;br&gt;Angivna värdet för faktureringsperiod är inte giltigt</value>
+  </data>
+	<data name="valBillingPeriod2.Text" xml:space="preserve">
+    <value>&lt;br&gt;Faktureringsperioden måste vara större än noll</value>
+  </data>
+	<data name="valTrialFee1.Text" xml:space="preserve">
+    <value>&lt;br&gt;Värde som anges för försöksavgift är inte giltigt</value>
+  </data>
+	<data name="valTrialFee2.Text" xml:space="preserve">
+    <value>&lt;br&gt;Försöksavgiften måste vara större än eller lika med noll</value>
+  </data>
+	<data name="valTrialPeriod1.Text" xml:space="preserve">
+    <value>&lt;br&gt;Värde som anges för  försöksperioden är inte giltigt</value>
+  </data>
+	<data name="valTrialPeriod2.Text" xml:space="preserve">
+    <value>&lt;br&gt;Trial Period Must Be Greater Than Zero</value>
+  </data>
+	<data name="ControlTitle_edit.Text" xml:space="preserve">
+    <value>Redigera säkerhetsroller</value>
+  </data>
+	<data name="ModuleHelp.Text" xml:space="preserve">
+    <value>&lt;h1&gt;Om Redigera säkerhetsroller&lt;/h1&gt;&lt;p&gt;Administratörer kan hantera säkerhetsroller definierade för sina portal. Modulen ger dig möjlighet att lägga till nya säkerhets-, ändra befintliga säkerhetsroller, radera säkerhetsroller och hantera användare som tilldelats säkerhetsroller.&lt;/p&gt;</value>
+  </data>
+	<data name="plRoleGroups.Text" xml:space="preserve">
+    <value>Rollgrupp:</value>
+  </data>
+	<data name="plRoleGroups.Help" xml:space="preserve">
+    <value>Markera den Rollengrupp som den här rollen tillhör.</value>
+  </data>
+	<data name="plRSVPCode.Text" xml:space="preserve">
+    <value>RSVP Kod:</value>
+  </data>
+	<data name="plRSVPCode.Help" xml:space="preserve">
+    <value>Ange en RSVP-kod för rollen. Den här koden kan användas för att ge användare en bekväm metod för att prenumerera på en eller flera roller.</value>
+  </data>
+	<data name="plRSVPLink.Text" xml:space="preserve">
+    <value>RSVP Länk:</value>
+  </data>
+	<data name="plRSVPLink.Help" xml:space="preserve">
+    <value>Om en RSVP-kod läggs till kan du dela följande webbadress.</value>
+  </data>
+	<data name="plIcon.Text" xml:space="preserve">
+    <value>Ikon:</value>
+  </data>
+	<data name="plIcon.Help" xml:space="preserve">
+    <value>Välj en ikon för rollen.</value>
+  </data>
+	<data name="DuplicateRole.Text" xml:space="preserve">
+    <value>En roll med samma namn finns redan. Rollen lades inte till.</value>
+  </data>
+	<data name="ProcessorWarning.Text" xml:space="preserve">
+    <value>&lt;b&gt;Varning:&lt;/b&gt;Du kommer att behöva konfigurera Betalningshanteraren (Payment Processor) under Webbplatsinställningar, så att möjligöra avgiftsbelagda roller/tjänster.</value>
+  </data>
+	<data name="IncompatibleFee.Text" xml:space="preserve">
+    <value>Du måste välja en fakturering frekvens om du vill ange en avgift för den här rollen</value>
+  </data>
+	<data name="valRoleName2.Text" xml:space="preserve">
+    <value>&lt;br&gt;Namnet är ogiltigt - roller kan endast innehålla följande tecken A-Za-z0-9_- och mellanslag</value>
+  </data>
+	<data name="securityModeListLabel.Help" xml:space="preserve">
+		<value>Välj säkerhetsläge för denna roll/grupp.</value>
+	</data>
+	<data name="securityModeListLabel.Text" xml:space="preserve">
+		<value>Säkerhetsläge:</value>
+	</data>
+	<data name="statusListLabel.Text" xml:space="preserve">
+		<value>Status:</value>
+	</data>
+	<data name="statusListLabel.Help" xml:space="preserve">
+		<value>Välj status för den här rollen/grupp</value>
+	</data>
+	<data name="SystemRoleWarning.Text" xml:space="preserve">
+		<value>Denna roll är ett systemroll bara minimala redigeringar är tillåtet.</value>
+	</data>
+	<data name="AssignToExistUsers.Help" xml:space="preserve">
+		<value>Tilldela den här rollen till alla befintliga användare.</value>
+	</data>
+	<data name="AssignToExistUsers.Text" xml:space="preserve">
+		<value>Tilldela till existerande användare:</value>
+	</data>
+</root>

@@ -1,7 +1,7 @@
 #region Copyright
 // 
 // DotNetNuke® - http://www.dotnetnuke.com
-// Copyright (c) 2002-2012
+// Copyright (c) 2002-2014
 // by DotNetNuke Corporation
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -40,6 +40,7 @@ namespace DotNetNuke.Modules.Admin.Skins
 {
     public partial class Attributes : PortalModuleBase
     {
+    	private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof (Attributes));
 
         #region Event Handlers
 
@@ -467,7 +468,7 @@ namespace DotNetNuke.Modules.Admin.Skins
                 }
 				catch (Exception ex)
 				{
-					DnnLog.Error(ex);
+					Logger.Error(ex);
 				}
             }
 

@@ -12,8 +12,8 @@
     <div class="dnnFormItem" id="divCaptcha1" runat="server" visible="false">
         <asp:label id="plCaptcha" AssociatedControlID="ctlCaptcha" runat="server" resourcekey="Captcha" CssClass="dnnFormLabel" />
     </div>
-    <div class="dnnFormItem" id="divCaptcha2" runat="server" visible="false">
-        <dnn:captchacontrol id="ctlCaptcha" captchawidth="130" captchaheight="40" runat="server" errorstyle-cssclass="dnnFormMessage dnnFormError" />
+    <div class="dnnFormItem dnnCaptcha" id="divCaptcha2" runat="server" visible="false">
+        <dnn:captchacontrol id="ctlCaptcha" captchawidth="130" captchaheight="40" runat="server" errorstyle-cssclass="dnnFormMessage dnnFormError dnnCaptcha" />
     </div>
     <div class="dnnFormItem">
         <asp:label id="lblLogin" runat="server" AssociatedControlID="cmdLogin" CssClass="dnnFormLabel" />
@@ -30,4 +30,25 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+	/*globals jQuery, window, Sys */
+	(function ($, Sys) {
+		function setUpLogin() {
+			var actionLinks = $("a[id$=cmdLogin]");
+			actionLinks.click(function () {
+				if ($(this).hasClass("dnnDisabledAction")) {
+					return false;
+				}
 
+				actionLinks.addClass("dnnDisabledAction");
+			});
+		}
+		
+		$(document).ready(function () {
+			setUpLogin();
+			Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+				setUpLogin();
+			});
+		});
+	}(jQuery, window.Sys));
+</script>  

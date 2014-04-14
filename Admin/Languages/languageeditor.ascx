@@ -61,8 +61,7 @@
                                         </tr>
                                         <tr style="vertical-align: top;">
                                             <td style="width:45%;">
-                                                <asp:Label runat="server" ID="lblDefault" CssClass="dnnLabelBox"></asp:Label>
-                                                <asp:TextBox ID="txtDefault" runat="server" Enabled="false" Visible="False" />
+                                                <asp:TextBox ID="txtDefault" runat="server" Enabled="false"/>
                                             </td>
                                             <td style="width:45%;">
                                                 <asp:TextBox ID="txtValue" runat="server" />                                                

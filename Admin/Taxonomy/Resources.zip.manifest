@@ -17,8 +17,8 @@
       <name>VocabularyList.ascx.resx</name>
     </file>
     <file>
-      <path>Images/</path>
-      <name>taxonomy.gif</name>
+      <path>Scripts/</path>
+      <name>TaxonomyEditor.js</name>
     </file>
     <file>
       <path />
@@ -31,6 +31,14 @@
     <file>
       <path />
       <name>VocabularyList.ascx</name>
+    </file>
+    <file>
+      <path />
+      <name>module.css</name>
+    </file>
+    <file>
+      <path />
+      <name>packages.config</name>
     </file>
     <file>
       <path>Controls/</path>

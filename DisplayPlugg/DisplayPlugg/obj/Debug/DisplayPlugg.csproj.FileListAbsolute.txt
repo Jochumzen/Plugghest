@@ -1,4 +1,0 @@
-G:\MD\DemoApps\Dnn7TestApp\DesktopModules\bin\DisplayPlugg.dll
-G:\MD\DemoApps\Dnn7TestApp\DesktopModules\bin\DisplayPlugg.pdb
-G:\MD\DemoApps\Dnn7TestApp\DesktopModules\DisplayPlugg\DisplayPlugg\obj\Debug\DisplayPlugg.dll
-G:\MD\DemoApps\Dnn7TestApp\DesktopModules\DisplayPlugg\DisplayPlugg\obj\Debug\DisplayPlugg.pdb

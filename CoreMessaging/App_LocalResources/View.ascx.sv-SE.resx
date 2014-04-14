@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="Actions.Text" xml:space="preserve">
+    <value>Åtgärder</value>
+  </data>
+	<data name="All.Text" xml:space="preserve">
+    <value>Alla</value>
+  </data>
+	<data name="ArrangeConversation.Text" xml:space="preserve">
+    <value>Konversation</value>
+  </data>
+	<data name="ArrangeDate.Text" xml:space="preserve">
+    <value>Datum</value>
+  </data>
+	<data name="ArrangeFrom.Text" xml:space="preserve">
+    <value>Från</value>
+  </data>
+	<data name="ArrangeMessages.Text" xml:space="preserve">
+    <value>Ordna</value>
+  </data>
+	<data name="Attach.Text" xml:space="preserve">
+    <value>Bifoga</value>
+  </data>
+	<data name="Attachments.Text" xml:space="preserve">
+    <value>Bilagor</value>
+  </data>
+	<data name="Browse.Text" xml:space="preserve">
+    <value>Bläddra</value>
+  </data>
+	<data name="Cancel.Text" xml:space="preserve">
+    <value>Avbryt</value>
+  </data>
+	<data name="ComposeNewMessage.Text" xml:space="preserve">
+    <value>Skriv ett nytt meddelande</value>
+  </data>
+	<data name="DismissThis.Text" xml:space="preserve">
+    <value>Avvisa det här</value>
+  </data>
+	<data name="EditModule.Text" xml:space="preserve">
+    <value>Redigera modul</value>
+  </data>
+	<data name="FileSize.Header" xml:space="preserve">
+    <value>Filstorlek:</value>
+  </data>
+	<data name="Filter.Text" xml:space="preserve">
+    <value>Filtrera</value>
+  </data>
+	<data name="FilterCategory.Text" xml:space="preserve">
+    <value>kategori</value>
+  </data>
+	<data name="FilterFriends.Text" xml:space="preserve">
+    <value>vänner</value>
+  </data>
+	<data name="FilterFrom.Text" xml:space="preserve">
+    <value>från</value>
+  </data>
+	<data name="FilterGroups.Text" xml:space="preserve">
+    <value>grupper</value>
+  </data>
+	<data name="FilterUnread.Text" xml:space="preserve">
+    <value>oläst</value>
+  </data>
+	<data name="FilterViewAll.Text" xml:space="preserve">
+    <value>visa alla</value>
+  </data>
+	<data name="LastModified.Header" xml:space="preserve">
+    <value>Senast ändrad</value>
+  </data>
+	<data name="LoadMore.Text" xml:space="preserve">
+    <value>Ladda Mer</value>
+  </data>
+	<data name="MarkArchive.Text" xml:space="preserve">
+    <value>Arkivera</value>
+  </data>
+	<data name="MarkRead.Text" xml:space="preserve">
+    <value>Markera som läst</value>
+  </data>
+	<data name="MarkUnread.Text" xml:space="preserve">
+    <value>Markera som oläst</value>
+  </data>
+	<data name="Message.Text" xml:space="preserve">
+    <value>Ditt meddelande</value>
+  </data>
+	<data name="MessageSent.Text" xml:space="preserve">
+    <value>Ditt meddelande har skickats.</value>
+  </data>
+	<data name="MessageSentTitle.Text" xml:space="preserve">
+    <value>Meddelandet Skickat</value>
+  </data>
+	<data name="Name.Header" xml:space="preserve">
+    <value>Namn</value>
+  </data>
+	<data name="None.Text" xml:space="preserve">
+    <value>Inga</value>
+  </data>
+	<data name="NoResults.Text" xml:space="preserve">
+    <value>Inget resultat</value>
+  </data>
+	<data name="Read.Text" xml:space="preserve">
+    <value>Läs</value>
+  </data>
+	<data name="ReadStatusToggle.Text" xml:space="preserve">
+    <value>Markera som Läst eller Oläst</value>
+  </data>
+	<data name="Remove.Text" xml:space="preserve">
+    <value>Ta bort bilagan</value>
+  </data>
+	<data name="Reply.Text" xml:space="preserve">
+    <value>Svara</value>
+  </data>
+	<data name="Searching.Text" xml:space="preserve">
+    <value>Söker...</value>
+  </data>
+	<data name="Select.Text" xml:space="preserve">
+    <value>Markera</value>
+  </data>
+	<data name="Send.Text" xml:space="preserve">
+    <value>Skicka</value>
+  </data>
+	<data name="Subject.Text" xml:space="preserve">
+    <value>Ämne</value>
+  </data>
+	<data name="Throttling.Text" xml:space="preserve">
+    <value>Vänta innan du skickar ett nytt meddelande.</value>
+  </data>
+	<data name="Title.Text" xml:space="preserve">
+    <value>Skriva Meddelandet</value>
+  </data>
+	<data name="To.Text" xml:space="preserve">
+    <value>Skicka till</value>
+  </data>
+	<data name="Type.Header" xml:space="preserve">
+    <value>Typ</value>
+  </data>
+	<data name="Unread.Text" xml:space="preserve">
+    <value>Olästa</value>
+  </data>
+	<data name="UserFileManagerTitle.Text" xml:space="preserve">
+    <value>Bläddra efter fil att använda</value>
+  </data>
+	<data name="ApplyActionToMessages.Text" xml:space="preserve">
+    <value>Tillämpa En Åtgärd På Dina Meddelanden</value>
+  </data>
+	<data name="Archived.Text" xml:space="preserve">
+    <value>Arkiverad</value>
+  </data>
+	<data name="ArchivedMessages.Text" xml:space="preserve">
+    <value>Arkiverade Meddelanden</value>
+  </data>
+	<data name="ArchiveMessages.Text" xml:space="preserve">
+    <value>Arkivera Meddelande(n)</value>
+  </data>
+	<data name="BackToMessages.Text" xml:space="preserve">
+    <value>Tillbaka Till Meddelanden</value>
+  </data>
+	<data name="ConversationArchived.Text" xml:space="preserve">
+    <value>Konversationen har arkiverats.</value>
+  </data>
+	<data name="ConversationSetAsRead.Text" xml:space="preserve">
+    <value>The conversation has been set as read.</value>
+  </data>
+	<data name="ConversationSetAsUnread.Text" xml:space="preserve">
+    <value>The conversation has been set as unread.</value>
+  </data>
+	<data name="ConversationUnarchived.Text" xml:space="preserve">
+    <value>The conversation has been unarchived.</value>
+  </data>
+	<data name="Conversations.Text" xml:space="preserve">
+    <value>Konversationer</value>
+  </data>
+	<data name="Loading.Text" xml:space="preserve">
+    <value>Laddar...</value>
+  </data>
+	<data name="LoadingContent.Text" xml:space="preserve">
+    <value>Laddar innehåll...</value>
+  </data>
+	<data name="MarkUnarchive.Text" xml:space="preserve">
+    <value>Hämta från arkiv</value>
+  </data>
+	<data name="Messages.Text" xml:space="preserve">
+    <value>Meddelanden</value>
+  </data>
+	<data name="NewUnreadMessages.Text" xml:space="preserve">
+    <value> Nya olästa meddelanden</value>
+  </data>
+	<data name="SelectMessages.Text" xml:space="preserve">
+    <value>Markera Meddelanden</value>
+  </data>
+	<data name="Sent.Text" xml:space="preserve">
+    <value>Skickade</value>
+  </data>
+	<data name="SentMessages.Text" xml:space="preserve">
+    <value>Skickade meddelanden</value>
+  </data>
+	<data name="ShowPreviousReplies.Text" xml:space="preserve">
+    <value>Visa Tidigare Svar</value>
+  </data>
+	<data name="PermissionsNotProperlySet.Text" xml:space="preserve">
+    <value>Modul behörigheter är inte korrekt inställd. Modulen ska inte vara synlig för obehöriga användare. Vänligen korrigera detta.</value>
+  </data>
+	<data name="ContentNotAvailable.Text" xml:space="preserve">
+    <value>Innehållet i denna modul är inte synligt för obehöriga användare. Vänligen logga in för att se dess innehåll.</value>
+  </data>
+	<data name="Notifications.Text" xml:space="preserve">
+    <value>Notifiering</value>
+  </data>
+	<data name="Of.Text" xml:space="preserve">
+    <value> av </value>
+  </data>
+	<data name="TotalNotifications.Text" xml:space="preserve">
+    <value> Totala Antalet Noteringar</value>
+  </data>
+	<data name="From.Text" xml:space="preserve">
+    <value>Från</value>
+  </data>
+	<data name="SentTo.Text" xml:space="preserve">
+    <value>Skickad till</value>
+  </data>
+	<data name="NotificationConfirmNo.Text" xml:space="preserve">
+    <value>Nej</value>
+  </data>
+	<data name="NotificationConfirmTitle.Text" xml:space="preserve">
+    <value>Bekräfta</value>
+  </data>
+	<data name="NotificationConfirmYes.Text" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+	<data name="ActionNotPerformed.Text" xml:space="preserve">
+    <value>Ett fel uppstod vid utförande av åtgärden. Försök igen senare.</value>
+  </data>
+	<data name="ActionPerformed.Text" xml:space="preserve">
+    <value>Åtgärden har genomförts.</value>
+  </data>
+	<data name="ServerError.Text" xml:space="preserve">
+    <value>Ett fel uppstod när begäran bearbetades. Försök igen senare.</value>
+  </data>
+	<data name="ServerErrorWithDescription.Text" xml:space="preserve">
+    <value>Ett fel uppstod när begäran bearbetades:</value>
+  </data>
+	<data name="CreateMessageError.Text" xml:space="preserve">
+    <value>An error occurred while creating the message. Please try again later.</value>
+  </data>
+	<data name="CreateMessageErrorWithDescription.Text" xml:space="preserve">
+    <value>An error occurred while creating the message:</value>
+  </data>
+	<data name="AutoSuggestError.Text" xml:space="preserve">
+    <value>Ett fel inträffade samtidigt som de får förslag:</value>
+  </data>
+	<data name="Upload.Text" xml:space="preserve">
+		<value>Ladda upp från datorn</value>
+	</data>
+</root>

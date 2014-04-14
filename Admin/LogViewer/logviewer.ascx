@@ -2,7 +2,6 @@
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.UI.WebControls" Assembly="DotNetNuke" %>
 <%@ Register TagPrefix="dnn" Namespace="DotNetNuke.Web.UI.WebControls" Assembly="DotNetNuke.Web" %>
 <%@ Register TagPrefix="dnn" TagName="Label" Src="~/controls/LabelControl.ascx" %>
-
 <script language="javascript" type="text/javascript">
 /*globals jQuery, window, Sys */
 (function ($, Sys) {
@@ -31,6 +30,18 @@
 			}
 			return checked;
 		});
+		
+		$("div.wordwrap").each(function() {
+			var content = $(this).html();
+			content = content.replace(/[\w\.]+/g, function (word) {
+				if (word.length <= 50 || word.indexOf(".") == -1) {
+					return word;
+				}
+				return "<span class=\"block\" title=\"" + word + "\">" + word.substr(0, 10) + "..." + word.substr(word.length - 10, 10) + "</span>";
+			});
+			$(this).html(content);
+		});
+
 	}
 	$(document).ready(function () {
 		setUpDnnLogViewer();
@@ -56,7 +67,7 @@
                     <dnn:DnnComboBox ID="ddlRecordsPerPage" runat="server" AutoPostBack="true">
                         <Items>
                             <dnn:DnnComboBoxItem Value="10" Text="10" />
-                            <dnn:DnnComboBoxItem Value="25" Text="25" />
+                            <dnn:DnnComboBoxItem Value="25" Text="25" Selected="True" />
                             <dnn:DnnComboBoxItem Value="50" Text="50" />
                             <dnn:DnnComboBoxItem Value="100" Text="100" />
                             <dnn:DnnComboBoxItem Value="250" Text="250" />
@@ -91,7 +102,7 @@
 						<div style="width:170px"><%# GetMyLogType(DataBinder.Eval(Container.DataItem,"LogTypeKey").ToString()).LogTypeFriendlyName %>&nbsp;</div>
 						<div style="width:90px"><%# DataBinder.Eval(Container.DataItem,"LogUserName") %>&nbsp;</div>
 						<div style="width:120px"><%# DataBinder.Eval(Container.DataItem,"LogPortalName") %>&nbsp;</div>
-						<div style="width:280px"><%# ((DotNetNuke.Services.Log.EventLog.LogInfo)Container.DataItem).LogProperties.Summary %>&nbsp;</div>
+						<div style="width:280px" class="wordwrap"><%# ((DotNetNuke.Services.Log.EventLog.LogInfo)Container.DataItem).LogProperties.Summary %>&nbsp;</div>
 					</div>
 					<div class="dnnLogItemDetail" style="display:none;">
 						<%# GetPropertiesText(Container.DataItem) %>
@@ -107,7 +118,7 @@
 						<div style="width:170px"><%# GetMyLogType(DataBinder.Eval(Container.DataItem,"LogTypeKey").ToString()).LogTypeFriendlyName %>&nbsp;</div>
 						<div style="width:90px"><%# DataBinder.Eval(Container.DataItem,"LogUserName") %>&nbsp;</div>
 						<div style="width:120px"><%# DataBinder.Eval(Container.DataItem,"LogPortalName") %>&nbsp;</div>
-						<div style="width:280px"><%# ((DotNetNuke.Services.Log.EventLog.LogInfo)Container.DataItem).LogProperties.Summary %>&nbsp;</div>
+						<div style="width:280px" class="wordwrap"><%# ((DotNetNuke.Services.Log.EventLog.LogInfo)Container.DataItem).LogProperties.Summary %>&nbsp;</div>
 					</div>
 					<div class="dnnLogItemDetail" style="display:none;">
 						<%# GetPropertiesText(Container.DataItem) %>
@@ -118,7 +129,7 @@
 			<dnn:PagingControl ID="ctlPagingControlBottom" runat="server"></dnn:PagingControl>
 		</div>
         <div class="dnnlvLegend">
-			<h3>Legend</h3>
+			<h3><%=LocalizeString("Legend") %></h3>
 			<div class="dnnLeft">
 				<div class="lvlItem"><span class="Exception"></span><asp:Label ID="Label1" runat="server" resourcekey="ExceptionCode" /></div>
 				<div class="lvlItem"><span class="ItemCreated"></span><asp:Label ID="Label2" runat="server" resourcekey="ItemCreatedCode" /></div>

@@ -1,7 +1,7 @@
 #region Copyright
 // 
 // DotNetNuke® - http://www.dotnetnuke.com
-// Copyright (c) 2002-2012
+// Copyright (c) 2002-2014
 // by DotNetNuke Corporation
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -23,13 +23,25 @@
 using System;
 using System.Threading;
 using System.Web.Security;
+using System.Web.UI;
 
+using DotNetNuke.Common.Utilities;
+using DotNetNuke.Entities.Host;
 using DotNetNuke.Entities.Modules;
+using DotNetNuke.Entities.Portals;
 using DotNetNuke.Entities.Users;
+using DotNetNuke.Entities.Users.Membership;
+using DotNetNuke.Framework;
 using DotNetNuke.Instrumentation;
+using DotNetNuke.Security;
 using DotNetNuke.Security.Membership;
 using DotNetNuke.Services.Localization;
+using DotNetNuke.Services.Log.EventLog;
+using DotNetNuke.Services.Mail;
+using DotNetNuke.UI.Skins.Controls;
 using DotNetNuke.UI.Utilities;
+using DotNetNuke.Web.Client.ClientResourceManagement;
+using DotNetNuke.Web.UI.WebControls;
 
 #endregion
 
@@ -47,13 +59,21 @@ namespace DotNetNuke.Modules.Admin.Users
     /// -----------------------------------------------------------------------------
     public partial class Password : UserModuleBase
     {
+    	private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof (Password));
+        protected bool UseCaptcha
+        {
+            get
+            {
+                return Convert.ToBoolean(GetSetting(PortalId, "Security_CaptchaChangePassword"));
+            }
+        }
         #region Delegates
 
         public delegate void PasswordUpdatedEventHandler(object sender, PasswordUpdatedEventArgs e);
 
         #endregion
 		
-		#region "Public Properties"
+		#region Public Properties
 
         /// -----------------------------------------------------------------------------
         /// <summary>
@@ -75,10 +95,11 @@ namespace DotNetNuke.Modules.Admin.Users
                 return _Membership;
             }
         }
+
 		
 		#endregion
 
-		#region "Events"
+		#region Events
 
 
         public event PasswordUpdatedEventHandler PasswordUpdated;
@@ -86,7 +107,7 @@ namespace DotNetNuke.Modules.Admin.Users
 
 		#endregion
 
-		#region "Event Methods"
+		#region Event Methods
 
         /// -----------------------------------------------------------------------------
         /// <summary>
@@ -130,7 +151,7 @@ namespace DotNetNuke.Modules.Admin.Users
 
 		#endregion
 
-		#region "Public Methods"
+		#region Public Methods
 
         /// -----------------------------------------------------------------------------
         /// <summary>
@@ -142,14 +163,6 @@ namespace DotNetNuke.Modules.Admin.Users
         /// -----------------------------------------------------------------------------
         public override void DataBind()
         {
-            if (IsAdmin)
-            {
-                lblTitle.Text = string.Format(Localization.GetString("PasswordTitle.Text", LocalResourceFile), User.Username, User.UserID);
-            }
-            else
-            {
-                titleRow.Visible = false;
-            }
             lblLastChanged.Text = User.Membership.LastPasswordChangeDate.ToLongDateString();
 
             //Set Password Expiry Label
@@ -162,15 +175,17 @@ namespace DotNetNuke.Modules.Admin.Users
                 lblExpires.Text = PasswordConfig.PasswordExpiry > 0 ? User.Membership.LastPasswordChangeDate.AddDays(PasswordConfig.PasswordExpiry).ToLongDateString() : Localization.GetString("NoExpiry", LocalResourceFile);
             }
 			
-            //f Password retrieval is not supported then only the user can change
-            //their password, an Admin must Reset
-            if (((!MembershipProviderConfig.PasswordRetrievalEnabled) && IsAdmin && (!IsUser)))
+           if (((!MembershipProviderConfig.PasswordRetrievalEnabled) && IsAdmin && (!IsUser)))
             {
-                pnlChange.Visible = false;
+                pnlChange.Visible = true;
+                cmdUpdate.Visible = true;
+                oldPasswordRow.Visible = false;
+                lblChangeHelp.Text = Localization.GetString("AdminChangeHelp", LocalResourceFile);
             }
             else
             {
                 pnlChange.Visible = true;
+                cmdUpdate.Visible = true;
 				
 				//Set up Change Password
                 if (IsAdmin && !IsUser)
@@ -181,6 +196,18 @@ namespace DotNetNuke.Modules.Admin.Users
                 else
                 {
                     lblChangeHelp.Text = Localization.GetString("UserChangeHelp", LocalResourceFile);
+                    if (Request.IsAuthenticated)
+                    {
+                        pnlChange.Visible = true;
+                        cmdUserReset.Visible = false;
+                        cmdUpdate.Visible = true;
+                    }
+                    else
+                    {
+                        pnlChange.Visible = false;
+                        cmdUserReset.Visible = true;
+                        cmdUpdate.Visible = false;
+                    }
                 }
             }
 			
@@ -189,10 +216,12 @@ namespace DotNetNuke.Modules.Admin.Users
             if (!MembershipProviderConfig.PasswordResetEnabled)
             {
                 pnlReset.Visible = false;
+                cmdReset.Visible = false;
             }
             else
             {
                 pnlReset.Visible = true;
+                cmdReset.Visible = true;
 				
 				//Set up Reset Password
                 if (IsAdmin && !IsUser)
@@ -200,6 +229,7 @@ namespace DotNetNuke.Modules.Admin.Users
                     if (MembershipProviderConfig.RequiresQuestionAndAnswer)
                     {
                         pnlReset.Visible = false;
+                        cmdReset.Visible = false;
                     }
                     else
                     {
@@ -220,6 +250,7 @@ namespace DotNetNuke.Modules.Admin.Users
                     else
                     {
                         pnlReset.Visible = false;
+                        cmdReset.Visible = false;
                     }
                 }
             }
@@ -228,47 +259,107 @@ namespace DotNetNuke.Modules.Admin.Users
             if (MembershipProviderConfig.RequiresQuestionAndAnswer && IsUser)
             {
                 pnlQA.Visible = true;
+                cmdUpdateQA.Visible = true;
             }
             else
             {
                 pnlQA.Visible = false;
+                cmdUpdateQA.Visible = false;
             }
         }
 
 		#endregion
 
-		#region "Event Handlers"
+		#region Event Handlers
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// Page_Load runs when the control is loaded
-        /// </summary>
-        /// <remarks>
-        /// </remarks>
-        /// <history>
-        /// 	[cnurse]	03/03/2006  created
-        /// </history>
-        /// -----------------------------------------------------------------------------
+        protected override void OnInit(EventArgs e)
+        {
+            base.OnInit(e);
+            ClientResourceManager.RegisterScript(Page, "~/Resources/Shared/scripts/dnn.jquery.extensions.js");
+            ClientResourceManager.RegisterScript(Page, "~/Resources/Shared/scripts/dnn.jquery.tooltip.js");
+            ClientResourceManager.RegisterScript(Page, "~/Resources/Shared/scripts/dnn.PasswordStrength.js");
+			ClientResourceManager.RegisterScript(Page, "~/DesktopModules/Admin/Security/Scripts/dnn.PasswordComparer.js");
+
+            jQuery.RequestDnnPluginsRegistration();
+        }
+
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
             //ClientAPI.RegisterKeyCapture(Parent, cmdUpdate.Controls[0], 13);
             //ClientAPI.RegisterKeyCapture(this, cmdUpdate.Controls[0], 13);
             cmdReset.Click += cmdReset_Click;
+            cmdUserReset.Click += cmdUserReset_Click;
             cmdUpdate.Click += cmdUpdate_Click;
             cmdUpdateQA.Click += cmdUpdateQA_Click;
+
+			if (MembershipProviderConfig.RequiresQuestionAndAnswer && User.UserID != UserController.GetCurrentUserInfo().UserID)
+			{
+				pnlChange.Visible = false;
+			    cmdUpdate.Visible = false;
+				CannotChangePasswordMessage.Visible = true;
+			}
+
+            if (UseCaptcha)
+            {
+                captchaRow.Visible = true;
+                ctlCaptcha.ErrorMessage = Localization.GetString("InvalidCaptcha", LocalResourceFile);
+                ctlCaptcha.Text = Localization.GetString("CaptchaText", LocalResourceFile);
+            }
+           
         }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// cmdReset_Click runs when the Reset Button is clicked
-        /// </summary>
-        /// <remarks>
-        /// </remarks>
-        /// <history>
-        /// 	[cnurse]	03/03/2006  created
-        /// </history>
-        /// -----------------------------------------------------------------------------
+
+        protected override void OnPreRender(EventArgs e)
+        {
+            base.OnPreRender(e);
+
+
+			if (Host.EnableStrengthMeter)
+			{
+				passwordContainer.CssClass = "password-strength-container";
+				txtNewPassword.CssClass = "password-strength";
+
+				var options = new DnnPaswordStrengthOptions();
+				var optionsAsJsonString = Json.Serialize(options);
+				var script = string.Format("dnn.initializePasswordStrength('.{0}', {1});{2}",
+					"password-strength", optionsAsJsonString, Environment.NewLine);
+
+				if (ScriptManager.GetCurrent(Page) != null)
+				{
+					// respect MS AJAX
+					ScriptManager.RegisterStartupScript(Page, GetType(), "PasswordStrength", script, true);
+				}
+				else
+				{
+					Page.ClientScript.RegisterStartupScript(GetType(), "PasswordStrength", script, true);
+				}
+			}
+
+			var confirmPasswordOptions = new DnnConfirmPasswordOptions()
+			{
+				FirstElementSelector = "#" + passwordContainer.ClientID + " input[type=password]",
+				SecondElementSelector = ".password-confirm",
+				ContainerSelector = ".dnnPassword",
+				UnmatchedCssClass = "unmatched",
+				MatchedCssClass = "matched"
+			};
+
+			var confirmOptionsAsJsonString = Json.Serialize(confirmPasswordOptions);
+			var confirmScript = string.Format("dnn.initializePasswordComparer({0});{1}", confirmOptionsAsJsonString, Environment.NewLine);
+
+			if (ScriptManager.GetCurrent(Page) != null)
+			{
+				// respect MS AJAX
+				ScriptManager.RegisterStartupScript(Page, GetType(), "ConfirmPassword", confirmScript, true);
+			}
+			else
+			{
+				Page.ClientScript.RegisterStartupScript(GetType(), "ConfirmPassword", confirmScript, true);
+			}
+        }
+
+
         private void cmdReset_Click(object sender, EventArgs e)
         {
             if (IsUserOrAdmin == false)
@@ -287,87 +378,217 @@ namespace DotNetNuke.Modules.Admin.Users
             }
             try
             {
-                UserController.ResetPassword(User, answer);
-                OnPasswordUpdated(new PasswordUpdatedEventArgs(PasswordUpdateStatus.Success));
+                //create resettoken valid for 24hrs
+                UserController.ResetPasswordToken(User,1440);
+
+                bool canSend = Mail.SendMail(User, MessageType.PasswordReminder, PortalSettings) == string.Empty;
+                var message = String.Empty;
+                var moduleMessageType = ModuleMessage.ModuleMessageType.GreenSuccess;
+                if (canSend)
+                {
+                    message = Localization.GetString("PasswordSent", LocalResourceFile);
+                    LogSuccess();
+                }
+                else
+                {
+                    message = Localization.GetString("OptionUnavailable", LocalResourceFile);
+                    moduleMessageType=ModuleMessage.ModuleMessageType.RedError;
+                    LogFailure(message);
+                }
+
+               
+                UI.Skins.Skin.AddModuleMessage(this, message, moduleMessageType);
             }
             catch (ArgumentException exc)
             {
-                DnnLog.Error(exc);
+                Logger.Error(exc);
                 OnPasswordUpdated(new PasswordUpdatedEventArgs(PasswordUpdateStatus.InvalidPasswordAnswer));
             }
             catch (Exception exc)
             {
-                DnnLog.Error(exc);
+                Logger.Error(exc);
                 OnPasswordUpdated(new PasswordUpdatedEventArgs(PasswordUpdateStatus.PasswordResetFailed));
             }
         }
 
-        /// -----------------------------------------------------------------------------
-        /// <summary>
-        /// cmdUpdate_Click runs when the Update  Button is clicked
-        /// </summary>
-        /// <remarks>
-        /// </remarks>
-        /// <history>
-        /// 	[cnurse]	03/03/2006  created
-        /// </history>
-        /// -----------------------------------------------------------------------------
-        private void cmdUpdate_Click(Object sender, EventArgs e)
+        private void cmdUserReset_Click(object sender, EventArgs e)
         {
-            if (IsUserOrAdmin == false)
-            {
-                return;
-            }
-            //1. Check New Password and Confirm are the same
-            if (txtNewPassword.Text != txtNewConfirm.Text)
-            {
-                OnPasswordUpdated(new PasswordUpdatedEventArgs(PasswordUpdateStatus.PasswordMismatch));
-                return;
-            }
-			
-			//2. Check New Password is Valid
-            if (!UserController.ValidatePassword(txtNewPassword.Text))
-            {
-                OnPasswordUpdated(new PasswordUpdatedEventArgs(PasswordUpdateStatus.PasswordInvalid));
-                return;
-            }
-			
-			//3. Check old Password is Provided
-            if (!IsAdmin && String.IsNullOrEmpty(txtOldPassword.Text))
-            {
-                OnPasswordUpdated(new PasswordUpdatedEventArgs(PasswordUpdateStatus.PasswordMissing));
-                return;
-            }
-			
-			//4. Check New Password is ddifferent
-            if (!IsAdmin && txtNewPassword.Text == txtOldPassword.Text)
-            {
-                OnPasswordUpdated(new PasswordUpdatedEventArgs(PasswordUpdateStatus.PasswordNotDifferent));
-                return;
-            }
             try
             {
-                OnPasswordUpdated(UserController.ChangePassword(User, txtOldPassword.Text, txtNewPassword.Text)
-                                      ? new PasswordUpdatedEventArgs(PasswordUpdateStatus.Success)
-                                      : new PasswordUpdatedEventArgs(PasswordUpdateStatus.PasswordResetFailed));
-            }
-            catch (MembershipPasswordException exc)
-            {
-				//Password Answer missing
-                DnnLog.Error(exc);
+                //send fresh resettoken copy
+                bool canSend = UserController.ResetPasswordToken(User,true);
 
+                var message = String.Empty;
+                var moduleMessageType = ModuleMessage.ModuleMessageType.GreenSuccess;
+                if (canSend)
+                {
+                    message = Localization.GetString("PasswordSent", LocalResourceFile);
+                    LogSuccess();
+                }
+                else
+                {
+                    message = Localization.GetString("OptionUnavailable", LocalResourceFile);
+                    moduleMessageType = ModuleMessage.ModuleMessageType.RedError;
+                    LogFailure(message);
+                }
+
+
+                UI.Skins.Skin.AddModuleMessage(this, message, moduleMessageType);
+            }
+            catch (ArgumentException exc)
+            {
+                Logger.Error(exc);
                 OnPasswordUpdated(new PasswordUpdatedEventArgs(PasswordUpdateStatus.InvalidPasswordAnswer));
             }
-			catch(ThreadAbortException)
-			{
-				//Do nothing we are not logging ThreadAbortxceptions caused by redirects    
-			}
             catch (Exception exc)
             {
-				//Fail
-                DnnLog.Error(exc);
-
+                Logger.Error(exc);
                 OnPasswordUpdated(new PasswordUpdatedEventArgs(PasswordUpdateStatus.PasswordResetFailed));
+            }
+        }
+
+        private void LogSuccess()
+        {
+            LogResult(string.Empty);
+        }
+
+        private void LogFailure(string reason)
+        {
+            LogResult(reason);
+        }
+
+        private void LogResult(string message)
+        {
+            var portalSecurity = new PortalSecurity();
+
+            var objEventLog = new EventLogController();
+            var objEventLogInfo = new LogInfo();
+
+            objEventLogInfo.LogPortalID = PortalSettings.PortalId;
+            objEventLogInfo.LogPortalName = PortalSettings.PortalName;
+            objEventLogInfo.LogUserID = UserId;
+            objEventLogInfo.LogUserName = portalSecurity.InputFilter(User.Username,
+                                                                     PortalSecurity.FilterFlag.NoScripting | PortalSecurity.FilterFlag.NoAngleBrackets | PortalSecurity.FilterFlag.NoMarkup);
+            if (string.IsNullOrEmpty(message))
+            {
+                objEventLogInfo.LogTypeKey = "PASSWORD_SENT_SUCCESS";
+            }
+            else
+            {
+                objEventLogInfo.LogTypeKey = "PASSWORD_SENT_FAILURE";
+                objEventLogInfo.LogProperties.Add(new LogDetailInfo("Cause", message));
+            }
+
+            objEventLog.AddLog(objEventLogInfo);
+        }
+
+        private void cmdUpdate_Click(Object sender, EventArgs e)
+        {
+            if ((UseCaptcha && ctlCaptcha.IsValid) || !UseCaptcha)
+            {
+                if (IsUserOrAdmin == false)
+                {
+                    return;
+                }
+                //1. Check New Password and Confirm are the same
+                if (txtNewPassword.Text != txtNewConfirm.Text)
+                {
+                    OnPasswordUpdated(new PasswordUpdatedEventArgs(PasswordUpdateStatus.PasswordMismatch));
+                    return;
+                }
+
+                //2. Check New Password is Valid
+                if (!UserController.ValidatePassword(txtNewPassword.Text))
+                {
+                    OnPasswordUpdated(new PasswordUpdatedEventArgs(PasswordUpdateStatus.PasswordInvalid));
+                    return;
+                }
+
+                //3. Check old Password is Provided
+                if (!IsAdmin && String.IsNullOrEmpty(txtOldPassword.Text))
+                {
+                    OnPasswordUpdated(new PasswordUpdatedEventArgs(PasswordUpdateStatus.PasswordMissing));
+                    return;
+                }
+
+                //4. Check New Password is ddifferent
+                if (!IsAdmin && txtNewPassword.Text == txtOldPassword.Text)
+                {
+                    OnPasswordUpdated(new PasswordUpdatedEventArgs(PasswordUpdateStatus.PasswordNotDifferent));
+                    return;
+                }
+                //5. Check New Password is not same as username or banned
+                var settings = new MembershipPasswordSettings(User.PortalID);
+
+                if (settings.EnableBannedList)
+                {
+                    var m = new MembershipPasswordController();
+                    if (m.FoundBannedPassword(txtNewPassword.Text) || User.Username == txtNewPassword.Text)
+                    {
+                        OnPasswordUpdated(new PasswordUpdatedEventArgs(PasswordUpdateStatus.BannedPasswordUsed));
+                        return;
+                    }
+
+                }
+                if (!IsAdmin && txtNewPassword.Text == txtOldPassword.Text)
+                {
+                    OnPasswordUpdated(new PasswordUpdatedEventArgs(PasswordUpdateStatus.PasswordNotDifferent));
+                    return;
+                }
+                if (!IsAdmin)
+                {
+                    try
+                    {
+                        OnPasswordUpdated(UserController.ChangePassword(User, txtOldPassword.Text, txtNewPassword.Text)
+                                              ? new PasswordUpdatedEventArgs(PasswordUpdateStatus.Success)
+                                              : new PasswordUpdatedEventArgs(PasswordUpdateStatus.PasswordResetFailed));
+                    }
+                    catch (MembershipPasswordException exc)
+                    {
+                        //Password Answer missing
+                        Logger.Error(exc);
+
+                        OnPasswordUpdated(new PasswordUpdatedEventArgs(PasswordUpdateStatus.InvalidPasswordAnswer));
+                    }
+                    catch (ThreadAbortException)
+                    {
+                        //Do nothing we are not logging ThreadAbortxceptions caused by redirects    
+                    }
+                    catch (Exception exc)
+                    {
+                        //Fail
+                        Logger.Error(exc);
+
+                        OnPasswordUpdated(new PasswordUpdatedEventArgs(PasswordUpdateStatus.PasswordResetFailed));
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        OnPasswordUpdated(UserController.ResetAndChangePassword(User, txtNewPassword.Text)
+                                              ? new PasswordUpdatedEventArgs(PasswordUpdateStatus.Success)
+                                              : new PasswordUpdatedEventArgs(PasswordUpdateStatus.PasswordResetFailed));
+                    }
+                    catch (MembershipPasswordException exc)
+                    {
+                        //Password Answer missing
+                        Logger.Error(exc);
+
+                        OnPasswordUpdated(new PasswordUpdatedEventArgs(PasswordUpdateStatus.InvalidPasswordAnswer));
+                    }
+                    catch (ThreadAbortException)
+                    {
+                        //Do nothing we are not logging ThreadAbortxceptions caused by redirects    
+                    }
+                    catch (Exception exc)
+                    {
+                        //Fail
+                        Logger.Error(exc);
+
+                        OnPasswordUpdated(new PasswordUpdatedEventArgs(PasswordUpdateStatus.PasswordResetFailed));
+                    }
+                }
             }
         }
 

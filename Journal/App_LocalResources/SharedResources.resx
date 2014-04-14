@@ -198,7 +198,7 @@
 	&lt;p&gt;
 		&lt;span class="authorname"&gt;[JournalControl:AUTHORNAMELINK]&lt;/span&gt;[JournalItem:Summary]
 		&lt;div class="jphoto dnnClear"&gt;
-			&lt;img src="[journaldata:ImageUrl]" style="width:250px;" /&gt;
+			&lt;a href="[journaldata:ImageUrl]" target="_blank"&gt;&lt;img src="[journaldata:ImageUrl]" style="width:250px;" /&gt;&lt;/a&gt;
 		&lt;/div&gt;
 	&lt;/p&gt;
 
@@ -547,5 +547,17 @@
 	&lt;/p&gt;
 	[JOURNALCONTROL:LIKELIST]
 &lt;/div&gt;</value>
+  </data>
+  <data name="Notification_Mention.Body" xml:space="preserve">
+    <value>{0}</value>
+  </data>
+  <data name="Notification_Mention.Subject" xml:space="preserve">
+    <value>{0} mentioned you in a {1}</value>
+  </data>
+  <data name="Notification_MentionType_Comment.Text" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="Notification_MentionType_Post.Text" xml:space="preserve">
+    <value>Post</value>
   </data>
 </root>

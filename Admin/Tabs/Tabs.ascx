@@ -6,6 +6,7 @@
 <script language="javascript" type="text/javascript">
 /*globals jQuery, window, Sys */
 (function ($, Sys) {
+	var needReload = false;
 	function setUpTabsModule() {
 		$('#dnnTabsModule').dnnPanels()
 			.find('.dnnFormExpandContent a').dnnExpandAll({
@@ -13,8 +14,54 @@
 			    collapseText: '<%=DotNetNuke.UI.Utilities.ClientAPI.GetSafeJSString(Localization.GetString("CollapseAll", Localization.SharedResourceFile))%>',
 				targetArea: '#dnnTabsModule'
 			});
+
+		$("#btnPageSearch", $('#dnnTabsModule')).click(function(e) {
+			searchPages($("#searchKeyword", $('#dnnTabsModule')).val());
+		});
+		$("#searchKeyword", $('#dnnTabsModule')).keydown(function(e) {
+			if (e.which == 13) {
+				$("#btnPageSearch", $('#dnnTabsModule')).click();
+				e.preventDefault();
+			}
+		});
+		
+		$("#<%=cmdUpdate.ClientID%>").click(function() {
+			needReload = true;
+		});
+	    
+        $('input[id$=cmdDeleteModule]').dnnConfirm({
+            text: '<%= DotNetNuke.UI.Utilities.ClientAPI.GetSafeJSString(LocalizeString("DeleteItem")) %>',
+            yesText: '<%= Localization.GetSafeJSString("Yes.Text", Localization.SharedResourceFile) %>',
+            noText: '<%= Localization.GetSafeJSString("No.Text", Localization.SharedResourceFile) %>',
+        	title: '<%= Localization.GetSafeJSString("Confirm.Text", Localization.SharedResourceFile) %>',
+        	isButton: true
+        });
 	}
 
+	var searchPages = function(keyword) {
+		var tree = $find("<%=ctlPages.ClientID %>");
+		var nodes = tree.get_allNodes();
+		for (var i = 0; i < nodes.length; i++) {
+			var node = nodes[i];
+			if (node.get_value() == "-1") {
+				continue;
+			}
+			if (keyword == "") {
+				node.set_visible(true);
+				node.collapse();
+			} else if (node.get_text().toLowerCase().indexOf(keyword.toLowerCase()) > -1) {
+				node.set_visible(true);
+				var parent = node.get_parent();
+				while (parent.get_value() != "-1") {
+					parent.set_visible(true);
+					parent.expand();
+					parent = parent.get_parent();
+				}
+			} else {
+				node.set_visible(false);
+			}
+		}
+	};
 
 	$(document).ready(function () {
 		setUpTabsModule();
@@ -55,11 +102,15 @@
 				setTimeout(msgQueue[0], 0);
 				msgQueue.splice(0, 1);
 			}
-		}
+		};
 
 		Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
-			setUpTabsModule();
-			processMsgQueue();
+			if (needReload) {
+				location.reload();
+			} else {
+				setUpTabsModule();
+				processMsgQueue();
+			}
 		});
 	});
 
@@ -74,11 +125,17 @@
 			var id = '<%=ctlContext.ClientID%>';
 			var item = eventArgs.get_menuItem();
 			var cmd = item.get_value();
-			if (cmd == 'delete') {
-				if (!confirm('<%=GetConfirmString()%>')) {
-					item.get_menu().hide();
-					eventArgs.set_cancel(true);
-				}
+		    var attributes = item.get_attributes();
+			if (cmd == 'delete' && !attributes.getAttribute("confirm")) {
+			    item.get_menu().hide();
+			    $("<a href='#' />").dnnConfirm({
+			        text: '<%=GetConfirmString()%>',
+			        callbackTrue: function () {
+			            attributes.setAttribute("confirm", true);
+			            item.click();
+			        }
+			    }).click();
+			    eventArgs.set_cancel(true);
 			}
 			/*get current node to set hash*/
 			var nodeValue = eventArgs.get_node().get_value();
@@ -119,7 +176,10 @@
 				    </asp:RadioButtonList>
                 </div>
 			</div>		
-		</asp:Panel> 
+		</asp:Panel>
+		<div class="dnnFormItem">
+			<input id="searchKeyword" type="text" /> <a id="btnPageSearch" class="dnnSecondaryAction"><%=LocalizeString("Search") %></a>
+		</div>
 		<div class="dnnTreeExpand">
 			<asp:LinkButton ID="cmdExpandTree" runat="server" CommandName="Expand" />
 		</div>
@@ -172,6 +232,10 @@
 				<img runat="server" src="images/Icon_Disabled.png" alt="" />
 				<asp:Literal ID="lblDisabled" runat="server" />
 			</div>
+			<div class="dtlItem">
+				<img runat="server" src="images/Icon_Redirect.png" alt="" />
+				<asp:Literal ID="lblRedirect" runat="server" />
+			</div>
 		</div>
 	</div>        
 	<div class="tmTabContainer" runat="server" visible="false" id="pnlDetails">
@@ -182,8 +246,8 @@
 			<fieldset>
 				<div class="dnnFormItem">
 					<dnn:Label ID="lblName" runat="server" Suffix=":" CssClass="dnnFormRequired"  />
-					<asp:TextBox ID="txtName" runat="server" MaxLength="50" />
-					<asp:RequiredFieldValidator ID="valName" runat="server" Display="Dynamic" resourcekey="valName" ControlToValidate="txtName" CssClass="dnnFormMessage dnnFormError" ValidationGroup="Page" SetFocusOnError="true" />
+					<asp:TextBox ID="txtName" runat="server" MaxLength="200" ValidationGroup="Page" />
+					<asp:RequiredFieldValidator ID="valName" runat="server" EnableClientScript="True" Display="Dynamic" resourcekey="valName.ErrorMessage" ControlToValidate="txtName" CssClass="dnnFormMessage dnnFormError" ValidationGroup="Page"/>
 				</div>
 				<div class="dnnFormItem">
 					<dnn:Label ID="lblTitle" runat="server" suffix=":" />
@@ -200,7 +264,11 @@
 				<div class="dnnFormItem">
 					<dnn:Label ID="lblPageSSL" runat="server" suffix="?" />
 					<asp:CheckBox ID="chkSecure" runat="server" />
-				</div>   
+				</div> 
+				<div class="dnnFormItem">
+					<dnn:Label ID="lblAllowIndex" runat="server" ControlName="chkAllowIndex" />
+					<asp:CheckBox ID="chkAllowIndex" runat="server" />
+				</div>  
 			</fieldset>
 		</div>    														 
 		<div id="PermissionsSection" class="ssasContent dnnClear" runat="server">
@@ -247,8 +315,12 @@
 			<h2 id="Panel-SEO" class="dnnFormSectionHead"><a href="" class="dnnSectionExpanded"><%=LocalizeString("SEO.Tabname")%></a></h2>
 			<fieldset>
 				<div class="dnnFormItem">
-					<dnn:Label ID="lblSitemapPriority" runat="server" suffix=":" />
-					<asp:TextBox ID="txtSitemapPriority" runat="server" />
+					<dnn:Label ID="lblSitemapPriority" runat="server" suffix=":" CssClass="dnnFormRequired" />
+					<asp:TextBox ID="txtSitemapPriority" runat="server" ValidationGroup="Page" />
+                    <asp:RequiredFieldValidator ID="valPriorityRequired" runat="server" ControlToValidate="txtSitemapPriority" 
+                        resourcekey="valPriorityRequired.ErrorMessage" CssClass="dnnFormMessage dnnFormError" Display="Dynamic" ValidationGroup="Page" />
+                    <asp:CompareValidator ID="valPriority" runat="server" ControlToValidate="txtSitemapPriority" Operator="DataTypeCheck" Type="Double" 
+                        resourcekey="valPriority.ErrorMessage" CssClass="dnnFormMessage dnnFormError" Display="Dynamic" ValidationGroup="Page" />
 				</div>
 				<div class="dnnFormItem">
 					<dnn:Label ID="lblDescription" runat="server" suffix=":" />
@@ -269,7 +341,9 @@
 			<fieldset>
 				<div class="dnnFormItem">
 					<dnn:Label ID="lblMetaRefresh" runat="server" suffix=":" />
-					<asp:TextBox ID="txtRefresh" runat="server" />
+					<asp:TextBox ID="txtRefresh" runat="server" ValidationGroup="Page" />
+                    <asp:RegularExpressionValidator ID="valRefresh" runat="server" ControlToValidate="txtRefresh" ValidationGroup="Page"
+                        resourcekey="valRefresh.ErrorMessage" ValidationExpression="^\d+$" CssClass="dnnFormMessage dnnFormError" Display="Dynamic" />
 				</div>
 				<div class="dnnFormItem">
 					<dnn:Label ID="lblMetaHead" runat="server" suffix=":" />
@@ -319,7 +393,7 @@
 			</fieldset>
 		</div>
 		<ul class="dnnActions dnnClear">
-			<li><asp:LinkButton ID="cmdUpdate" runat="server" resourcekey="cmdUpdate" CssClass="dnnPrimaryAction" ValidationGroup="Page" /></li>
+			<li><asp:LinkButton ID="cmdUpdate" runat="server" resourcekey="cmdUpdate" CssClass="dnnPrimaryAction" ValidationGroup="Page" CausesValidation="True" /></li>
 			<li><asp:HyperLink ID="cmdMore" runat="server" resourcekey="cmdMore" CssClass="dnnSecondaryAction" /></li>
 		</ul>     
 	</div>

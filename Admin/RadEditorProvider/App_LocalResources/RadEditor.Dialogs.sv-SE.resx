@@ -1,0 +1,1970 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="About_Copyright" xml:space="preserve">
+    <value>Copyright 2002-2013 ©Telerik  All rights reserved.</value>
+  </data>
+	<data name="About_Title" xml:space="preserve">
+    <value>RadEditor by Telerik</value>
+  </data>
+	<data name="Common_AddCustomTarget" xml:space="preserve">
+    <value>[Lägg till anpassat mål ...]</value>
+  </data>
+	<data name="Common_AllowedExtensions" xml:space="preserve">
+    <value>Tillåtna filändelser</value>
+  </data>
+	<data name="Common_Back" xml:space="preserve">
+    <value>Tillbaka</value>
+  </data>
+	<data name="Common_BackgroundColor" xml:space="preserve">
+    <value>Bakgrundsfärg</value>
+  </data>
+	<data name="Common_BackgroundImage" xml:space="preserve">
+    <value>Bakgrundsbild</value>
+  </data>
+	<data name="Common_Black" xml:space="preserve">
+    <value>Svart</value>
+  </data>
+	<data name="Common_Blue" xml:space="preserve">
+    <value>Blå</value>
+  </data>
+	<data name="Common_BorderColor" xml:space="preserve">
+    <value>Kantfärg</value>
+  </data>
+	<data name="Common_BorderWidth" xml:space="preserve">
+    <value>Kantbredd</value>
+  </data>
+	<data name="Common_Bottom" xml:space="preserve">
+    <value>Botten</value>
+  </data>
+	<data name="Common_bytes" xml:space="preserve">
+    <value>Byte</value>
+  </data>
+	<data name="Common_Cancel" xml:space="preserve">
+    <value>Avbryt</value>
+  </data>
+	<data name="Common_CellCss" xml:space="preserve">
+    <value>Cell CSS</value>
+  </data>
+	<data name="Common_ClassID" xml:space="preserve">
+    <value>Ange Class-ID</value>
+  </data>
+	<data name="Common_ClassIDText" xml:space="preserve">
+    <value>Class ID</value>
+  </data>
+	<data name="Common_Client_AlertFile" xml:space="preserve">
+    <value>Vänligen ange fil att ladda upp!</value>
+  </data>
+	<data name="Common_Close" xml:space="preserve">
+    <value>Stäng</value>
+  </data>
+	<data name="Common_ConfirmDelete" xml:space="preserve">
+    <value>Är du säker på att du vill radera den markerade filen?
+Den valda filen kan vara i bruk. Om den raderas, kan vissa sidor visas felaktigt.
+Tryck "OK" för att bekräfta raderingen.</value>
+  </data>
+	<data name="Common_ConstrainProportions" xml:space="preserve">
+    <value>Bibehåll proportioner?</value>
+  </data>
+	<data name="Common_ControlButtons" xml:space="preserve">
+    <value>Styrknappar</value>
+  </data>
+	<data name="Common_Create" xml:space="preserve">
+    <value>Skapa</value>
+  </data>
+	<data name="Common_CreateNewFolder" xml:space="preserve">
+    <value>Skriv in det nya mappnamnet</value>
+  </data>
+	<data name="Common_CreateThumbnail" xml:space="preserve">
+    <value>Skapa miniatyrbild</value>
+  </data>
+	<data name="Common_CssClass" xml:space="preserve">
+    <value>CSS Class</value>
+  </data>
+	<data name="Common_CustomTargets" xml:space="preserve">
+    <value>Anpassat Mål</value>
+  </data>
+	<data name="Common_Delete" xml:space="preserve">
+    <value>Radera</value>
+  </data>
+	<data name="Common_DimensionUnit" xml:space="preserve">
+    <value>Måttenhet</value>
+  </data>
+	<data name="Common_FileExists" xml:space="preserve">
+    <value>En fil med samma namn som målet finns redan och du har valt att inte skriva över det!</value>
+  </data>
+	<data name="Common_Green" xml:space="preserve">
+    <value>Grön</value>
+  </data>
+	<data name="Common_Height" xml:space="preserve">
+    <value>Höjd</value>
+  </data>
+	<data name="Common_Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+	<data name="Common_ImageAltText" xml:space="preserve">
+    <value>Alt Text</value>
+  </data>
+	<data name="Common_ImageEditor" xml:space="preserve">
+    <value>Bildredigerare</value>
+  </data>
+	<data name="Common_ImageFieldSet" xml:space="preserve">
+    <value>Bildegenskaper</value>
+  </data>
+	<data name="Common_Insert" xml:space="preserve">
+    <value>Infoga</value>
+  </data>
+	<data name="Common_InvalidCharactersInPath" xml:space="preserve">
+    <value>Ogiltigt tecken i mappnamnet.</value>
+  </data>
+	<data name="Common_InvalidFileExtension" xml:space="preserve">
+    <value>Filändelsen på den uppladdade filen är inte är giltig. Vänligen ange en giltig fil!</value>
+  </data>
+	<data name="Common_InvalidFileSize" xml:space="preserve">
+    <value>Storleken på den uppladdade filen överskrider max tillåten storlek</value>
+  </data>
+	<data name="Common_Kilobytes" xml:space="preserve">
+    <value>KB</value>
+  </data>
+	<data name="Common_Left" xml:space="preserve">
+    <value>Vänster</value>
+  </data>
+	<data name="Common_LookIn" xml:space="preserve">
+    <value>Titta i</value>
+  </data>
+	<data name="Common_MaxFileSize" xml:space="preserve">
+    <value>Max tillåten filstorlek</value>
+  </data>
+	<data name="Common_Megabytes" xml:space="preserve">
+    <value>MB</value>
+  </data>
+	<data name="Common_MessageCannotWriteToFolder" xml:space="preserve">
+    <value>Kan inte skriva till målmappen!</value>
+  </data>
+	<data name="Common_MessageNoValidDimensions" xml:space="preserve">
+    <value>Vänligen ange giltigt bild mått</value>
+  </data>
+	<data name="Common_MessageSourceNotLocal" xml:space="preserve">
+    <value>Den angivna bildfilen för konvertering finns på en annan server!</value>
+  </data>
+	<data name="Common_Middle" xml:space="preserve">
+    <value>Mitten</value>
+  </data>
+	<data name="Common_NameExists" xml:space="preserve">
+    <value>Ett objekt med samma namn finns redan i den här katalogen!</value>
+  </data>
+	<data name="Common_NewFolder" xml:space="preserve">
+    <value>Ny Mapp</value>
+  </data>
+	<data name="Common_NewImageName" xml:space="preserve">
+    <value>Nytt bildnamn</value>
+  </data>
+	<data name="Common_No" xml:space="preserve">
+    <value>Nej</value>
+  </data>
+	<data name="Common_NoColor" xml:space="preserve">
+    <value>Ingen färg</value>
+  </data>
+	<data name="Common_None" xml:space="preserve">
+    <value>Ingen</value>
+  </data>
+	<data name="Common_NoPermissionsToCreateFolder" xml:space="preserve">
+    <value>Den valda mappen kunde inte skapas eftersom programmet inte hade tillräckligt med behörigheter. Vänligen kontakta administratören.</value>
+  </data>
+	<data name="Common_NoPermissionsToDeleteFile" xml:space="preserve">
+    <value>Den valda filen kunde inte raderas eftersom programmet inte hade tillräckligt med behörigheter. Vänligen kontakta administratören.</value>
+  </data>
+	<data name="Common_NoPermissionsToDeleteFolder" xml:space="preserve">
+    <value>Den valda mappen kunde inte tas bort eftersom programmet inte hade tillräckligt med behörigheter. Vänligen kontakta administratören.</value>
+  </data>
+	<data name="Common_NoUploadedFile" xml:space="preserve">
+    <value>Vänligen välj en fil att ladda upp!</value>
+  </data>
+	<data name="Common_OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+	<data name="Common_Orange" xml:space="preserve">
+    <value>Orange</value>
+  </data>
+	<data name="Common_OverwriteExisting" xml:space="preserve">
+    <value>Skriv över om filen finns?</value>
+  </data>
+	<data name="Common_Paste" xml:space="preserve">
+    <value>Klistra in</value>
+  </data>
+	<data name="Common_Percent" xml:space="preserve">
+    <value>Procent</value>
+  </data>
+	<data name="Common_Pixel" xml:space="preserve">
+    <value>Pixel</value>
+  </data>
+	<data name="Common_PresetTargets" xml:space="preserve">
+    <value>Förinställt Mål</value>
+  </data>
+	<data name="Common_Preview" xml:space="preserve">
+    <value>Förhandsgranska</value>
+  </data>
+	<data name="Common_Properties" xml:space="preserve">
+    <value>Egenskaper</value>
+  </data>
+	<data name="Common_PropertiesPanel" xml:space="preserve">
+    <value>Egenskapspanel</value>
+  </data>
+	<data name="Common_Red" xml:space="preserve">
+    <value>Röd</value>
+  </data>
+	<data name="Common_Refresh" xml:space="preserve">
+    <value>Uppdatera</value>
+  </data>
+	<data name="Common_Right" xml:space="preserve">
+    <value>Höger</value>
+  </data>
+	<data name="Common_SelectFile" xml:space="preserve">
+    <value>Välj fil</value>
+  </data>
+	<data name="Common_SortByExt" xml:space="preserve">
+    <value>Typ</value>
+  </data>
+	<data name="Common_SortByExtTitle" xml:space="preserve">
+    <value>Sortera efter filtyp</value>
+  </data>
+	<data name="Common_SortByFilename" xml:space="preserve">
+    <value>Filnamn</value>
+  </data>
+	<data name="Common_SortByFilenameTitle" xml:space="preserve">
+    <value>Sortera Efter Filnamn</value>
+  </data>
+	<data name="Common_SortBySize" xml:space="preserve">
+    <value>Storlek</value>
+  </data>
+	<data name="Common_SortBySizeTitle" xml:space="preserve">
+    <value>Sortera Efter Storlek</value>
+  </data>
+	<data name="Common_TableCss" xml:space="preserve">
+    <value>Tabell CSS</value>
+  </data>
+	<data name="Common_Target" xml:space="preserve">
+    <value>Mål</value>
+  </data>
+	<data name="Common_TargetBlank" xml:space="preserve">
+    <value>Nytt Fönster</value>
+  </data>
+	<data name="Common_TargetMedia" xml:space="preserve">
+    <value>Mediepanelen</value>
+  </data>
+	<data name="Common_TargetParent" xml:space="preserve">
+    <value>Överordnat Fönster</value>
+  </data>
+	<data name="Common_TargetSearch" xml:space="preserve">
+    <value>Sök Yta</value>
+  </data>
+	<data name="Common_TargetSelf" xml:space="preserve">
+    <value>Samma Fönster</value>
+  </data>
+	<data name="Common_TargetTop" xml:space="preserve">
+    <value>Webbläsarfönster</value>
+  </data>
+	<data name="Common_Top" xml:space="preserve">
+    <value>Topp</value>
+  </data>
+	<data name="Common_Up" xml:space="preserve">
+    <value>Upp</value>
+  </data>
+	<data name="Common_Upload" xml:space="preserve">
+    <value>Ladda Upp</value>
+  </data>
+	<data name="Common_UploadFile" xml:space="preserve">
+    <value>Ladda Upp Fil</value>
+  </data>
+	<data name="Common_Uploading" xml:space="preserve">
+    <value>Laddar upp...</value>
+  </data>
+	<data name="Common_Url" xml:space="preserve">
+    <value>URL</value>
+  </data>
+	<data name="Common_UseControlVMessage" xml:space="preserve">
+    <value>Vänligen använd CTRL + V för att klistra in under det innehåll du vill ska tas bort</value>
+  </data>
+	<data name="Common_White" xml:space="preserve">
+    <value>Vit</value>
+  </data>
+	<data name="Common_Width" xml:space="preserve">
+    <value>Bredd</value>
+  </data>
+	<data name="Common_Yellow" xml:space="preserve">
+    <value>Gul</value>
+  </data>
+	<data name="Common_Yes" xml:space="preserve">
+    <value>Ja</value>
+  </data>
+	<data name="DocumentManager_DocumentPropertiesLegend" xml:space="preserve">
+    <value>Dokumentegenskaper</value>
+  </data>
+	<data name="DocumentManager_Title" xml:space="preserve">
+    <value>Dokumenthanterare</value>
+  </data>
+	<data name="DocumentManager_Tooltip" xml:space="preserve">
+    <value>Verktygstips</value>
+  </data>
+	<data name="FindAndReplace_CaseSensitive" xml:space="preserve">
+    <value>Skiftlägeskänslig</value>
+  </data>
+	<data name="FindAndReplace_Down" xml:space="preserve">
+    <value>Ner</value>
+  </data>
+	<data name="FindAndReplace_EntireText" xml:space="preserve">
+    <value>Hela texten</value>
+  </data>
+	<data name="FindAndReplace_Find" xml:space="preserve">
+    <value>Hitta</value>
+  </data>
+	<data name="FindAndReplace_FindNext" xml:space="preserve">
+    <value>Sök nästa</value>
+  </data>
+	<data name="FindAndReplace_MatchCase" xml:space="preserve">
+    <value>Matcha skiftläge</value>
+  </data>
+	<data name="FindAndReplace_MatchWholeWords" xml:space="preserve">
+    <value>Matcha hela ord</value>
+  </data>
+	<data name="FindAndReplace_Replace" xml:space="preserve">
+    <value>Ersätt</value>
+  </data>
+	<data name="FindAndReplace_ReplaceAll" xml:space="preserve">
+    <value>Ersätt Alla</value>
+  </data>
+	<data name="FindAndReplace_ReplaceWith" xml:space="preserve">
+    <value>Ersätt Med</value>
+  </data>
+	<data name="FindAndReplace_Search" xml:space="preserve">
+    <value>Sök</value>
+  </data>
+	<data name="FindAndReplace_SearchDirection" xml:space="preserve">
+    <value>Riktning</value>
+  </data>
+	<data name="FindAndReplace_SearchIn" xml:space="preserve">
+    <value>Sök i</value>
+  </data>
+	<data name="FindAndReplace_SearchOptions" xml:space="preserve">
+    <value>Sökalternativ</value>
+  </data>
+	<data name="FindAndReplace_SearchText" xml:space="preserve">
+    <value>Hitta</value>
+  </data>
+	<data name="FindAndReplace_Selection" xml:space="preserve">
+    <value>Urval</value>
+  </data>
+	<data name="FindAndReplace_Title" xml:space="preserve">
+    <value>Sök &amp;amp; ersätt</value>
+  </data>
+	<data name="FlashManager_AlertClassID" xml:space="preserve">
+    <value>Vänligen, ange ett Class-ID!</value>
+  </data>
+	<data name="FlashManager_AlertWidthHeight" xml:space="preserve">
+    <value>Vänligen, ange bredd och höjd på Flash-filen!</value>
+  </data>
+	<data name="FlashManager_Baseline" xml:space="preserve">
+    <value>Baslinje</value>
+  </data>
+	<data name="FlashManager_CenterBottom" xml:space="preserve">
+    <value>Centrerad Botten</value>
+  </data>
+	<data name="FlashManager_CenterCenter" xml:space="preserve">
+    <value>Centrerad Centrerad</value>
+  </data>
+	<data name="FlashManager_CenterTop" xml:space="preserve">
+    <value>Centrerad Topp</value>
+  </data>
+	<data name="FlashManager_Custom" xml:space="preserve">
+    <value>Anpassad</value>
+  </data>
+	<data name="FlashManager_FlashAlign" xml:space="preserve">
+    <value>Flash Justering</value>
+  </data>
+	<data name="FlashManager_FlashMenu" xml:space="preserve">
+    <value>Flash Meny</value>
+  </data>
+	<data name="FlashManager_FlashPropertiesLegend" xml:space="preserve">
+    <value>Flash Filmegenskaper</value>
+  </data>
+	<data name="FlashManager_High" xml:space="preserve">
+    <value>Höjd</value>
+  </data>
+	<data name="FlashManager_HtmlAlign" xml:space="preserve">
+    <value>HTML Justering</value>
+  </data>
+	<data name="FlashManager_Left" xml:space="preserve">
+    <value>Vänster</value>
+  </data>
+	<data name="FlashManager_LeftBottom" xml:space="preserve">
+    <value>Vänstrer Botten</value>
+  </data>
+	<data name="FlashManager_LeftCenter" xml:space="preserve">
+    <value>Vänstrer Centrerad</value>
+  </data>
+	<data name="FlashManager_LeftTop" xml:space="preserve">
+    <value>Vänster Topp</value>
+  </data>
+	<data name="FlashManager_Loop" xml:space="preserve">
+    <value>Loop</value>
+  </data>
+	<data name="FlashManager_Low" xml:space="preserve">
+    <value>Låg</value>
+  </data>
+	<data name="FlashManager_Medium" xml:space="preserve">
+    <value>Medium</value>
+  </data>
+	<data name="FlashManager_Middle" xml:space="preserve">
+    <value>Mitten</value>
+  </data>
+	<data name="FlashManager_Play" xml:space="preserve">
+    <value>Spela</value>
+  </data>
+	<data name="FlashManager_Quality" xml:space="preserve">
+    <value>Kvalitet</value>
+  </data>
+	<data name="FlashManager_Right" xml:space="preserve">
+    <value>Höger</value>
+  </data>
+	<data name="FlashManager_RightBottom" xml:space="preserve">
+    <value>Höger Botten</value>
+  </data>
+	<data name="FlashManager_RightCenter" xml:space="preserve">
+    <value>Höger Centrerad</value>
+  </data>
+	<data name="FlashManager_RightTop" xml:space="preserve">
+    <value>Höger Topp</value>
+  </data>
+	<data name="FlashManager_TextTop" xml:space="preserve">
+    <value>TextTop</value>
+  </data>
+	<data name="FlashManager_Title" xml:space="preserve">
+    <value>Flash hanteraren</value>
+  </data>
+	<data name="FlashManager_Top" xml:space="preserve">
+    <value>Topp</value>
+  </data>
+	<data name="FlashManager_Transparent" xml:space="preserve">
+    <value>Transparent</value>
+  </data>
+	<data name="FormatCodeBlock_DisplayLineNumbers" xml:space="preserve">
+    <value>Visa radnummer</value>
+  </data>
+	<data name="FormatCodeBlock_LanguageCS" xml:space="preserve">
+    <value>C#</value>
+  </data>
+	<data name="FormatCodeBlock_LanguageCss" xml:space="preserve">
+    <value>CSS</value>
+  </data>
+	<data name="FormatCodeBlock_LanguageDelphi" xml:space="preserve">
+    <value>Delphi</value>
+  </data>
+	<data name="FormatCodeBlock_LanguageJavascript" xml:space="preserve">
+    <value>Javascript</value>
+  </data>
+	<data name="FormatCodeBlock_LanguagePhp" xml:space="preserve">
+    <value>Php</value>
+  </data>
+	<data name="FormatCodeBlock_LanguagePython" xml:space="preserve">
+    <value>Python</value>
+  </data>
+	<data name="FormatCodeBlock_LanguageSQL" xml:space="preserve">
+    <value>SQL</value>
+  </data>
+	<data name="FormatCodeBlock_LanguageVB" xml:space="preserve">
+    <value>VB</value>
+  </data>
+	<data name="FormatCodeBlock_LanguageXml" xml:space="preserve">
+    <value>Markup - (x)HTML, XML, ASPX, ...</value>
+  </data>
+	<data name="FormatCodeBlock_MaxSnippetHeight" xml:space="preserve">
+    <value>Max Snippet Height</value>
+  </data>
+	<data name="FormatCodeBlock_MaxSnippetWidth" xml:space="preserve">
+    <value>Max Snippet Width</value>
+  </data>
+	<data name="FormatCodeBlock_PasteSourceCode" xml:space="preserve">
+    <value>Paste source code below</value>
+  </data>
+	<data name="FormatCodeBlock_SelectLanguage" xml:space="preserve">
+    <value>Select Language</value>
+  </data>
+	<data name="ImageEditor_Crop" xml:space="preserve">
+    <value>Beskär</value>
+  </data>
+	<data name="ImageEditor_Flip" xml:space="preserve">
+    <value>Vänd</value>
+  </data>
+	<data name="ImageEditor_FlipBoth" xml:space="preserve">
+    <value>Vänd Båda</value>
+  </data>
+	<data name="ImageEditor_FlipHorizontal" xml:space="preserve">
+    <value>Vänd Horisontellt</value>
+  </data>
+	<data name="ImageEditor_FlipVertical" xml:space="preserve">
+    <value>Vänd Vertikalt</value>
+  </data>
+	<data name="ImageEditor_Opacity" xml:space="preserve">
+    <value>Opacitet</value>
+  </data>
+	<data name="ImageEditor_Resize" xml:space="preserve">
+    <value>Ändra storlek</value>
+  </data>
+	<data name="ImageEditor_Rotate" xml:space="preserve">
+    <value>Rotera</value>
+  </data>
+	<data name="ImageEditor_Save" xml:space="preserve">
+    <value>Spara</value>
+  </data>
+	<data name="ImageEditor_SaveAs" xml:space="preserve">
+    <value>Spara som...</value>
+  </data>
+	<data name="ImageManager_AlertDimensions" xml:space="preserve">
+    <value>Vänligen, ange antingen miniatyrerbildens bredd eller miniatyrbildens höjd.</value>
+  </data>
+	<data name="ImageManager_AlertHeight" xml:space="preserve">
+    <value>Vänligen, ange giltigt bildhöjd.</value>
+  </data>
+	<data name="ImageManager_AlertWidth" xml:space="preserve">
+    <value>Vänligen, ange giltigt bildbredd.</value>
+  </data>
+	<data name="ImageManager_Title" xml:space="preserve">
+    <value>Bildhanterare</value>
+  </data>
+	<data name="ImageMap_AlertDeleteAllAreas" xml:space="preserve">
+    <value>Är du säker på att du vill radera alla ytor.</value>
+  </data>
+	<data name="ImageMap_AlertDeleteArea" xml:space="preserve">
+    <value>Är du säker på att du vill radera denhär ytan.</value>
+  </data>
+	<data name="ImageMap_AreaFieldSet" xml:space="preserve">
+    <value>Ogiltig Ytegenskap. Ange url.</value>
+  </data>
+	<data name="ImageMap_ChooseImage" xml:space="preserve">
+    <value>Välj Bild</value>
+  </data>
+	<data name="ImageMap_Circle" xml:space="preserve">
+    <value>Cirkel</value>
+  </data>
+	<data name="ImageMap_AlertInvalidAreaProperties" xml:space="preserve">
+    <value>Ogiltig Ytegenskap. Ange url.</value>
+  </data>
+	<data name="ImageMap_AlertInvalidProperties" xml:space="preserve">
+    <value>Ogiltig Ytegenskap!</value>
+  </data>
+	<data name="ImageMap_AlertWrongAreaDimensions" xml:space="preserve">
+    <value>Felaktig ytdimensioner har upptäcks. Hoppar över detta område.</value>
+  </data>
+	<data name="ImageMap_Comment" xml:space="preserve">
+    <value>Alt Text</value>
+  </data>
+	<data name="ImageMap_DefineAreaPropertiesLegend" xml:space="preserve">
+    <value>Ange Ytegenskaper</value>
+  </data>
+	<data name="ImageMap_HowToAdd" xml:space="preserve">
+    <value>Du kan dra över bilden för att skapa en ny yta.</value>
+  </data>
+	<data name="ImageMap_NewArea" xml:space="preserve">
+    <value>Ny Yta</value>
+  </data>
+	<data name="ImageMap_Polygon" xml:space="preserve">
+    <value>Polygon</value>
+  </data>
+	<data name="ImageMap_Rectangle" xml:space="preserve">
+    <value>Rektangel</value>
+  </data>
+	<data name="ImageMap_RemoveAllAreas" xml:space="preserve">
+    <value>Ta Bort Alla</value>
+  </data>
+	<data name="ImageMap_RemoveArea" xml:space="preserve">
+    <value>Ta Bort Yta</value>
+  </data>
+	<data name="ImageMap_SelectAreaShape" xml:space="preserve">
+    <value>Välj form på yta</value>
+  </data>
+	<data name="ImageMap_SelectImage" xml:space="preserve">
+    <value>Välj en bild för att skapa en klickbar bildyta.</value>
+  </data>
+	<data name="ImageMap_ShapeAlt" xml:space="preserve">
+    <value>Dra i hörnet längst ner till höger för att ändra storlek på ytan.</value>
+  </data>
+	<data name="ImageMap_UpdateArea" xml:space="preserve">
+    <value>Uppdatera Yta</value>
+  </data>
+	<data name="LinkManager_AnchorTab" xml:space="preserve">
+    <value>Ankare</value>
+  </data>
+	<data name="LinkManager_EmailTab" xml:space="preserve">
+    <value>E-post</value>
+  </data>
+	<data name="LinkManager_ExistingAnchor" xml:space="preserve">
+    <value>Befintligt Ankare</value>
+  </data>
+	<data name="LinkManager_HyperlinkTab" xml:space="preserve">
+    <value>Hyperlänk</value>
+  </data>
+	<data name="LinkManager_LinkAddress" xml:space="preserve">
+    <value>Adress</value>
+  </data>
+	<data name="LinkManager_LinkName" xml:space="preserve">
+    <value>Namn</value>
+  </data>
+	<data name="LinkManager_LinkSubject" xml:space="preserve">
+    <value>Ämne</value>
+  </data>
+	<data name="LinkManager_LinkTarget" xml:space="preserve">
+    <value>Mål</value>
+  </data>
+	<data name="LinkManager_LinkText" xml:space="preserve">
+    <value>Länktext</value>
+  </data>
+	<data name="LinkManager_LinkTooltip" xml:space="preserve">
+    <value>Tooltip</value>
+  </data>
+	<data name="LinkManager_LinkType" xml:space="preserve">
+    <value>Typ</value>
+  </data>
+	<data name="LinkManager_LinkUrl" xml:space="preserve">
+    <value>URL</value>
+  </data>
+	<data name="LinkManager_Other" xml:space="preserve">
+    <value>Övriga</value>
+  </data>
+	<data name="LinkManager_Title" xml:space="preserve">
+    <value>Hyperlänk Hanteraren</value>
+  </data>
+	<data name="MediaManager_AlertValue" xml:space="preserve">
+    <value>Vänligen, ange giltigt värde för egenskapen!</value>
+  </data>
+	<data name="MediaManager_AlertWidthHeight" xml:space="preserve">
+    <value>Vänligen, ange bredd och höjd för mediefilen!</value>
+  </data>
+	<data name="MediaManager_Align" xml:space="preserve">
+    <value>Justera</value>
+  </data>
+	<data name="MediaManager_AllowChangeDisplaySize" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om skärmens storlek kan ändras.</value>
+  </data>
+	<data name="MediaManager_AllowScan" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om scanning är aktiverad för filer som stöder skanning (snabbspolning framåt och bakåt).</value>
+  </data>
+	<data name="MediaManager_AnimationAtStart" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om animeringen körs före den första bilden visas.</value>
+  </data>
+	<data name="MediaManager_Arrowhourglass" xml:space="preserve">
+    <value>Standard pil och litet timglas</value>
+  </data>
+	<data name="MediaManager_AudioStream" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar löpnumret på den aktuella ljudströmmen.</value>
+  </data>
+	<data name="MediaManager_AutoRewind" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om Windows Media Player automatiskt återgår till klippets utgångspunkt när klippet spelats upp eller på annat sätt upphört.</value>
+  </data>
+	<data name="MediaManager_AutoSize" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om Windows Media Player automatiskt ändrar storlek för att tillgodose det aktuella media objektet i den storlek som anges av &lt;B&gt;DisplaySize&lt;/ B&gt; egendom.</value>
+  </data>
+	<data name="MediaManager_AutoStart" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om klippet ska börja spela automatiskt.</value>
+  </data>
+	<data name="MediaManager_Balance" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger stereo balans.</value>
+  </data>
+	<data name="MediaManager_Baseline" xml:space="preserve">
+    <value>Baslinje</value>
+  </data>
+	<data name="MediaManager_Bottom" xml:space="preserve">
+    <value>Botten</value>
+  </data>
+	<data name="MediaManager_Caption2" xml:space="preserve">
+    <value>Bild 2</value>
+  </data>
+	<data name="MediaManager_CCActive" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om dold textning är på eller av.</value>
+  </data>
+	<data name="MediaManager_ClickToPlay" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om användaren kan växla mellan uppspelning på och av genom att klicka på videobild.</value>
+  </data>
+	<data name="MediaManager_ColorKey" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar den färgnyckel som används av DVD-uppspelning.</value>
+  </data>
+	<data name="MediaManager_Crosshair" xml:space="preserve">
+    <value>Crosshair</value>
+  </data>
+	<data name="MediaManager_CurrentAngle" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett nummer som identifierar den aktuella kameravinkeln.</value>
+  </data>
+	<data name="MediaManager_CurrentAudioStream" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger den aktuella ljudströmmen.</value>
+  </data>
+	<data name="MediaManager_CurrentCCService" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger den aktuella tjänst för dold textning.</value>
+  </data>
+	<data name="MediaManager_CurrentMarker" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar det aktuella markörnumret.</value>
+  </data>
+	<data name="MediaManager_CurrentPosition" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar klippets nuvarande position, i sekunder.</value>
+  </data>
+	<data name="MediaManager_CurrentSubpictureStream" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger den aktuella strömmen av subbild.</value>
+  </data>
+	<data name="MediaManager_CursorType" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar typ av markör.</value>
+  </data>
+	<data name="MediaManager_Custom" xml:space="preserve">
+    <value>Anpassad</value>
+  </data>
+	<data name="MediaManager_Customh" xml:space="preserve">
+    <value>Anpassad -</value>
+  </data>
+	<data name="MediaManager_DefaultCaption1" xml:space="preserve">
+    <value>Standard. Bild 1</value>
+  </data>
+	<data name="MediaManager_DefaultFrame" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som representerar standard målet för HTTP-ramen.</value>
+  </data>
+	<data name="MediaManager_Description" xml:space="preserve">
+    <value>&lt;br /&gt;&lt;b&gt;Beskrivning: &lt;/b&gt;</value>
+  </data>
+	<data name="MediaManager_DesignTime" xml:space="preserve">
+    <value>Storlek som anges vid designtillfället</value>
+  </data>
+	<data name="MediaManager_DisplayBackColor" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar bakgrundsfärgen på displayen.</value>
+  </data>
+	<data name="MediaManager_DisplayForeColor" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar förgrundsfärgen på displayen.</value>
+  </data>
+	<data name="MediaManager_DisplayMode" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om statusraden visar aktuell position i sekunder (Ja) eller bildrutor (Nej).</value>
+  </data>
+	<data name="MediaManager_DisplaySize" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar storleken på displayfönstret.</value>
+  </data>
+	<data name="MediaManager_DoublepointedNESW" xml:space="preserve">
+    <value>Dubbelriktad Pil Nordöstra Sydväst</value>
+  </data>
+	<data name="MediaManager_DoublepointedNS" xml:space="preserve">
+    <value>Dubbelriktad Pil Nord Syd</value>
+  </data>
+	<data name="MediaManager_DoublepointedNWSE" xml:space="preserve">
+    <value>Dubbelriktad Pil Nordväst Sydöst</value>
+  </data>
+	<data name="MediaManager_DoublepointedWE" xml:space="preserve">
+    <value>Dubbelriktad Pil Väst Öst</value>
+  </data>
+	<data name="MediaManager_DoubleSourceImage" xml:space="preserve">
+    <value>Double the dimensions of the source image</value>
+  </data>
+	<data name="MediaManager_EnableContextMenu" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om snabbmeny visas när användaren klickar på höger musknapp.</value>
+  </data>
+	<data name="MediaManager_Enabled" xml:space="preserve">
+    <value>This property specifies or retrieves a value indicating whether the Windows Media Player control is enabled.</value>
+  </data>
+	<data name="MediaManager_EnableFullScreenControls" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om Windows Media Player-kontroll är aktiverad.</value>
+  </data>
+	<data name="MediaManager_EnablePositionControls" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om positionen kontroller är aktiverade på kontrollfältet.</value>
+  </data>
+	<data name="MediaManager_EnableTracker" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om trackbar kontroll är aktiverad.</value>
+  </data>
+	<data name="MediaManager_EntireScreen" xml:space="preserve">
+    <value>Storlek på hela skärmen</value>
+  </data>
+	<data name="MediaManager_ExtendedDataServices" xml:space="preserve">
+    <value>Extended Data Services (XDS)</value>
+  </data>
+	<data name="MediaManager_Fourpointedarrow" xml:space="preserve">
+    <value>Fyra pilar i kryss</value>
+  </data>
+	<data name="MediaManager_HalfScreen" xml:space="preserve">
+    <value>Halva storleken av skärmen</value>
+  </data>
+	<data name="MediaManager_HalfSourceImage" xml:space="preserve">
+    <value>B och H är hälften av källbilden</value>
+  </data>
+	<data name="MediaManager_Handpointing" xml:space="preserve">
+    <value>Hand med pekfinger</value>
+  </data>
+	<data name="MediaManager_Hidden" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om spelaren är synlig i webbläsaren.</value>
+  </data>
+	<data name="MediaManager_Hourglass" xml:space="preserve">
+    <value>Timglas</value>
+  </data>
+	<data name="MediaManager_InvokeURLs" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om Windows Media Player automatiskt anropar webbadresser i en webbläsare (URL flipping).</value>
+  </data>
+	<data name="MediaManager_Language" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger den aktuella plats som används för de nationella språkstödet.</value>
+  </data>
+	<data name="MediaManager_MediaPropertiesLegend" xml:space="preserve">
+    <value>Egenskaper För Media</value>
+  </data>
+	<data name="MediaManager_Middle" xml:space="preserve">
+    <value>Mellan</value>
+  </data>
+	<data name="MediaManager_Mute" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar den aktuella läget för avstängt ljud i Windows Media Player.</value>
+  </data>
+	<data name="MediaManager_NA" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+	<data name="MediaManager_None" xml:space="preserve">
+    <value>Inga</value>
+  </data>
+	<data name="MediaManager_Nosubpicturestream" xml:space="preserve">
+    <value>Det finns ingen ström av subbild</value>
+  </data>
+	<data name="MediaManager_PlayCount" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar antalet gånger ett klipp spelas upp</value>
+  </data>
+	<data name="MediaManager_PreviewMode" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om Windows Media Player är i förhandsgranskningsläge.</value>
+  </data>
+	<data name="MediaManager_QuarterScreen" xml:space="preserve">
+    <value>En fjärdedel av storleken på skärmen</value>
+  </data>
+	<data name="MediaManager_Rate" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar bildfrekvens i klippet.</value>
+  </data>
+	<data name="MediaManager_Right" xml:space="preserve">
+    <value>Höger</value>
+  </data>
+	<data name="MediaManager_Samesize" xml:space="preserve">
+    <value>Same size as the source image</value>
+  </data>
+	<data name="MediaManager_SelectionEnd" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar tiden inom det aktuella klippet där uppspelningen kommer att sluta. Den här egenskapen kan inte ställas in eller hämtas förrän &lt;B&gt;ReadyState&lt;/ B&gt; egenskapen (read-only) har värdet 4.</value>
+  </data>
+	<data name="MediaManager_SelectionStart" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar tiden inom det aktuella klippet där uppspelningen kommer starta.</value>
+  </data>
+	<data name="MediaManager_SelectProperty" xml:space="preserve">
+    <value>Välj Egenskap</value>
+  </data>
+	<data name="MediaManager_SendErrorEvents" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om Windows Media Player skickar indikerar om fel.</value>
+  </data>
+	<data name="MediaManager_SendKeyboardEvents" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om Windows Media Player skickar tangentbords händelser.</value>
+  </data>
+	<data name="MediaManager_SendMouseClickEvents" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om Windows Media Player skickar händelser om musklick.</value>
+  </data>
+	<data name="MediaManager_SendMouseMoveEvents" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om Windows Media Player skickar händelser om musrörelse.</value>
+  </data>
+	<data name="MediaManager_SendOpenStateChangeEvents" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om Windows Media Player skickar händelser om öppet tillstånd förändras.</value>
+  </data>
+	<data name="MediaManager_SendPlayStateChangeEvents" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om Windows Media Player skickar spela händelser om tillståndet förändras.</value>
+  </data>
+	<data name="MediaManager_SendWarningEvents" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om Windows Media Player skickar varnings händelser.</value>
+  </data>
+	<data name="MediaManager_ShowAudioControls" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om ljudreglagen visas i kontrollfältet.</value>
+  </data>
+	<data name="MediaManager_ShowCaptioning" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om området för dold textning är synligt och textning för hörselskadade är aktiverad.</value>
+  </data>
+	<data name="MediaManager_ShowControls" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om kontrollfältet är synlig.</value>
+  </data>
+	<data name="MediaManager_ShowDisplay" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om displayen är synlig.</value>
+  </data>
+	<data name="MediaManager_ShowGotoBar" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om området för Go To baren är synlig.</value>
+  </data>
+	<data name="MediaManager_ShowPositionControls" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om positionens kontrollerna visas i kontrollfältet.</value>
+  </data>
+	<data name="MediaManager_ShowStatusBar" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om statusraden är synlig.</value>
+  </data>
+	<data name="MediaManager_ShowTracker" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om området för trackbar är synlig.</value>
+  </data>
+	<data name="MediaManager_SixteenthScreen" xml:space="preserve">
+    <value>En sextondel av skärmes storlek</value>
+  </data>
+	<data name="MediaManager_SlashedCircle" xml:space="preserve">
+    <value>Kryssad cirkel</value>
+  </data>
+	<data name="MediaManager_Standardarrow" xml:space="preserve">
+    <value>Standard Pil</value>
+  </data>
+	<data name="MediaManager_Streamisvalid" xml:space="preserve">
+    <value>Strömmen Är Giltigt</value>
+  </data>
+	<data name="MediaManager_SubpictureOn" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om området för subbild visas.</value>
+  </data>
+	<data name="MediaManager_Text1" xml:space="preserve">
+    <value>Text1</value>
+  </data>
+	<data name="MediaManager_Text2" xml:space="preserve">
+    <value>Text2</value>
+  </data>
+	<data name="MediaManager_TextIbeam" xml:space="preserve">
+    <value>Text textmarkör</value>
+  </data>
+	<data name="MediaManager_TextTop" xml:space="preserve">
+    <value>Överst i text</value>
+  </data>
+	<data name="MediaManager_Title" xml:space="preserve">
+    <value>Mediahanterare</value>
+  </data>
+	<data name="MediaManager_TransparentAtStart" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om området för Windows Media Player är transparent innan uppspelningen startar och efter avslutad uppspelning</value>
+  </data>
+	<data name="MediaManager_ValidateAudio" xml:space="preserve">
+    <value>Vänligen ange ett värde från noll till sju som visar den aktuella ljudström eller 0xFFFFFFFF om ingen ström är vald.</value>
+  </data>
+	<data name="MediaManager_ValidateLCID" xml:space="preserve">
+    <value>Vänligen, ange ett numeriskt värde som motsvarar en LCID identifiering av plats för nationellt språkstödet.</value>
+  </data>
+	<data name="MediaManager_ValidateNumber" xml:space="preserve">
+    <value>Vänligen, skriv bara numeriska värden.</value>
+  </data>
+	<data name="MediaManager_ValidateNumber10" xml:space="preserve">
+    <value>Vänligen, ange ett värde mellan –10.00 till 10.00.</value>
+  </data>
+	<data name="MediaManager_ValidateNumber10000" xml:space="preserve">
+    <value>Vänligen, ange ett värde mellan –10,000 till 10,000.</value>
+  </data>
+	<data name="MediaManager_ValidateNumberHex" xml:space="preserve">
+    <value>Vänligen, ange ett hexadecimalt värde.</value>
+  </data>
+	<data name="MediaManager_Value" xml:space="preserve">
+    <value>Värde</value>
+  </data>
+	<data name="MediaManager_Verticalarrow" xml:space="preserve">
+    <value>Vertikal pil</value>
+  </data>
+	<data name="MediaManager_VideoBorder3D" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar ett värde som anger om den tredimensionella effekten för filmens ram är aktiverad.</value>
+  </data>
+	<data name="MediaManager_VideoBorderColor" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar färg på filmens ram.</value>
+  </data>
+	<data name="MediaManager_VideoBorderWidth" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar bredden på filmens ram, i pixlar.</value>
+  </data>
+	<data name="MediaManager_Volume" xml:space="preserve">
+    <value>Den här egenskapen anger eller hämtar volymen i hundradels decibel.</value>
+  </data>
+	<data name="PageProperties_BackColor" xml:space="preserve">
+    <value>Bakgrundsfärg</value>
+  </data>
+	<data name="PageProperties_BaseLocation" xml:space="preserve">
+    <value>Bas Placering</value>
+  </data>
+	<data name="PageProperties_BodyAttributes" xml:space="preserve">
+    <value>Body Attribut</value>
+  </data>
+	<data name="PageProperties_BottomMargin" xml:space="preserve">
+    <value>Nedre Marginal</value>
+  </data>
+	<data name="PageProperties_ClassName" xml:space="preserve">
+    <value>Klass Namn</value>
+  </data>
+	<data name="PageProperties_Description" xml:space="preserve">
+    <value>Beskrivning</value>
+  </data>
+	<data name="PageProperties_Keywords" xml:space="preserve">
+    <value>Nyckelord</value>
+  </data>
+	<data name="PageProperties_LeftMargin" xml:space="preserve">
+    <value>Vänstermarginal</value>
+  </data>
+	<data name="PageProperties_PageAttributes" xml:space="preserve">
+    <value>Sidattribut</value>
+  </data>
+	<data name="PageProperties_PageTitle" xml:space="preserve">
+    <value>Sidrubrik</value>
+  </data>
+	<data name="PageProperties_RightMargin" xml:space="preserve">
+    <value>Högermarginal</value>
+  </data>
+	<data name="PageProperties_TopMargin" xml:space="preserve">
+    <value>Övre Marginal</value>
+  </data>
+	<data name="ReservedResource" xml:space="preserve">
+    <value>Vänligen, ta inte bort denna sträng. RadEditor behöver det för att avgöra om en extern resurs-fil finns i App_GlobalResources.</value>
+  </data>
+	<data name="SetImageProperties_Constrain" xml:space="preserve">
+    <value>Bibehåll</value>
+  </data>
+	<data name="SetImageProperties_HorizontalSpacing" xml:space="preserve">
+    <value>Horisontellt Avstånd</value>
+  </data>
+	<data name="SetImageProperties_ImageAlignment" xml:space="preserve">
+    <value>Bildjustering</value>
+  </data>
+	<data name="SetImageProperties_ImageSrc" xml:space="preserve">
+    <value>Bild Src</value>
+  </data>
+	<data name="SetImageProperties_LongDescription" xml:space="preserve">
+    <value>Lång Beskrivning</value>
+  </data>
+	<data name="SetImageProperties_Title" xml:space="preserve">
+    <value>Bildegenskaper</value>
+  </data>
+	<data name="SetImageProperties_VerticalSpacing" xml:space="preserve">
+    <value>Vertikalt Avstånd</value>
+  </data>
+	<data name="TableWizard_AddHexColor" xml:space="preserve">
+    <value>Lägg Till Hex Färg...</value>
+  </data>
+	<data name="TableWizard_Additional" xml:space="preserve">
+    <value>Ytterligare</value>
+  </data>
+	<data name="TableWizard_Alignment" xml:space="preserve">
+    <value>Justering</value>
+  </data>
+	<data name="TableWizard_AllFourSides" xml:space="preserve">
+    <value>Alla fyra sidorna</value>
+  </data>
+	<data name="TableWizard_AllRowsAndColomns" xml:space="preserve">
+    <value>Alla rader och kolumner</value>
+  </data>
+	<data name="TableWizard_AssociateCellsWithHeaders" xml:space="preserve">
+    <value>Associerar celler med rubriker</value>
+  </data>
+	<data name="TableWizard_Baseline" xml:space="preserve">
+    <value>Baslinje</value>
+  </data>
+	<data name="TableWizard_Betweenall" xml:space="preserve">
+    <value>Mellan alla rader och kolumner</value>
+  </data>
+	<data name="TableWizard_BetweenColumns" xml:space="preserve">
+    <value>Mellan kolumner</value>
+  </data>
+	<data name="TableWizard_Betweengroup" xml:space="preserve">
+    <value>Mellan rad och kolumngrupp</value>
+  </data>
+	<data name="TableWizard_BetweenRows" xml:space="preserve">
+    <value>Mellan rader</value>
+  </data>
+	<data name="TableWizard_Border" xml:space="preserve">
+    <value>Kantlinje</value>
+  </data>
+	<data name="TableWizard_Bottom" xml:space="preserve">
+    <value>Nederst</value>
+  </data>
+	<data name="TableWizard_BottomSide" xml:space="preserve">
+    <value>Enbart nederst</value>
+  </data>
+	<data name="TableWizard_Caption" xml:space="preserve">
+    <value>Bildtext</value>
+  </data>
+	<data name="TableWizard_CaptionAlign" xml:space="preserve">
+    <value>Bildtext Justering</value>
+  </data>
+	<data name="TableWizard_CellPadding" xml:space="preserve">
+    <value>Cell Padding</value>
+  </data>
+	<data name="TableWizard_CellSpacing" xml:space="preserve">
+    <value>Cell Spacing</value>
+  </data>
+	<data name="TableWizard_Center" xml:space="preserve">
+    <value>Center</value>
+  </data>
+	<data name="TableWizard_Columns" xml:space="preserve">
+    <value>Kolumner</value>
+  </data>
+	<data name="TableWizard_ColumnSettings" xml:space="preserve">
+    <value>Antal Kolumner och Spännvidd</value>
+  </data>
+	<data name="TableWizard_ColumnSpan" xml:space="preserve">
+    <value>Kolumn Spännvidd</value>
+  </data>
+	<data name="TableWizard_Content" xml:space="preserve">
+    <value>Innehåll</value>
+  </data>
+	<data name="TableWizard_ContentAlignment" xml:space="preserve">
+    <value>Justering av innehåll</value>
+  </data>
+	<data name="TableWizard_Custom" xml:space="preserve">
+    <value>Anpassad</value>
+  </data>
+	<data name="TableWizard_Customh" xml:space="preserve">
+    <value>Anpassad -</value>
+  </data>
+	<data name="TableWizard_Dimensions" xml:space="preserve">
+    <value>Dimensioner</value>
+  </data>
+	<data name="TableWizard_Frame" xml:space="preserve">
+    <value>Ram</value>
+  </data>
+	<data name="TableWizard_HeadingColumns" xml:space="preserve">
+    <value>Rubrik kolumner</value>
+  </data>
+	<data name="TableWizard_HeadingRows" xml:space="preserve">
+    <value>Rubrik Rader</value>
+  </data>
+	<data name="TableWizard_HeadingsLabel" xml:space="preserve">
+    <value>Rubriker</value>
+  </data>
+	<data name="TableWizard_Horizontal" xml:space="preserve">
+    <value>Horisontell</value>
+  </data>
+	<data name="TableWizard_InvalidCellHeight" xml:space="preserve">
+    <value>Ogiltig cell höjd.</value>
+  </data>
+	<data name="TableWizard_InvalidCellWidth" xml:space="preserve">
+    <value>Ogiltig cell bredd.</value>
+  </data>
+	<data name="TableWizard_InvalidTableHeight" xml:space="preserve">
+    <value>Ogiltig tabellhöjd.</value>
+  </data>
+	<data name="TableWizard_InvalidTableWidth" xml:space="preserve">
+    <value>Ogiltig tabellbredd.</value>
+  </data>
+	<data name="TableWizard_Layout" xml:space="preserve">
+    <value>Layout</value>
+  </data>
+	<data name="TableWizard_LeftAndRightSide" xml:space="preserve">
+    <value>Endast höger och vänster sida</value>
+  </data>
+	<data name="TableWizard_LeftSide" xml:space="preserve">
+    <value>Vänster sida</value>
+  </data>
+	<data name="TableWizard_Middle" xml:space="preserve">
+    <value>Mellan</value>
+  </data>
+	<data name="TableWizard_NoBorders" xml:space="preserve">
+    <value>Ingen kantlinje</value>
+  </data>
+	<data name="TableWizard_NoInteriorBorders" xml:space="preserve">
+    <value>Ingen inre kantlinje</value>
+  </data>
+	<data name="TableWizard_NoTextWrapping" xml:space="preserve">
+    <value>Inget radbyte för text</value>
+  </data>
+	<data name="TableWizard_NoWrapping" xml:space="preserve">
+    <value>Inget radbyte</value>
+  </data>
+	<data name="TableWizard_OtherOptionsLabel" xml:space="preserve">
+    <value>Andra Alternativ</value>
+  </data>
+	<data name="TableWizard_PixelsOrPercents" xml:space="preserve">
+    <value>pixlar, %</value>
+  </data>
+	<data name="TableWizard_PromptColor" xml:space="preserve">
+    <value>Vänligen ge anpassad färg i HEX värde</value>
+  </data>
+	<data name="TableWizard_Right" xml:space="preserve">
+    <value>Höger</value>
+  </data>
+	<data name="TableWizard_RightSide" xml:space="preserve">
+    <value>Endast höger sida</value>
+  </data>
+	<data name="TableWizard_Rows" xml:space="preserve">
+    <value>Rader</value>
+  </data>
+	<data name="TableWizard_RowSettings" xml:space="preserve">
+    <value>Rad Antal Rad Spännvidd</value>
+  </data>
+	<data name="TableWizard_RowSpan" xml:space="preserve">
+    <value>Rad Spännvidd</value>
+  </data>
+	<data name="TableWizard_Size" xml:space="preserve">
+    <value>Storlek</value>
+  </data>
+	<data name="TableWizard_Summary" xml:space="preserve">
+    <value>Sammanfattning</value>
+  </data>
+	<data name="TableWizard_Tab1HeaderText" xml:space="preserve">
+    <value>Tabelldesign</value>
+  </data>
+	<data name="TableWizard_Tab2HeaderText" xml:space="preserve">
+    <value>Tabellegenskaper</value>
+  </data>
+	<data name="TableWizard_Tab3HeaderText" xml:space="preserve">
+    <value>Cellegenskaper</value>
+  </data>
+	<data name="TableWizard_Tab4HeaderText" xml:space="preserve">
+    <value>Tillgänglighet</value>
+  </data>
+	<data name="TableWizard_TableBorderControlSizeOverflow" xml:space="preserve">
+    <value>Du försöker ställa in storlek för kantlinje till större värde än max (1000). Det kommer att sättas till 1000.</value>
+  </data>
+	<data name="TableWizard_TableControls" xml:space="preserve">
+    <value>Tabell Reglage</value>
+  </data>
+	<data name="TableWizard_TableDesignPreviewLabel" xml:space="preserve">
+    <value>Förhandsgranska tabelldesign</value>
+  </data>
+	<data name="TableWizard_Title" xml:space="preserve">
+    <value>Tabellguiden</value>
+  </data>
+	<data name="TableWizard_TopAndBottomSide" xml:space="preserve">
+    <value>Endast överst och underst</value>
+  </data>
+	<data name="TableWizard_TopSide" xml:space="preserve">
+    <value>Endast överst</value>
+  </data>
+	<data name="TableWizard_UseColor" xml:space="preserve">
+    <value>Använd färg</value>
+  </data>
+	<data name="TableWizard_Vertical" xml:space="preserve">
+    <value>Vertikal</value>
+  </data>
+	<data name="Common_Rename" xml:space="preserve">
+    <value>Byt namn</value>
+  </data>
+	<data name="Common_Add" xml:space="preserve">
+    <value>Lägg till</value>
+  </data>
+	<data name="Common_Clear" xml:space="preserve">
+    <value>Rensa</value>
+  </data>
+	<data name="Common_Remove" xml:space="preserve">
+    <value>Ta bort</value>
+  </data>
+	<data name="Common_Select" xml:space="preserve">
+    <value>Välj</value>
+  </data>
+	<data name="Common_Open" xml:space="preserve">
+    <value>Öppna</value>
+  </data>
+	<data name="SilverlightManager_AutoUpgrade" xml:space="preserve">
+    <value>Automatisk uppgradering</value>
+  </data>
+	<data name="SilverlightManager_EnableHtmlAccess" xml:space="preserve">
+    <value>Aktivera HTML Åtkomst</value>
+  </data>
+	<data name="SilverlightManager_MinVersion" xml:space="preserve">
+    <value>Min Körtidsversion</value>
+  </data>
+	<data name="SilverlightManager_Windowless" xml:space="preserve">
+    <value>Fönsterlös</value>
+  </data>
+	<data name="Common_StyleBuilder" xml:space="preserve">
+    <value>Stil Utformare</value>
+  </data>
+	<data name="TableWizard_AccessibilityOptions" xml:space="preserve">
+    <value>Alternativ För Hjälpmedel</value>
+  </data>
+	<data name="TableWizard_ApplySpecialFormatsTo" xml:space="preserve">
+    <value>Använda särskilda format till</value>
+  </data>
+	<data name="TableWizard_FirstColumn" xml:space="preserve">
+    <value>Första kolumnen</value>
+  </data>
+	<data name="TableWizard_HeadingRow" xml:space="preserve">
+    <value>Rubrik Rad</value>
+  </data>
+	<data name="TableWizard_LastColumn" xml:space="preserve">
+    <value>Sista Kolumnen</value>
+  </data>
+	<data name="TableWizard_LastRow" xml:space="preserve">
+    <value>Sista Raden</value>
+  </data>
+	<data name="TableWizard_NoCSSClassLayout" xml:space="preserve">
+    <value>Ingen CSS Class Layout</value>
+  </data>
+	<data name="FindAndReplace_AllReplaced" xml:space="preserve">
+    <value>{0} förekomster i texten har ersatts!</value>
+  </data>
+	<data name="FindAndReplace_NotFound" xml:space="preserve">
+    <value>Söksträngen hittades inte.</value>
+  </data>
+	<data name="FindAndReplace_NotSupported" xml:space="preserve">
+    <value>Sökfunktionen stöds inte av den här webbläsaren!</value>
+  </data>
+	<data name="Common_Forward" xml:space="preserve">
+    <value>Framåt</value>
+  </data>
+	<data name="Common_ApplyClass" xml:space="preserve">
+    <value>Använd Class</value>
+  </data>
+	<data name="Common_ClearClass" xml:space="preserve">
+    <value>Rensa Class</value>
+  </data>
+	<data name="Common_Decrease" xml:space="preserve">
+    <value>Minska</value>
+  </data>
+	<data name="Common_Increase" xml:space="preserve">
+    <value>Öka</value>
+  </data>
+	<data name="Common_GridPagerText" xml:space="preserve">
+    <value>{4} Sida &lt;strong&gt;{0}&lt;/strong&gt; av &lt;strong&gt;{1}&lt;/strong&gt;. Artikel &lt;strong&gt;{2}&lt;/strong&gt; till &lt;strong&gt;{3}&lt;/strong&gt; av &lt;strong&gt;{5}&lt;/strong&gt;</value>
+  </data>
+	<data name="Common_GridSortedAscToolTip" xml:space="preserve">
+    <value>Sortera stigande</value>
+  </data>
+	<data name="Common_GridSortedDescToolTip" xml:space="preserve">
+    <value>Sortera fallande</value>
+  </data>
+	<data name="Common_GridSortToolTip" xml:space="preserve">
+    <value>Klicka här för att sortera</value>
+  </data>
+	<data name="Common_PasteHtmlMessage" xml:space="preserve">
+		<value>Vänligen infoga HTML-innehållet som du vill klistra in</value>
+	</data>
+	<data name="ImageEditor_Reset" xml:space="preserve">
+		<value>Återställ Bild</value>
+	</data>
+	<data name="Common_ActualSize" xml:space="preserve">
+		<value>Verklig storlek</value>
+	</data>
+	<data name="Common_BestFit" xml:space="preserve">
+		<value>Bästa Passning</value>
+	</data>
+	<data name="Common_ZoomIn" xml:space="preserve">
+		<value>Zooma In</value>
+	</data>
+	<data name="Common_ZoomOut" xml:space="preserve">
+		<value>Zooma Ut</value>
+	</data>
+	<data name="Common_AddCustomColor" xml:space="preserve">
+		<value>Lägg Till Egen Färg...</value>
+	</data>
+	<data name="StyleBuilder_BackgroundTab" xml:space="preserve">
+		<value>Bakgrund</value>
+	</data>
+	<data name="TableWizard_SelectAll" xml:space="preserve">
+		<value>Markera allt</value>
+	</data>
+	<data name="Common_Margin" xml:space="preserve">
+		<value>Marginal</value>
+	</data>
+	<data name="SetImageProperties_LinkToOriginal" xml:space="preserve">
+		<value>Länka till original</value>
+	</data>
+	<data name="SetImageProperties_OpenInNewWindow" xml:space="preserve">
+		<value>Öppna i nytt fönster</value>
+	</data>
+	<data name="Common_AllProperties" xml:space="preserve">
+		<value>Alla egenskaper...</value>
+	</data>
+	<data name="Common_Copy" xml:space="preserve">
+		<value>Kopiera</value>
+	</data>
+	<data name="StyleBuilder_Absolute" xml:space="preserve">
+		<value>Absolut</value>
+	</data>
+	<data name="StyleBuilder_Bold" xml:space="preserve">
+		<value>Fet</value>
+	</data>
+	<data name="StyleBuilder_Bolder" xml:space="preserve">
+		<value>Fetare</value>
+	</data>
+	<data name="StyleBuilder_BorderTab" xml:space="preserve">
+		<value>Kant</value>
+	</data>
+	<data name="StyleBuilder_Capitalization" xml:space="preserve">
+		<value>Capitalization</value>
+	</data>
+	<data name="StyleBuilder_Capitalize" xml:space="preserve">
+		<value>Capitalize</value>
+	</data>
+	<data name="StyleBuilder_Color" xml:space="preserve">
+		<value>Färg</value>
+	</data>
+	<data name="StyleBuilder_EdgesTab" xml:space="preserve">
+		<value>Kanter</value>
+	</data>
+	<data name="StyleBuilder_Effects" xml:space="preserve">
+		<value>Effekter</value>
+	</data>
+	<data name="StyleBuilder_FontAttributes" xml:space="preserve">
+		<value>Typsnittsattribut</value>
+	</data>
+	<data name="StyleBuilder_FontFamily" xml:space="preserve">
+		<value>Familj</value>
+	</data>
+	<data name="StyleBuilder_FontName" xml:space="preserve">
+		<value>Typsnittsnamn</value>
+	</data>
+	<data name="StyleBuilder_FontSize" xml:space="preserve">
+		<value>Storlek</value>
+	</data>
+	<data name="StyleBuilder_FontTab" xml:space="preserve">
+		<value>Typsnitt</value>
+	</data>
+	<data name="StyleBuilder_Italics" xml:space="preserve">
+		<value>Kursiv</value>
+	</data>
+	<data name="StyleBuilder_Larger" xml:space="preserve">
+		<value>Större</value>
+	</data>
+	<data name="StyleBuilder_LayoutTab" xml:space="preserve">
+		<value>Layout</value>
+	</data>
+	<data name="StyleBuilder_Lighter" xml:space="preserve">
+		<value>Ljusare</value>
+	</data>
+	<data name="StyleBuilder_ListsTab" xml:space="preserve">
+		<value>Listor</value>
+	</data>
+	<data name="StyleBuilder_Lowercase" xml:space="preserve">
+		<value>Gemener</value>
+	</data>
+	<data name="StyleBuilder_Normal" xml:space="preserve">
+		<value>Normal</value>
+	</data>
+	<data name="StyleBuilder_NotSet" xml:space="preserve">
+		<value>&amp;lt;Ej Inställt&amp;gt;</value>
+	</data>
+	<data name="StyleBuilder_Overline" xml:space="preserve">
+		<value>Överlinje</value>
+	</data>
+	<data name="StyleBuilder_Relative" xml:space="preserve">
+		<value>Relativ</value>
+	</data>
+	<data name="StyleBuilder_SmallCaps" xml:space="preserve">
+		<value>Små bokstäver</value>
+	</data>
+	<data name="StyleBuilder_Smaller" xml:space="preserve">
+		<value>Mindre</value>
+	</data>
+	<data name="StyleBuilder_Specific" xml:space="preserve">
+		<value>Specifik</value>
+	</data>
+	<data name="StyleBuilder_Strikethrough" xml:space="preserve">
+		<value>Genomstruken</value>
+	</data>
+	<data name="StyleBuilder_TextTab" xml:space="preserve">
+		<value>Text</value>
+	</data>
+	<data name="StyleBuilder_Underline" xml:space="preserve">
+		<value>Understruken</value>
+	</data>
+	<data name="StyleBuilder_Uppercase" xml:space="preserve">
+		<value>Versaler</value>
+	</data>
+	<data name="StyleBuilder_Bulleted" xml:space="preserve">
+		<value>Punktlista</value>
+	</data>
+	<data name="StyleBuilder_Bullets" xml:space="preserve">
+		<value>Punkter</value>
+	</data>
+	<data name="StyleBuilder_Circle" xml:space="preserve">
+		<value>Cirkel</value>
+	</data>
+	<data name="StyleBuilder_CustomBullet" xml:space="preserve">
+		<value>Anpassad punkt</value>
+	</data>
+	<data name="StyleBuilder_Disk" xml:space="preserve">
+		<value>Disk</value>
+	</data>
+	<data name="StyleBuilder_Inside" xml:space="preserve">
+		<value>Inuti (Text är inte indragen)</value>
+	</data>
+	<data name="StyleBuilder_Outside" xml:space="preserve">
+		<value>Utanför (texten är indragen innanför)</value>
+	</data>
+	<data name="StyleBuilder_Position" xml:space="preserve">
+		<value>Position</value>
+	</data>
+	<data name="StyleBuilder_Square" xml:space="preserve">
+		<value>Fyrkant</value>
+	</data>
+	<data name="StyleBuilder_Style" xml:space="preserve">
+		<value>Stil</value>
+	</data>
+	<data name="StyleBuilder_UnBulleted" xml:space="preserve">
+		<value>Inte punkter</value>
+	</data>
+	<data name="StyleBuilder_Alignment" xml:space="preserve">
+		<value>Justering</value>
+	</data>
+	<data name="StyleBuilder_AllowFloatingObjects" xml:space="preserve">
+		<value>Tillåt flytande objekt</value>
+	</data>
+	<data name="StyleBuilder_AllowTextToFlow" xml:space="preserve">
+		<value>Tillåt text att flöda</value>
+	</data>
+	<data name="StyleBuilder_AlwaysUseScrollbars" xml:space="preserve">
+		<value>Använd alltid rullningslister</value>
+	</data>
+	<data name="StyleBuilder_Baseline" xml:space="preserve">
+		<value>Baslinje</value>
+	</data>
+	<data name="StyleBuilder_Block" xml:space="preserve">
+		<value>Som ett blockelement</value>
+	</data>
+	<data name="StyleBuilder_Both" xml:space="preserve">
+		<value>Båda</value>
+	</data>
+	<data name="StyleBuilder_Center" xml:space="preserve">
+		<value>Center</value>
+	</data>
+	<data name="StyleBuilder_Clipping" xml:space="preserve">
+		<value>Klippning</value>
+	</data>
+	<data name="StyleBuilder_Collapse" xml:space="preserve">
+		<value>Kollapsa</value>
+	</data>
+	<data name="StyleBuilder_CollapseBorder" xml:space="preserve">
+		<value>Kollapsa kant</value>
+	</data>
+	<data name="StyleBuilder_Collapsed" xml:space="preserve">
+		<value>Kollapsade</value>
+	</data>
+	<data name="StyleBuilder_Content" xml:space="preserve">
+		<value>Innehåll</value>
+	</data>
+	<data name="StyleBuilder_ContentIsClipped" xml:space="preserve">
+		<value>Innehållet är avklippt</value>
+	</data>
+	<data name="StyleBuilder_ContentIsNotClipped" xml:space="preserve">
+		<value>Innehåll är inte avklipp</value>
+	</data>
+	<data name="StyleBuilder_Custom" xml:space="preserve">
+		<value>Anpassad</value>
+	</data>
+	<data name="StyleBuilder_Dashed" xml:space="preserve">
+		<value>Streckad</value>
+	</data>
+	<data name="StyleBuilder_Display" xml:space="preserve">
+		<value>Visa</value>
+	</data>
+	<data name="StyleBuilder_DoNotAllow" xml:space="preserve">
+		<value>Tillåt inte</value>
+	</data>
+	<data name="StyleBuilder_DoNotUseBgrImage" xml:space="preserve">
+		<value>Använd inte bakgrundsbild</value>
+	</data>
+	<data name="StyleBuilder_DontAllowTextOnSides" xml:space="preserve">
+		<value>Tillåt inte text på sidorna</value>
+	</data>
+	<data name="StyleBuilder_Dotted" xml:space="preserve">
+		<value>Prickad</value>
+	</data>
+	<data name="StyleBuilder_DoubleLine" xml:space="preserve">
+		<value>Dubbel linje</value>
+	</data>
+	<data name="StyleBuilder_FixedBackground" xml:space="preserve">
+		<value>Fast bakgrund</value>
+	</data>
+	<data name="StyleBuilder_FlowControl" xml:space="preserve">
+		<value>Flödeskontroll</value>
+	</data>
+	<data name="StyleBuilder_Groove" xml:space="preserve">
+		<value>Räffla</value>
+	</data>
+	<data name="StyleBuilder_Hidden" xml:space="preserve">
+		<value>Dolda</value>
+	</data>
+	<data name="StyleBuilder_Horizontal" xml:space="preserve">
+		<value>Horisontell</value>
+	</data>
+	<data name="StyleBuilder_Image" xml:space="preserve">
+		<value>Bild</value>
+	</data>
+	<data name="StyleBuilder_Indentation" xml:space="preserve">
+		<value>Indrag</value>
+	</data>
+	<data name="StyleBuilder_Inline" xml:space="preserve">
+		<value>Som ett flytande element</value>
+	</data>
+	<data name="StyleBuilder_Inset" xml:space="preserve">
+		<value>Infoga</value>
+	</data>
+	<data name="StyleBuilder_Justification" xml:space="preserve">
+		<value>Berättigande</value>
+	</data>
+	<data name="StyleBuilder_Justify" xml:space="preserve">
+		<value>Rättfärdiga</value>
+	</data>
+	<data name="StyleBuilder_LeftToRight" xml:space="preserve">
+		<value>Vänster till höger</value>
+	</data>
+	<data name="StyleBuilder_Letters" xml:space="preserve">
+		<value>Brev</value>
+	</data>
+	<data name="StyleBuilder_Lines" xml:space="preserve">
+		<value>Linjer</value>
+	</data>
+	<data name="StyleBuilder_Medium" xml:space="preserve">
+		<value>Medium</value>
+	</data>
+	<data name="StyleBuilder_Middle" xml:space="preserve">
+		<value>Mellan</value>
+	</data>
+	<data name="StyleBuilder_OnEitherSide" xml:space="preserve">
+		<value>På ömse sidor</value>
+	</data>
+	<data name="StyleBuilder_OnlyOnLeft" xml:space="preserve">
+		<value>Endast till vänster</value>
+	</data>
+	<data name="StyleBuilder_OnlyOnRight" xml:space="preserve">
+		<value>Endast till höger</value>
+	</data>
+	<data name="StyleBuilder_Outset" xml:space="preserve">
+		<value>Vid början</value>
+	</data>
+	<data name="StyleBuilder_Overflow" xml:space="preserve">
+		<value>Flöda över</value>
+	</data>
+	<data name="StyleBuilder_Padding" xml:space="preserve">
+		<value>Stoppning</value>
+	</data>
+	<data name="StyleBuilder_Ridge" xml:space="preserve">
+		<value>Spaltfyllnad</value>
+	</data>
+	<data name="StyleBuilder_RightToLeft" xml:space="preserve">
+		<value>Höger till vänster</value>
+	</data>
+	<data name="StyleBuilder_SameForAll" xml:space="preserve">
+		<value>Samma för alla</value>
+	</data>
+	<data name="StyleBuilder_Scrolling" xml:space="preserve">
+		<value>Rulla</value>
+	</data>
+	<data name="StyleBuilder_ScrollingBackground" xml:space="preserve">
+		<value>Rullande bakgrund</value>
+	</data>
+	<data name="StyleBuilder_SolidLine" xml:space="preserve">
+		<value>Heldragen linje</value>
+	</data>
+	<data name="StyleBuilder_SpacingBetween" xml:space="preserve">
+		<value>Avstånd mellan</value>
+	</data>
+	<data name="StyleBuilder_Sub" xml:space="preserve">
+		<value>Underkategori</value>
+	</data>
+	<data name="StyleBuilder_Super" xml:space="preserve">
+		<value>Super</value>
+	</data>
+	<data name="StyleBuilder_TextBottom" xml:space="preserve">
+		<value>Text-botten</value>
+	</data>
+	<data name="StyleBuilder_TextDirection" xml:space="preserve">
+		<value>Textriktning</value>
+	</data>
+	<data name="StyleBuilder_TextFlow" xml:space="preserve">
+		<value>Textflöde</value>
+	</data>
+	<data name="StyleBuilder_TextTop" xml:space="preserve">
+		<value>Text-topp</value>
+	</data>
+	<data name="StyleBuilder_Thick" xml:space="preserve">
+		<value>Tjock</value>
+	</data>
+	<data name="StyleBuilder_Thin" xml:space="preserve">
+		<value>Tunn</value>
+	</data>
+	<data name="StyleBuilder_Tiling" xml:space="preserve">
+		<value>Plattor</value>
+	</data>
+	<data name="StyleBuilder_ToTheLeft" xml:space="preserve">
+		<value>Till vänster</value>
+	</data>
+	<data name="StyleBuilder_ToTheRight" xml:space="preserve">
+		<value>Till höger</value>
+	</data>
+	<data name="StyleBuilder_UseScrollbarsIfNeeded" xml:space="preserve">
+		<value>Använd rullningslister om det behövs</value>
+	</data>
+	<data name="StyleBuilder_Vertical" xml:space="preserve">
+		<value>Vertikal</value>
+	</data>
+	<data name="StyleBuilder_Visibility" xml:space="preserve">
+		<value>Synlighet</value>
+	</data>
+	<data name="StyleBuilder_Visible" xml:space="preserve">
+		<value>Synlig</value>
+	</data>
+	<data name="StyleBuilder_Words" xml:space="preserve">
+		<value>Ord</value>
+	</data>
+	<data name="ImageEditor_AddText" xml:space="preserve">
+		<value>Lägg till text</value>
+	</data>
+	<data name="ImageEditor_Print" xml:space="preserve">
+		<value>Skriv ut bild</value>
+	</data>
+	<data name="ImageEditor_Redo" xml:space="preserve">
+		<value>Gör om</value>
+	</data>
+	<data name="ImageEditor_RotateLeft" xml:space="preserve">
+		<value>Rotera vänster 90 grader</value>
+	</data>
+	<data name="ImageEditor_RotateRight" xml:space="preserve">
+		<value>Rotera höger 90 grader</value>
+	</data>
+	<data name="ImageEditor_Undo" xml:space="preserve">
+		<value>Ångra</value>
+	</data>
+	<data name="ImageEditor_Zoom" xml:space="preserve">
+		<value>Zoom</value>
+	</data>
+	<data name="ImageEditor_AddText_Color" xml:space="preserve">
+		<value>Färg</value>
+	</data>
+	<data name="ImageEditor_AddText_ColorToolTip" xml:space="preserve">
+		<value>Färgen på text att infoga</value>
+	</data>
+	<data name="ImageEditor_AddText_CurrentColorText" xml:space="preserve">
+		<value>(Nuvarande färg är {0})</value>
+	</data>
+	<data name="ImageEditor_AddText_FontFamily" xml:space="preserve">
+		<value>teckensnitt</value>
+	</data>
+	<data name="ImageEditor_AddText_FontFamilyToolTip" xml:space="preserve">
+		<value>Typsnitt på text att infoga</value>
+	</data>
+	<data name="ImageEditor_AddText_FontSize" xml:space="preserve">
+		<value>Typsnittsstorlek</value>
+	</data>
+	<data name="ImageEditor_AddText_FontSizeToolTip" xml:space="preserve">
+		<value>Storleken på text att infoga</value>
+	</data>
+	<data name="ImageEditor_AddText_PickColorToolTip" xml:space="preserve">
+		<value>Välj färg</value>
+	</data>
+	<data name="ImageEditor_AddText_SampleText" xml:space="preserve">
+		<value>Din text här...</value>
+	</data>
+	<data name="ImageEditor_AddText_Title" xml:space="preserve">
+		<value>Infoga text</value>
+	</data>
+	<data name="ImageEditor_Common_Position" xml:space="preserve">
+		<value>Position</value>
+	</data>
+	<data name="ImageEditor_Common_SliderDrag" xml:space="preserve">
+		<value>Dra för att ändra värdet</value>
+	</data>
+	<data name="ImageEditor_Common_SwapWidthHeight" xml:space="preserve">
+		<value>Byt Bredd och Höjd</value>
+	</data>
+	<data name="ImageEditor_Common_X" xml:space="preserve">
+		<value>X</value>
+	</data>
+	<data name="ImageEditor_Common_Y" xml:space="preserve">
+		<value>Y</value>
+	</data>
+	<data name="ImageEditor_Crop_AspectRatio" xml:space="preserve">
+		<value>Bildförhållande</value>
+	</data>
+	<data name="ImageEditor_Crop_AspectRatioToolTip" xml:space="preserve">
+		<value>Välj Bildförhållande</value>
+	</data>
+	<data name="ImageEditor_Crop_Button" xml:space="preserve">
+		<value>Beskär</value>
+	</data>
+	<data name="ImageEditor_Crop_Title" xml:space="preserve">
+		<value>Beskär bild</value>
+	</data>
+	<data name="ImageEditor_Flip_None" xml:space="preserve">
+		<value>Vänd Inga</value>
+	</data>
+	<data name="ImageEditor_Flip_Title" xml:space="preserve">
+		<value>Vänd</value>
+	</data>
+	<data name="ImageEditor_Opacity_TextboxToolTip" xml:space="preserve">
+		<value>Ange ett värde mellan 0 och 100%</value>
+	</data>
+	<data name="ImageEditor_Opacity_Title" xml:space="preserve">
+		<value>Genomskinlighet</value>
+	</data>
+	<data name="ImageEditor_Print_Button" xml:space="preserve">
+		<value>Skriv ut</value>
+	</data>
+	<data name="ImageEditor_Print_Title" xml:space="preserve">
+		<value>Skriv ut bild</value>
+	</data>
+	<data name="ImageEditor_Resize_Button" xml:space="preserve">
+		<value>Ändra storlek</value>
+	</data>
+	<data name="ImageEditor_Resize_Percentage" xml:space="preserve">
+		<value>Procent</value>
+	</data>
+	<data name="ImageEditor_Resize_PercentageToolTip" xml:space="preserve">
+		<value>Procent av ursprunglig bredd x höjd [0,100%]</value>
+	</data>
+	<data name="ImageEditor_Resize_PresetSizes" xml:space="preserve">
+		<value>Förinställd Storlek</value>
+	</data>
+	<data name="ImageEditor_Resize_PresetSizesToolTip" xml:space="preserve">
+		<value>Välj förinställd bredd x höjd</value>
+	</data>
+	<data name="ImageEditor_Resize_Title" xml:space="preserve">
+		<value>Ändra storlek</value>
+	</data>
+	<data name="ImageEditor_Rotate_DropDownToolTip" xml:space="preserve">
+		<value>Välja en rotationsvinkel</value>
+	</data>
+	<data name="ImageEditor_Rotate_Title" xml:space="preserve">
+		<value>Rotera</value>
+	</data>
+	<data name="ImageEditor_Save_ClientRadioText" xml:space="preserve">
+		<value>Ladda ner bild</value>
+	</data>
+	<data name="ImageEditor_Save_FileNameLabel" xml:space="preserve">
+		<value>Filnamn</value>
+	</data>
+	<data name="ImageEditor_Save_FileNameToolTip" xml:space="preserve">
+		<value>Ange Filnamn</value>
+	</data>
+	<data name="ImageEditor_Save_ServerRadioText" xml:space="preserve">
+		<value>Spara bild på servern</value>
+	</data>
+	<data name="ImageEditor_Save_Title" xml:space="preserve">
+		<value>Spara bild</value>
+	</data>
+	<data name="ImageEditor_StatusBar_LastAction" xml:space="preserve">
+		<value>Senaste åtgärd</value>
+	</data>
+	<data name="ImageEditor_StatusBar_Position" xml:space="preserve">
+		<value>Pos.</value>
+	</data>
+	<data name="ImageEditor_StatusBar_Size" xml:space="preserve">
+		<value>Storlek</value>
+	</data>
+	<data name="ImageEditor_StatusBar_Zoom" xml:space="preserve">
+		<value>Zoom</value>
+	</data>
+	<data name="ImageEditor_Zoom_ActualSizeToolTip" xml:space="preserve">
+		<value>Zooma till 100%</value>
+	</data>
+	<data name="ImageEditor_Zoom_BestFitToolTip" xml:space="preserve">
+		<value>Passa bilden i redigerbart område</value>
+	</data>
+	<data name="ImageEditor_Zoom_TextboxToolTip" xml:space="preserve">
+		<value>Ange ett värde mellan 0 och 100%</value>
+	</data>
+	<data name="ImageEditor_Zoom_Title" xml:space="preserve">
+		<value>Zoom</value>
+	</data>
+	<data name="TrackChangesDialog_InitialContent" xml:space="preserve">
+		<value>Ursprungligt innehåll</value>
+	</data>
+	<data name="TrackChangesDialog_TrackChanges" xml:space="preserve">
+		<value>Spåra ändringar</value>
+	</data>
+	<data name="LinkManager_TrackLink.Text" xml:space="preserve">
+		<value>Spåra hur många gånger den här länken klickas</value>
+	</data>
+	<data name="LinkManager_TrackUser.Text" xml:space="preserve">
+		<value>Loggar användaren, datum och tid för varje klick</value>
+	</data>
+</root>

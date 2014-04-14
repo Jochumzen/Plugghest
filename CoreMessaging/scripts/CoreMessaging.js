@@ -12,6 +12,7 @@
     var repliesPageSize = 2;
     var notificationsPageSize = 10;
     var containerElement = null;
+	var refreshInterval = 60000; //refresh inbox status every 1 minute.
 
     function displayMessage(placeholderSelector, message, cssclass) {
         var messageNode = $("<div/>")
@@ -108,7 +109,7 @@
         self.NewThreadCount = ko.observable(data.NewThreadCount);
         self.ThreadCount = ko.observable(data.ThreadCount);
         self.MessageIDName = "messageSelect" + self.ConversationId;
-        self.SenderAvatar = profilePicHandler.replace("{0}", self.SenderUserID).replace("{1}", 32).replace("{2}", 32);
+        self.SenderAvatar = profilePicHandler.replace("{0}", self.SenderUserID).replace("{1}", 64).replace("{2}", 64);
         self.SenderProfileUrl = data.SenderProfileUrl;
         self.MessageAbstract = (self.Body.length < 50) ? self.Body : self.Body.substr(0, 50) + "...";
         self.messageSelected = ko.observable(false);
@@ -139,7 +140,7 @@
         self.NewThreadCount = ko.observable(data.Conversation.NewThreadCount);
         self.Attachments = data.Attachments;
         self.MessageIDName = "messageSelect" + self.ConversationId;
-        self.SenderAvatar = profilePicHandler.replace("{0}", self.SenderUserID).replace("{1}", 32).replace("{2}", 32);
+        self.SenderAvatar = profilePicHandler.replace("{0}", self.SenderUserID).replace("{1}", 64).replace("{2}", 64);
         self.SenderProfileUrl = data.Conversation.SenderProfileUrl;
         self.CreatedOnDate = data.Conversation.DisplayDate;
 
@@ -201,6 +202,9 @@
 
         //use an observable value to show/hide the replies list
         self.showReplies = ko.observable(false);
+        
+        //use an observable value to decide if a reply is possible
+        self.replyHasRecipients = ko.observable(true);
 
         self.threadSubject = ko.observable('');
         self.threadTo = ko.observable('');
@@ -275,13 +279,38 @@
             }
         };
 
-        self.fetch_unix_timestamp = function() { return (new Date().getTime().toString().substring(0, 10)); };
+        self.fetch_unix_timestamp = function () { return (new Date().getTime().toString().substring(0, 10)); };
 
         self.sendThreadRequest = function (message) {
             History.pushState({ view: 'messages', action: 'thread', conversationId: message.ConversationId }, "", "?view=messages&action=thread&t=" + self.fetch_unix_timestamp());
         };
 
+        self.checkReplyHasRecipients = function (conversationId) {
+            var returnValue = 0; // If the call fails, just return 0.
+
+            $.ajax({
+                type: "GET",
+                beforeSend: serviceFramework.setModuleHeaders,
+                url: baseServicepath + "CheckReplyHasRecipients",
+                async: false,
+                cache: false,
+                data: { conversationId: conversationId }
+            }).done(function (data) {
+                if ($.type(data) === "number") {
+                    returnValue = data;
+                }
+            });
+
+            if (returnValue == 0) {
+                self.replyHasRecipients(false);
+                displayMessage("#dnnCoreMessaging", settings.replyHasNoRecipientsText, "dnnFormWarning");
+            } else {
+                self.replyHasRecipients(true);
+            }
+        };
+        
         self.sendThreadRequestHandler = function (conversationId, afterMessageId) {
+            self.checkReplyHasRecipients(conversationId);
             $.ajax({
                 type: "GET",
                 url: baseServicepath + "Thread",
@@ -328,7 +357,7 @@
         self.getReplies = function (message) {
             self.highlightThreads = false;
             if (message.Read() !== true) {
-                self.markAsRead(message);    
+                self.markAsRead(message);
             }
             self.conversationRead(true);
             self.messagethreads([]);
@@ -666,12 +695,40 @@
                 data: { NotificationId: action.NotificationId }
             }).done(function (data) {
                 if (data.Result === "success") {
+
                     var notificationToRemove = ko.utils.arrayFirst(self.notifications(), function (notification) {
                         return notification.NotificationId === action.NotificationId;
                     });
+
                     self.notifications.remove(notificationToRemove);
+
+                    //remove notification from the userControl bar
+
+                    var notifications = $("#dnn_dnnUser_notificationLink").children("span");
+
+                    if (notifications) {
+                        var totalNotificationsTxt = notifications.text();
+
+                        if (totalNotificationsTxt != "") {
+                            var totalNotifications = parseInt(totalNotificationsTxt);
+                            totalNotifications--;
+
+                            if (totalNotifications > 0) {
+                                notifications.text(totalNotifications);
+                            }
+                            else {
+                                notifications.text("");
+                            }
+                        }
+                    }
+
+
                     self.TotalNotifications(self.TotalNotifications() - 1);
                     displayMessage("#dnnCoreNotification", settings.actionPerformedText, "dnnFormSuccess");
+                    
+                    if (data.Link) {
+                        location.href = data.Link;
+                    }
                 }
                 else {
                     if (typeof data.Message !== "undefined" && data.Message != null && data.Message !== '') {
@@ -757,7 +814,7 @@
             var body = $(containerElement + " #replyMessage").val();
             if (body.length == 0) return;
             var conversationId = self.messagethreads()[0].ConversationId;
-
+            displayMessage("#dnnCoreMessaging", "test", "dnnFormWarning");
             $.ajax({
                 type: "POST",
                 url: baseServicepath + "Reply",
@@ -840,6 +897,7 @@
                 }
             });
         };
+	    		
     }
 
     this.init = function (element) {
@@ -850,6 +908,13 @@
         $(element).dnnComposeMessage(composeMessageOptions);
 
         var stateview = getQuerystring('view');
+        //cover case where advanced rewriter used
+        if (stateview == "") {
+            if (document.URL.indexOf("view/notifications") >= 0) {
+                stateview = "notifications";
+            }
+        }
+        
         if (stateview === "notifications") {
             // load initial state of notifications
             $(element + ' #smMainContent').dnnTabs({ selected: 1 });
@@ -859,6 +924,10 @@
             $(element + ' #smMainContent').dnnTabs({ selected: 0 });
             viewModel.myinboxHandler();
         }
+
+	    setInterval(function() {
+	    	viewModel.loadBox(inboxpath);
+	    }, refreshInterval);
 
         viewModel.getTotals();
     };

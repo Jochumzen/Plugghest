@@ -17,7 +17,7 @@
 		<div class="dnnFormItem">
 			  <dnn:label id="lblRedirect" runat="server" resourcekey="lblRedirect" controlname="cboSourcePage" />
 			  <asp:Label ID="lblHomePage" runat="server" CssClass="dnnFixedSizeComboBox" />
-			  <dnn:DnnComboBox ID="cboSourcePage" runat="server" CssClass="dnnFixedSizeComboBox"  OnClientSelectedIndexChanged="cboSourcePageChanged" />
+              <dnn:DnnPageDropDownList ID="cboSourcePage" runat="server" />
 		</div>
 		<div class="dnnFormItem">
 			<dnn:label id="lblRedirectTarget" runat="server" controlname="optRedirectTarget"
@@ -30,13 +30,11 @@
 			</asp:RadioButtonList>
 			<div id="dvTargetPortal" runat="server" class="dnnFormItem">
 				<div class="dnnLabel"></div>
-				<%--<asp:DropDownList ID="cboPortal" runat="server" CssClass="dnnFixedSizeComboBox" />--%>
                 <dnn:DnnComboBox ID="cboPortal" runat="server" CssClass="dnnFixedSizeComboBox" />
 			</div>
 			<div id="dvTargetPage" runat="server" class="dnnFormItem">
 				<div class="dnnLabel"></div>
-				<%--<asp:DropDownList ID="cboTargetPage" runat="server" CssClass="dnnFixedSizeComboBox" />--%>
-                <dnn:DnnComboBox ID="cboTargetPage" runat="server" CssClass="dnnFixedSizeComboBox" />
+                 <dnn:DnnPageDropDownList ID="cboTargetPage" runat="server" />
 			</div>
 			<div id="dvTargetUrl" runat="server" class="dnnFormItem">				
 				<dnn:label id="lblTargetUrl" runat="server" controlname="txtTargetUrl" resourcekey="lblTargetUrl" />
@@ -101,38 +99,8 @@
                             $('#<%= dvTargetUrl.ClientID %>').show();
                         }
                     });
-
-                    $("#<%=cboSourcePage.ClientID %>").change(function (e) {
-                        filterTargetList();
-                    });
-
-                    setTimeout(filterTargetList, 100);
                 });
 
         } (jQuery));
     }
-    function cboSourcePageChanged(sender, e) {
-        filterTargetList();
-    }
-
-    /*filter target page list to hide the select value of source page list*/
-    function filterTargetList() {
-        var sourceList = $find("<%=cboSourcePage.ClientID %>");
-
-        if (sourceList.get_items().length == 0) {
-            return;
-        }
-
-        var sourcePage = sourceList.get_value();
-        var targetList = $find("<%=cboTargetPage.ClientID %>");
-        var options = targetList.get_items();
-        var initialSel = -1;
-        for (var i = 0; i < options.length; i++) {
-            if (options[i].value == sourcePage)
-                options[i].disable();
-            else if (initialSel == -1)
-                initialSel = i;
-        }
-        options[initialSel].select();
-    };
 </script>

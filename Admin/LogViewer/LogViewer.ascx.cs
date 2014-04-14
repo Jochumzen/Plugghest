@@ -1,7 +1,7 @@
 #region Copyright
 // 
 // DotNetNuke® - http://www.dotnetnuke.com
-// Copyright (c) 2002-2012
+// Copyright (c) 2002-2014
 // by DotNetNuke Corporation
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -301,7 +301,14 @@ namespace DotNetNuke.Modules.Admin.LogViewer
             {
 				//display the values in the Panel child controls.
                 var ldi = (LogDetailInfo)objLogProperties[i];
-                str.Append("<p><strong>" + ldi.PropertyName + "</strong>: " + Server.HtmlEncode(ldi.PropertyValue) + "</p>");
+                if (ldi.PropertyName == "Message")
+                {
+                    str.Append("<p><strong>" + ldi.PropertyName + "</strong>:</br><pre>" + Server.HtmlEncode(ldi.PropertyValue) + "</pre></p>");
+                }
+                else
+                {
+                    str.Append("<p><strong>" + ldi.PropertyName + "</strong>:" + Server.HtmlEncode(ldi.PropertyValue) + "</p>");
+                }
             }
             str.Append("<p>" + Localization.GetString("ServerName", LocalResourceFile) + Server.HtmlEncode(objLogInfo.LogServerName) + "</p>");
             return str.ToString();
@@ -498,6 +505,8 @@ namespace DotNetNuke.Modules.Admin.LogViewer
 
                 ctlPagingControlBottom.Visible = false;
             }
+
+			editSettings.Visible = UserInfo.IsSuperUser;
         }
 
         public string EventFilter { get; set; }

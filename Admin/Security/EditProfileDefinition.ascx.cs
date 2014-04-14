@@ -1,7 +1,7 @@
 #region Copyright
 // 
 // DotNetNuke® - http://www.dotnetnuke.com
-// Copyright (c) 2002-2012
+// Copyright (c) 2002-2014
 // by DotNetNuke Corporation
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -31,6 +31,7 @@ using DotNetNuke.Common;
 using DotNetNuke.Common.Lists;
 using DotNetNuke.Common.Utilities;
 using DotNetNuke.Entities.Modules;
+using DotNetNuke.Entities.Portals;
 using DotNetNuke.Entities.Profile;
 using DotNetNuke.Framework;
 using DotNetNuke.Instrumentation;
@@ -56,6 +57,7 @@ namespace DotNetNuke.Modules.Admin.Users
     /// -----------------------------------------------------------------------------
     public partial class EditProfileDefinition : PortalModuleBase
     {
+    	private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof (EditProfileDefinition));
 		#region Private Members
 
         private string ResourceFile = "~/DesktopModules/Admin/Security/App_LocalResources/Profile.ascx";
@@ -204,7 +206,7 @@ namespace DotNetNuke.Modules.Admin.Users
             {
                 lstEntries.Mode = "ListEntries";
                 lstEntries.SelectedKey = PropertyDefinition.PropertyName;
-                lstEntries.ListPortalID = UsersPortalId;
+                lstEntries.ListPortalID = PortalController.GetEffectivePortalId(UsersPortalId);
                 lstEntries.ShowDelete = false;
                 lstEntries.DataBind();
             }
@@ -315,7 +317,7 @@ namespace DotNetNuke.Modules.Admin.Users
             }
             catch (Exception exc) //Module failed to load
             {
-                DnnLog.Error(exc);
+                Logger.Error(exc);
                 UI.Skins.Skin.AddModuleMessage(this, Localization.GetString("Save.ErrorMessage", LocalResourceFile), ModuleMessage.ModuleMessageType.YellowWarning);
             }
         }
@@ -616,5 +618,3 @@ namespace DotNetNuke.Modules.Admin.Users
 		#endregion
     }
 }
-
-

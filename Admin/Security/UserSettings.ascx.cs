@@ -1,7 +1,7 @@
 #region Copyright
 // 
 // DotNetNuke® - http://www.dotnetnuke.com
-// Copyright (c) 2002-2012
+// Copyright (c) 2002-2014
 // by DotNetNuke Corporation
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -29,6 +29,7 @@ using System.Linq;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Portals;
 using DotNetNuke.Entities.Users;
+using DotNetNuke.UI.Skins.Controls;
 using DotNetNuke.Web.UI.WebControls;
 
 using DataCache = DotNetNuke.UI.Utilities.DataCache;
@@ -49,6 +50,12 @@ namespace DesktopModules.Admin.Security
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+
+			if (PortalController.IsMemberOfPortalGroup(PortalId) && PortalController.GetEffectivePortalId(PortalId) != PortalId)
+			{
+				dnnUserSettings.Visible = false;
+				CannotChangeSettingsMessage.Visible = true;
+			}
 
             manageServiceItem.Visible = usersControl.Visible = !IsHostMenu;
         }

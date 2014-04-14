@@ -292,4 +292,13 @@
   <data name="Restore.Confirm" xml:space="preserve">
     <value>Are you sure you want to restore this user?</value>
   </data>
+  <data name="DisplayName.Text" xml:space="preserve">
+    <value>Display Name</value>
+  </data>
+  <data name="PagerPageSize.Text" xml:space="preserve">
+    <value>Items per page:</value>
+  </data>
+  <data name="PagerTextFormat.Text" xml:space="preserve">
+    <value>{4} Page {0} of {1}, users {2} to {3} of {5}</value>
+  </data>
 </root>

@@ -21,38 +21,6 @@
       <name>View.ascx.resx</name>
     </file>
     <file>
-      <path>Images/</path>
-      <name>docs-icn.png</name>
-    </file>
-    <file>
-      <path>Images/</path>
-      <name>join-group-icn.png</name>
-    </file>
-    <file>
-      <path>Images/</path>
-      <name>member-icn.png</name>
-    </file>
-    <file>
-      <path>Images/</path>
-      <name>photo-icn.png</name>
-    </file>
-    <file>
-      <path>Images/</path>
-      <name>posts-icn.png</name>
-    </file>
-    <file>
-      <path>Images/</path>
-      <name>sample-group-profile.jpg</name>
-    </file>
-    <file>
-      <path>Images/</path>
-      <name>Social_Groups_16X16.png</name>
-    </file>
-    <file>
-      <path>Images/</path>
-      <name>Social_Groups_32X32.png</name>
-    </file>
-    <file>
       <path />
       <name>Create.ascx</name>
     </file>
@@ -83,6 +51,38 @@
     <file>
       <path />
       <name>View.ascx</name>
+    </file>
+    <file>
+      <path>Images/</path>
+      <name>docs-icn.png</name>
+    </file>
+    <file>
+      <path>Images/</path>
+      <name>join-group-icn.png</name>
+    </file>
+    <file>
+      <path>Images/</path>
+      <name>member-icn.png</name>
+    </file>
+    <file>
+      <path>Images/</path>
+      <name>photo-icn.png</name>
+    </file>
+    <file>
+      <path>Images/</path>
+      <name>posts-icn.png</name>
+    </file>
+    <file>
+      <path>Images/</path>
+      <name>sample-group-profile.jpg</name>
+    </file>
+    <file>
+      <path>Images/</path>
+      <name>Social_Groups_16X16.png</name>
+    </file>
+    <file>
+      <path>Images/</path>
+      <name>Social_Groups_32X32.png</name>
     </file>
     <file>
       <path />

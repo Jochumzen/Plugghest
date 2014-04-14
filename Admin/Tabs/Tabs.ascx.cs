@@ -1,7 +1,7 @@
-﻿#region Copyright
+#region Copyright
 // 
-// DotNetNuke® - http://www.dotnetnuke.com
-// Copyright (c) 2002-2012
+// DotNetNuke� - http://www.dotnetnuke.com
+// Copyright (c) 2002-2014
 // by DotNetNuke Corporation
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -35,6 +35,8 @@ using DotNetNuke.Entities.Portals;
 using DotNetNuke.Entities.Tabs;
 using DotNetNuke.Entities.Users;
 using DotNetNuke.Framework;
+using DotNetNuke.Framework.JavaScriptLibraries;
+using DotNetNuke.Instrumentation;
 using DotNetNuke.Security;
 using DotNetNuke.Security.Permissions;
 using DotNetNuke.Services.Exceptions;
@@ -51,7 +53,7 @@ using Globals = DotNetNuke.Common.Globals;
 
 namespace DesktopModules.Admin.Tabs
 {
-
+    
     public enum Position
     {
         Child,
@@ -67,6 +69,7 @@ namespace DesktopModules.Admin.Tabs
     /// </remarks>
     public partial class View : PortalModuleBase
     {
+        private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof (View));
 
         #region Private Members
 
@@ -188,6 +191,14 @@ namespace DesktopModules.Admin.Tabs
             }
         }
 
+        private string IconRedirect
+        {
+            get
+            {
+                return ResolveUrl("~/DesktopModules/Admin/Tabs/images/Icon_Redirect.png");
+            }
+        }
+
         private string SelectedNode
         {
             get
@@ -240,7 +251,7 @@ namespace DesktopModules.Admin.Tabs
 
             jQuery.RequestDnnPluginsRegistration();
 
-            ClientAPI.RegisterClientReference(Page, ClientAPI.ClientNamespaceReferences.dnn_dom);
+            JavaScript.RegisterClientReference(Page, ClientAPI.ClientNamespaceReferences.dnn_dom);
             ClientAPI.RegisterClientScriptBlock(Page, "dnn.controls.js");
             dgPermissions.RegisterScriptsForAjaxPanel();
         }
@@ -335,8 +346,8 @@ namespace DesktopModules.Admin.Tabs
             SelectedNode = e.Node.Value;
 
             var tabController = new TabController();
-			var portalId = rblMode.SelectedValue == "H" ? Null.NullInteger : PortalId;
-			var objTab = tabController.GetTab(int.Parse(e.Node.Value), portalId, false);
+            var portalId = rblMode.SelectedValue == "H" ? Null.NullInteger : PortalId;
+            var objTab = tabController.GetTab(int.Parse(e.Node.Value), portalId, false);
 
             switch (e.MenuItem.Value.ToLower())
             {
@@ -480,8 +491,15 @@ namespace DesktopModules.Admin.Tabs
             var objTab = objTabController.GetTab(int.Parse(e.Node.Value), PortalId, false);
             if (objTab != null && TabPermissionController.CanManagePage(objTab))
             {
-                //Check for invalid 
-                if (!IsValidTabName(e.Text) || !IsValidTabPath(objTab, Globals.GenerateTabPath(objTab.ParentId, e.Text)))
+                //Check for invalid
+                string invalidType;
+                if (!TabController.IsValidTabName(e.Text, out invalidType))
+                {
+                    ShowErrorMessage(string.Format(Localization.GetString(invalidType, LocalResourceFile), e.Text));
+                    e.Node.Text = objTab.TabName;
+                    e.Text = objTab.TabName;
+                }
+                else if (!IsValidTabPath(objTab, Globals.GenerateTabPath(objTab.ParentId, e.Text)))
                 {
                     e.Node.Text = objTab.TabName;
                     e.Text = objTab.TabName;
@@ -545,8 +563,10 @@ namespace DesktopModules.Admin.Tabs
             strValue = strValue.Replace(Environment.NewLine, "\n");
             strValue = strValue.Replace("\n" + "\n", "\n").Trim();
 
-            if (!IsValidTabName(strValue))
+            string invalidType;
+            if (!TabController.IsValidTabName(strValue, out invalidType))
             {
+                ShowErrorMessage(string.Format(Localization.GetString(invalidType, LocalResourceFile), strValue));
                 return;
             }
 
@@ -558,16 +578,11 @@ namespace DesktopModules.Admin.Tabs
 
             foreach (var strLine in pages)
             {
-                var oTab = new TabInfo { TabName = strLine };
-                if (strLine.StartsWith(">"))
-                {
-                    oTab.Level = strLine.LastIndexOf(">", StringComparison.Ordinal) + 1;
-                }
-                else
-                {
-                    oTab.Level = 0;
-                }
-                tabs.Add(oTab);
+                tabs.Add(new TabInfo
+                            {
+                                TabName = Regex.Replace(strLine, ">*(.*)", "${1}"),
+                                Level = strLine.LastIndexOf(">", StringComparison.Ordinal) + 1
+                            });
             }
 
             var currentIndex = -1;
@@ -577,14 +592,23 @@ namespace DesktopModules.Admin.Tabs
 
                 try
                 {
-                    oTab.TabID = oTab.TabName.StartsWith(">") == false
-                                     ? CreateTabFromParent(rootTab, oTab.TabName, parentId)
-                                     : CreateTabFromParent(rootTab, oTab.TabName.Replace(">", ""), GetParentTabId(tabs, currentIndex, oTab.Level - 1));
+                    if (oTab.Level == 0)
+                    {
+                        oTab.TabID = CreateTabFromParent(rootTab, oTab.TabName, parentId);
+                    }
+                    else
+                    {
+                        var parentTabId = GetParentTabId(tabs, currentIndex, oTab.Level - 1);
+                        if (parentTabId != Null.NullInteger)
+                        {
+                            oTab.TabID = CreateTabFromParent(rootTab, oTab.TabName, parentTabId);
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {
                     ShowErrorMessage(ex.ToString());
-                    //Instrumentation.DnnLog.Error(ex); --this code shows unexpected results.
+                    //Instrumentation.Logger.Error(ex); --this code shows unexpected results.
                 }
             }
 
@@ -619,6 +643,9 @@ namespace DesktopModules.Admin.Tabs
             var intTab = Convert.ToInt32(ctlPages.SelectedNode.Value);
             var tabcontroller = new TabController();
             var tab = tabcontroller.GetTab(intTab, PortalId, true);
+            this.Page.Validate();
+            if (!this.Page.IsValid) 
+                return;
             if (tab != null && TabPermissionController.CanManagePage(tab))
             {
                 tab.TabName = txtName.Text;
@@ -631,6 +658,7 @@ namespace DesktopModules.Admin.Tabs
                 tab.IsDeleted = false;
                 tab.Url = ctlURL.Url;
                 tabcontroller.UpdateTabSetting(tab.TabID, "LinkNewWindow", ctlURL.NewWindow.ToString());
+                tabcontroller.UpdateTabSetting(tab.TabID, "AllowIndex", chkAllowIndex.Checked.ToString());
 
                 tab.SkinSrc = drpSkin.SelectedValue;
                 tab.ContainerSrc = drpContainer.SelectedValue;
@@ -642,22 +670,23 @@ namespace DesktopModules.Admin.Tabs
                     tab.TabPermissions.AddRange(dgPermissions.Permissions);
                 }
 
-                //Check for invalid 
-                if (!IsValidTabName(tab.TabName))
+                //All validations have been done in the Page.Validate()
+
+                //Check for invalid
+                string invalidType;
+                if (!TabController.IsValidTabName(tab.TabName, out invalidType))
                 {
+                    ShowErrorMessage(string.Format(Localization.GetString(invalidType, LocalResourceFile), tab.TabName));
                     return;
                 }
 
                 //Validate Tab Path
                 if (!IsValidTabPath(tab, tab.TabPath))
                 {
-                    return ;
+                    return;
                 }
 
-                if (txtRefresh.Text.Length > 0 && IsNumeric(txtRefresh.Text))
-                {
-                    tab.RefreshInterval = Convert.ToInt32(txtRefresh.Text);
-                }
+                tab.RefreshInterval = txtRefresh.Text == "" ? Null.NullInteger : Convert.ToInt32(txtRefresh.Text);
 
                 tab.SiteMapPriority = float.Parse(txtSitemapPriority.Text);
                 tab.PageHeadText = txtMeta.Text;
@@ -752,11 +781,15 @@ namespace DesktopModules.Admin.Tabs
                     canHide = false;
                 }
 
-                if (tab.DisableLink)
+				if (tab.DisableLink 
+					|| (tab.TabID == PortalSettings.AdminTabId || tab.TabID == PortalSettings.SplashTabId ||
+							tab.TabID == PortalSettings.HomeTabId || tab.TabID == PortalSettings.LoginTabId ||
+							tab.TabID == PortalSettings.UserTabId || tab.TabID == PortalSettings.SuperTabId))
                 {
                     canDisable = false;
                 }
-                else
+				
+				if (!tab.DisableLink)
                 {
                     canEnable = false;
                 }
@@ -857,22 +890,25 @@ namespace DesktopModules.Admin.Tabs
                 txtName.Text = tab.TabName;
                 chkVisible.Checked = tab.IsVisible;
 
-                txtSitemapPriority.Text = tab.SiteMapPriority.ToString(CultureInfo.InvariantCulture);
+                txtSitemapPriority.Text = tab.SiteMapPriority.ToString();
                 txtDescription.Text = tab.Description;
                 txtKeywords.Text = tab.KeyWords;
-                txtMeta.Text = tab.PageHeadText;
-                txtRefresh.Text = tab.RefreshInterval.ToString(CultureInfo.InvariantCulture);
+                txtMeta.Text = tab.PageHeadText;                
+                if (tab.RefreshInterval != Null.NullInteger)
+                {
+                    txtRefresh.Text = tab.RefreshInterval.ToString(); 
+                }
 
                 drpSkin.SelectedValue = tab.SkinSrc;
                 drpContainer.SelectedValue = tab.ContainerSrc;
 
-				ctlURL.Url = tab.Url;
+                ctlURL.Url = tab.Url;
                 if (string.IsNullOrEmpty(tab.Url))
                 {
                     ctlURL.UrlType = "N";
                 }
                 bool newWindow = false;
-                if (tab.TabSettings["LinkNewWindow"] != null && Boolean.TryParse((string)tab.TabSettings["LinkNewWindow"], out newWindow))
+                if (tab.TabSettings["LinkNewWindow"] != null && Boolean.TryParse((string)tab.TabSettings["LinkNewWindow"], out newWindow) && newWindow)
                 {
                     ctlURL.NewWindow = newWindow;
                 }
@@ -888,6 +924,10 @@ namespace DesktopModules.Admin.Tabs
                 {
                     chkDisabled.Enabled = false;
                 }
+                else
+                {
+					chkDisabled.Enabled = true;
+                }
 
                 if (PortalSettings.SSLEnabled)
                 {
@@ -899,6 +939,8 @@ namespace DesktopModules.Admin.Tabs
                     chkSecure.Enabled = false;
                     chkSecure.Checked = tab.IsSecure;
                 }
+                var allowIndex = false;
+                chkAllowIndex.Checked = !tab.TabSettings.ContainsKey("AllowIndex") || !bool.TryParse(tab.TabSettings["AllowIndex"].ToString(), out allowIndex) || allowIndex;
 
                 ctlIcon.Url = tab.IconFileRaw;
                 ctlIconLarge.Url = tab.IconFileLargeRaw;
@@ -909,7 +951,7 @@ namespace DesktopModules.Admin.Tabs
                 termsSelector.Terms = tab.Terms;
                 termsSelector.DataBind();
 
-				grdModules.Rebind();
+                grdModules.Rebind();
             }
         }
 
@@ -1065,17 +1107,20 @@ namespace DesktopModules.Admin.Tabs
 
         private string GetNodeStatusIcon(TabInfo tab)
         {
+            string s = "";
             if (tab.DisableLink)
             {
-                return "<img src=\"" + IconPageDisabled + "\" class=\"statusicon\" />";
+                s = s + string.Format("<img src=\"{0}\" alt=\"\" title=\"{1}\" class=\"statusicon\" />", IconPageDisabled, LocalizeString("lblDisabled"));
             }
-
             if (tab.IsVisible == false)
             {
-                return "<img src=\"" + IconPageHidden + "\" class=\"statusicon\" />";
+                s = s + string.Format("<img src=\"{0}\" alt=\"\" title=\"{1}\" class=\"statusicon\" />", IconPageHidden, LocalizeString("lblHidden"));
             }
-
-            return "";
+            if (tab.Url != "")
+            {
+                s = s + string.Format("<img src=\"{0}\" alt=\"\" title=\"{1}\" class=\"statusicon\" />", IconRedirect, LocalizeString("lblRedirect"));
+            }
+            return s;
         }
 
         private bool IsAdminTab(TabInfo tab)
@@ -1165,6 +1210,7 @@ namespace DesktopModules.Admin.Tabs
             cmdExpandTree.Text = LocalizeString("ExpandAll");
             lblDisabled.Text = LocalizeString("lblDisabled");
             lblHidden.Text = LocalizeString("lblHidden");
+            lblRedirect.Text = LocalizeString("lblRedirect");
             lblHome.Text = LocalizeString("lblHome");
             lblSecure.Text = LocalizeString("lblSecure");
             lblEveryone.Text = LocalizeString("lblEveryone");
@@ -1351,9 +1397,11 @@ namespace DesktopModules.Admin.Tabs
 
             tab.TabPath = Globals.GenerateTabPath(tab.ParentId, tab.TabName);
 
-            //Check for invalid 
-            if (!IsValidTabName(tab.TabName))
+            //Check for invalid
+            string invalidType;
+            if (!TabController.IsValidTabName(tab.TabName, out invalidType))
             {
+                ShowErrorMessage(string.Format(Localization.GetString(invalidType, LocalResourceFile), tab.TabName));
                 return Null.NullInteger;
             }
 
@@ -1434,24 +1482,6 @@ namespace DesktopModules.Admin.Tabs
             return Null.NullInteger;
         }
 
-        private bool IsValidTabName(string tabName)
-        {
-            var valid = true;
-
-            if (string.IsNullOrEmpty(tabName.Trim()))
-            {
-                ShowWarningMessage(Localization.GetString("EmptyTabName", LocalResourceFile));
-                valid = false;
-            }
-            else if (Regex.IsMatch(tabName, "^AUX$|^CON$|^LPT[1-9]$|^CON$|^COM[1-9]$|^NUL$|^SITEMAP$|^LINKCLICK$|^KEEPALIVE$|^DEFAULT$|^ERRORPAGE$", RegexOptions.IgnoreCase))
-            {
-                valid = false;
-                ShowWarningMessage(string.Format(Localization.GetString("InvalidTabName", LocalResourceFile), tabName));
-            }
-
-            return valid;
-        }
-
         private bool IsValidTabPath(TabInfo tab, string newTabPath)
         {
             var valid = true;
@@ -1470,9 +1500,9 @@ namespace DesktopModules.Admin.Tabs
                 var controller = new TabController();
                 var existingTab = controller.GetTab(tabID, tab.PortalID, false);
                 if (existingTab != null && existingTab.IsDeleted)
-                    ShowWarningMessage(Localization.GetString("TabRecycled", LocalResourceFile));
+                    ShowErrorMessage(Localization.GetString("TabRecycled", LocalResourceFile));
                 else
-                    ShowWarningMessage(Localization.GetString("TabExists", LocalResourceFile));
+                    ShowErrorMessage(Localization.GetString("TabExists", LocalResourceFile));
 
                 valid = false;
             }
@@ -1480,7 +1510,7 @@ namespace DesktopModules.Admin.Tabs
             //check whether have conflict between tab path and portal alias.
             if (TabController.IsDuplicateWithPortalAlias(tab.PortalID, newTabPath))
             {
-                ShowWarningMessage(Localization.GetString("PathDuplicateWithAlias", LocalResourceFile));
+                ShowErrorMessage(Localization.GetString("PathDuplicateWithAlias", LocalResourceFile));
                 valid = false;
             }
 

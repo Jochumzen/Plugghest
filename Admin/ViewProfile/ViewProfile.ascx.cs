@@ -1,7 +1,7 @@
 #region Copyright
 // 
 // DotNetNuke® - http://www.dotnetnuke.com
-// Copyright (c) 2002-2012
+// Copyright (c) 2002-2014
 // by DotNetNuke Corporation
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -111,7 +111,7 @@ namespace DotNetNuke.Modules.Admin.Users
                     template = Localization.GetString("DefaultTemplate", LocalResourceFile);
                 }
 			    var editUrl = Globals.NavigateURL(ModuleContext.PortalSettings.ActiveTab.TabID, "Profile", "userId=" + ProfileUserId, "pageno=1");
-                var profileUrl = Globals.NavigateURL(ModuleContext.PortalSettings.ActiveTab.TabID, "Profile", "userId=" + ProfileUserId, "pageno=3");
+                var profileUrl = Globals.NavigateURL(ModuleContext.PortalSettings.ActiveTab.TabID, "Profile", "userId=" + ProfileUserId, "pageno=2");
 
                 if (template.Contains("[BUTTON:EDITPROFILE]"))
                 {
@@ -168,9 +168,6 @@ namespace DotNetNuke.Modules.Admin.Users
                 StringBuilder sb = new StringBuilder();
                 bool propertyNotFound = false;
 
-			    var dataType = new ListController().GetListEntryInfo("DataType", "RichText");
-
-
                 foreach (ProfilePropertyDefinition property in ProfileUser.Profile.ProfileProperties)
                 {
                     string value = propertyAccess.GetProperty(property.PropertyName,
@@ -184,13 +181,9 @@ namespace DotNetNuke.Modules.Admin.Users
                     var clientName = Localization.GetSafeJSString(property.PropertyName);
                     sb.Append("self['" + clientName + "'] = ko.observable(");
                     sb.Append("\"");
-                    value = Localization.GetSafeJSString(value);
-
-                    if(property.DataType == dataType.EntryID)
-                    {
-                        value = value.Replace("\r", string.Empty).Replace("\n", string.Empty);
-                    }
-
+                    value = Localization.GetSafeJSString(Server.HtmlDecode(value));
+                    value = value.Replace("\r", string.Empty).Replace("\n",  " ");
+                    value = value.Replace(";", string.Empty).Replace("//",string.Empty);
                     sb.Append(value + "\"" + ");");
                     sb.Append('\n');
                     sb.Append("self['" + clientName + "Text'] = '");
@@ -204,6 +197,8 @@ namespace DotNetNuke.Modules.Admin.Users
 			                       : String.Empty;
 
                 sb.Append("self.Email = ko.observable('");
+                email = Localization.GetSafeJSString(Server.HtmlDecode(email));
+                email = email.Replace(";", string.Empty).Replace("//", string.Empty);
                 sb.Append(email + "');");
                 sb.Append('\n');
                 sb.Append("self.EmailText = '");

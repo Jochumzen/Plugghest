@@ -1,7 +1,7 @@
 #region Copyright
 // 
 // DotNetNuke® - http://www.dotnetnuke.com
-// Copyright (c) 2002-2012
+// Copyright (c) 2002-2014
 // by DotNetNuke Corporation
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -44,6 +44,7 @@ namespace DesktopModules.Admin.Console
 
     public partial class Settings : ModuleSettingsBase
     {
+    	private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof (Settings));
 
         private void BindTabs(int tabId, bool includeParent)
         {
@@ -176,6 +177,10 @@ namespace DesktopModules.Admin.Console
                     {
                         ShowTooltip.Checked = Convert.ToBoolean(Settings["ShowTooltip"]);
                     }
+					if (Settings.ContainsKey("OrderTabsByHierarchy"))
+					{
+						OrderTabsByHierarchy.Checked = Convert.ToBoolean(Settings["OrderTabsByHierarchy"]);
+					}
                     if (Settings.ContainsKey("ConsoleWidth"))
                     {
                         ConsoleWidth.Text = Convert.ToString(Settings["ConsoleWidth"]);
@@ -207,7 +212,7 @@ namespace DesktopModules.Admin.Console
                     }
                     catch (Exception exc)
                     {
-                        DnnLog.Error(exc);
+                        Logger.Error(exc);
 
                         throw new Exception("ConsoleWidth value is invalid. Value must be numeric.");
                     }
@@ -226,6 +231,7 @@ namespace DesktopModules.Admin.Console
                 moduleController.UpdateModuleSetting(ModuleId, "DefaultView", DefaultView.SelectedValue);
                 moduleController.UpdateModuleSetting(ModuleId, "AllowViewChange", AllowViewChange.Checked.ToString(CultureInfo.InvariantCulture));
                 moduleController.UpdateModuleSetting(ModuleId, "ShowTooltip", ShowTooltip.Checked.ToString(CultureInfo.InvariantCulture));
+				moduleController.UpdateModuleSetting(ModuleId, "OrderTabsByHierarchy", OrderTabsByHierarchy.Checked.ToString(CultureInfo.InvariantCulture));
                 moduleController.UpdateModuleSetting(ModuleId, "IncludeParent", IncludeParent.Checked.ToString(CultureInfo.InvariantCulture)); 
                 moduleController.UpdateModuleSetting(ModuleId, "ConsoleWidth", wdth);
 
@@ -233,8 +239,8 @@ namespace DesktopModules.Admin.Console
                 {
                     if (item.ItemType == ListItemType.Item || item.ItemType == ListItemType.AlternatingItem)
                     {
-                        var tabPath = ((HiddenField)item.Controls[3]).Value;
-                        var visibility = ((DropDownList)item.Controls[5]).SelectedValue;
+	                    var tabPath = (item.FindControl("tabPath") as HiddenField).Value;
+						var visibility = (item.FindControl("tabVisibility") as DnnComboBox).SelectedValue;
 
                         var key = String.Format("TabVisibility{0}", tabPath.Replace("//","-"));
                         moduleController.UpdateModuleSetting(ModuleId, key, visibility);

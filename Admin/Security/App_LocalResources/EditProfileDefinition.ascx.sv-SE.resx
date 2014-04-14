@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers && schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="EditProperty.Text" xml:space="preserve">
+    <value>Redigera Specifikationen För Profilegenskapen</value>
+  </data>
+	<data name="AddContent.Action" xml:space="preserve">
+    <value>Lägg Till Ny Profilegenskap</value>
+  </data>
+	<data name="ProfilePropertyDefinition_DataType.Text" xml:space="preserve">
+    <value>Datatyp:</value>
+  </data>
+	<data name="ProfilePropertyDefinition_DataType.Help" xml:space="preserve">
+    <value>Välj datatypen för detta fält</value>
+  </data>
+	<data name="ProfilePropertyDefinition_DefaultValue.Text" xml:space="preserve">
+    <value>Standardvärde:</value>
+  </data>
+	<data name="ProfilePropertyDefinition_DefaultValue.Help" xml:space="preserve">
+    <value>Du kan ange ett standardvärde för den här egenskapen</value>
+  </data>
+	<data name="ProfilePropertyDefinition_PropertyCategory.Text" xml:space="preserve">
+    <value>Egenskapens Kategori:</value>
+  </data>
+	<data name="ProfilePropertyDefinition_PropertyCategory.Help" xml:space="preserve">
+    <value>Ange kategori för den här egenskapen. Detta gör att de relaterade egenskaperna blir grupperade tillsammans när de visas för användaren.</value>
+  </data>
+	<data name="ProfilePropertyDefinition_PropertyName.Text" xml:space="preserve">
+    <value>Namn på egenskap:</value>
+  </data>
+	<data name="ProfilePropertyDefinition_PropertyName.Help" xml:space="preserve">
+    <value>Ange ett namn för egenskapen</value>
+  </data>
+	<data name="ProfilePropertyDefinition_ValidationExpression.Text" xml:space="preserve">
+    <value>Validering Fras:</value>
+  </data>
+	<data name="ProfilePropertyDefinition_ValidationExpression.Help" xml:space="preserve">
+    <value>Du kan ange ett reguljärt uttryck för att validera de data som anges för den här egenskapen</value>
+  </data>
+	<data name="ProfilePropertyDefinition_ViewOrder.Text" xml:space="preserve">
+    <value>Sorteringsordning:</value>
+  </data>
+	<data name="ProfilePropertyDefinition_ViewOrder.Help" xml:space="preserve">
+    <value>Ange en Sorteringsordning för den här egenskapen</value>
+  </data>
+	<data name="ProfilePropertyDefinition_Visible.Text" xml:space="preserve">
+    <value>Synlig:</value>
+  </data>
+	<data name="ProfilePropertyDefinition_Visible.Help" xml:space="preserve">
+    <value>Om ej markerad, är den här egenskapen endast synlig för administratörer - användaren kommer inte att kunna se eller redigera egenskapen.</value>
+  </data>
+	<data name="ProfilePropertyDefinition_Required.Text" xml:space="preserve">
+    <value>Obligatorisk:</value>
+  </data>
+	<data name="ProfilePropertyDefinition_Required.Help" xml:space="preserve">
+    <value>Ange om den här egenskapen krävs.</value>
+  </data>
+	<data name="ProfilePropertyDefinition_Length.Text" xml:space="preserve">
+    <value>Längd:</value>
+  </data>
+	<data name="ProfilePropertyDefinition_Length.Help" xml:space="preserve">
+    <value>Ange den maximala längden för den här egenskapen. Detta kommer endast att gälla för specifika datatyper.</value>
+  </data>
+	<data name="DuplicateName.Text" xml:space="preserve">
+    <value>Den här egenskap finns redan. Namnet på egenskapen måste vara unika. Välj ett annat namn för den här egenskapen.</value>
+  </data>
+	<data name="ProfilePropertyDefinition_PropertyCategory.Required" xml:space="preserve">
+    <value>Den kategori krävs</value>
+  </data>
+	<data name="ProfilePropertyDefinition_PropertyName.Required" xml:space="preserve">
+    <value>Namn på egenskapen krävs</value>
+  </data>
+	<data name="plCategoryName.Help" xml:space="preserve">
+    <value>Ange texten för kategorinamn på det valda språket</value>
+  </data>
+	<data name="plCategoryName.Text" xml:space="preserve">
+    <value>Kategorinamn:</value>
+  </data>
+	<data name="plLocales.Help" xml:space="preserve">
+    <value>Markera språk</value>
+  </data>
+	<data name="plLocales.Text" xml:space="preserve">
+    <value>Välj språk:</value>
+  </data>
+	<data name="plPropertyHelp.Help" xml:space="preserve">
+    <value>på det valda språket</value>
+  </data>
+	<data name="plPropertyHelp.Text" xml:space="preserve">
+    <value>Hjälp:</value>
+  </data>
+	<data name="plPropertyName.Help" xml:space="preserve">
+    <value>Ange texten för egenskapens namn på det valda språket</value>
+  </data>
+	<data name="plPropertyName.Text" xml:space="preserve">
+    <value>Namn på egenskap:</value>
+  </data>
+	<data name="cmdCreate.Text" xml:space="preserve">
+    <value>Skapa Ny Egenskap</value>
+  </data>
+	<data name="cmdUpdate.Text" xml:space="preserve">
+    <value>Uppdatera Egenskap</value>
+  </data>
+	<data name="Introduction.Help" xml:space="preserve">
+    <value>Det första steget i att redigera en Definition av Profilegenskap är att uppdatera Egenskapens detaljer. Gör de ändringar du behöver i fälten på den här sidan, och klicka på "Nästa" för att spara ändringarna, och gå vidare till nästa steg.</value>
+  </data>
+	<data name="Introduction.Title" xml:space="preserve">
+    <value>Redigera Egenskapens Specifikation</value>
+  </data>
+	<data name="List.Help" xml:space="preserve">
+    <value>Egenskapens specifikation har uppdaterats. Denna egenskap är en Listtyp . Nästa steg är att definiera poster i listan.</value>
+  </data>
+	<data name="List.Title" xml:space="preserve">
+    <value>Hantera Listposter</value>
+  </data>
+	<data name="Introduction_Add.Help" xml:space="preserve">
+    <value>Det första steget i att skapa en Definition av en Profilegenskapen är att definiera egenskapens detaljer. Fyll i detaljerna på den här sidan och klicka på "Nästa" för att skapa Egenskapens Definition.   &lt;b&gt;Notera:&lt;/b&gt; Alla fält med en röd asterisk är obligatoriska.</value>
+  </data>
+	<data name="Introduction_Add.Title" xml:space="preserve">
+    <value>Lägga Till Ny Specifikation För Egenskapen</value>
+  </data>
+	<data name="Localization.Help" xml:space="preserve">
+    <value>Nästa steg är att hantera lokalt språk för den här egenskapen. Välj det språk som du vill uppdatera, lägga till text eller ändra den befintliga texten och klicka på "Uppdatera"</value>
+  </data>
+	<data name="Localization.Title" xml:space="preserve">
+    <value>Hantera Språkanpassning</value>
+  </data>
+	<data name="cmdCancel.Text" xml:space="preserve">
+    <value>Återgå Till Lista Över Profilegenskap</value>
+  </data>
+	<data name="ProfilePropertyDefinition_PropertyName.Validation" xml:space="preserve">
+    <value>Namnet för Egenskapen kan inte innehålla mellanslag</value>
+  </data>
+	<data name="plPropertyRequired.Help" xml:space="preserve">
+    <value>Ange felmeddelande att visas i det här fältet när egenskapen krävs men inte används.</value>
+  </data>
+	<data name="plPropertyRequired.Text" xml:space="preserve">
+    <value>Felmeddelande om egenskapen är obligatorisk:</value>
+  </data>
+	<data name="plPropertyValidation.Help" xml:space="preserve">
+    <value>Ange felmeddelande som visas i det här fältet när egenskapen misslyckas mot validering med reguljära uttryck.</value>
+  </data>
+	<data name="plPropertyValidation.Text" xml:space="preserve">
+    <value>Validering Felmeddelande:</value>
+  </data>
+	<data name="RequiredTextBox.Text" xml:space="preserve">
+    <value>Om du använder en textfält, måste minsta längd vara större än 0.</value>
+  </data>
+	<data name="AddProperty.Text" xml:space="preserve">
+    <value>Lägga till Specifikation av Profilegenskapen</value>
+  </data>
+	<data name="ProfilePropertyDefinition_DefaultVisibility.Help" xml:space="preserve">
+		<value>Du kan ställa in standardläget för synlighet av profilenegenskapen. Detta är det ursprungliga värdet för synlighet och gäller om användaren inte ändrar det, när de redigerar sin profil.</value>
+	</data>
+	<data name="ProfilePropertyDefinition_DefaultVisibility.Text" xml:space="preserve">
+		<value>Förvald Synlighet:</value>
+	</data>
+	<data name="ProfilePropertyDefinition_ReadOnly.Help" xml:space="preserve">
+		<value>Du kan göra en profilenegenskapen skrivskyddad. Ett egenskap som endats kan läsas, kan redigeras av admin och är endast läsbar för slutanvändaren.</value>
+	</data>
+	<data name="ProfilePropertyDefinition_ReadOnly.Text" xml:space="preserve">
+		<value>Läs Endast:</value>
+	</data>
+	<data name="Cancel.Text" xml:space="preserve">
+		<value>Avbryt</value>
+	</data>
+	<data name="Return.Text" xml:space="preserve">
+		<value>Uppdatera</value>
+	</data>
+	<data name="valPropertyName.ErrorMessage" xml:space="preserve">
+		<value>Du måste ange ett namn för den här egenskapen.</value>
+	</data>
+</root>

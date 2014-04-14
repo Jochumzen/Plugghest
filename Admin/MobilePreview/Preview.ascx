@@ -8,18 +8,18 @@
 		<div class="dnnFormItem">
 			<dnn:Label ID="lblProfile" runat="server" ControlName="ddlProfileList" />
 			<%--<asp:DropDownList ID="ddlProfileList" runat="server" Width="300" AutoPostBack="true" />--%>
-            <dnn:DnnComboBox ID="ddlProfileList" runat="server" AutoPostBack="true" OnClientSelectedIndexChanged="ddlProfileListIndexChanged" />
+            <dnn:DnnComboBox ID="ddlProfileList" runat="server" OnClientSelectedIndexChanged="ddlProfileListIndexChanged" />
 		</div>
 		<div class="dnnFormItem">
 			<dnn:Label ID="lblOrientation" runat="server" ControlName="rblOrientation" />
-			<asp:RadioButtonList ID="rblOrientation" runat="server" RepeatColumns="2" RepeatDirection="Horizontal" AutoPostBack="true">
+			<asp:RadioButtonList ID="rblOrientation" runat="server" RepeatColumns="2" RepeatDirection="Horizontal">
 				<asp:ListItem Value="vertical" resourcekey="Vertical" Selected="true"></asp:ListItem>
 				<asp:ListItem Value="horizontal" resourcekey="Horizontal"></asp:ListItem>			
 			</asp:RadioButtonList>
 		</div>
 		<div class="dnnFormItem">
 			<dnn:Label ID="lblSendAgent" runat="server" ControlName="cbSendAgent" />
-			<asp:CheckBox ID="cbSendAgent" runat="server" Checked="true" AutoPostBack="true"/>
+			<asp:CheckBox ID="cbSendAgent" runat="server" Checked="true" />
 		</div>
 		<div class="dnnFormItem">
 			<dnn:Label ID="lblDimensions" runat="server" ControlName="ddlProfileList" />
@@ -56,6 +56,7 @@
         var device = combo.get_value();
         var sizeValue = eval("({" + device + "})");
         var orientation = $(orientationFilter + ":checked").val();
+        emulator.previewWithAgent($(previewWithAgentId)[0].checked);
         if (orientation == "vertical") {
             if (!($(previewWithAgentId)[0].checked)) {
                 emulator.setPreview(sizeValue.width, sizeValue.height);
@@ -91,7 +92,6 @@
         });
 
         $(previewWithAgentId).change(function () {
-            emulator.previewWithAgent(this.checked);
             changeView();
         });
 

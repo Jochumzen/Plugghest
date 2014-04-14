@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="ReservedResource" xml:space="preserve">
+    <value>Vänligen, ta inte bort nyckeln.</value>
+  </data>
+	<data name="AdvancedAllDayEvent" xml:space="preserve">
+    <value>Hela dagen</value>
+  </data>
+	<data name="AdvancedDaily" xml:space="preserve">
+    <value>Dagligen</value>
+  </data>
+	<data name="AdvancedDay" xml:space="preserve">
+    <value>Dag</value>
+  </data>
+	<data name="AdvancedDays" xml:space="preserve">
+    <value>Dag(ar)</value>
+  </data>
+	<data name="AdvancedSubject" xml:space="preserve">
+    <value>Ämne</value>
+  </data>
+	<data name="AdvancedDescription" xml:space="preserve">
+    <value>Beskrivning</value>
+  </data>
+	<data name="AdvancedEndAfter" xml:space="preserve">
+    <value>Sluta efter</value>
+  </data>
+	<data name="AdvancedEndByThisDate" xml:space="preserve">
+    <value>Avsluta med</value>
+  </data>
+	<data name="AdvancedEvery" xml:space="preserve">
+    <value>Varje</value>
+  </data>
+	<data name="AdvancedEveryWeekday" xml:space="preserve">
+    <value>Varje veckodag</value>
+  </data>
+	<data name="AdvancedFirst" xml:space="preserve">
+    <value>Först</value>
+  </data>
+	<data name="AdvancedFourth" xml:space="preserve">
+    <value>Fjärde</value>
+  </data>
+	<data name="AdvancedFrom" xml:space="preserve">
+    <value>Starttid</value>
+  </data>
+	<data name="AdvancedHourly" xml:space="preserve">
+    <value>Timvis</value>
+  </data>
+	<data name="AdvancedHours" xml:space="preserve">
+    <value>timme(ar)</value>
+  </data>
+	<data name="AdvancedLast" xml:space="preserve">
+    <value>sist</value>
+  </data>
+	<data name="AdvancedMaskDay" xml:space="preserve">
+    <value>dag</value>
+  </data>
+	<data name="AdvancedMaskWeekday" xml:space="preserve">
+    <value>veckodag</value>
+  </data>
+	<data name="AdvancedMaskWeekendDay" xml:space="preserve">
+    <value>helgdag</value>
+  </data>
+	<data name="AdvancedMonthly" xml:space="preserve">
+    <value>Månadsvis</value>
+  </data>
+	<data name="AdvancedMonths" xml:space="preserve">
+    <value>månad(er)</value>
+  </data>
+	<data name="AdvancedMoreDetails" xml:space="preserve">
+    <value>Fler detaljer</value>
+  </data>
+	<data name="AdvancedNoEndDate" xml:space="preserve">
+    <value>Inget slutdatum</value>
+  </data>
+	<data name="AdvancedOccurrences" xml:space="preserve">
+    <value>händelser</value>
+  </data>
+	<data name="AdvancedOf" xml:space="preserve">
+    <value>av</value>
+  </data>
+	<data name="AdvancedOfEvery" xml:space="preserve">
+    <value>av varje</value>
+  </data>
+	<data name="AdvancedRange" xml:space="preserve">
+    <value>Intervall för upprepning:</value>
+  </data>
+	<data name="AdvancedRecurEvery" xml:space="preserve">
+    <value>Upprepa varje</value>
+  </data>
+	<data name="AdvancedRecurrence" xml:space="preserve">
+    <value>Återkommande</value>
+  </data>
+	<data name="AdvancedRecurringAppointment" xml:space="preserve">
+    <value>Återkommande uppgift</value>
+  </data>
+	<data name="AdvancedReset" xml:space="preserve">
+    <value>Återställ undantag</value>
+  </data>
+	<data name="AdvancedSecond" xml:space="preserve">
+    <value>sekund</value>
+  </data>
+	<data name="AdvancedThe" xml:space="preserve">
+    <value>Den</value>
+  </data>
+	<data name="AdvancedThird" xml:space="preserve">
+    <value>Tredje</value>
+  </data>
+	<data name="AdvancedTo" xml:space="preserve">
+    <value>Sluttid</value>
+  </data>
+	<data name="AdvancedWeekly" xml:space="preserve">
+    <value>Veckovis</value>
+  </data>
+	<data name="AdvancedWeeks" xml:space="preserve">
+    <value>vecka(or) om</value>
+  </data>
+	<data name="AdvancedYearly" xml:space="preserve">
+    <value>Årligen</value>
+  </data>
+	<data name="AllDay" xml:space="preserve">
+    <value>hela dagen</value>
+  </data>
+	<data name="Cancel" xml:space="preserve">
+    <value>Avbryt</value>
+  </data>
+	<data name="ConfirmCancel" xml:space="preserve">
+    <value>Avbryt</value>
+  </data>
+	<data name="ConfirmDeleteText" xml:space="preserve">
+    <value>Är du säker på att du vill ta bort det här mötet?</value>
+  </data>
+	<data name="ConfirmDeleteTitle" xml:space="preserve">
+    <value>Bekräfta radering</value>
+  </data>
+	<data name="ConfirmOK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+	<data name="ConfirmRecurrenceDeleteOccurrence" xml:space="preserve">
+    <value>Radera bara denna händelse.</value>
+  </data>
+	<data name="ConfirmRecurrenceDeleteSeries" xml:space="preserve">
+    <value>Ta bort serien.</value>
+  </data>
+	<data name="ConfirmRecurrenceDeleteTitle" xml:space="preserve">
+    <value>Ta bort ett återkommande möte</value>
+  </data>
+	<data name="ConfirmRecurrenceEditOccurrence" xml:space="preserve">
+    <value>Redigera endast den här händelsen.</value>
+  </data>
+	<data name="ConfirmRecurrenceEditSeries" xml:space="preserve">
+    <value>Redigera serien.</value>
+  </data>
+	<data name="ConfirmRecurrenceEditTitle" xml:space="preserve">
+    <value>Redigera ett återkommande möte</value>
+  </data>
+	<data name="ConfirmRecurrenceResizeOccurrence" xml:space="preserve">
+    <value>Ändra storlek på endast den här händelsen.</value>
+  </data>
+	<data name="ConfirmRecurrenceResizeSeries" xml:space="preserve">
+    <value>Ändra storlek på serien.</value>
+  </data>
+	<data name="ConfirmRecurrenceResizeTitle" xml:space="preserve">
+    <value>Ändra storlek på ett återkommande möte</value>
+  </data>
+	<data name="ConfirmRecurrenceMoveOccurrence" xml:space="preserve">
+    <value>Flytta endast den här händelsen.</value>
+  </data>
+	<data name="ConfirmRecurrenceMoveSeries" xml:space="preserve">
+    <value>Flytta serien.</value>
+  </data>
+	<data name="ConfirmRecurrenceMoveTitle" xml:space="preserve">
+    <value>Flytta ett återkommande möte</value>
+  </data>
+	<data name="HeaderDay" xml:space="preserve">
+    <value>Dag</value>
+  </data>
+	<data name="HeaderMonth" xml:space="preserve">
+    <value>Månad</value>
+  </data>
+	<data name="HeaderTimeline" xml:space="preserve">
+    <value>Tidslinje</value>
+  </data>
+	<data name="HeaderMultiDay" xml:space="preserve">
+    <value>Flera dagar</value>
+  </data>
+	<data name="HeaderNextDay" xml:space="preserve">
+    <value>nästa dag</value>
+  </data>
+	<data name="HeaderPrevDay" xml:space="preserve">
+    <value>föregående dag</value>
+  </data>
+	<data name="HeaderToday" xml:space="preserve">
+    <value>i dag</value>
+  </data>
+	<data name="HeaderWeek" xml:space="preserve">
+    <value>Vecka</value>
+  </data>
+	<data name="Show24Hours" xml:space="preserve">
+    <value>Visa 24 timmar...</value>
+  </data>
+	<data name="ShowAdvancedForm" xml:space="preserve">
+    <value>Alternativ</value>
+  </data>
+	<data name="ShowBusinessHours" xml:space="preserve">
+    <value>Visa kontorstid...</value>
+  </data>
+	<data name="ShowMore" xml:space="preserve">
+    <value>mer...</value>
+  </data>
+	<data name="AdvancedCalendarOK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+	<data name="AdvancedCalendarCancel" xml:space="preserve">
+    <value>Avbryt</value>
+  </data>
+	<data name="AdvancedCalendarToday" xml:space="preserve">
+    <value>I dag</value>
+  </data>
+	<data name="AdvancedSubjectRequired" xml:space="preserve">
+    <value>Vänligen, ange ett ämne för mötet</value>
+  </data>
+	<data name="AdvancedStartTimeBeforeEndTime" xml:space="preserve">
+    <value>Start time must be before end time</value>
+  </data>
+	<data name="AdvancedStartTimeRequired" xml:space="preserve">
+    <value>Startdatum krävs</value>
+  </data>
+	<data name="AdvancedStartDateRequired" xml:space="preserve">
+    <value>Start date is required</value>
+  </data>
+	<data name="AdvancedEndTimeRequired" xml:space="preserve">
+    <value>Sista tid krävs</value>
+  </data>
+	<data name="AdvancedEndDateRequired" xml:space="preserve">
+    <value>Slutdatum krävs</value>
+  </data>
+	<data name="AdvancedInvalidNumber" xml:space="preserve">
+    <value>Ogiltigt nummer</value>
+  </data>
+	<data name="AdvancedWorking" xml:space="preserve">
+    <value>Arbetar...</value>
+  </data>
+	<data name="AdvancedDone" xml:space="preserve">
+    <value>Klar</value>
+  </data>
+	<data name="AdvancedNewAppointment" xml:space="preserve">
+    <value>Ny Avtalad Tid</value>
+  </data>
+	<data name="AdvancedEditAppointment" xml:space="preserve">
+    <value>Redigera Möte</value>
+  </data>
+	<data name="AdvancedClose" xml:space="preserve">
+    <value>Stäng</value>
+  </data>
+	<data name="ConfirmResetExceptionsTitle" xml:space="preserve">
+    <value>Bekräfta återställning av undantag</value>
+  </data>
+	<data name="ConfirmResetExceptionsText" xml:space="preserve">
+    <value>Vill du ta bort alla nuvarande återkommande undantag?</value>
+  </data>
+	<data name="Save" xml:space="preserve">
+    <value>Spara</value>
+  </data>
+	<data name="ContextMenuAddAppointment" xml:space="preserve">
+		<value>Nytt möte</value>
+	</data>
+	<data name="ContextMenuAddRecurringAppointment" xml:space="preserve">
+		<value>Ny Återkommande möte</value>
+	</data>
+	<data name="ContextMenuDelete" xml:space="preserve">
+		<value>Ta bort</value>
+	</data>
+	<data name="ContextMenuEdit" xml:space="preserve">
+		<value>Redigera</value>
+	</data>
+	<data name="ContextMenuGoToToday" xml:space="preserve">
+		<value>Gå till idag</value>
+	</data>
+	<data name="Reminder" xml:space="preserve">
+		<value>Påminnelse</value>
+	</data>
+	<data name="Reminders" xml:space="preserve">
+		<value>Påminnelser</value>
+	</data>
+	<data name="ReminderDueIn" xml:space="preserve">
+		<value>Beror på</value>
+	</data>
+	<data name="ReminderOverdue" xml:space="preserve">
+		<value>Förfallna</value>
+	</data>
+	<data name="ReminderMinute" xml:space="preserve">
+		<value>minute</value>
+	</data>
+	<data name="ReminderMinutes" xml:space="preserve">
+		<value>minutes</value>
+	</data>
+	<data name="ReminderHour" xml:space="preserve">
+		<value>timme</value>
+	</data>
+	<data name="ReminderHours" xml:space="preserve">
+		<value>timmar</value>
+	</data>
+	<data name="ReminderDay" xml:space="preserve">
+		<value>dag</value>
+	</data>
+	<data name="ReminderDays" xml:space="preserve">
+		<value>dagar</value>
+	</data>
+	<data name="ReminderWeek" xml:space="preserve">
+		<value>vecka</value>
+	</data>
+	<data name="ReminderWeeks" xml:space="preserve">
+		<value>veckor</value>
+	</data>
+	<data name="ReminderNone" xml:space="preserve">
+		<value>Ingen</value>
+	</data>
+	<data name="ReminderSnooze" xml:space="preserve">
+		<value>Snooze</value>
+	</data>
+	<data name="ReminderDismiss" xml:space="preserve">
+		<value>Avvisa</value>
+	</data>
+	<data name="ReminderDismissAll" xml:space="preserve">
+		<value>Avvisa alla</value>
+	</data>
+	<data name="ReminderOpenItem" xml:space="preserve">
+		<value>Öppna Post</value>
+	</data>
+	<data name="ReminderSnoozeHint" xml:space="preserve">
+		<value>Klicka Snooze om du vill bli påmind igen om:</value>
+	</data>
+	<data name="ReminderBeforeStart" xml:space="preserve">
+		<value>före start</value>
+	</data>
+</root>

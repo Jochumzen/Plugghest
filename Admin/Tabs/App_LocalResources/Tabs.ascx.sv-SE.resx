@@ -1,0 +1,444 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="AddPage.Text" xml:space="preserve">
+    <value>Lägg till sidor</value>
+  </data>
+	<data name="CanNotDeleteHomeTab.Text" xml:space="preserve">
+    <value>Du får inte radera hemsidan för portalen!</value>
+  </data>
+	<data name="CanNotDeleteSpecialTab.Text" xml:space="preserve">
+    <value>Det här är en speciell sida och kan inte tas bort!</value>
+  </data>
+	<data name="Collapse.Text" xml:space="preserve">
+    <value>Fäll ihop alla noder</value>
+  </data>
+	<data name="ConfirmDelete.Text" xml:space="preserve">
+    <value>Det här kommer att radera den valda sidan och alla dess undersidor. Är du säker?</value>
+  </data>
+	<data name="DeletePage.Text" xml:space="preserve">
+    <value>Ta bort sida</value>
+  </data>
+	<data name="EditPage.Text" xml:space="preserve">
+    <value>Sidinställningar</value>
+  </data>
+	<data name="Expand.Text" xml:space="preserve">
+    <value>Expandera alla</value>
+  </data>
+	<data name="InvalidTabName.Text" xml:space="preserve">
+    <value>{0} är en ogiltig sidtitel</value>
+  </data>
+	<data name="lblDisabled.Text" xml:space="preserve">
+    <value>Sidan är inaktiverad</value>
+  </data>
+	<data name="lblHidden.Text" xml:space="preserve">
+    <value>Sidan är dold i menyn</value>
+  </data>
+	<data name="lblHome.Text" xml:space="preserve">
+    <value>Startsida för portalen</value>
+  </data>
+	<data name="lblSecure.Text" xml:space="preserve">
+    <value>Synlig enbart för dedikerade roller</value>
+  </data>
+	<data name="lblEveryone.Text" xml:space="preserve">
+    <value>Sidan är synlig för alla</value>
+  </data>
+	<data name="MovePageDown.Text" xml:space="preserve">
+    <value>Flytta ner</value>
+  </data>
+	<data name="MovePageUp.Text" xml:space="preserve">
+    <value>Flytta upp</value>
+  </data>
+	<data name="root.Text" xml:space="preserve">
+    <value>Portal Root</value>
+  </data>
+	<data name="ShowHostTabs.Text" xml:space="preserve">
+    <value>Host-sidor</value>
+  </data>
+	<data name="ShowPortalTabs.Text" xml:space="preserve">
+    <value>Portal-sidor</value>
+  </data>
+	<data name="ViewPage.Text" xml:space="preserve">
+    <value>Visa sida</value>
+  </data>
+	<data name="DisablePage.Text" xml:space="preserve">
+    <value>Inaktivera länken i navigering</value>
+  </data>
+	<data name="EnablePage.Text" xml:space="preserve">
+    <value>Aktivera länken i navigering</value>
+  </data>
+	<data name="HidePage.Text" xml:space="preserve">
+    <value>Dölj sidan från menyn</value>
+  </data>
+	<data name="lblHostOnly.Text" xml:space="preserve">
+    <value>Hantera:</value>
+  </data>
+	<data name="ShowPage.Text" xml:space="preserve">
+    <value>Visa i navigeringen</value>
+  </data>
+	<data name="lblAdminOnly.Text" xml:space="preserve">
+    <value>Endast synlig för endast administratörer</value>
+  </data>
+	<data name="lblRegistered.Text" xml:space="preserve">
+    <value>Synlig för registrerade användare</value>
+  </data>
+	<data name="btnBulkCreate.Text" xml:space="preserve">
+    <value>Skapa sidor</value>
+  </data>
+	<data name="BulkCreateIntro.Text" xml:space="preserve">
+    <value>Detta kommer att skapa en sida per rad under den valda sidan. För att skapa hierarkier, kan du börja rader med "&gt;".</value>
+  </data>
+	<data name="MakeHome.Text" xml:space="preserve">
+    <value>Gör Till Startsida</value>
+  </data>
+	<data name="cmdMore.Text" xml:space="preserve">
+    <value>Mer inställningar</value>
+  </data>
+	<data name="cmdUpdate.Text" xml:space="preserve">
+    <value>Uppdatera sidan</value>
+  </data>
+	<data name="Appearance.Tabname" xml:space="preserve">
+    <value>Utseende</value>
+  </data>
+	<data name="Common.Tabname" xml:space="preserve">
+    <value>Vanlig</value>
+  </data>
+	<data name="Link.Tabname" xml:space="preserve">
+    <value>Länk</value>
+  </data>
+	<data name="Metatags.Tabname" xml:space="preserve">
+    <value>Metataggar</value>
+  </data>
+	<data name="Module.Header" xml:space="preserve">
+    <value>Modul</value>
+  </data>
+	<data name="Modules.Tabname" xml:space="preserve">
+    <value>Moduler</value>
+  </data>
+	<data name="ModuleTitle.Header" xml:space="preserve">
+    <value>Titel</value>
+  </data>
+	<data name="Options.Header" xml:space="preserve">
+    <value>Alternativ</value>
+  </data>
+	<data name="Permissions.Tabname" xml:space="preserve">
+    <value>Rättigheter</value>
+  </data>
+	<data name="SEO.Tabname" xml:space="preserve">
+    <value>SEO - Sökmotoroptimering</value>
+  </data>
+	<data name="lblContainer.Text" xml:space="preserve">
+    <value>Standard modulram</value>
+  </data>
+	<data name="lblDescription.Text" xml:space="preserve">
+    <value>Sidbeskrivning</value>
+  </data>
+	<data name="lblDisabledPage.Text" xml:space="preserve">
+    <value>Inaktiv</value>
+  </data>
+	<data name="lblIconLarge.Text" xml:space="preserve">
+    <value>Stor ikon</value>
+  </data>
+	<data name="lblIconSmall.Text" xml:space="preserve">
+    <value>Liten ikon</value>
+  </data>
+	<data name="lblKeywords.Text" xml:space="preserve">
+    <value>Nyckelord för sidan</value>
+  </data>
+	<data name="lblMetaHead.Text" xml:space="preserve">
+    <value>Sidans HEAD-Taggar</value>
+  </data>
+	<data name="lblMetaRefresh.Text" xml:space="preserve">
+    <value>Uppdateringsintervall (sekunder)</value>
+  </data>
+	<data name="lblName.Text" xml:space="preserve">
+    <value>Sidnamn</value>
+  </data>
+	<data name="lblPageSSL.Text" xml:space="preserve">
+    <value>Säker anslutning</value>
+  </data>
+	<data name="lblPermanentRedirect.Text" xml:space="preserve">
+    <value>Styra om permanent</value>
+  </data>
+	<data name="lblSitemapPriority.Text" xml:space="preserve">
+    <value>Sidkartsprioritet</value>
+  </data>
+	<data name="lblSkin.Text" xml:space="preserve">
+    <value>Sidans skinn</value>
+  </data>
+	<data name="lblTitle.Text" xml:space="preserve">
+    <value>Sidtitel</value>
+  </data>
+	<data name="lblVisible.Text" xml:space="preserve">
+    <value>Inkludera i meny</value>
+  </data>
+	<data name="lblTags.Text" xml:space="preserve">
+    <value>Sidtaggar</value>
+  </data>
+	<data name="cmdCopySkin.Text" xml:space="preserve">
+    <value>Kopiera valda utseendet till undersidor</value>
+  </data>
+	<data name="DefaultContainer.Text" xml:space="preserve">
+    <value>[Standars modulram]</value>
+  </data>
+	<data name="DefaultSkin.Text" xml:space="preserve">
+    <value>[Standard utseende]</value>
+  </data>
+	<data name="DesignCopied.Text" xml:space="preserve">
+    <value>Utseende tillämpas på alla underordnade sidor</value>
+  </data>
+	<data name="DesignCopyError.Text" xml:space="preserve">
+    <value>Ett fel uppstod vid tillämpning av det valda utseendet för alla undersidor</value>
+  </data>
+	<data name="Host.Text" xml:space="preserve">
+    <value>Host</value>
+  </data>
+	<data name="Site.Text" xml:space="preserve">
+    <value>Webbplats</value>
+  </data>
+	<data name="ModuleHelp.Text" xml:space="preserve">
+    <value>&lt;h1&gt;Om sidor&lt;/h1&gt;&lt;p&gt;Admin användaren kan hantera sidor på webbplatsen.&lt;/p&gt;</value>
+  </data>
+	<data name="lblUrl.Text" xml:space="preserve">
+    <value>Länk</value>
+  </data>
+	<data name="TabRecycled.Text" xml:space="preserve">
+    <value>En sida med detta namn finns i Papperskorgen. För att återställa denna sida använder Papperskorgen.</value>
+  </data>
+	<data name="lblNoRecords.Text" xml:space="preserve">
+    <value>Det finns inga moduler på den valda sidan.</value>
+  </data>
+	<data name="TabExists.Text" xml:space="preserve">
+    <value>Sidnamnet du valt används redan för en annan sida på samma nivå av sidhierarki.</value>
+  </data>
+	<data name="TabCreated.Text" xml:space="preserve">
+    <value>Sida {0} skapad</value>
+  </data>
+	<data name="TabDeleted.Text" xml:space="preserve">
+    <value>Sida {0} borttagen</value>
+  </data>
+	<data name="TabHidden.Text" xml:space="preserve">
+    <value>Sida {0} dold från navigeringen</value>
+  </data>
+	<data name="TabShown.Text" xml:space="preserve">
+    <value>Sida {0} är med i navigeringen</value>
+  </data>
+	<data name="TabEnabled.Text" xml:space="preserve">
+    <value>Sida {0} aktiverad</value>
+  </data>
+	<data name="TabDisabled.Text" xml:space="preserve">
+    <value>Sida {0} avaktiverad</value>
+  </data>
+	<data name="TabMadeHome.Text" xml:space="preserve">
+    <value>Sida {0} gjort som startsida</value>
+  </data>
+	<data name="TabUpdated.Text" xml:space="preserve">
+    <value>Sida {0} uppdaterad</value>
+  </data>
+	<data name="TabMoved.Text" xml:space="preserve">
+    <value>Sida {0} flyttad</value>
+  </data>
+	<data name="EmptyTabName.Text" xml:space="preserve">
+    <value>Sidnamn är tomt</value>
+  </data>
+	<data name="lblLegend.Text" xml:space="preserve">
+    <value>Teckenförklaring</value>
+  </data>
+	<data name="lblContainer.Help" xml:space="preserve">
+    <value>Den valda modulramen kommer att tillämpas på alla moduler på den här sida.</value>
+  </data>
+	<data name="lblDescription.Help" xml:space="preserve">
+    <value>Ange en beskrivning av den här sida här.</value>
+  </data>
+	<data name="lblDisabledPage.Help" xml:space="preserve">
+    <value>Om sidan är inaktiverad är den inte tillgänglig för användare av webbplatsen. Du kan använda det här alternativet för att dölja innehåll som du kanske vill visa vid ett senare tillfälle.</value>
+  </data>
+	<data name="lblIconLarge.Help" xml:space="preserve">
+    <value>Du kan välja en stor ikon som ska användas i konsolen.</value>
+  </data>
+	<data name="lblIconSmall.Help" xml:space="preserve">
+    <value>Du kan välja en ikon som kan användas i menyn.</value>
+  </data>
+	<data name="lblKeywords.Help" xml:space="preserve">
+    <value>Skriv in några nyckelord för denna sida (separerade med kommatecken). Dessa sökord används av sökmotorer för att indexera dina webbsidor.</value>
+  </data>
+	<data name="lblMetaHead.Help" xml:space="preserve">
+    <value>Ange några taggar (dvs. metataggar) som bör göras i "HEAD"-taggen i HTML för denna sida.</value>
+  </data>
+	<data name="lblMetaRefresh.Help" xml:space="preserve">
+    <value>Ange intervallet för att vänta mellan automatisk uppdatering av sidan. (Exempel: Ange "60" för 1 minut eller lämna tomt för att avaktivera.)</value>
+  </data>
+	<data name="lblName.Help" xml:space="preserve">
+    <value>Detta är namnet på sidan. Texten du anger visas i menysystemet.</value>
+  </data>
+	<data name="lblPageSSL.Help" xml:space="preserve">
+    <value>Ange om den här sidan ska tvingas använda en säker anslutning (SSL). Detta alternativ kommer endast att aktiveras om administratören har aktiverat SSL på webbplatsen inställningar.</value>
+  </data>
+	<data name="lblPermanentRedirect.Help" xml:space="preserve">
+    <value>Markera den här rutan om du vill meddela kunden att denna sida skall betraktas som permanent flyttat. Detta skulle tillåta sökmotorer att ändra sina webbadresser till att länka direkt till resursen. Detta ignoreras om LinkType är Ingen.</value>
+  </data>
+	<data name="lblSitemapPriority.Help" xml:space="preserve">
+    <value>Ange önskad prioritet (mellan 0 och 1.0). Detta hjälper till att avgöra hur denna sida rankas i Google i förhållande till andra sidor på din webbplats (0.5 är standard).</value>
+  </data>
+	<data name="lblSkin.Help" xml:space="preserve">
+    <value>Det valda utseendet kommer att tillämpas på denna sida.</value>
+  </data>
+	<data name="lblTags.Help" xml:space="preserve">
+    <value>Markera objekt från den nedrullningsbara menyn att tagga den här sidan.</value>
+  </data>
+	<data name="lblTitle.Help" xml:space="preserve">
+    <value>Ange en titel för sidan här. Texten du anger visas i webbläsarens titelfält.</value>
+  </data>
+	<data name="lblUrl.Help" xml:space="preserve">
+    <value>Om du vill att den här sidan ska bete sig som en navigeringslänk till en annan resurs, kan du ange värdet Länk URL här. Observera att det här fältet är valfritt.</value>
+  </data>
+	<data name="lblVisible.Help" xml:space="preserve">
+    <value>Du kan välja mellan att inkludera sidan i huvudmenyn eller inte göra det. Om en sida inte finns i menyn kan du fortfarande länka till den baserad på dess webbadress.</value>
+  </data>
+	<data name="bulkPagesLabel.Text" xml:space="preserve">
+    <value>Sidor:</value>
+  </data>
+	<data name="PathDuplicateWithAlias.Text" xml:space="preserve">
+		<value>There has a site domain same with your page path.</value>
+	</data>
+	<data name="ExceededQuota.Text" xml:space="preserve">
+		<value>Det är inte tillåtet att lägga till sidan eftersom att lägga till en sida kommer att överstiga Sidkvoten för den här webbplatsen. Vänligen kontakta ditt webbhotell för frågor som rör att öka din Sidkvot.</value>
+	</data>
+	<data name="valName.ErrorMessage" xml:space="preserve">
+		<value>Sidnamn är obligatoriskt</value>
+	</data>
+	<data name="valRefresh.ErrorMessage" xml:space="preserve">
+		<value>Ogiltig talet</value>
+	</data>
+	<data name="valPriority.ErrorMessage" xml:space="preserve">
+		<value>Ogiltigt värde för prioritet</value>
+	</data>
+	<data name="valPriorityRequired.ErrorMessage" xml:space="preserve">
+		<value>Prioritet är obligatorisk</value>
+	</data>
+	<data name="lblAllowIndex.Help" xml:space="preserve">
+		<value>Huruvida den här sidan tillåts att indexeras av sökspindlar.</value>
+	</data>
+	<data name="lblAllowIndex.Text" xml:space="preserve">
+		<value>Tillåt indexering:</value>
+	</data>
+	<data name="Search.Text" xml:space="preserve">
+		<value>Sök</value>
+	</data>
+</root>

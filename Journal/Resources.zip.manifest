@@ -17,6 +17,22 @@
       <name>View.ascx.resx</name>
     </file>
     <file>
+      <path>Scripts/</path>
+      <name>journal.js</name>
+    </file>
+    <file>
+      <path>Scripts/</path>
+      <name>journalcomments.js</name>
+    </file>
+    <file>
+      <path>Scripts/</path>
+      <name>journaleditor.js</name>
+    </file>
+    <file>
+      <path>Scripts/</path>
+      <name>mentionsInput.js</name>
+    </file>
+    <file>
       <path />
       <name>Edit.ascx</name>
     </file>
@@ -31,10 +47,6 @@
     <file>
       <path />
       <name>View.ascx</name>
-    </file>
-    <file>
-      <path />
-      <name>module.css</name>
     </file>
     <file>
       <path>Images/</path>
@@ -62,11 +74,7 @@
     </file>
     <file>
       <path>Images/</path>
-      <name>journal_16X16.jpg</name>
-    </file>
-    <file>
-      <path>Images/</path>
-      <name>journal_32X32.jpg</name>
+      <name>journal_32X32.png</name>
     </file>
     <file>
       <path>Images/</path>
@@ -81,28 +89,12 @@
       <name>throbber.gif</name>
     </file>
     <file>
-      <path>scripts/</path>
-      <name>journal.js</name>
+      <path />
+      <name>module.css</name>
     </file>
     <file>
-      <path>scripts/</path>
-      <name>journalcomments.js</name>
-    </file>
-    <file>
-      <path>scripts/</path>
-      <name>journaleditor.js</name>
-    </file>
-    <file>
-      <path>scripts/</path>
-      <name>jquery.dnnUserFileUpload.js</name>
-    </file>
-    <file>
-      <path>scripts/</path>
-      <name>jquery.fileupload.js</name>
-    </file>
-    <file>
-      <path>scripts/</path>
-      <name>jquery.iframe-transport.js</name>
+      <path />
+      <name>packages.config</name>
     </file>
   </files>
 </dotnetnuke>

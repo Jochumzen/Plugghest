@@ -264,4 +264,10 @@
   <data name="SystemRoleWarning.Text" xml:space="preserve">
     <value>This role is a system role, only minimal edits allowed.</value>
   </data>
+  <data name="AssignToExistUsers.Help" xml:space="preserve">
+    <value>Assign this role to all existing users.</value>
+  </data>
+  <data name="AssignToExistUsers.Text" xml:space="preserve">
+    <value>Assign to existing users:</value>
+  </data>
 </root>

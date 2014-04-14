@@ -1,7 +1,7 @@
 #region Copyright
 // 
 // DotNetNuke® - http://www.dotnetnuke.com
-// Copyright (c) 2002-2012
+// Copyright (c) 2002-2014
 // by DotNetNuke Corporation
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -28,6 +28,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 
 using DotNetNuke.Common;
+using DotNetNuke.Common.Lists;
 using DotNetNuke.Common.Utilities;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Modules.Actions;
@@ -94,23 +95,21 @@ namespace DesktopModules.Admin.Security
                 //cboRoleGroups.Items.Add(new ListItem(Localization.GetString("AllRoles"), "-2"));
                 cboRoleGroups.AddItem(Localization.GetString("AllRoles"), "-2");
 
-                var item = new ListItem(Localization.GetString("GlobalRoles"), "-1");
+				var item = new DnnComboBoxItem(Localization.GetString("GlobalRoles"), "-1");
                 if (_roleGroupId == -1)
                 {
                     item.Selected = true;
                 }
-                //cboRoleGroups.Items.Add(item);
-                cboRoleGroups.AddItem(item.Text, item.Value);
+                cboRoleGroups.Items.Add(item);
 
                 foreach (RoleGroupInfo roleGroup in arrGroups)
                 {
-                    item = new ListItem(roleGroup.RoleGroupName, roleGroup.RoleGroupID.ToString(CultureInfo.InvariantCulture));
+					item = new DnnComboBoxItem(roleGroup.RoleGroupName, roleGroup.RoleGroupID.ToString(CultureInfo.InvariantCulture));
                     if (_roleGroupId == roleGroup.RoleGroupID)
                     {
                         item.Selected = true;
                     }
-                    //cboRoleGroups.Items.Add(item);
-                    cboRoleGroups.AddItem(item.Text, item.Value);
+                    cboRoleGroups.Items.Add(item);
                 }
                 divGroups.Visible = true;
             }
@@ -124,8 +123,24 @@ namespace DesktopModules.Admin.Security
 
         #endregion
 
-		#region Public Methods
+        #region Protected Methods
 
+        /// <summary>
+        /// Get text description of Frequency Value
+        /// </summary>
+        protected string FormatFrequency(string frequency)
+        {
+            if (frequency == "N") return string.Empty;
+
+            var ctlEntry = new ListController();
+            ListEntryInfo entry = ctlEntry.GetListEntryInfo("Frequency", frequency);
+            return entry.Text;
+        }
+
+        #endregion
+
+        #region Public Methods
+        
         /// <summary>
         /// FormatPeriod filters out Null values from the Period column of the Grid
         /// </summary>
@@ -208,7 +223,7 @@ namespace DesktopModules.Admin.Security
                     {
                         //so first create the format string with a dummy value and then
                         //replace the dummy value with the FormatString place holder
-                        string formatString = EditUrl("RoleID", "KEYFIELD", "User Roles");
+                        string formatString = EditUrl("RoleId", "KEYFIELD", "User Roles");
                         formatString = formatString.Replace("KEYFIELD", "{0}");
                         imageColumn.NavigateURLFormatString = formatString;
                     }

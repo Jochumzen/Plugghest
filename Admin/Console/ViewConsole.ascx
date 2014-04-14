@@ -14,7 +14,6 @@
 	<br id="SettingsBreak" runat="server" style="clear:both" />
 	<div>
 	<asp:Repeater ID="DetailView" runat="server">
-		<ItemTemplate><%#GetHtml(Container.DataItem)%></ItemTemplate>
 	</asp:Repeater>
 	</div>
 	<br style="clear:both" />

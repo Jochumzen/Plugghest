@@ -1,7 +1,7 @@
 #region Copyright
 // 
 // DotNetNuke® - http://www.dotnetnuke.com
-// Copyright (c) 2002-2012
+// Copyright (c) 2002-2014
 // by DotNetNuke Corporation
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -53,6 +53,7 @@ namespace DotNetNuke.Modules.Admin.Portals
 {
     public partial class Signup : PortalModuleBase
     {
+    	private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof (Signup));
         #region Private Properties
 
         private CultureDropDownTypes DisplayType { get; set; }
@@ -109,6 +110,8 @@ namespace DotNetNuke.Modules.Admin.Portals
                 if (!Page.IsPostBack)
                 {
                     BindTemplates();
+                    // load template description
+                    cboTemplate_SelectedIndexChanged(null, null);
 
                     if (UserInfo.IsSuperUser)
                     {
@@ -344,7 +347,8 @@ namespace DotNetNuke.Modules.Admin.Portals
 
                     //check whether have conflict between tab path and portal alias.
                     var checkTabPath = string.Format("//{0}", strPortalAlias);
-                    if (TabController.GetTabByTabPath(PortalSettings.PortalId, checkTabPath, string.Empty) != Null.NullInteger)
+                    if (TabController.GetTabByTabPath(PortalSettings.PortalId, checkTabPath, string.Empty) != Null.NullInteger
+						|| TabController.GetTabByTabPath(Null.NullInteger, checkTabPath, string.Empty) != Null.NullInteger)
                     {
                         message = Localization.GetString("DuplicateWithTab", LocalResourceFile);
                     }
@@ -419,7 +423,16 @@ namespace DotNetNuke.Modules.Admin.Portals
                             if (useCurrent.Checked)
                             {
                                 adminUser = UserInfo;
-                                adminUser.Membership.Password = UserController.GetPassword(ref adminUser, String.Empty);
+                                intPortalId = objPortalController.CreatePortal(txtPortalName.Text,
+                                                                           adminUser.UserID,
+                                                                           txtDescription.Text,
+                                                                           txtKeyWords.Text,
+                                                                           template,
+                                                                           homeDir,
+                                                                           strPortalAlias,
+                                                                           strServerPath,
+                                                                           strChildPath,
+                                                                           blnChild);
                             }
                             else
                             {
@@ -445,9 +458,7 @@ namespace DotNetNuke.Modules.Admin.Portals
                                                         }
                                                 };
 
-
-                            }
-							intPortalId = objPortalController.CreatePortal(txtPortalName.Text,
+                                intPortalId = objPortalController.CreatePortal(txtPortalName.Text,
                                                                            adminUser,
                                                                            txtDescription.Text,
                                                                            txtKeyWords.Text,
@@ -457,6 +468,8 @@ namespace DotNetNuke.Modules.Admin.Portals
                                                                            strServerPath,
                                                                            strChildPath,
                                                                            blnChild);
+                            }
+							
                         }
                         catch (Exception ex)
                         {
@@ -502,13 +515,21 @@ namespace DotNetNuke.Modules.Admin.Portals
                             }
                             catch (Exception exc)
                             {
-                                DnnLog.Error(exc);
+                                Logger.Error(exc);
 
                                 closePopUpStr = (PortalSettings.EnablePopUps) ? "onclick=\"return " + UrlUtils.ClosePopUp(true,webUrl,true) + "\"" : "";
                                 message = string.Format(Localization.GetString("UnknownSendMail.Error", LocalResourceFile), webUrl, closePopUpStr);
                             }
                             var objEventLog = new EventLogController();
                             objEventLog.AddLog(objPortalController.GetPortal(intPortalId), PortalSettings, UserId, "", EventLogController.EventLogType.PORTAL_CREATED);
+
+                            // mark default language as published if content localization is enabled
+                            bool ContentLocalizationEnabled = PortalController.GetPortalSettingAsBoolean("ContentLocalizationEnabled", PortalId, false);
+                            if (ContentLocalizationEnabled)
+                            {
+                                LocaleController lc = new LocaleController();
+                                lc.PublishLanguage(intPortalId, objPortal.DefaultLanguage, true);
+                            }
 
                             //Redirect to this new site
                             if (message == Null.NullString)
@@ -589,17 +610,17 @@ namespace DotNetNuke.Modules.Admin.Portals
                     
                     if (!String.IsNullOrEmpty(template.Description))
                     {
-                        lblTemplateDescription.Visible = true;
+                        rowTemplateDescription.Visible = true;
                         lblTemplateDescription.Text = Server.HtmlDecode(template.Description);
                     }
                     else
                     {
-                        lblTemplateDescription.Visible = false;
+                        rowTemplateDescription.Visible = false;
                     }
                 }
                 else
                 {
-                    lblTemplateDescription.Visible = false;
+                    rowTemplateDescription.Visible = false;
                 }
             }
             catch (Exception exc) //Module failed to load

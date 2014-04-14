@@ -12,6 +12,11 @@
     float: right;
 }
 
+.dnnListEditorNoList {
+    color: #999999;
+    text-align: center;
+}
+
 /* dnn tree */
 .DNNTree{
     margin-bottom: 20px;

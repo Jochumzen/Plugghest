@@ -36,6 +36,10 @@
                     <dnn:Label ID="plAutoAssignment" runat="server" ResourceKey="AutoAssignment" ControlName="chkAutoAssignment" />
                     <asp:CheckBox ID="chkAutoAssignment" runat="server" />
                 </div>
+				<div class="dnnFormItem" id="assignToExistUsers">
+                    <dnn:Label ID="plAssignToExistUsers" runat="server" ResourceKey="AssignToExistUsers" ControlName="chkAssignToExistUsers" />
+                    <asp:CheckBox ID="chkAssignToExistUsers" runat="server" />
+                </div>
                 <div class="dnnFormItem">
                     <dnn:Label ID="securityModeListLabel" runat="server" Suffix="" ControlName="securityModeList" />
                     <%--<asp:DropDownList ID="securityModeList" runat="server"/>--%>
@@ -61,11 +65,8 @@
                 </div>
                 <div class="dnnFormItem" id="divBillingPeriod" runat="server">
                     <dnn:Label ID="plBillingPeriod" runat="server" ResourceKey="BillingPeriod" Suffix=":" ControlName="txtBillingPeriod" />
-                    <asp:TextBox ID="txtBillingPeriod" runat="server" MaxLength="50" Columns="30" />
-                    <div class="dnnLabel">                    
-                    </div>
-                    <%--<asp:DropDownList ID="cboBillingFrequency" runat="server" DataValueField="value" DataTextField="text" AutoPostBack="true" />--%>
-                    <dnn:DnnComboBox ID="cboBillingFrequency" runat="server" DataValueField="value" DataTextField="text" AutoPostBack="true" />
+                    <asp:TextBox ID="txtBillingPeriod" runat="server" MaxLength="50" Columns="30" CssClass="dnnFixedSizeComboBox" />
+                    <dnn:DnnComboBox ID="cboBillingFrequency" runat="server" DataValueField="value" DataTextField="text" AutoPostBack="true" CssClass="dnnFixedSizeComboBox" />
                     <asp:CompareValidator ID="valBillingPeriod1" CssClass="dnnFormMessage dnnFormError" runat="server" resourcekey="valBillingPeriod1" ControlToValidate="txtBillingPeriod" Display="Dynamic" Type="Integer" Operator="DataTypeCheck" />
                     <asp:CompareValidator ID="valBillingPeriod2" CssClass="dnnFormMessage dnnFormError" runat="server" resourcekey="valBillingPeriod2" ControlToValidate="txtBillingPeriod" Display="Dynamic" Operator="GreaterThan" ValueToCompare="0" />
                 </div>
@@ -78,7 +79,6 @@
                 <div class="dnnFormItem" id="divTrialPeriod" runat="server">
                     <dnn:Label ID="plTrialPeriod" runat="server" ResourceKey="TrialPeriod" Suffix=":" ControlName="txtTrialPeriod" />
                     <asp:TextBox ID="txtTrialPeriod" runat="server" MaxLength="50" Columns="30" CssClass="dnnFixedSizeComboBox" />
-                    <%--<asp:DropDownList ID="cboTrialFrequency" runat="server" Width="100px" DataValueField="value" DataTextField="text" AutoPostBack="true" />--%>
                     <dnn:DnnComboBox ID="cboTrialFrequency" runat="server" DataValueField="value" DataTextField="text" AutoPostBack="true" CssClass="dnnFixedSizeComboBox" />
                     <asp:CompareValidator ID="valTrialPeriod1" CssClass="dnnFormMessage dnnFormError" runat="server" resourcekey="valTrialPeriod1" ControlToValidate="txtTrialPeriod" Display="Dynamic" Type="Integer" Operator="DataTypeCheck" />
                     <asp:CompareValidator ID="valTrialPeriod2" CssClass="dnnFormMessage dnnFormError" runat="server" resourcekey="valTrialPeriod2" ControlToValidate="txtTrialPeriod" Display="Dynamic" Operator="GreaterThan" ValueToCompare="0" />
@@ -120,6 +120,15 @@
             noText: noText,
             title: titleText
         });
+
+	    var updateAssignRow = function(show) {
+			if (show) {
+				$("#assignToExistUsers").show();
+			} else {
+				$("#assignToExistUsers").hide().find("input[type=checkbox]").attr("checked", false);
+				$("#assignToExistUsers").find("input[type=checkbox]").attr("checked", false);
+			}
+	    };
         
          var updateView = function(e) {
             var txtBillingPeriod = $("#<%=txtBillingPeriod.ClientID %>");
@@ -144,10 +153,16 @@
                 txtTrialPeriod.removeAttr("disabled");
                 cboTrialFrequency.enable();
             }
-        };
+
+         	updateAssignRow($("#<%=chkAutoAssignment.ClientID%>").attr("checked"));
+         };
 
         $("#<%=txtServiceFee.ClientID %>").keyup(updateView);
-        $("#<%=txtTrialFee.ClientID %>").keyup(updateView);
+    	$("#<%=txtTrialFee.ClientID %>").keyup(updateView);
+
+	    $("#<%=chkAutoAssignment.ClientID%>").click(function() {
+		    updateAssignRow(this.checked);
+	    });
         
         setTimeout(updateView, 0);
     }

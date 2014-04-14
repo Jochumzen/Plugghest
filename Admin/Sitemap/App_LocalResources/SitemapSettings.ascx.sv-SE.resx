@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="SectionCoreSettings.Text" xml:space="preserve">
+    <value>Grundinställningar för sidornas URL</value>
+  </data>
+	<data name="cmdSaveAll.Text" xml:space="preserve">
+    <value>Spara Webbkartans konfiguration</value>
+  </data>
+	<data name="cmdRefresh.Text" xml:space="preserve">
+    <value>Uppdatera sidprioriteringar</value>
+  </data>
+	<data name="cmdVerification.Text" xml:space="preserve">
+    <value>Skapa</value>
+  </data>
+	<data name="cmdSubmitToSearch.Text" xml:space="preserve">
+    <value>Skicka</value>
+  </data>
+	<data name="cmdSubmitToSearch.ToolTip" xml:space="preserve">
+    <value>Skicka</value>
+  </data>
+	<data name="1Day.Text" xml:space="preserve">
+    <value>1 Dag</value>
+  </data>
+	<data name="2Days.Text" xml:space="preserve">
+    <value>2 Dagar</value>
+  </data>
+	<data name="3Days.Text" xml:space="preserve">
+    <value>3 Dagar</value>
+  </data>
+	<data name="4Days.Text" xml:space="preserve">
+    <value>4 Dagar</value>
+  </data>
+	<data name="5Days.Text" xml:space="preserve">
+    <value>5 Dagar</value>
+  </data>
+	<data name="6Days.Text" xml:space="preserve">
+    <value>6 Dagar</value>
+  </data>
+	<data name="7Days.Text" xml:space="preserve">
+    <value>7 Dagar</value>
+  </data>
+	<data name="lblExcludePriority.Help" xml:space="preserve">
+		<value>Detta alternativ kan användas för att ta bort vissa sidor från webbplatskartan. Till exempel kan du ställa in prioritering -1 för en sida och ange -1 här för att få sidan att inte vara med i den genererade webbplatskartan.</value>
+	</data>
+	<data name="lblExcludePriority.Text" xml:space="preserve">
+		<value>Uteslut webbadresser med en prioritet lägre än:</value>
+	</data>
+	<data name="Description.Header" xml:space="preserve">
+		<value>Beskrivning</value>
+	</data>
+	<data name="Keywords.Header" xml:space="preserve">
+		<value>Sidans Nyckelord</value>
+	</data>
+	<data name="lblCache.Help" xml:space="preserve">
+		<value>Aktivera det här alternativet om du vill cachelagra webbplatskartan så att den inte genereras varje gång den efterfrågas. Detta är speciellt nödvändigt för stora webbplatser. Om din webbplats har mer än 50,000 webbadresser kommer webbplatskartan blir cachas med ett standardvärde på 1 dag. Ställ in detta värde till 0 för att inaktivera cachelagring.</value>
+	</data>
+	<data name="lblCache.Text" xml:space="preserve">
+		<value>Dagar till cachelagra webbplatskarta för</value>
+	</data>
+	<data name="Edit.Cancel" xml:space="preserve">
+		<value>Avbryt</value>
+	</data>
+	<data name="Edit.Edit" xml:space="preserve">
+		<value>Redigera</value>
+	</data>
+	<data name="Edit.Update" xml:space="preserve">
+		<value>Uppdatera</value>
+	</data>
+	<data name="Enabled.Header" xml:space="preserve">
+		<value>Enabled</value>
+	</data>
+	<data name="DisableCaching.Text" xml:space="preserve">
+		<value>Inaktivera Caching</value>
+	</data>
+	<data name="lblLevelPriority.Help" xml:space="preserve">
+		<value>Om markerad kommer prioritet för varje sida beräknas från hierarkin för sidan. Sidor i toppnivå kommer att ha ett värde av 1, andra nivån 0,9, tredje nivån 0,8, ... Den här inställningen ändrar inte det värde som lagras i själva sidanmen den kommer att använda det beräknade värdet vid behov.</value>
+	</data>
+	<data name="lblIncludeHidden.Help" xml:space="preserve">
+		<value>Om markerad dolda sidor (ej synlig i menyn) kommer också att finnas i webbplatskartan. Standardinställningen är att inte inkludera dolda sidor.</value>
+	</data>
+	<data name="lblIncludeHidden.Text" xml:space="preserve">
+		<value>Inkludera Dolda Sidor?</value>
+	</data>
+	<data name="lblLevelPriority.Text" xml:space="preserve">
+		<value>Använd sidnivå baserade prioriteringar?</value>
+	</data>
+	<data name="lblMinPagePriority.Help" xml:space="preserve">
+		<value>När "sidnivå baserade prioriteringar" används kan minsta prioritet för sidor användas för att ställa den lägsta prioritet som kommer att användas på lågnivåsidor</value>
+	</data>
+	<data name="lblMinPagePriority.Text" xml:space="preserve">
+		<value>Minsta Prioritet för Sidor:</value>
+	</data>
+	<data name="lblSearchEngine.Help" xml:space="preserve">
+		<value>Skicka in din webbplats till den valda sökmotorn för indexering.</value>
+	</data>
+	<data name="lblSearchEngine.Text" xml:space="preserve">
+		<value>Sökmotor:</value>
+	</data>
+	<data name="lblSiteMap.Help" xml:space="preserve">
+		<value>Skicka din webbplatskarta till Google för bättre sökoptimering. Klicka på Skicka att få ett Googles verktyg för webbansvarig-konto och verifiera ditt ägare av webbplatsen (med tex verifiering alternativet nedan). Efter verifiering kan du välja att alternativet Lägg till/testa webbplatskarta vid Optimering &gt;&gt; Webbplatskarta och klistra in Webbplatskartas URL.</value>
+	</data>
+	<data name="lblSiteMap.Text" xml:space="preserve">
+		<value>Webbplatskartans URL:</value>
+	</data>
+	<data name="MessageUpdated.Text" xml:space="preserve">
+		<value>Din konfiguration har sparats</value>
+	</data>
+	<data name="PageTitle.Header" xml:space="preserve">
+		<value>Sidrubrik</value>
+	</data>
+	<data name="Priority.Header" xml:space="preserve">
+		<value>Prioritet</value>
+	</data>
+	<data name="Level.Header" xml:space="preserve">
+		<value>Nivå</value>
+	</data>
+	<data name="ProviderDescription.Header" xml:space="preserve">
+		<value>Beskrivning</value>
+	</data>
+	<data name="ProviderEnabled.Header" xml:space="preserve">
+		<value>Aktiverad?</value>
+	</data>
+	<data name="ProviderName.Header" xml:space="preserve">
+		<value>Provider Namn</value>
+	</data>
+	<data name="ProviderOverride.Header" xml:space="preserve">
+		<value>Åsidosätt prioriteringar?</value>
+	</data>
+	<data name="lnkResetCache.Text" xml:space="preserve">
+		<value>Rensa Cache</value>
+	</data>
+	<data name="ResetOK.Text" xml:space="preserve">
+		<value>Webbplatskartans cache har framgångsrikt rensats</value>
+	</data>
+	<data name="lblVerification.Help" xml:space="preserve">
+		<value>När du registrerar dig med Googles verktyg för webbansvarig måste du verifiera att du äger webbplatsen. Väljmetoden "Ladda upp en HTML-fil" från Google Verifiering . Ange filnamnet som visas (tex. google53c0cef435b2b81e.html) i verifikationsbilagan textrutan och klicka på Skapa. Återgå till Google och välj Bekräfta-knappen.</value>
+	</data>
+	<data name="lblVerification.Text" xml:space="preserve">
+		<value>Verifiering:</value>
+	</data>
+	<data name="lnkTestSitemap.Text" xml:space="preserve">
+		<value>Visa aktuella webbplatskarta</value>
+	</data>
+	<data name="NoCacheToReset.Text" xml:space="preserve">
+		<value>Ingen datacache finns tillgänglig för att återställa</value>
+	</data>
+	<data name="Name.Header" xml:space="preserve">
+		<value>Namn</value>
+	</data>
+	<data name="OverridePriority.Header" xml:space="preserve">
+		<value>Åsidosätt prioritet</value>
+	</data>
+	<data name="SectionGeneralSettings.Text" xml:space="preserve">
+		<value>Allmänna Webbplatskartinställningar</value>
+	</data>
+	<data name="SectionCoreSettingsLbl.Text" xml:space="preserve">
+		<value>Ändra grundinställningar som gäller för allmänna DotNetNuke sidor.</value>
+	</data>
+	<data name="SectionGeneralSettingsLbl.Text" xml:space="preserve">
+		<value>Konfigurerar inställningarna som gäller för alla webbadresser som ingår i webbplatskartan.</value>
+	</data>
+	<data name="valPriority.Text" xml:space="preserve">
+		<value>Du måste ange ett giltigt nummer mellan 0.0 och 1.0.</value>
+	</data>
+	<data name="SectionProviderSettings.Help" xml:space="preserve">
+		<value>In this section you can view and configure available Sitemap providers for the current website. Check the "Enabled" checkbox if you want to include urls generated for that provider in the final sitemap file. You can also override the priority for all urls of any given provider by checking the appropriate checkbox and giving a value for the new priority</value>
+	</data>
+	<data name="SectionProviderSettings.Text" xml:space="preserve">
+		<value>Installerade Providers för Webbplatskarta</value>
+	</data>
+	<data name="SectionSubmissionSettings.Text" xml:space="preserve">
+		<value>Webbplats Anmälan</value>
+	</data>
+	<data name="SectionSubmissionSettingsLbl.Text" xml:space="preserve">
+		<value>I det här avsnittet kan du skicka in din webbplats till olika sökmotorer.</value>
+	</data>
+</root>

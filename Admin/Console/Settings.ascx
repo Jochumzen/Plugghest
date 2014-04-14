@@ -64,6 +64,10 @@
 		<asp:Checkbox ID="ShowTooltip" runat="server" Checked="true" />
 	</div>
 	<div class="dnnFormItem">
+		<dnn:label id="lblOrderTabsByHierarchy" runat="server" ControlName="OrderTabsByHierarchy" ResourceKey="OrderTabsByHierarchy" Suffix=":" />
+		<asp:Checkbox ID="OrderTabsByHierarchy" runat="server" />
+	</div>
+	<div class="dnnFormItem">
 		<dnn:label id="lblConsoleWidth" runat="server" ControlName="ConsoleWidth" ResourceKey="ConsoleWidth" Suffix=":" />
 		<asp:TextBox ID="ConsoleWidth" runat="server" Text="" />
 	</div>

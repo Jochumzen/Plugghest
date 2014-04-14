@@ -1,0 +1,5 @@
+C:\websites\dnndev.me\bin\ViewCourses.dll
+C:\websites\dnndev.me\bin\ViewCourses.pdb
+C:\websites\dnndev.me\DesktopModules\ViewCourses\obj\Debug\ViewCourses.dll
+C:\websites\dnndev.me\DesktopModules\ViewCourses\obj\Debug\ViewCourses.pdb
+C:\websites\dnndev.me\DesktopModules\ViewCourses\obj\Debug\ViewCourses.csprojResolveAssemblyReference.cache

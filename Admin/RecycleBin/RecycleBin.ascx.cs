@@ -1,7 +1,7 @@
 #region Copyright
 // 
 // DotNetNuke® - http://www.dotnetnuke.com
-// Copyright (c) 2002-2012
+// Copyright (c) 2002-2014
 // by DotNetNuke Corporation
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -94,23 +94,25 @@ namespace DesktopModules.Admin.RecycleBin
 
                 if (tab == null)
                 {
-                    modulesListBox.Items.Add(new ListItem(module.ModuleTitle, module.TabID + "-" + module.ModuleID));
+                    modulesListBox.Items.Add(new ListItem(module.ModuleTitle + " - " + module.LastModifiedOnDate, module.TabID + "-" + module.ModuleID));
                 }
                 else if (tab.TabID == module.TabID)
                 {
-                    modulesListBox.Items.Add(new ListItem(tab.TabName + " - " + module.ModuleTitle, module.TabID + "-" + module.ModuleID));
+                    modulesListBox.Items.Add(new ListItem(tab.TabName + " - " + module.ModuleTitle + " - " + module.LastModifiedOnDate, module.TabID + "-" + module.ModuleID));
                 }
             }
 
-            tabsListBox.DataSource = DeletedTabs;
-            tabsListBox.DataBind();
+            foreach (var tab in DeletedTabs)
+            {
+	            var item = new ListItem(tab.IndentedTabName + " - " + tab.LastModifiedOnDate, tab.TabID.ToString());
+				item.Attributes.Add("ParentId", tab.ParentId.ToString());
+				tabsListBox.Items.Add(item);
+            }
 
             cmdRestoreTab.Enabled = (DeletedTabs.Count > 0);
             cmdDeleteTab.Enabled = (DeletedTabs.Count > 0);
-
             cmdRestoreModule.Enabled = (modulesListBox.Items.Count > 0);
             cmdDeleteModule.Enabled = (modulesListBox.Items.Count > 0);
-
             cmdEmpty.Enabled = DeletedTabs.Count > 0 || modulesListBox.Items.Count > 0;
 		}
 
@@ -163,7 +165,7 @@ namespace DesktopModules.Admin.RecycleBin
                                             .OrderBy(tab => tab.TabPath)
                                             .ToList();
 
-            DeletedModules = moduleController.GetModules(PortalId)
+            DeletedModules = moduleController.GetRecycleModules(PortalId)
                                                 .Cast<ModuleInfo>()
                                                 .Where(module => module.IsDeleted && (modeButtonList.SelectedValue == "ALL" || module.CultureCode == currentLocale.Code))
                                                 .ToList();
@@ -178,7 +180,7 @@ namespace DesktopModules.Admin.RecycleBin
             var module = moduleController.GetModule(moduleId, tabId, false);
             if ((module != null))
             {
-                if (tabsListBox.Items.FindByValue(module.TabID.ToString(CultureInfo.InvariantCulture)) != null)
+                if (DeletedTabs.Any(t => t.TabID == module.TabID))
                 {
                     var title = !string.IsNullOrEmpty(module.ModuleTitle) ? module.ModuleTitle : module.DesktopModule.FriendlyName;
                     Skin.AddModuleMessage(this, string.Format(Localization.GetString("TabDeleted.ErrorMessage", LocalResourceFile), title),
@@ -196,7 +198,7 @@ namespace DesktopModules.Admin.RecycleBin
 
 			if (tab != null)
 			{
-				if (!Null.IsNull(tab.ParentId) && tabsListBox.Items.FindByValue(tab.ParentId.ToString(CultureInfo.InvariantCulture)) != null)
+				if (!Null.IsNull(tab.ParentId) && DeletedTabs.Any(t => t.TabID == tab.ParentId))
 				{
 					Skin.AddModuleMessage(this,
 												   string.Format(Localization.GetString("ChildTab.ErrorMessage", LocalResourceFile), tab.TabName),
@@ -207,6 +209,7 @@ namespace DesktopModules.Admin.RecycleBin
 				{
 				    var tabController = new TabController();
                     tabController.RestoreTab(tab, PortalSettings);
+					DeletedTabs.Remove(tab);
 
 					//restore modules in this tab
 					modulesListBox.Items.Cast<ListItem>().ToList().ForEach(i =>

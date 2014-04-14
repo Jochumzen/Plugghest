@@ -22,7 +22,7 @@
 			<%--<asp:dropdownlist id="cboContainers" Runat="server" AutoPostBack="True" />--%>
             <dnn:DnnComboBox ID="cboContainers" runat="server" AutoPostBack="true" />
 			<div class="legacySkinNotice">
-				<asp:Label ID="lblLegacy" runat="server" class="dnnFormMessage dnnFormWarning" resourcekey="LegacySkin" Visible="false" />
+				<asp:Label ID="lblLegacy" runat="server" class="dnnFormMessage dnnFormWarning" resourcekey="LegacySkin" />
 			</div>	
 		</div>
 		<asp:panel id="pnlSkin" Runat="server" Visible="False" Cssclass="dnnFormItem">

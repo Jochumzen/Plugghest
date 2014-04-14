@@ -1,0 +1,662 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+	<!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+	<xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+		<xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+		<xsd:element name="root" msdata:IsDataSet="true">
+			<xsd:complexType>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:element name="metadata">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" />
+							</xsd:sequence>
+							<xsd:attribute name="name" use="required" type="xsd:string" />
+							<xsd:attribute name="type" type="xsd:string" />
+							<xsd:attribute name="mimetype" type="xsd:string" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="assembly">
+						<xsd:complexType>
+							<xsd:attribute name="alias" type="xsd:string" />
+							<xsd:attribute name="name" type="xsd:string" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="data">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+								<xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+							<xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+							<xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+							<xsd:attribute ref="xml:space" />
+						</xsd:complexType>
+					</xsd:element>
+					<xsd:element name="resheader">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+							</xsd:sequence>
+							<xsd:attribute name="name" type="xsd:string" use="required" />
+						</xsd:complexType>
+					</xsd:element>
+				</xsd:choice>
+			</xsd:complexType>
+		</xsd:element>
+	</xsd:schema>
+	<resheader name="resmimetype">
+		<value>text/microsoft-resx</value>
+	</resheader>
+	<resheader name="version">
+		<value>2.0</value>
+	</resheader>
+	<resheader name="reader">
+		<value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<resheader name="writer">
+		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+	</resheader>
+	<data name="CreateLocalizedPages.Text" xml:space="preserve">
+    <value>Skapa Språkanpassade sidor</value>
+  </data>
+	<data name="avalableCulturesLabel.Text" xml:space="preserve">
+    <value>Tillgängliga Språk</value>
+  </data>
+	<data name="CacheSettings.Text" xml:space="preserve">
+    <value>Cacheinställningar</value>
+  </data>
+	<data name="SkinPreview.Text" xml:space="preserve">
+    <value>Förhandsgranska Skin och Container</value>
+  </data>
+	<data name="Add.Text" xml:space="preserve">
+    <value>Lägg till sida</value>
+  </data>
+	<data name="BasicSettings.Text" xml:space="preserve">
+		<value>Grundinställningar</value>
+	</data>
+	<data name="BasicSettingsHelp.Text" xml:space="preserve">
+		<value>I det här avsnittet kan du ställa in grundläggande inställningar för den här sidan.</value>
+	</data>
+	<data name="TabName.Text" xml:space="preserve">
+		<value>Sidans namn</value>
+	</data>
+	<data name="TabNameHelp.Text" xml:space="preserve">
+		<value>Detta är namnet på sidan. Texten du skriver kommer att visas i menysystemet.</value>
+	</data>
+	<data name="Title.Text" xml:space="preserve">
+		<value>Sidtitel</value>
+	</data>
+	<data name="TitleHelp.Text" xml:space="preserve">
+		<value>Ange en titel för sidan här. Texten du skriver kommer att visas i webbläsarfönstrets titelfält.</value>
+	</data>
+	<data name="Description.Text" xml:space="preserve">
+		<value>Beskrivning</value>
+	</data>
+	<data name="DescriptionHelp.Text" xml:space="preserve">
+		<value>Ange här en beskrivning av sida .</value>
+	</data>
+	<data name="ParentTab.Text" xml:space="preserve">
+		<value>Överordnad sida</value>
+	</data>
+	<data name="ParentTab.Help" xml:space="preserve">
+		<value>Välj den sida som du vill att den här sidan ska vara underordnat till.</value>
+	</data>
+	<data name="DefaultTemplate.Text" xml:space="preserve">
+		<value>Förvalda</value>
+	</data>
+	<data name="Url.Text" xml:space="preserve">
+		<value>Länk Url</value>
+	</data>
+	<data name="UrlHelp.Text" xml:space="preserve">
+		<value>Om du vill att den här sida ska bete sig som en navigations länk till en annan resurs, kan du ange värdet Länk URL . Observera att detta fältet är valfritt.</value>
+	</data>
+	<data name="Copy.Text" xml:space="preserve">
+		<value>Kopiera Sida</value>
+	</data>
+	<data name="CopyModules.Text" xml:space="preserve">
+		<value>Kopiera Från Sidan</value>
+	</data>
+	<data name="CopyModulesHelp.Text" xml:space="preserve">
+		<value>Välj sidan (om någon finns) som du vill kopiera moduler från.</value>
+	</data>
+	<data name="CopyContent.Text" xml:space="preserve">
+		<value>Specificera Moduler</value>
+	</data>
+	<data name="CopyContentHelp.Text" xml:space="preserve">
+		<value>Välj de moduler som du vill kopiera och ange titeln för modulen. Dessutom ange om du vill skapa en ny modul (utan innehåll), en kopia av modulen (med innehåll), eller en referens till ett befintligt modul (delat innehåll).</value>
+	</data>
+	<data name="ModuleNew.Text" xml:space="preserve">
+		<value>Ny</value>
+	</data>
+	<data name="ModuleCopy.Text" xml:space="preserve">
+		<value>Kopiera</value>
+	</data>
+	<data name="AdvancedSettings.Text" xml:space="preserve">
+		<value>Avancerade Inställningar</value>
+	</data>
+	<data name="AdvancedSettingsHelp.Text" xml:space="preserve">
+		<value>I det här avsnittet kan du ställa in mer avancerade inställningar för den här sidan.</value>
+	</data>
+	<data name="Appearance.Text" xml:space="preserve">
+		<value>Utseende</value>
+	</data>
+	<data name="Icon.Text" xml:space="preserve">
+		<value>Ikon</value>
+	</data>
+	<data name="IconHelp.Text" xml:space="preserve">
+		<value>Du kan välja en ikon som kan användas i menyn.</value>
+	</data>
+	<data name="plSkin.Text" xml:space="preserve">
+		<value>Sidans skinn</value>
+	</data>
+	<data name="plSkin.Help" xml:space="preserve">
+		<value>Det valda skinnet kommer att tillämpas på den här sidan.</value>
+	</data>
+	<data name="plContainer.Text" xml:space="preserve">
+		<value>Sidan Container</value>
+	</data>
+	<data name="plContainer.Help" xml:space="preserve">
+		<value>Den valda containern kommer att tillämpas på alla moduler på den här sidan.</value>
+	</data>
+	<data name="Menu.Text" xml:space="preserve">
+		<value>Inkludera i menyn</value>
+	</data>
+	<data name="MenuHelp.Text" xml:space="preserve">
+		<value>Du kan välja om huruvida sidan ska inkluderas i huvudmenyn eller inte. Om en sida inte finns i menyn kan du fortfarande länka till den, baserat på dess webbadress.</value>
+	</data>
+	<data name="Disabled.Text" xml:space="preserve">
+		<value>Inaktiverad</value>
+	</data>
+	<data name="DisabledHelp.Text" xml:space="preserve">
+		<value>Om sidan är inaktiverad kan den inte klickas på i någon navigeringsmenyn. Detta alternativ används för att ge platsmarkörer för underordnade menyalternativ.</value>
+	</data>
+	<data name="SecuritySettings.Text" xml:space="preserve">
+		<value>Säkerhetsinställningar</value>
+	</data>
+	<data name="Permissions.Text" xml:space="preserve">
+		<value>Behörigheter</value>
+	</data>
+	<data name="PermissionsHelp.Text" xml:space="preserve">
+		<value>Välj de grupper av människor som kan visa och administrera den här sidan.</value>
+	</data>
+	<data name="OtherSettings.Text" xml:space="preserve">
+		<value>Andra inställningar</value>
+	</data>
+	<data name="KeyWords.Text" xml:space="preserve">
+		<value>Sökord</value>
+	</data>
+	<data name="KeyWordsHelp.Text" xml:space="preserve">
+		<value>Ange några nyckelord för den här sidan (separerade med kommatecken). Dessa sökord används av vissa sökmotorer på Internet som hjälpinformation vid katalogisering av sidorna på din webbplats.</value>
+	</data>
+	<data name="plSecure.Text" xml:space="preserve">
+		<value>Säker?</value>
+	</data>
+	<data name="plSecure.Help" xml:space="preserve">
+		<value>Ange om den här sidan bör tvingas att använda en säker anslutning (SSL). Detta alternativ kommer endast att aktiveras om administratören har aktiverat SSL i Webbplatsinställningar.</value>
+	</data>
+	<data name="plStartDate.Text" xml:space="preserve">
+		<value>Startdatum:</value>
+	</data>
+	<data name="CacheDuration.Help" xml:space="preserve">
+		<value>Ange den tid (i sekunder) som sidan ska cachas för. Detta måste vara ett heltal.</value>
+	</data>
+	<data name="CacheDuration.Text" xml:space="preserve">
+		<value>Cache tid (sekunder)</value>
+	</data>
+	<data name="CacheIncludeExclude.Text" xml:space="preserve">
+		<value>Inkludera/Exkludera parametrar som standard</value>
+	</data>
+	<data name="CacheIncludeExclude.Help" xml:space="preserve">
+		<value>Om värdet är INKLUDERA kommer alla frågeparametrars olika variationer resultera i en ny post i den utgående cachen. Om den är inställd att UTESLUTA kommer frågeparametrar inte användas för att variera den cachade sidan.</value>
+	</data>
+	<data name="CacheDurationInfo.Text" xml:space="preserve">
+		<value>Observera, det finns en schemalagd uppgift för rensning av Output Cache. Uppgiften måste köra oftare än den Cache tid du anger här.</value>
+	</data>
+	<data name="BadTemplate.Text" xml:space="preserve">
+		<value>Sidmallen är inte ett giltigt XML-dokument. Välj en annan mall och försök igen.</value>
+	</data>
+	<data name="CacheMaxVaryByCount.Help" xml:space="preserve">
+		<value>Ange maximalt antal av variationer att lagra i cachen för den här sidan. Detta måste vara ett heltal. (Observera att den här funktion förhindrar potentiella överbelastningsattacker.)</value>
+	</data>
+	<data name="ControlTitle_edit.Text" xml:space="preserve">
+		<value>Redigera sida</value>
+	</data>
+	<data name="cmdCopySkin.Text" xml:space="preserve">
+		<value>Kopiera design</value>
+	</data>
+	<data name="cmdCopyPerm.Text" xml:space="preserve">
+		<value>Kopiera behörigheter</value>
+	</data>
+	<data name="CacheProvider.Help" xml:space="preserve">
+		<value>Välj provider du vill använda för denna sida.</value>
+	</data>
+	<data name="CacheProvider.Text" xml:space="preserve">
+		<value>Output Cache Provider</value>
+	</data>
+	<data name="CacheMaxVaryByCount.Text" xml:space="preserve">
+		<value>Variera Med Gräns</value>
+	</data>
+	<data name="cmdClearPageCache.Text" xml:space="preserve">
+		<value>Töm cache - den här sidan</value>
+	</data>
+	<data name="cmdClearAllPageCache.Text" xml:space="preserve">
+		<value>Töm cache - Alla sidor</value>
+	</data>
+	<data name="cmdSubmit.Text" xml:space="preserve">
+		<value>Skicka</value>
+	</data>
+	<data name="ControlTitle_tab.Text" xml:space="preserve">
+		<value>Sidinställningarna</value>
+	</data>
+	<data name="cultureLabel.Help" xml:space="preserve">
+		<value>Språket för den här sidan</value>
+	</data>
+	<data name="cultureLabel.Text" xml:space="preserve">
+		<value>Sidans språk:</value>
+	</data>
+	<data name="cultureTypeLabel.Help" xml:space="preserve">
+		<value>Välj om det är en språk neutral sida som är samma på alla språk eller borde ha språkanpassade versioner för varje språk.</value>
+	</data>
+	<data name="cultureTypeLabel.Text" xml:space="preserve">
+		<value>Språk Typ:</value>
+	</data>
+	<data name="DefaultCulture.Text" xml:space="preserve">
+		<value>Här är standardspråket för webbplatsen</value>
+	</data>
+	<data name="Culture.Text" xml:space="preserve">
+		<value>Skapa endast i nuvarande språk</value>
+	</data>
+	<data name="CopyPage.Text" xml:space="preserve">
+		<value>Kopiera sida</value>
+	</data>
+	<data name="CopyDesignToChildren.Confirm" xml:space="preserve">
+		<value>Skin och containern kommer att ersättas för alla underliggande sidor till den här sidan. Är du säker på att du vill fortsätta?</value>
+	</data>
+	<data name="DeletePermissionError.Text" xml:space="preserve">
+		<value>Du har inte behörighet att ta bort den här sidan.</value>
+	</data>
+	<data name="defaultCultureLabel.Help" xml:space="preserve">
+		<value>Klicka på den här länken för att visa versionen av den här sida med standard språket</value>
+	</data>
+	<data name="defaultCultureLabel.Text" xml:space="preserve">
+		<value>Förvalda Språk:</value>
+	</data>
+	<data name="DeleteSpecialPage.Text" xml:space="preserve">
+		<value>En sida definieras som Hem, Splash, logga in eller Användarsida för webbplatsen, eller den sist synliga sidan på webbplatsen kan inte tas bort. Även Admin och Host Sidan kan inte raderas.</value>
+	</data>
+	<data name="DesignCopied.Text" xml:space="preserve">
+		<value>Designen har kopierats</value>
+	</data>
+	<data name="DesignCopyError.Text" xml:space="preserve">
+		<value>Det uppstod ett fel vid kopiering av designen</value>
+	</data>
+	<data name="edit.Text" xml:space="preserve">
+		<value>Redigera</value>
+	</data>
+	<data name="ExceededQuota.Text" xml:space="preserve">
+		<value>Att lägga den här sidan kommer att överstiga Sidkvoten för den här webbplatsen. Vänligen kontakta ditt webbhotell för frågor som rör öka din Sidkvoten.</value>
+	</data>
+	<data name="ExcludeVaryBy.Text" xml:space="preserve">
+		<value>Uteslut parametrar från Cache Variation</value>
+	</data>
+	<data name="ExcludeVaryBy.Help" xml:space="preserve">
+		<value>A list of querystring parameter names (separated by commas) to be EXCLUDED from the variations of cached pages.  This setting is only valid when the default above is set to INCLUDE querystring parameters from cached page variations.</value>
+	</data>
+	<data name="InsertPosition.Help" xml:space="preserve">
+		<value>Välj den sida som du vill den här sidan som ska infogas före eller efter, eller valfritt lägga till sidan till slutet av den aktuella nivån.</value>
+	</data>
+	<data name="InsertPosition.Text" xml:space="preserve">
+		<value>Infoga Sida:</value>
+	</data>
+	<data name="InvalidTabName.Text" xml:space="preserve">
+		<value>Det här är ett ogiltigt sidnamn</value>
+	</data>
+	<data name="InsertAfter.Text" xml:space="preserve">
+		<value>Efter</value>
+	</data>
+	<data name="InsertBefore.Text" xml:space="preserve">
+		<value>Före</value>
+	</data>
+	<data name="InsertAtEnd.Text" xml:space="preserve">
+		<value>Lägg till i slutet</value>
+	</data>
+	<data name="IconLarge.Text" xml:space="preserve">
+		<value>Stor ikon</value>
+	</data>
+	<data name="IconLargeHelp.Text" xml:space="preserve">
+		<value>Du kan välja en stor ikon som ska användas i konsolen.</value>
+	</data>
+	<data name="InvalidTabDates.Text" xml:space="preserve">
+		<value>Du har angivit ogiltiga start och slutdatum, sidan kommer aldrig att visas</value>
+	</data>
+	<data name="IncludeVaryBy.Text" xml:space="preserve">
+		<value>Include Params in Cache Variation</value>
+	</data>
+	<data name="IncludeVaryBy.Help" xml:space="preserve">
+		<value>A list of querystring parameter names (separated by commas) to be INCLUDED in the variations of cached pages.  This setting is only valid when the default above is set to EXCLUDE querystring parameters from cached page variations.</value>
+	</data>
+	<data name="IsTranslated.Text" xml:space="preserve">
+		<value>Är översatt?</value>
+	</data>
+	<data name="IsTranslated.Help" xml:space="preserve">
+		<value>Markera/avmarkera rutan för att ange om här sidan är översatt (eller inte)</value>
+	</data>
+	<data name="lblCachedItemCount.Text" xml:space="preserve">
+		<value>Aktuell Cache Count: {0} variationer för den här sidan</value>
+	</data>
+	<data name="Localization.Text" xml:space="preserve">
+		<value>Språkanpassning</value>
+	</data>
+	<data name="Localize.Confirm" xml:space="preserve">
+		<value>Du är på väg att skapa språkanpassade kopior av alla sidor på webbplatsen för "{0}" språk. Dessa sidor kommer att dela innehåll med samma sida i standard språket - "{1}" tills modulerna har språkanpassats.</value>
+	</data>
+	<data name="LocalizedModules.Text" xml:space="preserve">
+		<value>Språkanpassning av modul</value>
+	</data>
+	<data name="Localized.Text" xml:space="preserve">
+		<value>Skapa språkanpassade versioner av sidan</value>
+	</data>
+	<data name="ModuleHelp.Text" xml:space="preserve">
+		<value>&lt;h1&gt; Sidhantering &lt;/ h1&gt; &lt;p&gt; Den här modulen låter dig ändra inställningarna för en befintlig sida, ta bort sidan, eller skicka den till Google för indexering. &lt;/ p&gt;</value>
+	</data>
+	<data name="ModuleReference.Text" xml:space="preserve">
+		<value>Referens</value>
+	</data>
+	<data name="Neutral.Text" xml:space="preserve">
+		<value>Skapa Enstaka Neutral Språksida</value>
+	</data>
+	<data name="NewContentMessage.Body" xml:space="preserve">
+		<value>Följande sida har nytt innehåll redo för översättning&lt;br/&gt;
+
+Sida: &lt;a href='{1}'&gt; {0} &lt;/ a&gt; &lt;br/&gt; {2}</value>
+	</data>
+	<data name="NewContentMessage.Subject" xml:space="preserve">
+		<value>Nytt innehåll Klart för översättning</value>
+	</data>
+	<data name="PageDetails.Text" xml:space="preserve">
+		<value>Sidinformation</value>
+	</data>
+	<data name="PageHeadText.Text" xml:space="preserve">
+		<value>Sidans HEAD-Taggar</value>
+	</data>
+	<data name="PageHeadText.Help" xml:space="preserve">
+		<value>Ange några taggar (dvs. metataggar) som skall visas i "HEAD"-taggen i HTML för denna sida.</value>
+	</data>
+	<data name="PathDuplicateWithAlias.Text" xml:space="preserve">
+		<value>Det finns en webbplats domän som är samma som din sidas sökväg.</value>
+	</data>
+	<data name="PermissionCopyError.Text" xml:space="preserve">
+		<value>Det uppstod ett fel vid kopiering av behörigheter</value>
+	</data>
+	<data name="PermissionsCopied.Text" xml:space="preserve">
+		<value>Kopiering av behörigheter lyckades</value>
+	</data>
+	<data name="plCopyPerm.Help" xml:space="preserve">
+		<value>Kopierar för tillfället valda behörigheterna för sidan till underordnade sidor.</value>
+	</data>
+	<data name="plCopyPerm.Text" xml:space="preserve">
+		<value>Kopiera behörigheter till underordnade sidor:</value>
+	</data>
+	<data name="plCopySkin.Help" xml:space="preserve">
+		<value>Kopierar det markerade utseendet (skinn och containrar) för sidan till underordnade sidor. Alternativ endast tillgänglig för webbplatsen Admins och Superanvändare.</value>
+	</data>
+	<data name="plCopySkin.Text" xml:space="preserve">
+		<value>Kopiera design till underordnade:</value>
+	</data>
+	<data name="plEndDate.Text" xml:space="preserve">
+		<value>Slutdatum:</value>
+	</data>
+	<data name="plEndDate.Help" xml:space="preserve">
+		<value>Ange slutdatum för visning av den här sidan. Du kan använda kalendern för att välja ett datum.</value>
+	</data>
+	<data name="plFolder.Help" xml:space="preserve">
+		<value>Välj mallenmappen som ska användas</value>
+	</data>
+	<data name="plFolder.Text" xml:space="preserve">
+		<value>Mallmapp:</value>
+	</data>
+	<data name="plStartDate.Help" xml:space="preserve">
+		<value>Ange startdatumet för visning av den här sidan. Du kan använda kalendern för att välja ett datum.</value>
+	</data>
+	<data name="plPermanentRedirect.Help" xml:space="preserve">
+		<value>Markera den här rutan om du vill meddela klienten att den här sidan skall betraktas som permanent flyttad. Det gör det möjligt för sökmotorer att ändra sina webbadresser till att länka direkt till resursen. Detta ignoreras om LinkType är Ingen.</value>
+	</data>
+	<data name="plPermanentRedirect.Text" xml:space="preserve">
+		<value>Permanent Omdirigering?</value>
+	</data>
+	<data name="plPriority.Help" xml:space="preserve">
+		<value>Ange önskad prioritet (mellan 0 och 1.0). Det hjälper till att bestämma hur den här sida rankas i Google med avseende på andra sidor på din webbplats (0.5 är standard).</value>
+	</data>
+	<data name="plPriority.Text" xml:space="preserve">
+		<value>Webbkartsprioritet:</value>
+	</data>
+	<data name="plTags.Help" xml:space="preserve">
+		<value>Markera objekt från rullgardinsmenyn för att märka den här sidan</value>
+	</data>
+	<data name="plTags.Text" xml:space="preserve">
+		<value>Taggar:</value>
+	</data>
+	<data name="plTemplate.Help" xml:space="preserve">
+		<value>Välj en sidmall som du vill använda för att skapa den här sidan.</value>
+	</data>
+	<data name="plTemplate.Text" xml:space="preserve">
+		<value>Sidmall:</value>
+	</data>
+	<data name="PopulatePages.Text" xml:space="preserve">
+		<value>Fyll i sidor</value>
+	</data>
+	<data name="Publish.Confirm" xml:space="preserve">
+		<value>Du är på väg att publicera den här sidan. Den här åtgärden kommer att markera alla moduler som översatts och automatiskt kopiera alla Visa behörigheter från överordnat/standardspråk. Är du säker på att du vill göra det?</value>
+	</data>
+	<data name="PreviewNoSelectionMessage.Text" xml:space="preserve">
+		<value>Vänligen välj ett skinn och/eller container till förhandsvisningen.</value>
+	</data>
+	<data name="Publish.Text" xml:space="preserve">
+		<value>Publicera</value>
+	</data>
+	<data name="PublishPage.Text" xml:space="preserve">
+		<value>Klicka på den här knappen för att publicera sidan. Det kommer kopiera vybehörigheter från standard språkets version av sidan, vilket gör sidan synlig för besökarna.</value>
+	</data>
+	<data name="ReadyForTranslation.Text" xml:space="preserve">
+		<value>Klar för översättning</value>
+	</data>
+	<data name="publishPageLabel.Help" xml:space="preserve">
+		<value>Klicka på knappen till höger för att publicera sidan. Det kommer kopiera vybehörigheter från standard språkets version av sidan, vilket gör sidan synlig för besökarna.</value>
+	</data>
+	<data name="publishPageLabel.Text" xml:space="preserve">
+		<value>Publicera sidan</value>
+	</data>
+	<data name="RefreshInterval.Text" xml:space="preserve">
+		<value>Uppdateringsintervall (sekunder)</value>
+	</data>
+	<data name="RefreshInterval.Help" xml:space="preserve">
+		<value>Ange intervallet att vänta mellan automatisk uppdatering av sidan. (Exempel: Ange "60" för 1 minut eller lämna tomt för att avaktivera.)</value>
+	</data>
+	<data name="Root.Text" xml:space="preserve">
+		<value>Rot</value>
+	</data>
+	<data name="readyToTranslateLabel.Help" xml:space="preserve">
+		<value>Klicka på länken nedan för att markera den här sidan "Klar för översättning". Det kommer kopiera modulen innehållet till de underordnadespråkversionerna av sidan och skicka meddelanden till alla användare i en översättningsroll.</value>
+	</data>
+	<data name="readyToTranslateLabel.Text" xml:space="preserve">
+		<value>Klicka på länken nedan för att markera den här sidan "Klar för översättning". Det kommer kopiera modulen innehållet till de underordnadespråkversionerna av sidan och skicka meddelanden till alla användare i en översättningsroll.</value>
+	</data>
+	<data name="RequiredFields.Text" xml:space="preserve">
+		<value>Indikerar obligatoriska fält</value>
+	</data>
+	<data name="SubmitToGoogle.Text" xml:space="preserve">
+		<value>Skicka Sidan Till Google</value>
+	</data>
+	<data name="TabExists.Text" xml:space="preserve">
+		<value>Namnet på sidan du valt används redan för en annan sida på samma nivå av sidhierarkin.</value>
+	</data>
+	<data name="TabRecycled.Text" xml:space="preserve">
+		<value>En sida med samma namn finns i Papperskorgen. För att återställa den sidan använder Papperskorgen.</value>
+	</data>
+	<data name="TranslateConfirm.Text" xml:space="preserve">
+		<value>Du är på väg att markera den här sidan som översatt? Åtgärden är omedelbar. Är du säker?</value>
+	</data>
+	<data name="TranslationComment.Text" xml:space="preserve">
+		<value>Ange översättningskommentar</value>
+	</data>
+	<data name="UnTranslateConfirm.Text" xml:space="preserve">
+		<value>Du är på väg att markera den här sidan som inte översatt? Åtgärden är omedelbar. Är du säker?</value>
+	</data>
+	<data name="Update.Text" xml:space="preserve">
+		<value>Uppdatera Sidan</value>
+	</data>
+	<data name="valTabName.ErrorMessage" xml:space="preserve">
+		<value>Sidnamn krävs</value>
+	</data>
+	<data name="valStartDate.ErrorMessage" xml:space="preserve">
+		<value>Ogiltigt Startdatum</value>
+	</data>
+	<data name="valEndDate.ErrorMessage" xml:space="preserve">
+		<value>Ogiltigt Slutdatum</value>
+	</data>
+	<data name="valEndDate2.ErrorMessage" xml:space="preserve">
+		<value>Slutdatum måste vara efter Startdatum</value>
+	</data>
+	<data name="valCacheTime.ErrorMessage" xml:space="preserve">
+		<value>Cachelängden måste vara ett nummer</value>
+	</data>
+	<data name="valCacheVaryByLimit.ErrorMessage" xml:space="preserve">
+		<value>Cache Vary ByLimit must be a number</value>
+	</data>
+	<data name="view.Text" xml:space="preserve">
+		<value>Visa</value>
+	</data>
+	<data name="LocalizedTabs.Text" xml:space="preserve">
+		<value>Sidans språkanpassning</value>
+	</data>
+	<data name="plAllowIndex.Help" xml:space="preserve">
+		<value>Huruvida den här sidan tillåts att indexeras av sökspindlar.</value>
+	</data>
+	<data name="plAllowIndex.Text" xml:space="preserve">
+		<value>Tillåt indexering:</value>
+	</data>
+	<data name="cmdUpdateLocalization.Text" xml:space="preserve">
+		<value>Uppdatera språkanpassning</value>
+	</data>
+	<data name="AddMissingLanguages.Text" xml:space="preserve">
+		<value>Lägga till saknade språk</value>
+	</data>
+	<data name="doNotRedirectLabel.Help" xml:space="preserve">
+		<value>Markera rutan för att garantera att den här sida är undans från de regler som kan sluta med en omdirigering.</value>
+	</data>
+	<data name="doNotRedirectLabel.Text" xml:space="preserve">
+		<value>Omdirigera Inte:</value>
+	</data>
+	<data name="MakeNeutral.Confirm" xml:space="preserve">
+		<value>Detta kommer att ta bort alla översatta versioner av sidan. Endast standard språkets versionen av sidan kommer att finnas kvar. Är du säker på att du vill göra detta?</value>
+	</data>
+	<data name="MakeNeutral.Text" xml:space="preserve">
+		<value>Konvertera sidan till neutralt språk</value>
+	</data>
+	<data name="MakeTranslatable.Text" xml:space="preserve">
+		<value>Gör sidan översättningsbara</value>
+	</data>
+	<data name="plCustomStylesheet.Help" xml:space="preserve">
+		<value>A stylesheet that will only be loaded for this page. The file must be located in the home directory or a sub folder of the current website.</value>
+	</data>
+	<data name="plCustomStylesheet.Text" xml:space="preserve">
+		<value>Formatmall för sidan</value>
+	</data>
+	<data name="RefreshInterval.Invalid" xml:space="preserve">
+		<value>Ogiltigt nummer</value>
+	</data>
+	<data name="UpdateUrlButton.Caption" xml:space="preserve">
+		<value>Uppdatera</value>
+	</data>
+	<data name="UpdateUrlButton.Tooltip" xml:space="preserve">
+		<value>Uppdatera URL</value>
+	</data>
+	<data name="TranslationMessageConfirmMessage.Error" xml:space="preserve">
+		<value>Något gick fel vid anmällan till Översättaren.</value>
+	</data>
+	<data name="TranslationMessageConfirmMessage.Text" xml:space="preserve">
+		<value>Anmälan till Översättaren lyckades.</value>
+	</data>
+	<data name="valPriority.ErrorMessage" xml:space="preserve">
+		<value>Ogiltigt värde för prioritering</value>
+	</data>
+	<data name="valPriorityRequired.ErrorMessage" xml:space="preserve">
+		<value>Prioritet Krävs</value>
+	</data>
+	<data name="UrlManagement.Text" xml:space="preserve">
+		<value>URL hantering</value>
+	</data>
+	<data name="urlLabel.Help" xml:space="preserve">
+		<value>Du kan ange en anpassad webbadress för sidan.</value>
+	</data>
+	<data name="urlLabel.Text" xml:space="preserve">
+		<value>Sidans URL:</value>
+	</data>
+	<data name="UrlPathCleaned.Error" xml:space="preserve">
+		<value>Den angivna URL:en för sidan innehåller otillåtna tecken, som har tagits bort. Du kan klicka på Uppdatera igen för att acceptera den ändrade URL:en.</value>
+	</data>
+	<data name="UrlPathNotUnique.Error" xml:space="preserve">
+		<value>Den angivna URL:en för sidan är inte tillgänglig. Om du vill acceptera det föreslagna alternativet, vänligen klicka på Uppdatera.</value>
+	</data>
+</root>

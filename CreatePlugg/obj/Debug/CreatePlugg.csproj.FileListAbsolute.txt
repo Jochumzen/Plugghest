@@ -1,0 +1,5 @@
+C:\websites\dnndev.me\bin\CreatePlugg.dll
+C:\websites\dnndev.me\bin\CreatePlugg.pdb
+C:\websites\dnndev.me\DesktopModules\CreatePlugg\obj\Debug\CreatePlugg.dll
+C:\websites\dnndev.me\DesktopModules\CreatePlugg\obj\Debug\CreatePlugg.pdb
+C:\websites\dnndev.me\DesktopModules\CreatePlugg\obj\Debug\CreatePlugg.csprojResolveAssemblyReference.cache

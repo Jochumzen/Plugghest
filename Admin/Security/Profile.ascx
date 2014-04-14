@@ -4,7 +4,8 @@
 /*globals jQuery, window, Sys */
 (function ($, Sys) {
     function setUpProfile() {
-        $('.dnnButtonDropdown').dnnSettingDropdown();
+    	$('.dnnButtonDropdown').dnnSettingDropdown();
+	    $('#<%=ProfileProperties.ClientID%>').dnnPanels();
     }
 
     $(document).ready(function () {
@@ -16,14 +17,11 @@
 } (jQuery, window.Sys));
 </script>
 <div class="dnnForm dnnProfile dnnClear">
-	<h2 id="divTitle" runat="server" class="dnnFormSectionHead"><asp:label id="lblTitle" runat="server" /></h2>
-	<fieldset>
-		<div class="propertyList">
-			<dnn:ProfileEditorControl id="ProfileProperties" runat="Server" enableClientValidation="true" />
-            <div class="dnnClear"></div>
-		</div>
-		<ul id="actionsRow" runat="server" class="dnnActions dnnClear">
-			<li><asp:LinkButton class="dnnPrimaryAction" id="cmdUpdate" runat="server" resourcekey="cmdUpdate" /></li>
-		</ul>
-	</fieldset>
+	<dnn:ProfileEditorControl id="ProfileProperties" runat="Server" 
+            GroupByMode="Section"
+            enableClientValidation="true" />
+    <div class="dnnClear"></div>
+	<ul id="actionsRow" runat="server" class="dnnActions dnnClear">
+		<li><asp:LinkButton class="dnnPrimaryAction" id="cmdUpdate" runat="server" resourcekey="cmdUpdate" /></li>
+	</ul>
 </div>

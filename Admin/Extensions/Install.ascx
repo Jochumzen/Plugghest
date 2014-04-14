@@ -56,12 +56,15 @@
                     <asp:RadioButtonList ID="rblLegacySkin" runat="server" RepeatDirection="Horizontal" RepeatLayout="Flow" CssClass="dnnFormRadioButtons">
                         <asp:ListItem Value="Skin" resourcekey="Skin" />
                         <asp:ListItem Value="Container" resourcekey="Container" />
-                        <asp:ListItem Value="None" Selected="True" resourcekey="None" />
                     </asp:RadioButtonList>
                 </asp:Panel>
                 <asp:Panel ID="pnlWhitelist" runat = "server" Visible="false">
                     <asp:Label ID="lblIgnoreWhiteListHelp" runat="server" resourcekey="IgnoreWhiteListHelp" />
                     <asp:CheckBox ID="chkIgnoreWhiteList" runat="server" resourcekey="IgnoreWhiteList" TextAlign="Left" AutoPostBack="true" />
+                </asp:Panel>
+				<asp:Panel ID="pnlAzureCompact" runat = "server" Visible="false">
+                    <p><asp:Label ID="lblAzureCompact" runat="server" /></p>
+                    <p><strong><asp:CheckBox ID="chkAzureCompact" runat="server" resourcekey="AzureCompact" TextAlign="Left" AutoPostBack="true" /></strong></p>
                 </asp:Panel>
                 <asp:PlaceHolder ID="phLoadLogs" runat="server" />
             </asp:WizardStep>
@@ -76,7 +79,7 @@
                         <dnn:DnnFormLiteralItem ID="version" runat="server" DataField = "Version" />
                         <dnn:DnnFormLiteralItem ID="owner" runat="server" DataField = "Owner" />
                         <dnn:DnnFormLiteralItem ID="organization" runat="server" DataField = "Organization" />
-                        <dnn:DnnFormLiteralItem ID="url" runat="server" DataField = "Url" />
+                        <dnn:DnnFormLiteralItem ID="url" runat="server" DataField = "URL" />
                         <dnn:DnnFormLiteralItem ID="email" runat="server" DataField = "Email" />
                     </Items>
                 </dnn:DnnFormEditor>
@@ -104,3 +107,33 @@
         </WizardSteps>
     </asp:Wizard>
 </div>
+<script type="text/javascript">
+	/*globals jQuery, window, Sys */
+	(function ($, Sys) {
+		function setUpInstallWizard() {
+			var actionLinks = $("a[id$=nextButtonStart], a[id$=cancelButtonStart], a[id$=nextButtonStep], a[id$=cancelButtonStep], a[id$=finishButtonStep]");
+			actionLinks.click(function () {
+				if ($(this).hasClass("dnnDisabledAction")) {
+					return false;
+				}
+
+				actionLinks.addClass("dnnDisabledAction");
+			    //show the loading icon
+				var loading = $("<div class=\"dnnLoading\"></div>");
+			    var container = $('#dnnInstallExtension');
+			    loading.css({
+			        width: container.width(),
+			        height: container.height()
+			    });
+			    container.prepend(loading);
+			});
+		}
+		
+		$(document).ready(function () {
+			setUpInstallWizard();
+			Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+				setUpInstallWizard();
+			});
+		});
+	}(jQuery, window.Sys));
+</script>   

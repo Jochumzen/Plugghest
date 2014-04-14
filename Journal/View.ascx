@@ -6,10 +6,8 @@
 
 <div id="userFileManager"></div>
 
-<dnn:DnnJsInclude runat="server" FilePath="~/DesktopModules/Journal/scripts/jquery.iframe-transport.js" />
 <dnn:DnnJsInclude runat="server" PathNameAlias="SharedScripts" FilePath="knockout.js" />
-<dnn:DnnJsInclude runat="server" FilePath="~/DesktopModules/Journal/scripts/jquery.fileupload.js" Priority="101"/>
-<dnn:DnnJsInclude runat="server" FilePath="~/DesktopModules/Journal/scripts/jquery.dnnUserFileUpload.js" Priority="102" />
+<dnn:DnnJsInclude runat="server" FilePath="~/Resources/Shared/Components/UserFileManager/jquery.dnnUserFileUpload.js" Priority="102" />
 <dnn:DnnJsInclude runat="server" FilePath="~/Resources/Shared/Components/UserFileManager/UserFileManager.js" Priority="105"></dnn:DnnJsInclude>
 <dnn:DnnCssInclude runat="server" FilePath="~/Resources/Shared/Components/UserFileManager/UserFileManager.css"></dnn:DnnCssInclude>
 
@@ -99,7 +97,7 @@
         </div>
     </div>
 </div>
-          <div class="dnnClear"></div>
+<div class="dnnClear"></div>
 
 
 <%} %>
@@ -108,12 +106,13 @@
 <div id="journalItems">
 <dnnj:JournalListControl ID="ctlJournalList" runat="server"></dnnj:JournalListControl>
 </div>
-<a href="javascript:void(0)" onclick="getItems();" style="display:none;" id="getMore" class="dnnPrimaryAction"><%= LocalizeString("GetMore.Text") %></a>
+<a href="#" style="display:none;" id="getMore" class="dnnPrimaryAction"><%= LocalizeString("GetMore.Text") %></a>
 
 <script type="text/javascript">
     var InputFileNS = {};
     InputFileNS.chooseFileText = '<%=Localization.GetSafeJSString(LocalizeString("ChooseFile.Text"))%>';
     InputFileNS.initilizeInput = function() {
+        $('.fileUploadArea :file').dnnFileInput();
         var fileUploadCtrl = $('.fileUploadArea').find('.dnnInputFileWrapper .dnnSecondaryAction');
         if (fileUploadCtrl) {
             fileUploadCtrl.html(InputFileNS.chooseFileText);
@@ -186,14 +185,9 @@
         opts.previewSelector = '#linkArea';
         opts.servicesFramework = $.ServicesFramework(<%=ModuleId %>);
 
-        $('body').previewify(opts);
+    	$('body').previewify(opts);
 
-      
-      
-     
-       
-       
-
+	    
     });
   
     function buildLikes(data,journalId){
@@ -213,71 +207,125 @@
     };
     var commentOpts = {};
     commentOpts.servicesFramework = $.ServicesFramework(<%=ModuleId %>);
-    function pluginInit() {
-        $('.jcmt').each(function(index){
-            $(this).journalComments(commentOpts);
-        });
-        var rows = $(".journalrow");
-        if (rows.length == pagesize) {
-            $("#getMore").show();
-        }
-        $('a[id^="cmtbtn-"]').click(function (e) {
-            e.preventDefault();
-            var jid = $(this).attr('id').replace('cmtbtn-', '');
-            var cmtarea = $("#jcmt-" + jid + " .cmteditarea");
-            var cmtbtn = $("#jcmt-" + jid + " .cmtbtn");
-            var cmtbtnlink = $("#jcmt-" + jid + " .cmtbtn a");
-            if (cmtarea.css('display') == 'none'){
-                cmtarea.show();
-                cmtbtnlink.addClass('disabled');
-                cmtbtn.show();
-                $("#jcmt-" + jid + "-txt").focus();
-
-            } else {
-                
-                var cmtedit = $("#jcmt-" + jid + " .cmteditor");
-                var plh = $("#jcmt-" + jid + " .editorPlaceholder");
-                cmtedit.animate({
-                        height: '0'
-                    }, 400, function () {
-                        cmtbtn.hide();
-                        cmtbtnlink.addClass('disabled').hide();
-                        cmtedit.text('').hide();
-                        cmtarea.hide();
-                        plh.show();
-                    });
-      
-            };
-            
-        });
-        $('a[id^="like-"]').click(function (e) {
-            e.preventDefault();
-            var jid = $(this).attr('id').replace('like-', '');
-            var data = {};
-            data.JournalId = jid;
-            journalPost('Like',data,buildLikes,jid);
-        });
-
-        $(".journalrow .minidel").each(function() {
+    
+    function bindConfirm() {
+        $(".journalrow .minidel, .journalrow .miniclose").each(function() {
             if($(this).data("confirmBinded")) {
                 return;
             }
 
-            $(this).data("confirmBinded", true);
-            var clickFunc = $(this).attr("onclick").substr(0, $(this).attr("onclick").indexOf("("));
-            $(this).attr("onclick", "");
-            var $this = this;
-            $(this).dnnConfirm({
+            var $this = $(this);
+            var oThis = this;
+            
+            $this.data("confirmBinded", true);
+            var clickFuncs = [];
+            if (typeof $this.attr("onclick") != "undefined" && $this.attr("onclick").length > 0) {
+                var clickFunc = $this.attr("onclick").substr(0, $this.attr("onclick").indexOf("("));
+                $this.attr("onclick", "");
+                clickFuncs.push(eval(clickFunc));
+            } else {
+                for (var i = 0; i < $this.data("events").click.length; i++) {
+                    var handler = $this.data("events").click[i].handler;
+                    if (typeof handler.name != "undefined" && handler.name.length > 0) {
+                        clickFuncs.push(handler);
+                        break;
+                    }
+                }
+
+                $this.unbind("click");
+            }
+
+            $this.dnnConfirm({
                 text: '<%= Localization.GetSafeJSString(LocalizeString("DeleteItem")) %>',
                 yesText: '<%= Localization.GetSafeJSString("Yes.Text", Localization.SharedResourceFile) %>',
                 noText: '<%= Localization.GetSafeJSString("No.Text", Localization.SharedResourceFile) %>',
                 title: '<%= Localization.GetSafeJSString("Confirm.Text", Localization.SharedResourceFile) %>',
                 isButton: true,
                 callbackTrue: function() {
-                    eval(clickFunc).call($this, $this);
+                    for(var i = 0; i < clickFuncs.length; i++)
+                        clickFuncs[i].call(oThis, oThis);
                 }
             });
         });
+    }
+
+    function pluginInit() {
+        
+        $('.jcmt').each(function () {
+            if($(this).data("journalCommentsBinded")) {
+                return;
+            }
+            $(this).data("journalCommentsBinded", true);
+            
+            $(this).journalComments(commentOpts);
+        });
+        
+        var rows = $(".journalrow");
+        if (rows.length == pagesize) {
+            $("#getMore").show();
+        }
+        
+        $('a[id^="cmtbtn-"]').each(function () {
+            if($(this).data("clickBinded")) {
+                return;
+            }
+            $(this).data("clickBinded", true);
+
+            $(this).click(function(e) {
+
+                e.preventDefault();
+                var jid = $(this).attr('id').replace('cmtbtn-', '');
+                var cmtarea = $("#jcmt-" + jid + " .cmteditarea");
+                var cmtbtn = $("#jcmt-" + jid + " .cmtbtn");
+                var cmtbtnlink = $("#jcmt-" + jid + " .cmtbtn a");
+                if (cmtarea.css('display') == 'none') {
+                    cmtarea.show();
+                    cmtbtnlink.addClass('disabled');
+                    cmtbtn.show();
+                    $("#jcmt-" + jid + "-txt").focus();
+
+                } else {
+
+                    var cmtedit = $("#jcmt-" + jid + " .cmteditor");
+                    var plh = $("#jcmt-" + jid + " .editorPlaceholder");
+                    cmtedit.animate({
+                            height: '0'
+                        }, 400, function() {
+                            cmtbtn.hide();
+                            cmtbtnlink.addClass('disabled').hide();
+                            cmtedit.text('').hide();
+                            cmtarea.hide();
+                            plh.show();
+                        });
+                }
+            });
+        });
+
+        $('a[id^="like-"]').each(function () {
+            if($(this).data("clickBinded")) {
+                return;
+            }
+            $(this).data("clickBinded", true);
+
+            $(this).click(function(e) {
+                e.preventDefault();
+                var jid = $(this).attr('id').replace('like-', '');
+                var data = { };
+                data.JournalId = jid;
+                journalPost('Like', data, buildLikes, jid);
+            });
+        });
+
+        bindConfirm();
+
+	    if (!$("#getMore").data("clickBinded")) {
+		    $("#getMore").click(function(e) {
+		    	getItems();
+			    e.preventDefault();
+		    });
+		    $("#getMore").data("clickBinded", true);
+	    }
+        $('#journalContent, .cmteditor').mentionsInput({servicesFramework: $.ServicesFramework(<%=ModuleContext.ModuleId %>)});
     }
     pluginInit();
 
@@ -288,7 +336,7 @@
         //console.log(jid);
         var data = {};
         data.JournalId = jid;
-        journalPost('Delete',data,journalRemove,jid)
+        journalPost('SoftDelete', data, journalRemove, jid);
     };
     function journalRemove(data, jid) {
         $('#jid-' + jid).slideUp(function(){

@@ -1,7 +1,7 @@
 #region Copyright
 // 
 // DotNetNuke® - http://www.dotnetnuke.com
-// Copyright (c) 2002-2012
+// Copyright (c) 2002-2014
 // by DotNetNuke Corporation
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -139,6 +139,7 @@ namespace DotNetNuke.Modules.Admin.Extensions
 
                 cmdDeleteDefinition.Visible = false;
                 cmdUpdateDefinition.Text = Localization.GetString("cmdCreateDefinition", LocalResourceFile);
+                cmdCancelDefinition.Visible = true;
                 pnlDefinition.Visible = true;
                 pnlControls.Visible = false;
             	definitionSelectRow.Visible = false;
@@ -333,6 +334,7 @@ namespace DotNetNuke.Modules.Admin.Extensions
             cmdDeleteDefinition.Click += cmdDeleteDefinition_Click;
             cmdUpdate.Click += cmdUpdate_Click;
             cmdUpdateDefinition.Click += cmdUpdateDefinition_Click;
+            cmdCancelDefinition.Click += cmdCancelDefinition_Click;
             grdControls.DeleteCommand += grdControls_DeleteCommand;
             grdControls.ItemDataBound += grdControls_ItemDataBound;
 
@@ -352,6 +354,11 @@ namespace DotNetNuke.Modules.Admin.Extensions
                     }
                 }
             }
+        }
+
+        private void cmdCancelDefinition_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(Globals.NavigateURL(ModuleContext.PortalSettings.ActiveTab.TabID));
         }
 
         protected override void OnLoad(EventArgs e)
@@ -394,7 +401,7 @@ namespace DotNetNuke.Modules.Admin.Extensions
         public override void UpdatePackage()
         {
             bool bUpdateSupportedFeatures = Null.NullBoolean;
-            PackageInfo _Package = PackageController.GetPackage(PackageID);
+            PackageInfo _Package = PackageController.Instance.GetExtensionPackage(Null.NullInteger, p => p.PackageID == PackageID);
 
             //Update module settings
             if (desktopModuleForm.IsValid)
@@ -497,6 +504,7 @@ namespace DotNetNuke.Modules.Admin.Extensions
                 DataCache.RemoveCache(string.Format(DataCache.PortalDesktopModuleCacheKey, ModuleContext.PortalId));
 
                 dgPermissions.ResetPermissions();
+                Response.Redirect(Globals.NavigateURL(ModuleContext.PortalSettings.ActiveTab.TabID));
             }
         }
 

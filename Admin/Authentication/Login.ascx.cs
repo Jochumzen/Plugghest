@@ -1,7 +1,7 @@
 #region Copyright
 // 
 // DotNetNuke® - http://www.dotnetnuke.com
-// Copyright (c) 2002-2012
+// Copyright (c) 2002-2014
 // by DotNetNuke Corporation
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Globalization;
 using System.IO;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.HtmlControls;
@@ -69,6 +70,7 @@ namespace DotNetNuke.Modules.Admin.Authentication
 	/// </history>
 	public partial class Login : UserModuleBase
 	{
+		private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof (Login));
 
 		#region Private Members
 
@@ -223,7 +225,7 @@ namespace DotNetNuke.Modules.Admin.Authentication
 				{
 					if (!String.IsNullOrEmpty(User.Profile.PreferredLocale) && User.Profile.PreferredLocale != CultureInfo.CurrentCulture.Name)
 					{
-						redirectURL = UrlUtils.ReplaceQSParam(redirectURL, "language", User.Profile.PreferredLocale);
+                        redirectURL = ReplaceLanguage(redirectURL, CultureInfo.CurrentCulture.Name, User.Profile.PreferredLocale);
 					}
 				}
 				
@@ -244,6 +246,29 @@ namespace DotNetNuke.Modules.Admin.Authentication
 				return redirectURL;
 			}
 		}
+
+
+        /// <summary>
+        /// Replaces the original language with user language
+        /// </summary>
+        /// <param name="Url"></param>
+        /// <param name="originalLanguage"></param>
+        /// <param name="newLanguage"></param>
+        /// <returns></returns>
+        private string ReplaceLanguage(string Url, string originalLanguage, string newLanguage)
+        {
+            string returnValue;
+            if (Host.UseFriendlyUrls)
+            {
+                returnValue = Regex.Replace(Url, "(.*)(/" + originalLanguage + "/)(.*)", "$1/" + newLanguage + "/$3", RegexOptions.IgnoreCase);
+            }
+            else
+            {
+                returnValue = Regex.Replace(Url, "(.*)(&|\\?)(language=)([^&\\?]+)(.*)", "$1$2$3" + newLanguage + "$5", RegexOptions.IgnoreCase);
+            }
+            return returnValue;
+        }
+
 
         /// <summary>
         /// Gets and sets a flag that determines whether a permanent auth cookie should be created
@@ -677,6 +702,11 @@ namespace DotNetNuke.Modules.Admin.Authentication
 					ctlProfile.DataBind();
 					break;
 			}
+
+			if (showProfile && Request.Url.ToString().Contains("popUp=true"))
+			{
+				ScriptManager.RegisterClientScriptBlock(this, GetType(), "ResizePopup", "if(parent.$('#iPopUp').length > 0 && parent.$('#iPopUp').dialog('isOpen')){parent.$('#iPopUp').dialog({width: 950, height: 550}).dialog({position: 'center'});};", true);
+			}
 		}
 
 		private void UpdateProfile(UserInfo objUser, bool update)
@@ -745,6 +775,7 @@ namespace DotNetNuke.Modules.Admin.Authentication
 			UserValidStatus validStatus = UserValidStatus.VALID;
 			string strMessage = Null.NullString;
 			DateTime expiryDate = Null.NullDate;
+		    bool okToShowPanel = true;
 
 			validStatus = UserController.ValidateUser(objUser, PortalId, ignoreExpiring);
 
@@ -758,6 +789,22 @@ namespace DotNetNuke.Modules.Admin.Authentication
 			switch (validStatus)
 			{
 				case UserValidStatus.VALID:
+                    //check if the user is an admin/host and validate their IP
+                    if (Host.EnableIPChecking)
+                    {
+                        bool isAdminUser = objUser.IsSuperUser || PortalSettings.UserInfo.IsInRole(PortalSettings.AdministratorRoleName); ;
+                        if (isAdminUser) 
+                        {
+                            if (IPFilterController.Instance.IsIPBanned(Request.UserHostAddress))
+                            {
+                                new PortalSecurity().SignOut();
+                                AddModuleMessage("IPAddressBanned", ModuleMessage.ModuleMessageType.RedError, true);
+                                okToShowPanel = false;
+                                break;
+                            }
+                        }
+                    }
+
 					//Set the Page Culture(Language) based on the Users Preferred Locale
 					if ((objUser.Profile != null) && (objUser.Profile.PreferredLocale != null))
 					{
@@ -800,6 +847,9 @@ namespace DotNetNuke.Modules.Admin.Authentication
 					pnlProceed.Visible = false;
 					break;
 				case UserValidStatus.UPDATEPROFILE:
+					//Save UserID in ViewState so that can update profile later.
+					UserId = objUser.UserID;
+
 					//When the user need update its profile to complete login, we need clear the login status because if the logrin is from
 					//3rd party login provider, it may call UserController.UserLogin because they doesn't check this situation.
 					new PortalSecurity().SignOut();
@@ -808,7 +858,7 @@ namespace DotNetNuke.Modules.Admin.Authentication
 					PageNo = 3;
 					break;
 			}
-			ShowPanel();
+		    if (okToShowPanel) ShowPanel();
 		}
 
         private bool UserNeedsVerification()
@@ -904,7 +954,7 @@ namespace DotNetNuke.Modules.Admin.Authentication
 				catch (Exception ex)
 				{
 					//control not there 
-					DnnLog.Error(ex);
+					Logger.Error(ex);
 				}
 			}
 			if (!Request.IsAuthenticated || UserNeedsVerification())

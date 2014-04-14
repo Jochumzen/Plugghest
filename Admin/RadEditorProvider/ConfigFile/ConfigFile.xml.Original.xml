@@ -2,7 +2,7 @@
 <configuration>
     <property name="Common Settings" IsSeparator="true" />
     <property name="Skin">Default</property>
-    <property name="AutoResizeHeight">true</property>
+    <property name="AutoResizeHeight">false</property>
     <property name="BorderWidth">0</property>
     <property name="Height">500px</property>
     <property name="Width">680px</property>
@@ -14,8 +14,8 @@
     <property name="NewLineBr">False</property>
     <property name="StripFormattingOptions">MSWordRemoveAll</property>
     <property name="LinksUseRelativeUrls">True</property>
-    <property name="LinksUseTabNames">false</property>
-    <property name="ShowPortalLinks">True</property>
+    <property name="LinksType">Normal</property>
+    <property name="ShowPortalLinks">False</property>
     <property name="ContentAreaMode"></property>
 
     <property name="Toolbar Settings" IsSeparator="true" />
@@ -55,7 +55,7 @@
 
     <property name="Silverlight Manager Settings" IsSeparator="true" />
     <property name="SilverlightPath">/</property>
-    <property name="SilverlightFilters">.*</property>   
+    <property name="SilverlightFilters">*.*</property>   
     <property name="MaxSilverlightSize">1024000</property>
 
     <property name="Template Manager Settings" IsSeparator="true" />
@@ -64,6 +64,8 @@
     <property name="TemplateFilters">
         <item>*.html</item>
         <item>*.htm</item>
+        <item>*.template</item>
+        <item>*.htmtemplate</item>
     </property>
 
 

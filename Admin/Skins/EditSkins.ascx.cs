@@ -1,7 +1,7 @@
 #region Copyright
 // 
 // DotNetNuke® - http://www.dotnetnuke.com
-// Copyright (c) 2002-2012
+// Copyright (c) 2002-2014
 // by DotNetNuke Corporation
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -55,6 +55,7 @@ namespace DotNetNuke.Modules.Admin.Skins
 	/// -----------------------------------------------------------------------------
 	public partial class EditSkins : PortalModuleBase
 	{
+		private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof (EditSkins));
 
 		#region Private Members
 
@@ -176,7 +177,7 @@ namespace DotNetNuke.Modules.Admin.Skins
 				}
 				catch (Exception ex) //problem creating thumbnail
 				{
-					DnnLog.Error(ex);
+					Logger.Error(ex);
 				}
 			}
 
@@ -365,7 +366,7 @@ namespace DotNetNuke.Modules.Admin.Skins
 				{
 					var file = strFile.ToLower();
                     intIndex += 1;
-                    if (intIndex == colSpan+ 1)
+                    if (intIndex == kColSpan+ 1)
                     {
                         intIndex = 1;
                     }
@@ -423,7 +424,8 @@ namespace DotNetNuke.Modules.Admin.Skins
 																	  Null.NullString,
 																	  "ContainerSrc=" + "[" + strSkinType + "]" + Globals.QueryStringEncode(strURL.Replace(".ascx", "").Replace("\\", "/")));
 					}
-					
+
+				    previewLink.CssClass = "dnnSecondaryAction";
 					previewLink.Target = "_new";
 					previewLink.Text = Localization.GetString("cmdPreview", LocalResourceFile);
 					cell.Controls.Add(previewLink);
@@ -610,6 +612,7 @@ namespace DotNetNuke.Modules.Admin.Skins
 			cmdDelete.Click += OnDeleteClick;
 			cmdParse.Click += OnParseClick;
 			cmdRestore.Click += OnRestoreClick;
+		    lblLegacy.Visible = false;
 
 			string strSkin;
 			var strContainer = Null.NullString;

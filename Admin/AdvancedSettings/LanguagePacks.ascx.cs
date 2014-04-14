@@ -2,7 +2,7 @@
 
 // 
 // DotNetNuke® - http://www.dotnetnuke.com
-// Copyright (c) 2002-2012
+// Copyright (c) 2002-2014
 // by DotNetNuke Corporation
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -167,7 +167,6 @@ namespace DotNetNuke.Modules.Admin.AdvancedSettings
             }
 
             //now add language packs from update service
-
             try
             {
                 StreamReader myResponseReader = UpdateService.GetLanguageList();
@@ -177,7 +176,9 @@ namespace DotNetNuke.Modules.Admin.AdvancedSettings
 
                 if (languages != null)
                 {
-                    foreach (XmlNode language in languages)
+	                var installedPackages = PackageController.Instance.GetExtensionPackages(Null.NullInteger, p => p.PackageType == "CoreLanguagePack");
+	                var installedLanguages = installedPackages.Select(package => LanguagePackController.GetLanguagePackByPackage(package.PackageID)).ToList();
+	                foreach (XmlNode language in languages)
                     {
                         string cultureCode = "";
                         string version = "";
@@ -193,17 +194,40 @@ namespace DotNetNuke.Modules.Admin.AdvancedSettings
                                 version = child.InnerText;
                             }
                         }
+	                    if (!string.IsNullOrEmpty(cultureCode) && !string.IsNullOrEmpty(version) && version.Length == 6)
+	                    {
+		                    var myCIintl = new CultureInfo(cultureCode, true);
+		                    version = version.Insert(4, ".").Insert(2, ".");
+		                    var package = new PackageInfo {Owner = OwnerUpdateService, Name = "LanguagePack-" + myCIintl.Name, FriendlyName = myCIintl.NativeName};
+		                    package.Name = myCIintl.NativeName;
+		                    package.Description = cultureCode;
+		                    Version ver = null;
+		                    Version.TryParse(version, out ver);
+		                    package.Version = ver;
 
-                        var myCIintl = new CultureInfo(cultureCode, true);
+							if (
+								installedLanguages.Any(
+									l =>
+									LocaleController.Instance.GetLocale(l.LanguageID).Code.ToLowerInvariant().Equals(cultureCode.ToLowerInvariant()) 
+									&& installedPackages.First(p => p.PackageID == l.PackageID).Version >= ver))
+							{
+								continue;
+							}
 
-                        var package = new PackageInfo { Owner = OwnerUpdateService, Name = "LanguagePack-" + myCIintl.Name, FriendlyName = myCIintl.NativeName };
-                        package.Name = myCIintl.NativeName;
-                        package.Description = cultureCode;
-                        Version ver = null;
-                        Version.TryParse("07.00.00", out ver);
-                        package.Version = ver;
-
-                        packages.Add(package);
+							if (packages.Any(p => p.Name == package.Name))
+							{
+								var existPackage = packages.First(p => p.Name == package.Name);
+								if (package.Version > existPackage.Version)
+								{
+									packages.Remove(existPackage);
+									packages.Add(package);
+								}
+							}
+							else
+							{
+								packages.Add(package);
+							}
+	                    }
                     }
                 }
             }
@@ -342,7 +366,7 @@ namespace DotNetNuke.Modules.Admin.AdvancedSettings
                     }
                     else
                     {
-                        installLink.NavigateUrl = Util.InstallURL(ModuleContext.TabId, Globals.NavigateURL(), package.PackageType, package.FileName);                        
+                        installLink.NavigateUrl = Util.InstallURL(ModuleContext.TabId, "", package.PackageType, package.FileName);                        
                     }
                 }
                 else
@@ -369,5 +393,7 @@ namespace DotNetNuke.Modules.Admin.AdvancedSettings
                 thisButton.Attributes["popupUrl"] = Util.InstallURL(ModuleContext.TabId, Globals.NavigateURL(), "CoreLanguagePack", "installlanguage.resources");                
             }
         }
+
+        public bool ShowDescription { get; set; }
     }
 }

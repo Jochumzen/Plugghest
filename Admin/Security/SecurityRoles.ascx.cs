@@ -1,7 +1,7 @@
 #region Copyright
 // 
 // DotNetNuke® - http://www.dotnetnuke.com
-// Copyright (c) 2002-2012
+// Copyright (c) 2002-2014
 // by DotNetNuke Corporation
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -63,6 +63,7 @@ namespace DotNetNuke.Modules.Admin.Security
     /// -----------------------------------------------------------------------------
     public partial class SecurityRoles : PortalModuleBase, IActionable
     {
+    	private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof (SecurityRoles));
 		#region "Private Members"
 
         private int RoleId = Null.NullInteger;
@@ -618,7 +619,7 @@ namespace DotNetNuke.Modules.Admin.Security
             }
             catch (ThreadAbortException exc) //Do nothing if ThreadAbort as this is caused by a redirect
             {
-                DnnLog.Debug(exc);
+                Logger.Debug(exc);
 
             }
             catch (Exception exc) //Module failed to load

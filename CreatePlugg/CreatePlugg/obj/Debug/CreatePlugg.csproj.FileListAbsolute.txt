@@ -1,4 +1,0 @@
-D:\Installed DNN\PawHealer\DesktopModules\bin\CreatePlugg.dll
-D:\Installed DNN\PawHealer\DesktopModules\bin\CreatePlugg.pdb
-D:\Installed DNN\PawHealer\DesktopModules\CreatePlugg\CreatePlugg\obj\Debug\CreatePlugg.dll
-D:\Installed DNN\PawHealer\DesktopModules\CreatePlugg\CreatePlugg\obj\Debug\CreatePlugg.pdb

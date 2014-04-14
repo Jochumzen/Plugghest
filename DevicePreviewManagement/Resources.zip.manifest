@@ -5,16 +5,16 @@
       <name>SharedResources.resx</name>
     </file>
     <file>
-      <path />
-      <name>module.css</name>
-    </file>
-    <file>
       <path>Images/</path>
       <name>DevicePreview_Standard_16X16.png</name>
     </file>
     <file>
       <path>Images/</path>
       <name>DevicePreview_Standard_32X32.png</name>
+    </file>
+    <file>
+      <path />
+      <name>module.css</name>
     </file>
     <file>
       <path />

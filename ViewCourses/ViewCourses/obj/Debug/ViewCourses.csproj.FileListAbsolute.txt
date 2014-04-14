@@ -1,4 +1,0 @@
-G:\MD\DemoApps\Dnn7TestApp\DesktopModules\bin\ViewCourses.dll
-G:\MD\DemoApps\Dnn7TestApp\DesktopModules\bin\ViewCourses.pdb
-G:\MD\DemoApps\Dnn7TestApp\DesktopModules\ViewCourses\ViewCourses\obj\Debug\ViewCourses.dll
-G:\MD\DemoApps\Dnn7TestApp\DesktopModules\ViewCourses\ViewCourses\obj\Debug\ViewCourses.pdb

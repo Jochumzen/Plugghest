@@ -27,9 +27,8 @@
 			</asp:RadioButtonList>
 			
 			<div id="dvSourcePage" runat="server" class="dnnEditItem dnnFormItem">
-				<%--<asp:DropDownList ID="cboSourcePage" runat="server" CssClass="dnnDropDown" />--%>
                 <div class="dnnLabel"></div>
-                <dnn:DnnComboBox ID="cboSourcePage" runat="server" CssClass="dnnFixedSizeComboBox" OnClientSelectedIndexChanged="filterTargetList" />
+			    <dnn:DnnPageDropDownList ID="cboSourcePage" runat="server" />
 				<div class="dnnChildPages dnnLeft">
 					<asp:CheckBox ID="chkChildPages" runat="server" Checked="false" resourcekey="chkChildPages"
 						TextAlign="Right" /></div>
@@ -45,14 +44,12 @@
 				<asp:ListItem Value="Url" resourcekey="optUrl" name="optTarget" />
 			</asp:RadioButtonList>
 			<div id="dvTargetPortal" runat="server" class="dnnFormItem">
-				<%--<asp:DropDownList ID="cboPortal" runat="server" CssClass="dnnDropDown" />--%>
                 <div class="dnnLabel"></div>
                 <dnn:DnnComboBox ID="cboPortal" runat="server" CssClass="dnnFixedSizeComboBox" />
 			</div>
 			<div id="dvTargetPage" runat="server" class="dnnFormItem">
-				<%--<asp:DropDownList ID="cboTargetPage" runat="server" CssClass="dnnDropDown" />--%>
                 <div class="dnnLabel"></div>
-                <dnn:DnnComboBox ID="cboTargetPage" runat="server" CssClass="dnnFixedSizeComboBox" />
+                <dnn:DnnPageDropDownList ID="cboTargetPage" runat="server" />
 			</div>
 			<div id="dvTargetUrl" runat="server" class="dvTargetUrl dnnFormItem">
 				<dnn:label id="lblTargetUrl" runat="server" controlname="txtTargetUrl" resourcekey="lblTargetUrl" />
@@ -66,6 +63,7 @@
 				<asp:ListItem Value="MobilePhone" resourcekey="optPhone" name="optType" Selected="true" />
 				<asp:ListItem Value="Tablet" resourcekey="optTablet" name="optType" />
 				<asp:ListItem Value="AllMobile" resourcekey="optBoth" name="optType" />
+				<asp:ListItem Value="SmartPhone" resourcekey="optSmartPhone" name="optType" />
 				<asp:ListItem Value="Other" resourcekey="optOther" name="optType" />
 			</asp:RadioButtonList>
 			<div id="dvOtherTypeSection" runat="server">
@@ -73,7 +71,6 @@
                     <div class="dnnLabel"></div>
 					<span><%=LocalizeString("OtherType.Text")%></span></div>
 				<div id="dvCapabilityList" runat="server" class="dnnFormItem dnnEditItem dnnCapabilityList">
-					<%--<asp:Label ID="lblCapability" runat="server" class="dnnCapabilityName" resourcekey="lblCapability" />--%>
                     <div class="dnnFormItem">
                     <div class="dnnLabel">
                         <label>
@@ -83,8 +80,6 @@
                         <dnn:DnnComboBox ID="cboCapabilityName" runat="server" CssClass="dnnFixedSizeComboBox"
 						OnClientSelectedIndexChanged="GetCapabilityValues" MarkFirstMatch="true" />
                     </div>
-					<%--<asp:Label ID="lblCapabilityValue" runat="server" class="dnnCapabilityValue" resourcekey="lblCapabilityValue" />
-					<br />--%>
 					<div class="dnnFormItem">
                      <div class="dnnLabel">
                      <label>
@@ -157,109 +152,87 @@
     function DisaplyUI() {
         (function ($) {
         	/* Hide optional upon inital page load sections */
-        	$(document).ready(function () {
-        		var source = $('#<%= optRedirectSource.ClientID %> input:checked').val();
-        		if (source !== "Tab") { $('#<%= dvSourcePage.ClientID %>').hide(); }
+        	var source = $('#<%= optRedirectSource.ClientID %> input:checked').val();
+        	if (source !== "Tab") { $('#<%= dvSourcePage.ClientID %>').hide(); }
 
-        		var type = $('#<%= optRedirectType.ClientID %> input:checked').val();
-        		if (type !== "Other") { $('#<%= dvOtherTypeSection.ClientID %>').hide(); }
+        	var type = $('#<%= optRedirectType.ClientID %> input:checked').val();
+        	if (type !== "Other") { $('#<%= dvOtherTypeSection.ClientID %>').hide(); }
 
-        		var target = $('#<%= optRedirectTarget.ClientID %> input:checked').val();
-        		if (target === "Portal") {
+        	var target = $('#<%= optRedirectTarget.ClientID %> input:checked').val();
+        	if (target === "Portal") {
+        		$('#<%= dvTargetPortal.ClientID %>').show();
+        		$('#<%= dvTargetPage.ClientID %>').hide();
+        		$('#<%= dvTargetUrl.ClientID %>').hide();
+        	}
+        	else if (target === "Tab") {
+        		$('#<%= dvTargetPortal.ClientID %>').hide();
+        		$('#<%= dvTargetPage.ClientID %>').show();
+        		$('#<%= dvTargetUrl.ClientID %>').hide();
+        	}
+        	else if (target === "Url") {
+        		$('#<%= dvTargetPortal.ClientID %>').hide();
+        		$('#<%= dvTargetPage.ClientID %>').hide();
+        		$('#<%= dvTargetUrl.ClientID %>').show();
+        	}
+
+        	/* Toggle source page drop down whenever radio buttons are checked */
+        	$("[name=optSource]").change(function () {
+        		var value = $('#<%= optRedirectSource.ClientID %> input:checked').val();
+        		if (value !== "Tab") {
+        			$('#<%= dvSourcePage.ClientID %>').hide();
+        			$('#<%= optRedirectTarget.ClientID %> input[value=Tab]').attr("disabled", true);
+
+        			if ($('#<%= optRedirectTarget.ClientID %> input[value=Tab]').is(":checked")) {
+        				if (!$('#<%= optRedirectTarget.ClientID %> input[value=Portal]').attr("disabled")) {
+        					$('#<%= optRedirectTarget.ClientID %> input[value=Portal]').click().trigger('change');
+        				}
+        				else {
+        					$('#<%= optRedirectTarget.ClientID %> input[value=Url]').click().trigger('change');
+        				}
+        			}
+        		}
+        		else {
+        			$('#<%= dvSourcePage.ClientID %>').show();
+        			$('#<%= optRedirectTarget.ClientID %> input[value=Tab]').attr("disabled", false);
+        		}
+        	});
+
+        	/* Toggle source page drop down whenever radio buttons are checked */
+        	$("[name=optType]").change(function () {
+        		var value = $('#<%= optRedirectType.ClientID %> input:checked').val();
+        		if (value !== "Other") {
+        			$('#<%= dvOtherTypeSection.ClientID %>').hide();
+        		}
+        		else {
+        			//Populate Page Dropdown list
+        			$('#<%= dvOtherTypeSection.ClientID %>').show();
+        		}
+        	});
+
+        	/* Toggle source page drop down whenever radio buttons are checked */
+        	$("[name=optTarget]").change(function () {
+        		var value = $('#<%= optRedirectTarget.ClientID %> input:checked').val();
+        		if (value === "Portal") {
         			$('#<%= dvTargetPortal.ClientID %>').show();
         			$('#<%= dvTargetPage.ClientID %>').hide();
         			$('#<%= dvTargetUrl.ClientID %>').hide();
         		}
-        		else if (target === "Tab") {
-        		    $('#<%= dvTargetPortal.ClientID %>').hide();
+        		else if (value === "Tab") {
+        			$('#<%= dvTargetPortal.ClientID %>').hide();
         			$('#<%= dvTargetPage.ClientID %>').show();
         			$('#<%= dvTargetUrl.ClientID %>').hide();
         		}
-        		else if (target === "Url") {
+        		else if (value === "Url") {
         			$('#<%= dvTargetPortal.ClientID %>').hide();
         			$('#<%= dvTargetPage.ClientID %>').hide();
         			$('#<%= dvTargetUrl.ClientID %>').show();
         		}
-
-        		/* Toggle source page drop down whenever radio buttons are checked */
-        		$("[name=optSource]").change(function () {
-        			var value = $('#<%= optRedirectSource.ClientID %> input:checked').val();
-        			if (value !== "Tab") {
-        				$('#<%= dvSourcePage.ClientID %>').hide();
-        				$('#<%= optRedirectTarget.ClientID %> input[value=Tab]').attr("disabled", true);
-
-        				if ($('#<%= optRedirectTarget.ClientID %> input[value=Tab]').is(":checked")) {
-        					if (!$('#<%= optRedirectTarget.ClientID %> input[value=Portal]').attr("disabled")) {
-        						$('#<%= optRedirectTarget.ClientID %> input[value=Portal]').click().trigger('change');
-        					}
-        					else {
-        						$('#<%= optRedirectTarget.ClientID %> input[value=Url]').click().trigger('change');
-        					}
-        				}
-        			}
-        			else {
-        				$('#<%= dvSourcePage.ClientID %>').show();
-        				$('#<%= optRedirectTarget.ClientID %> input[value=Tab]').attr("disabled", false);
-        			}
-        		});
-
-        		/* Toggle source page drop down whenever radio buttons are checked */
-        		$("[name=optType]").change(function () {
-        			var value = $('#<%= optRedirectType.ClientID %> input:checked').val();
-        			if (value !== "Other") {
-        				$('#<%= dvOtherTypeSection.ClientID %>').hide();
-        			}
-        			else {
-        				//Populate Page Dropdown list
-        				$('#<%= dvOtherTypeSection.ClientID %>').show();
-        			}
-        		});
-
-        		/* Toggle source page drop down whenever radio buttons are checked */
-        		$("[name=optTarget]").change(function () {
-        			var value = $('#<%= optRedirectTarget.ClientID %> input:checked').val();
-        			if (value === "Portal") {
-        				$('#<%= dvTargetPortal.ClientID %>').show();
-        				$('#<%= dvTargetPage.ClientID %>').hide();
-        				$('#<%= dvTargetUrl.ClientID %>').hide();
-        			}
-        			else if (value === "Tab") {
-        				$('#<%= dvTargetPortal.ClientID %>').hide();
-        				$('#<%= dvTargetPage.ClientID %>').show();
-        				$('#<%= dvTargetUrl.ClientID %>').hide();
-        			}
-        			else if (value === "Url") {
-        				$('#<%= dvTargetPortal.ClientID %>').hide();
-        				$('#<%= dvTargetPage.ClientID %>').hide();
-        				$('#<%= dvTargetUrl.ClientID %>').show();
-        			}
-        		});
-
-        		filterTargetList();
         	});
+
+	        $("[name=optSource], [name=optType], [name=optTarget]").trigger('change');
         } (jQuery));
     }
     
-	/*filter target page list to hide the select value of source page list*/
-	function filterTargetList() {
-		var sourceList = $find("<%=cboSourcePage.ClientID %>");
-        if (sourceList.get_items().length == 0) {
-        	return;
-        }
-
-        var sourcePage = sourceList.get_value();
-        var targetList = $find("<%=cboTargetPage.ClientID %>");
-        var items = targetList.get_items();
-        for (var i = 0; i < items.get_count() ; i++) {
-	        var item = items.getItem(i);
-	        if (item.get_value() == sourcePage) {
-	        	item.disable();
-	        } else {
-	        	item.enable();
-	        }
-        }
-    };
-
     function GetCapabilityValues(combo, eventArqs) {
         var capabilityValuesCombo = $find('<%= cboCapabilityValue.ClientID %>');
         if (combo.get_selectedIndex() > 0) {
@@ -271,13 +244,12 @@
             capabilityValuesCombo.clearItems();
         }
     }
-
-    function ItemsLoaded(combo, eventArqs) {
+    
+	function ItemsLoaded(combo, eventArqs) {
         if (combo.get_items().get_count() > 0) {
             // pre-select the first item
             combo.set_text(combo.get_items().getItem(0).get_text());
             combo.get_items().getItem(0).highlight();
         }
     }
-
 </script>

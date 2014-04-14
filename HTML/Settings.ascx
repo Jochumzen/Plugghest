@@ -7,6 +7,16 @@
 		<asp:CheckBox ID="chkReplaceTokens" runat="server" />
 	</div>
 	<div class="dnnFormItem">
+		<dnn:label id="plDecorate" controlname="cbDecorate" runat="server" />
+		<asp:CheckBox ID="cbDecorate" runat="server" />
+	</div>
+		<div class="dnnFormItem">
+        <dnn:label id="plSearchDescLength" runat="server" controlname="txtSearchDescLength" />
+        <asp:TextBox ID="txtSearchDescLength" runat="server" />
+        <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtSearchDescLength"
+            Display="Dynamic" CssClass="dnnFormMessage dnnFormError" ValidationExpression="^\d+$" resourcekey="valSearchDescLength.ErrorMessage" />
+    </div>
+	<div class="dnnFormItem">
 		<dnn:label id="plWorkflow" controlname="cboWorkflow" runat="server" suffix=":" />		
         <dnn:DnnComboBox ID="cboWorkflow" runat="server" DataTextField="WorkflowName" DataValueField="WorkflowID" AutoPostBack="True" />
 	</div>

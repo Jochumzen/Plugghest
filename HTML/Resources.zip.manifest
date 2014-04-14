@@ -42,7 +42,7 @@
     </file>
     <file>
       <path>Images/</path>
-      <name>html.gif</name>
+      <name>html.png</name>
     </file>
     <file>
       <path />
@@ -87,6 +87,10 @@
     <file>
       <path />
       <name>05.04.03.txt</name>
+    </file>
+    <file>
+      <path />
+      <name>module.css</name>
     </file>
   </files>
 </dotnetnuke>

@@ -7,10 +7,10 @@
             <dnn:label id="plRoleGroups" runat="server" suffix="" controlname="cboRoleGroups" />
             <%--<asp:dropdownlist id="cboRoleGroups" Runat="server" AutoPostBack="True" />--%>
             <dnn:DnnComboBox id="cboRoleGroups" Runat="server" AutoPostBack="True" />
-			<asp:hyperlink ID="lnkEditGroup" runat="server">
+			<asp:hyperlink ID="lnkEditGroup" runat="server" CssClass="inlineButton">
 				<dnn:dnnImage ID="imgEditGroup" IconKey="Edit" AlternateText="Edit" runat="server" resourcekey="Edit" />
 			</asp:hyperlink>
-			<dnn:DnnImagebutton ID="cmdDelete" Runat="server" IconKey="Delete" />
+			<dnn:DnnImagebutton ID="cmdDelete" Runat="server" IconKey="Delete" CssClass="inlineButton" />
         </div>
     </div>
 	<dnn:DnnGrid id="grdRoles" AutoGenerateColumns="false" EnableViewState="false" runat="server" CssClass="dnnGrid">
@@ -30,7 +30,11 @@
 					    <asp:label runat="server" Text='<%#FormatPeriod((int)DataBinder.Eval(Container.DataItem, "BillingPeriod")) %>' ID="Label2" />
 				    </ItemTemplate>
 			    </dnn:DnnGridTemplateColumn>
-			    <dnn:DnnGridBoundColumn DataField="BillingFrequency" HeaderText="Period" />
+			    <dnn:DnnGridTemplateColumn HeaderText="Period">
+				    <ItemTemplate>
+					    <asp:label runat="server" Text='<%#FormatFrequency((string) DataBinder.Eval(Container.DataItem, "BillingFrequency")) %>' ID="lblBillingFrequency" />
+				    </ItemTemplate>
+			    </dnn:DnnGridTemplateColumn>
 			    <dnn:DnnGridTemplateColumn HeaderText="Trial">
 				    <ItemTemplate>
 					    <asp:label runat="server" Text='<%#FormatPrice((float)DataBinder.Eval(Container.DataItem, "TrialFee")) %>' ID="Label3" />
@@ -41,7 +45,11 @@
 					    <asp:label runat="server" Text='<%#FormatPeriod((int)DataBinder.Eval(Container.DataItem, "TrialPeriod")) %>' ID="Label4" />
 				    </ItemTemplate>
 			    </dnn:DnnGridTemplateColumn>
-			    <dnn:DnnGridBoundColumn DataField="TrialFrequency" HeaderText="Period" />
+			    <dnn:DnnGridTemplateColumn HeaderText="Period">
+				    <ItemTemplate>
+					    <asp:label runat="server" Text='<%#FormatFrequency((string) DataBinder.Eval(Container.DataItem, "TrialFrequency")) %>' ID="lblTrialFrequency" />
+				    </ItemTemplate>
+			    </dnn:DnnGridTemplateColumn>
 			    <dnn:DnnGridTemplateColumn HeaderText="Public" ItemStyle-HorizontalAlign="Center">
 				    <ItemTemplate>
 					    <dnn:DnnImage Runat="server" ID="imgApproved" IconKey="Checked" Visible='<%# DataBinder.Eval(Container.DataItem,"IsPublic") %>' />
@@ -72,7 +80,8 @@
             text: '<%= DotNetNuke.UI.Utilities.ClientAPI.GetSafeJSString(LocalizeString("DeleteItem")) %>',
             yesText: '<%= Localization.GetSafeJSString("Yes.Text", Localization.SharedResourceFile) %>',
             noText: '<%= Localization.GetSafeJSString("No.Text", Localization.SharedResourceFile) %>',
-            title: '<%= Localization.GetSafeJSString("Confirm.Text", Localization.SharedResourceFile) %>'
+        	title: '<%= Localization.GetSafeJSString("Confirm.Text", Localization.SharedResourceFile) %>',
+        	isButton: true
         });
     }
 

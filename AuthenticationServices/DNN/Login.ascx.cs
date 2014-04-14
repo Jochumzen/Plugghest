@@ -1,7 +1,7 @@
 #region Copyright
 // 
 // DotNetNuke® - http://www.dotnetnuke.com
-// Copyright (c) 2002-2012
+// Copyright (c) 2002-2014
 // by DotNetNuke Corporation
 // 
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
@@ -30,6 +30,7 @@ using DotNetNuke.Entities.Host;
 using DotNetNuke.Entities.Portals;
 using DotNetNuke.Entities.Users;
 using DotNetNuke.Instrumentation;
+using DotNetNuke.Security;
 using DotNetNuke.Security.Membership;
 using DotNetNuke.Services.Authentication;
 using DotNetNuke.Services.Localization;
@@ -56,6 +57,7 @@ namespace DotNetNuke.Modules.Admin.Authentication
 	/// </history>
 	public partial class Login : AuthenticationLoginBase
 	{
+		private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof (Login));
 
 		#region Protected Properties
 
@@ -115,7 +117,7 @@ namespace DotNetNuke.Modules.Admin.Authentication
             string url;
             if (PortalSettings.UserRegistration != (int)Globals.PortalRegistrationType.NoRegistration)
             {
-                if (!string.IsNullOrEmpty(Request.QueryString["returnurl"]))
+                if (!string.IsNullOrEmpty(UrlUtils.ValidReturnUrl(Request.QueryString["returnurl"])))
                 {
                     returnUrl = Request.QueryString["returnurl"];
                 }
@@ -161,7 +163,24 @@ namespace DotNetNuke.Modules.Admin.Authentication
                     try
                     {
                         UserController.VerifyUser(verificationCode.Replace(".", "+").Replace("-", "/").Replace("_", "="));
-                        UI.Skins.Skin.AddModuleMessage(this, Localization.GetString("VerificationSuccess", LocalResourceFile), ModuleMessage.ModuleMessageType.GreenSuccess);
+
+                        var redirectTabId = Convert.ToInt32(GetSetting(PortalId, "Redirect_AfterRegistration"));
+
+	                    if (Request.IsAuthenticated)
+	                    {
+                            Response.Redirect(Globals.NavigateURL(redirectTabId > 0 ? redirectTabId : PortalSettings.HomeTabId, string.Empty, "VerificationSuccess=true"), true);
+	                    }
+	                    else
+	                    {
+                            if (redirectTabId > 0)
+                            {
+                                var redirectUrl = Globals.NavigateURL(redirectTabId, string.Empty, "VerificationSuccess=true");
+                                redirectUrl = redirectUrl.Replace(Globals.AddHTTP(PortalSettings.PortalAlias.HTTPAlias), string.Empty);
+                                Response.Cookies.Add(new HttpCookie("returnurl", redirectUrl));
+                            }
+
+		                    UI.Skins.Skin.AddModuleMessage(this, Localization.GetString("VerificationSuccess", LocalResourceFile), ModuleMessage.ModuleMessageType.GreenSuccess);
+	                    }
                     }
                     catch (UserAlreadyVerifiedException)
                     {
@@ -196,7 +215,7 @@ namespace DotNetNuke.Modules.Admin.Authentication
 					catch (Exception ex)
 					{
 						//control not there 
-						DnnLog.Error(ex);
+						Logger.Error(ex);
 					}
 				}
 				try
@@ -207,7 +226,7 @@ namespace DotNetNuke.Modules.Admin.Authentication
 				{
 					//Not sure why this Try/Catch may be necessary, logic was there in old setFormFocus location stating the following
 					//control not there or error setting focus
-					DnnLog.Error(ex);
+					Logger.Error(ex);
 				}
 			}
 
@@ -233,7 +252,11 @@ namespace DotNetNuke.Modules.Admin.Authentication
 			if ((UseCaptcha && ctlCaptcha.IsValid) || !UseCaptcha)
 			{
 				var loginStatus = UserLoginStatus.LOGIN_FAILURE;
-				var objUser = UserController.ValidateUser(PortalId, txtUsername.Text, txtPassword.Text, "DNN", string.Empty, PortalSettings.PortalName, IPAddress, ref loginStatus);
+                string userName = new PortalSecurity().InputFilter(txtUsername.Text,
+                                                         PortalSecurity.FilterFlag.NoScripting |
+                                                         PortalSecurity.FilterFlag.NoAngleBrackets |
+                                                         PortalSecurity.FilterFlag.NoMarkup);
+                var objUser = UserController.ValidateUser(PortalId, userName, txtPassword.Text, "DNN", string.Empty, PortalSettings.PortalName, IPAddress, ref loginStatus);
 				var authenticated = Null.NullBoolean;
 				var message = Null.NullString;
 				if (loginStatus == UserLoginStatus.LOGIN_USERNOTAPPROVED)
@@ -246,7 +269,7 @@ namespace DotNetNuke.Modules.Admin.Authentication
 				}
 				
 				//Raise UserAuthenticated Event
-				var eventArgs = new UserAuthenticatedEventArgs(objUser, txtUsername.Text, loginStatus, "DNN")
+                var eventArgs = new UserAuthenticatedEventArgs(objUser, userName, loginStatus, "DNN")
 				                    {
 				                        Authenticated = authenticated, 
                                         Message = message,

@@ -3,9 +3,6 @@
 //  add support for minDnnVersion filtering
 //  finalized support for TagCloud/Type filtering
 
-if (typeof dnn === 'undefined') dnn = {};
-if (typeof dnn.log === 'undefined') dnn.log = function () { for (var a in arguments) { if (typeof console !== 'undefined' && typeof console.log !== 'undefined') console.log(arguments[a]); } }
-
 function Gallery(params) {
 
     //defaults
@@ -125,7 +122,7 @@ function Gallery(params) {
     $(document).keydown(function (e) {
         e = e || window.event;
         if (e.which == 13) {
-            window.stop();
+            window.stop ? window.stop() : document.execCommand("stop");
             e.stopPropagation();
             e.preventDefault();
             _gallery.SearchGallery($('#searchText').val());
@@ -434,7 +431,7 @@ Gallery.prototype.getExtensions = function (callback) {
             return;
         }
     }
-    dnn.log(url);
+
     this.showLoading();
     this.eXHR = this.getXHR(url, "gotExtensions");
 }
@@ -486,7 +483,9 @@ Gallery.prototype.showExtensions = function (callback) {
 
 
     if (this.pagedExtensions.length > 0) {
-        $("#eTmpl").tmpl(this.pagedExtensions).appendTo(this.extensionList).fadeIn(this.animationSpeed);
+    	var extensions = $("#eTmpl").tmpl(this.pagedExtensions);
+    	extensions.appendTo(this.extensionList).hide();
+    	this.extensionList.children().fadeIn(this.animationSpeed);
     }
     this.pagedExtensions = [];
     if (callback) callback(this);
@@ -526,7 +525,7 @@ Gallery.prototype.DefaultDialogOptions = {
 }
 
 Gallery.prototype.getDownloadUrl = function (extensionID) {
-    return this.BaseDownLoadUrl.replace(escape("{{ExtensionID}}"), extensionID);
+    return this.BaseDownLoadUrl.replace(escape("{{ExtensionID}}"), extensionID).replace("{{ExtensionID}}", extensionID);
 }
 
 Gallery.prototype.ShowDetails = function (extensionID) {
@@ -574,8 +573,6 @@ Gallery.prototype.getCatalogs = function (completeCallback) {
 
     this.showLoading();
 
-    dnn.log(url);
-
     this.tagXHR = this.getXHR(url, "gotCatalogs");
 
     if (typeof (completeCallback) != "undefined" && $.isFunction(completeCallback)) {
@@ -602,8 +599,6 @@ Gallery.prototype.getTags = function (callback) {
     }
 
     this.showLoading();
-
-    dnn.log(url);
 
     this.tagXHR = this.getXHR(url, "gotTags");
 }

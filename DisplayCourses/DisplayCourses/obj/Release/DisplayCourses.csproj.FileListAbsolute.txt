@@ -1,5 +1,0 @@
-G:\MD\DemoApps\Dnn7TestApp\DesktopModules\bin\DisplayCourses.dll
-G:\MD\DemoApps\Dnn7TestApp\DesktopModules\bin\DisplayCourses.pdb
-G:\MD\DemoApps\Dnn7TestApp\DesktopModules\DisplayCourses\DisplayCourses\obj\Release\DisplayCourses.csprojResolveAssemblyReference.cache
-G:\MD\DemoApps\Dnn7TestApp\DesktopModules\DisplayCourses\DisplayCourses\obj\Release\DisplayCourses.dll
-G:\MD\DemoApps\Dnn7TestApp\DesktopModules\DisplayCourses\DisplayCourses\obj\Release\DisplayCourses.pdb
