@@ -75,7 +75,7 @@ namespace Plugghest.Modules.CourseMenu
             {
                 string CourseId = str.Replace("?c=", "");
 
-                List<CourseInCourseMenu> plug = new List<CourseInCourseMenu>();
+                List<Course> plug = new List<Course>();
                 CourseController PC = new CourseController();
 
                 //if course exist in the database...
@@ -92,7 +92,7 @@ namespace Plugghest.Modules.CourseMenu
                             Menu_Pluggs.Items.Add(new MenuItem(item.PluggId.ToString() + ": " + item.PluggName.ToString(), "", "", "/" + (Page as DotNetNuke.Framework.PageBase).PageCulture.Name.ToString().ToLower() + "/" + item.PluggId + "?c=" + CourseId));
 
 
-                            if (PluggId == item.PluggId)
+                            if (PluggId == item.PluggId.ToString())
                             {
                                 int index = item.Orders - 1;
                                 Menu_Pluggs.Items[index].Selected = true; //active order in menu
