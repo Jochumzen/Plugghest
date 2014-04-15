@@ -22,6 +22,7 @@ using DotNetNuke.Entities.Modules.Definitions;
 using System.IO;
 using Latex2MathML;
 using Ionic.Zip;
+using System.Collections.Generic;
 
 namespace Plugghest.Modules.CreatePlugg
 {
@@ -244,9 +245,25 @@ namespace Plugghest.Modules.CreatePlugg
 
 
             //Get ModuleDefinationId.............
-            PluggController pc = new PluggController();
-            int MDId = pc.GetModuleDefId("DisplayPlugg");
-            moduleInfo.ModuleDefID = MDId;
+            //PluggController pc = new PluggController();
+            //int MDId = pc.GetModuleDefId("DisplayPlugg");
+            //moduleInfo.ModuleDefID = MDId;
+
+            DesktopModuleInfo desktopModuleInfo = null;
+            foreach (KeyValuePair<int, DesktopModuleInfo> kvp in DesktopModuleController.GetDesktopModules(this.PortalId))
+            {
+                DesktopModuleInfo mod = kvp.Value;
+                if (mod != null)
+                    if (mod.FriendlyName == "DisplayPlugg")
+                    {
+                        desktopModuleInfo = mod;
+                        var mc = new ModuleDefinitionController();
+                        var mInfo = new ModuleDefinitionInfo();
+                        mInfo = mc.GetModuleDefinitionByName(desktopModuleInfo.DesktopModuleID, desktopModuleInfo.FriendlyName);
+                        //int moduleDefId = mInfo.ModuleDefID;
+                        moduleInfo.ModuleDefID = mInfo.ModuleDefID;
+                    }
+            }
             ///////////////////////..............
 
             moduleInfo.CacheTime = moduleDefinitionInfo.DefaultCacheTime;//Default Cache Time is 0
@@ -382,6 +399,7 @@ namespace Plugghest.Modules.CreatePlugg
             plug.ModifiedOnDate = DateTime.Now; ;
             plug.ModifiedByUserId = 1;
             PluggController PlugCtl = new PluggController();
+            PluggHandler plughandler = new PluggHandler();
 
             if (plug.PluggId > 0)
             {
@@ -401,7 +419,7 @@ namespace Plugghest.Modules.CreatePlugg
             }
             else
             {
-                PlugCtl.CreatePlug(plug);
+                plughandler.AddNewPlugg(plug);
 
                 pluggcontent.PluggId = plug.PluggId;
                 //To get all Language
@@ -458,6 +476,7 @@ namespace Plugghest.Modules.CreatePlugg
             pluggcontent.YouTubeString = link;
 
             PluggController plugc = new PluggController();
+            PluggHandler plughandler = new PluggHandler();
             if (isUpdate)
             {
                 Boolean IsExist = plugc.CheckIsPlugExist(Convert.ToInt32(pluggcontent.PluggId));
@@ -476,7 +495,7 @@ namespace Plugghest.Modules.CreatePlugg
             }
             else //Insert.........
             {
-                plugc.CreatePlugginContent(pluggcontent);//create puggin content
+                plughandler.AddNewPluggContent(pluggcontent);//create puggin content
             }
 
             pluggcontent.YouTubeString = YouTubeString;//add again file youtube string to PluggController To remove iframe...

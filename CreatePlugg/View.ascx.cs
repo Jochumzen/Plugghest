@@ -48,13 +48,13 @@ namespace Plugghest.Modules.CreatePlugg
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //Show tree();
-            BindTree();
-
             try
             {
                 if (!IsPostBack)
                 {
+                    //Show tree();
+                    BindTree();
+
                     ViewState["PID"] = null;
                     string CurrentUrl = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + HttpContext.Current.Request.RawUrl;
                     System.Uri uri = new System.Uri(CurrentUrl);
@@ -72,7 +72,7 @@ namespace Plugghest.Modules.CreatePlugg
                             if (IsExist)
                             {
                                 Plugg plugg = new Plugg();
-                                plugg = plugc.GetPlug(Convert.ToInt32(PID));
+                                plugg = plugc.GetPlugg(Convert.ToInt32(PID));
                                 if (plugg.WhoCanEdit == 1 || plugg.CreatedByUserId == this.UserId || UserInfo.IsInRole("Administator"))
                                 { //Check that either WhoCanEdit is anyone or the current user is the one who created the Plugg or the current user is a SuperUser.
 
@@ -246,6 +246,7 @@ namespace Plugghest.Modules.CreatePlugg
             plug.PluggId = 0;
 
             var plugc = new PluggController();
+            PluggHandler plughandler = new PluggHandler();
 
             plug.Title = txtTitle.Text;
 
@@ -264,7 +265,7 @@ namespace Plugghest.Modules.CreatePlugg
             if(!string.IsNullOrEmpty(hdnNodeSubjectId.Value))
             plug.Subject = Convert.ToInt32(hdnNodeSubjectId.Value);
 
-            plugc.CreatePlug(plug); //Create plugg
+            plughandler.AddNewPlugg(plug); //Create plugg
 
             //To get all Language
             for (int i = 0; i < DDLanguage.Items.Count; i++)
@@ -286,6 +287,9 @@ namespace Plugghest.Modules.CreatePlugg
             var plugContent = new PluggContent();
 
             var plugc = new PluggController();
+
+            var plugghandler = new PluggHandler();
+            
 
             plugContent.PluggId = PluggId;
 
@@ -342,7 +346,7 @@ namespace Plugghest.Modules.CreatePlugg
                 plugContent.LatexTextInHtml = "";
             }
 
-            plugc.CreatePlugginContent(plugContent);//create puggin content
+            plugghandler.AddNewPluggContent(plugContent);//create puggin content
 
         }
 
@@ -566,9 +570,28 @@ namespace Plugghest.Modules.CreatePlugg
 
 
             //Get ModuleDefinationId.............
-            PluggController pc = new PluggController();
-            int MDId = pc.GetModuleDefId("DisplayPlugg");
-            moduleInfo.ModuleDefID = MDId;
+            //PluggController pc = new PluggController();
+            //int MDId = pc.GetModuleDefId("DisplayPlugg");
+            //moduleInfo.ModuleDefID = MDId;
+
+            DesktopModuleInfo desktopModuleInfo = null;
+            foreach (KeyValuePair<int, DesktopModuleInfo> kvp in DesktopModuleController.GetDesktopModules(this.PortalId))
+            {
+                DesktopModuleInfo mod = kvp.Value;
+                if (mod != null)
+                    if (mod.FriendlyName == "DisplayPlugg")
+                    {
+                        desktopModuleInfo = mod;
+                        var mc = new ModuleDefinitionController();
+                        var mInfo = new ModuleDefinitionInfo();
+                        mInfo = mc.GetModuleDefinitionByName(desktopModuleInfo.DesktopModuleID, desktopModuleInfo.FriendlyName);
+                        //int moduleDefId = mInfo.ModuleDefID;
+                        moduleInfo.ModuleDefID = mInfo.ModuleDefID;
+                    }
+            }
+
+
+
             ///////////////////////..............
 
             moduleInfo.CacheTime = moduleDefinitionInfo.DefaultCacheTime;//Default Cache Time is 0
@@ -595,9 +618,27 @@ namespace Plugghest.Modules.CreatePlugg
 
 
             //Get ModuleDefinationId.............
-            PluggController pc = new PluggController();
-            int MDId = pc.GetModuleDefId("CourseMenu");
-            moduleInfo.ModuleDefID = MDId;
+            //PluggController pc = new PluggController();
+            //int MDId = pc.GetModuleDefId("CourseMenu");
+            //moduleInfo.ModuleDefID = MDId;
+            DesktopModuleInfo desktopModuleInfo = null;
+            foreach (KeyValuePair<int, DesktopModuleInfo> kvp in DesktopModuleController.GetDesktopModules(this.PortalId))
+            {
+                DesktopModuleInfo mod = kvp.Value;
+                if (mod != null)
+                    if (mod.FriendlyName == "CourseMenu")
+                    {
+                        desktopModuleInfo = mod;
+                        var mc = new ModuleDefinitionController();
+                        var mInfo = new ModuleDefinitionInfo();
+                        mInfo = mc.GetModuleDefinitionByName(desktopModuleInfo.DesktopModuleID, desktopModuleInfo.FriendlyName);
+                        //int moduleDefId = mInfo.ModuleDefID;
+                        moduleInfo.ModuleDefID = mInfo.ModuleDefID;
+                    }
+            }
+
+
+
             ///////////////////////..............
 
             moduleInfo.CacheTime = moduleDefinitionInfo.DefaultCacheTime;//Default Cache Time is 0
