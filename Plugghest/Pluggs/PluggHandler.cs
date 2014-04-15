@@ -20,5 +20,16 @@ namespace Plugghest.Pluggs
         {
             return plugcntr.CreatePluggContent(plugcontent);
         }
+
+        public List<Plugg> GetPluggList()
+        {
+            return plugcntr.GetPluggRecords();
+        }
+
+        public List<PluggContent> GetPluggincontentList(int PluggId)
+        {
+            return plugcntr.GetPluggincontents(PluggId);
+        }
+
     }
 }

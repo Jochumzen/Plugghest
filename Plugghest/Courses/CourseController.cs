@@ -80,39 +80,5 @@ namespace Plugghest.Courses
             return isexist;
         }
 
-
-
-
-        //P.J. Remove this - DO not read DNN tables directly. Code will break when DNN updates. Instead, do something like:
-        //DesktopModuleInfo desktopModuleInfo = null;
-        //foreach (KeyValuePair<int, DesktopModuleInfo> kvp in DesktopModuleController.GetDesktopModules(portalId))
-        //{
-        //    DesktopModuleInfo mod = kvp.Value;
-        //    if (mod != null)
-        //        if (mod.FriendlyName == "DisplayPlugg")
-        //        {
-        //            desktopModuleInfo = mod;
-        //            break;
-        //        }
-        //}
-
-        //To Get ModuleDefId....
-        //public int GetModuleDefId(string FriendlyName)
-        //{
-        //    List<ModuleDef> plug = new List<ModuleDef>();
-        //    using (IDataContext ctx = DataContext.Instance())
-        //    {
-        //        var rec = ctx.ExecuteQuery<ModuleDef>(CommandType.TableDirect, "select ModuleDefId from ModuleDefinitions where FriendlyName='" + FriendlyName + "'");
-        //        foreach (var item in rec)
-        //        {
-        //            plug.Add(new ModuleDef { ModuleDefID = item.ModuleDefID });
-        //        }
-        //    }
-        //    return plug[0].ModuleDefID;
-        //}
-
-
-
-
     }
 }

@@ -21,7 +21,6 @@ namespace Plugghest.Courses
     //Poko classes as a  Entity Layer.......
 
     [TableName("Courses")]
-    //setup the primary key for table
     [PrimaryKey("CourseId", AutoIncrement = true)]
     public class Course
     {
@@ -43,62 +42,10 @@ namespace Plugghest.Courses
 
         public string  Description { get; set; }
 
-        //P.J. This must go. A Plugg is not part of a course
-        public int PluggId { get; set; }
-
-        //P.J. This must go. Title IS CourseName
-        public string CourseName { get; set; }
-
-        //P.J. This must go. Unnecessary. You have "CreatedByUserId" -> UserName from DNN
-        public string UserName { get; set; }
-
-        //P.J. This must go. A Plugg is not part of a course
-        public string PluggName { get; set; }
-
-        //P.J. This must go. There is no Order roperty of a course
-        public int Orders { get; set; }
-
     }
 
 
-
-
-    //public class CourseInDisplayCourse
-    //{
-    //    public int CourseId { get; set; }
-    //    public string Title { get; set; }
-    //    public string Description { get; set; }
-    //    public int PluggId { get; set; }
-    //}
-
-
-    //public class CourseInViewCourses
-    //{
-    //    public int CourseId { get; set; }
-
-    //    public string CourseName { get; set; }
-
-    //    public int CreatedByUserId { get; set; }
-
-    //    public string UserName { get; set; }
-    //}
-
-
-
-    //public class CourseInCourseMenu
-    //{
-    //    public int CourseId { get; set; }
-
-    //    public string PluggId { get; set; }
-
-    //    public string PluggName { get; set; }
-
-    //    public int Orders { get; set; }
-
-    //}
-
     [TableName("CoursePlugg")]
-    //setup the primary key for table
     [PrimaryKey("PluggId", AutoIncrement = false)]
     public class CoursePlugg
     {
@@ -109,14 +56,4 @@ namespace Plugghest.Courses
         public int Orders { get; set; }
     }
 
-
-    //P.J. This must go. DO NOT USE DNN TABLES DIRECTLY. 
-
-    [TableName("ModuleDefinitions")]
-    [PrimaryKey("ModuleDefId", AutoIncrement = true)]
-    class ModuleDef
-    {
-        public int ModuleDefID { get; set; }
-        public string FriendlyName { get; set; }
-    }
 }
