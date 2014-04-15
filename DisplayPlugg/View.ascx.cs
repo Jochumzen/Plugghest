@@ -45,19 +45,22 @@ namespace Plugghest.Modules.DisplayPlugg
                 if (!IsPostBack)
                 {
                     PluggController pc = new PluggController();
+                    PluggHandler plugghandler = new PluggHandler();
+
                     int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);//get pluggid from page title
 
                     //Get current culture
                     string curlan = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
 
-                    List<PluggContentInDisplayPlugg> pluglist = pc.GetPluggincontents(pluggid);
+                    List<PluggContent> pluglist = plugghandler.GetPluggincontentList(pluggid);
+                    //List<PluggContent> pluglist = pc.GetPluggincontents(pluggid);
 
                     foreach (var item in pluglist)
                     {
                         //get current culture records...
                         if (curlan == item.CultureCode)
                         {
-                            lblTitle.Text = item.Title;
+                            //lblTitle.Text = item.Title;
                             lblYoutube.Text = item.YouTubeString;
                             lblHtmlText.Text = Server.HtmlDecode(item.HtmlText); ;
                             lblLatexText.Text = item.LatexText;
