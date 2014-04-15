@@ -12,6 +12,7 @@
 using System.Collections.Generic;
 using DotNetNuke.Data;
 using System.Data;
+using DotNetNuke.Entities.Users;
 
 namespace Plugghest.Subjects
 {

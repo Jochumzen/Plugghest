@@ -50,6 +50,9 @@ namespace Plugghest.Pluggs
             }
         }
 
+        //P.J. Remove. If you need PluggTitle you simply do
+        //PluggHandler myPluggHandler = new PluggHandler();
+        //public string myPluggTitle = myPluggHandler.GetPlugg(pluggId).Title;
         public string GetPlugTitle(int PluggId)
         {
             string plugtitle = "";
@@ -69,7 +72,14 @@ namespace Plugghest.Pluggs
             return plugtitle;
         }
 
-
+        //P.J. Why do you name the method "GetPluggsByCourseID" when it gets CoursePluggs??
+        //Method names are VERY impportant
+        //Also, the use of local variable "plug" is unfortunate. As this is a very short method, use Very short names (maybe "cp") but no MISLEADING names
+        //Finally, Make a constructor for the CoursePlugg class and 
+        //      plug.Add(new CoursePlugg { CourseId = item.CourseId, PluggId = item.PluggId,Orders=item.Orders });
+        //can be written
+        //      plug.Add(new CoursePlugg(item.CourseId, item.PluggId, item.Orders));
+        //which is simpler to read
         public List<CoursePlugg> GetPluggsByCourseID(int CourseID)
         {
             List<CoursePlugg> plug = new List<CoursePlugg>();
@@ -84,8 +94,21 @@ namespace Plugghest.Pluggs
             return plug;
         }
 
+        //P.J. I added this method. Remove this comment if you accept it.
+        //This method will get all the Pluggs
+        public IEnumerable<Plugg> GetAllPluggs()
+        {
+            IEnumerable<Plugg> t;
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<Plugg>();
+                t = rep.Get();
+            }
+            return t;
+        }
 
-        //P.J. GetAllPlugg_PageName is a very strange name for what method does
+        //P.J. Can you remove this method and use GetAllPluggs above?
+        //It seems very strange to get only the PluggId of all Pluggs - why would you want to do that?
         public List<Plugg> GetAllPlugg_PageName()
         {
             List<Plugg> plug = new List<Plugg>();
@@ -169,6 +192,7 @@ namespace Plugghest.Pluggs
         }
 
 
+        //P.J. This will not work as PLugg does not have Username. See comments in mail.
         public List<Plugg> GetPluggRecords()
         {
             List<Plugg> plug = new List<Plugg>();
@@ -185,7 +209,7 @@ namespace Plugghest.Pluggs
             return plug;
         }
 
-
+        //P.J. Naming problem...
         public List<CoursePlugg> GetPluggsByCourseIDForMenu(int CourseID)
         {
             List<CoursePlugg> plug = new List<CoursePlugg>();
@@ -200,7 +224,7 @@ namespace Plugghest.Pluggs
             return plug;
         }
 
-
+        //P.J. Constructor...
         public List<PluggContent> GetPluggincontents(int PluggId)
         {
             List<PluggContent> plug = new List<PluggContent>();

@@ -41,6 +41,7 @@ namespace Plugghest.Courses
             }
         }
 
+        //P.J. You do not need this - use GetCourse
         //Get Course Detail.....
         public List<Course> GetCourseDetail(int CourseId)
         {
