@@ -43,12 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Courses\CourseHandler.cs" />
     <Compile Include="Courses\FeatureController.cs" />
     <Compile Include="Courses\CourseItem.cs" />
     <Compile Include="Courses\CourseController.cs" />
     <Compile Include="Pluggs\FeatureController.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Pluggs\PluggHandler.cs" />
     <Compile Include="Pluggs\PluggItem.cs" />
     <Compile Include="Pluggs\PluggController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

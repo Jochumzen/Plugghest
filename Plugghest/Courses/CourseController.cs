@@ -31,63 +31,14 @@ namespace Plugghest.Courses
         }
 
         //For Insert Records into CoursePlugg
-        public void CreateCoursePlugg(CoursePlugg t)
+        public Boolean CreateCoursePlugg(CoursePlugg t)
         {
             using (IDataContext ctx = DataContext.Instance())
             {
                 var rep = ctx.GetRepository<CoursePlugg>();
                 rep.Insert(t);
+                return true;
             }
-        }
-
-        //P.J. Remove this - DO not read DNN tables directly. Code will break when DNN updates. Instead, do something like:
-        //DesktopModuleInfo desktopModuleInfo = null;
-        //foreach (KeyValuePair<int, DesktopModuleInfo> kvp in DesktopModuleController.GetDesktopModules(portalId))
-        //{
-        //    DesktopModuleInfo mod = kvp.Value;
-        //    if (mod != null)
-        //        if (mod.FriendlyName == "DisplayPlugg")
-        //        {
-        //            desktopModuleInfo = mod;
-        //            break;
-        //        }
-        //}
-
-        //To Get ModuleDefId....
-        public int GetModuleDefId(string FriendlyName)
-        {
-            List<ModuleDef> plug = new List<ModuleDef>();
-            using (IDataContext ctx = DataContext.Instance())
-            {
-                var rec = ctx.ExecuteQuery<ModuleDef>(CommandType.TableDirect, "select ModuleDefId from ModuleDefinitions where FriendlyName='" + FriendlyName + "'");
-                foreach (var item in rec)
-                {
-                    plug.Add(new ModuleDef { ModuleDefID = item.ModuleDefID });
-                }
-            }
-            return plug[0].ModuleDefID;
-
-        }
-
-        //P.J.  Please explain below why GetPluggTitle is in the CourseController??
-        //
-        public string GetPlugTitle(int PluggId)
-        {
-            string plugtitle = "";
-            List<Course> plug = new List<Course>();
-            using (IDataContext ctx = DataContext.Instance())
-            {
-                var rec = ctx.ExecuteQuery<Course>(CommandType.TableDirect, "select Title from Pluggs where PluggId=" + PluggId);
-                foreach (var item in rec)
-                {
-                    plug.Add(new Course { Title = item.Title });
-                }
-                if (plug.Count > 0)
-                {
-                    plugtitle = plug[0].Title; ;
-                }
-            }
-            return plugtitle;
         }
 
         //Get Course Detail.....
@@ -103,25 +54,10 @@ namespace Plugghest.Courses
                     crs.Add(new Course { CourseId = item.CourseId, Title = item.Title, Description = item.Description });
                 }
             }
-
             return crs;
         }
 
-        //P.J. If this gets Pluggs it should be in the PluggController
-        public List<Course> GetPluggsByCourseID(int CourseID)
-        {
-            List<Course> plug = new List<Course>();
-            using (IDataContext ctx = DataContext.Instance())
-            {
-                var rec = ctx.ExecuteQuery<Course>(CommandType.TableDirect, "select CourseId,Pluggs.PluggId,pluggs.Title as 'PluggName',Orders from CoursePlugg join Pluggs on CoursePlugg.PluggId=Pluggs.PluggId where CourseId=" + CourseID + "order by Orders");
-                foreach (var item in rec)
-                {
-                    plug.Add(new Course { CourseId = item.CourseId, PluggId = item.PluggId });
-                }
-            }
-            return plug;
-        }
-
+        //Get Course.....
         public Course GetCourse(int? courseId)
         {
             Course p;
@@ -133,64 +69,50 @@ namespace Plugghest.Courses
             return p;
         }
 
-        //Why is this called ..Plugg.. when it gets courses..
-        public List<Course> GetPluggRecords()
-        {
-            List<Course> plug = new List<Course>();
-            using (IDataContext ctx = DataContext.Instance())
-            {
-                var rec = ctx.ExecuteQuery<Course>(CommandType.TableDirect, @"select CourseId,Title as 'CourseName',Courses.CreatedByUserId,Username from Courses join Users on users.UserID=Courses.CreatedByUserId ");
-
-                foreach (var item in rec)
-                {
-                    plug.Add(new Course { CourseName = item.CourseName, CourseId = item.CourseId, CreatedByUserId = item.CreatedByUserId, UserName = item.UserName });
-                }
-            }
-
-            return plug;
-        }
-
-        //P.J. If this gets Pluggs it should be in the PluggController
-        public List<Course> GetPluggsByCourseIDForMenu(int CourseID)
-        {
-            List<Course> plug = new List<Course>();
-            using (IDataContext ctx = DataContext.Instance())
-            {
-                var rec = ctx.ExecuteQuery<Course>(CommandType.TableDirect, "select CourseId,Pluggs.PluggId,pluggs.Title as 'PluggName',Orders from CoursePlugg join Pluggs on CoursePlugg.PluggId=Pluggs.PluggId where CourseId=" + CourseID + "order by Orders");
-                foreach (var item in rec)
-                {
-                    plug.Add(new Course { CourseId = item.CourseId, PluggId = item.PluggId, PluggName = item.PluggName, Orders = item.Orders });
-                }
-            }
-            return plug;
-        }
-
-        //P.J. This is an extremely strange way of checking if CourseID exists. Can you do better?
+        //Check Course Exist or not
         public bool IsCourseIdExist(int CourseID)
         {
-            List<IsExist> isexist = new List<IsExist>();
-            bool val = false;
+            Boolean isexist;
             using (IDataContext ctx = DataContext.Instance())
             {
-                IEnumerable<IsExist> items = ctx.ExecuteQuery<IsExist>(CommandType.Text, "select COUNT(courseid) as 'isexist' from Courses where CourseId=" + CourseID);
-
-                foreach (var item in items)
-                {
-                    isexist.Add(new IsExist { isexist = item.isexist });
-                }
-                if (items != null)
-                {
-                    val = isexist[0].isexist;
-                }
+                isexist = ctx.ExecuteScalar<Boolean>(CommandType.Text, "select COUNT(courseid) as 'isexist' from Courses where CourseId=" + CourseID);
             }
-            return val;
-
+            return isexist;
         }
 
-        //P.J. This should go
-        class IsExist
-        {
-            public Boolean isexist { get; set; }
-        }
+
+
+
+        //P.J. Remove this - DO not read DNN tables directly. Code will break when DNN updates. Instead, do something like:
+        //DesktopModuleInfo desktopModuleInfo = null;
+        //foreach (KeyValuePair<int, DesktopModuleInfo> kvp in DesktopModuleController.GetDesktopModules(portalId))
+        //{
+        //    DesktopModuleInfo mod = kvp.Value;
+        //    if (mod != null)
+        //        if (mod.FriendlyName == "DisplayPlugg")
+        //        {
+        //            desktopModuleInfo = mod;
+        //            break;
+        //        }
+        //}
+
+        //To Get ModuleDefId....
+        //public int GetModuleDefId(string FriendlyName)
+        //{
+        //    List<ModuleDef> plug = new List<ModuleDef>();
+        //    using (IDataContext ctx = DataContext.Instance())
+        //    {
+        //        var rec = ctx.ExecuteQuery<ModuleDef>(CommandType.TableDirect, "select ModuleDefId from ModuleDefinitions where FriendlyName='" + FriendlyName + "'");
+        //        foreach (var item in rec)
+        //        {
+        //            plug.Add(new ModuleDef { ModuleDefID = item.ModuleDefID });
+        //        }
+        //    }
+        //    return plug[0].ModuleDefID;
+        //}
+
+
+
+
     }
 }

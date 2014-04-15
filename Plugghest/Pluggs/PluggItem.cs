@@ -21,16 +21,8 @@ namespace Plugghest.Pluggs
     [TableName("Pluggs")]
     //setup the primary key for table
     [PrimaryKey("PluggId", AutoIncrement = true)]
-    //configure caching using PetaPoco
-    //[Cacheable("Items", CacheItemPriority.Default, 20)]
-    //scope the objects to the ModuleId of a module on a page (or copy of a module on a page)
-    //[Scope("ModuleId")]
-
     public class Plugg
     {
-        ///<summary>
-        /// The ID of your object with the name of the ItemName
-        ///</summary>
         public int PluggId { get; set; }
 
         public string Title { get; set; }
@@ -51,105 +43,22 @@ namespace Plugghest.Pluggs
 
     }
 
-    //P.J. This class should go.
-    public class PluggInView
-    {
-        public int PluggId { get; set; }
-
-        public string PluggName { get; set; }
-
-        public int CreatedByUserId { get; set; }
-
-        public string UserName { get; set; }
-    }
-
     [TableName("PluggsContent")]
-    //setup the primary key for table
     [PrimaryKey("PluggId", AutoIncrement = false)]
-    //[PrimaryKey("LanguageId", AutoIncrement = false)]
-    //configure caching using PetaPoco
-    //[Cacheable("Items", CacheItemPriority.Default, 20)]
-    //scope the objects to the ModuleId of a module on a page (or copy of a module on a page)
-    //[Scope("ModuleId")]
     public class PluggContent
     {
-        ///<summary>
-        /// The ID of your object with the name of the ItemName
-        ///</summary>
         public int PluggId { get; set; }
-        ///<summary>
-        /// A string with the name of the ItemName
-        ///</summary>
-        public string CultureCode { get; set; }
-
-        ///<summary>
-        /// A string with the description of the object
-        ///</summary>
-        public string YouTubeString { get; set; }
-
-        ///<summary>
-        /// An integer with the user id of the assigned user for the object
-        ///</summary>
-        public string HtmlText { get; set; }
-
-        ///<summary>
-        /// The ModuleId of where the object was created and gets displayed
-        ///</summary>
-        public string LatexText { get; set; }
-
-
-        ///<summary>
-        /// An integer for the user id of the user who last updated the object
-        ///</summary>
-        public string LatexTextInHtml { get; set; }
-    }
-
-    //P.J. This class should go.
-    public class PluggContentInDisplayPlugg
-    {
-        ///<summary>
-        /// The ID of your object with the name of the ItemName
-        ///</summary>
-        public int PluggId { get; set; }
-        ///<summary>
-        /// A string with the name of the ItemName
-        ///</summary>
-        ///
-        public string Title { get; set; }
 
         public string CultureCode { get; set; }
 
-
-        ///<summary>
-        /// A string with the description of the object
-        ///</summary>
         public string YouTubeString { get; set; }
 
-        ///<summary>
-        /// An integer with the user id of the assigned user for the object
-        ///</summary>
         public string HtmlText { get; set; }
 
-        ///<summary>
-        /// The ModuleId of where the object was created and gets displayed
-        ///</summary>
         public string LatexText { get; set; }
 
-
-        ///<summary>
-        /// An integer for the user id of the user who last updated the object
-        ///</summary>
         public string LatexTextInHtml { get; set; }
 
-
     }
 
-    //P.J. This class should go.
-    [TableName("ModuleDefinitions")]
-    [PrimaryKey("ModuleDefId", AutoIncrement = true)]
-    class ModuleDef
-    {
-        public int ModuleDefID { get; set; }
-        public string FriendlyName { get; set; }
-    }
 }

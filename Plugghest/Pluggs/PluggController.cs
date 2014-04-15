@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using DotNetNuke.Data;
 using System.Data;
 using System;
+using Plugghest.Courses;
 
 namespace Plugghest.Pluggs
 {
@@ -39,30 +40,50 @@ namespace Plugghest.Pluggs
             return p;
         }
 
-        //P.J. Rename CreatePluggContent
-        public void CreatePlugginContent(PluggContent t)
+        public Boolean CreatePluggContent(PluggContent t)
         {
             using (IDataContext ctx = DataContext.Instance())
             {
                 var rep = ctx.GetRepository<PluggContent>();
                 rep.Insert(t);
+                return true;
             }
         }
 
-        //P.J. Remove. See comment in CourseController
-        public int GetModuleDefId(string FriendlyName)
+        public string GetPlugTitle(int PluggId)
         {
-            List<ModuleDef> plug = new List<ModuleDef>();
+            string plugtitle = "";
+            List<Course> plug = new List<Course>();
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rec = ctx.ExecuteQuery<ModuleDef>(CommandType.TableDirect, "select ModuleDefId from ModuleDefinitions where FriendlyName='" + FriendlyName + "'");
+                var rec = ctx.ExecuteQuery<Course>(CommandType.TableDirect, "select Title from Pluggs where PluggId=" + PluggId);
                 foreach (var item in rec)
                 {
-                    plug.Add(new ModuleDef { ModuleDefID = item.ModuleDefID });
+                    plug.Add(new Course { Title = item.Title });
+                }
+                if (plug.Count > 0)
+                {
+                    plugtitle = plug[0].Title; ;
                 }
             }
-            return plug[0].ModuleDefID;
+            return plugtitle;
         }
+
+
+        public List<Course> GetPluggsByCourseID(int CourseID)
+        {
+            List<Course> plug = new List<Course>();
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rec = ctx.ExecuteQuery<Course>(CommandType.TableDirect, "select CourseId,Pluggs.PluggId,pluggs.Title as 'PluggName',Orders from CoursePlugg join Pluggs on CoursePlugg.PluggId=Pluggs.PluggId where CourseId=" + CourseID + "order by Orders");
+                foreach (var item in rec)
+                {
+                    plug.Add(new Course { CourseId = item.CourseId, PluggId = item.PluggId });
+                }
+            }
+            return plug;
+        }
+
 
         //P.J. GetAllPlugg_PageName is a very strange name for what method does
         public List<Plugg> GetAllPlugg_PageName()
@@ -80,6 +101,7 @@ namespace Plugghest.Pluggs
         }
 
 
+
         public void DeleteAllPluggsContent()
         {
             using (IDataContext ctx = DataContext.Instance())
@@ -87,6 +109,8 @@ namespace Plugghest.Pluggs
                 ctx.ExecuteQuery<Plugg>(CommandType.TableDirect, "truncate table PluggsContent");
             }
         }
+
+
 
         public void DeleteAllPluggRecord()
         {
@@ -97,44 +121,19 @@ namespace Plugghest.Pluggs
             }
         }
 
-        //P.J. Try to do better
+
+
         public Boolean CheckIsPlugExist(int PID)
         {
-            IsExist objisexist = new IsExist();
+            Boolean isexist;
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rec = ctx.ExecuteQuery<IsExist>(CommandType.TableDirect, "select count(PluggId) as isexist from Pluggs where pluggid=" + PID);
-                foreach (var item in rec)
-                {
-                    objisexist.isexist = item.isexist;
-                }
+                isexist = ctx.ExecuteScalar<Boolean>(CommandType.Text, "select count(PluggId) as isexist from Pluggs where pluggid=" + PID);
             }
-            return objisexist.isexist;
+            return isexist;
         }
 
-        public class IsExist
-        {
-            public Boolean isexist { get; set; }
-        }
 
-        //P.J. No no no! 
-        //This is truly HORRIBLE coding. 
-        //You cannot have one "public Plugg GetPlugg(int? plugid)" - see above - and one misspelled "public Plugg GetPlug(int PluggId)" with one g
-        //How would anyone have a chance to understand the difference????
-
-        public Plugg GetPlug(int PluggId)
-        {
-            Plugg plugg = new Plugg();
-            using (IDataContext ctx = DataContext.Instance())
-            {
-                var rec = ctx.ExecuteQuery<Plugg>(CommandType.TableDirect, "select * from Pluggs where pluggid=" + PluggId);
-                foreach (var item in rec)
-                {
-                    plugg.Title = item.Title; plugg.CreatedByUserId = item.CreatedByUserId; plugg.CreatedInCultureCode = item.CreatedInCultureCode; plugg.CreatedOnDate = item.CreatedOnDate; plugg.ModifiedOnDate = item.ModifiedOnDate; plugg.WhoCanEdit=item.WhoCanEdit ;
-                }
-            }
-            return plugg;
-        }
 
         public PluggContent GetPlugContent(int PluggId, string CultureCode)
         {
@@ -160,6 +159,7 @@ namespace Plugghest.Pluggs
             }
         }
 
+
         public void UpdatePluggContent(PluggContent plugContent)
         {
             using (IDataContext db = DataContext.Instance())
@@ -168,36 +168,52 @@ namespace Plugghest.Pluggs
             }
         }
 
-        public List<PluggInView> GetPluggRecords()
+
+        public List<Plugg> GetPluggRecords()
         {
-            List<PluggInView> plug = new List<PluggInView>();
+            List<Plugg> plug = new List<Plugg>();
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rec = ctx.ExecuteQuery<PluggInView>(CommandType.TableDirect, @"select PluggId,Title as 'PluggName',pluggs.CreatedByUserId,Username from pluggs join Users on users.UserID=Pluggs.CreatedByUserId ");
+                var rec = ctx.ExecuteQuery<Plugg>(CommandType.TableDirect, @"select PluggId, Title ,pluggs.CreatedByUserId,Username from pluggs join Users on users.UserID=Pluggs.CreatedByUserId ");
 
                 foreach (var item in rec)
                 {
-                    plug.Add(new PluggInView { PluggName = item.PluggName, PluggId = item.PluggId, CreatedByUserId = item.CreatedByUserId, UserName = item.UserName });
+                    plug.Add(new Plugg { Title = item.Title, PluggId = item.PluggId, CreatedByUserId = item.CreatedByUserId});
                 }
             }
 
             return plug;
         }
 
-        public List<PluggContentInDisplayPlugg> GetPluggincontents(int PluggId)
+
+        public List<Course> GetPluggsByCourseIDForMenu(int CourseID)
         {
-            List<PluggContentInDisplayPlugg> plug = new List<PluggContentInDisplayPlugg>();
+            List<Course> plug = new List<Course>();
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rec = ctx.ExecuteQuery<PluggContentInDisplayPlugg>(CommandType.TableDirect, @"select Title,CultureCode,YouTubeString,HtmlText,LatexText,LatexTextInHtml from Pluggs inner join PluggsContent
-                                                                                      on pluggs.PluggId=PluggsContent.PluggId  where Pluggs.PluggId=" + PluggId);
-
+                var rec = ctx.ExecuteQuery<Course>(CommandType.TableDirect, "select CourseId,Pluggs.PluggId,pluggs.Title as 'PluggName',Orders from CoursePlugg join Pluggs on CoursePlugg.PluggId=Pluggs.PluggId where CourseId=" + CourseID + "order by Orders");
                 foreach (var item in rec)
                 {
-                    plug.Add(new PluggContentInDisplayPlugg { Title = item.Title, CultureCode = item.CultureCode, YouTubeString = item.YouTubeString, HtmlText = item.HtmlText, LatexText = item.LatexText, LatexTextInHtml = item.LatexTextInHtml });
+                    plug.Add(new Course { CourseId = item.CourseId, PluggId = item.PluggId, PluggName = item.PluggName, Orders = item.Orders });
                 }
             }
+            return plug;
+        }
 
+
+        public List<PluggContent> GetPluggincontents(int PluggId)
+        {
+            List<PluggContent> plug = new List<PluggContent>();
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rec = ctx.ExecuteQuery<PluggContent>(CommandType.TableDirect, @"select Title,CultureCode,YouTubeString,HtmlText,LatexText,LatexTextInHtml from Pluggs inner join PluggsContent
+                                                                                      on pluggs.PluggId=PluggsContent.PluggId  where Pluggs.PluggId=" + PluggId);
+                foreach (var item in rec)
+                {
+                    plug.Add(new PluggContent {CultureCode = item.CultureCode, YouTubeString = item.YouTubeString, HtmlText = item.HtmlText, LatexText = item.LatexText, LatexTextInHtml = item.LatexTextInHtml });
+                }
+                //remove .... Title = item.Title,
+            }
             return plug;
         }
 

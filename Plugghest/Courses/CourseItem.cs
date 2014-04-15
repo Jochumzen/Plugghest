@@ -18,6 +18,8 @@ using DotNetNuke.Entities.Content;
 
 namespace Plugghest.Courses
 {
+    //Poko classes as a  Entity Layer.......
+
     [TableName("Courses")]
     //setup the primary key for table
     [PrimaryKey("CourseId", AutoIncrement = true)]
