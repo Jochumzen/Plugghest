@@ -49,6 +49,7 @@ namespace Plugghest.Modules.ViewPluggs
         public void bindgrid()
         {
             PluggController pc = new PluggController();
+            PluggHandler plugghanler = new PluggHandler();
 
             //var pc = new PluggController();
             DnnGrid dgDNNGrid;
@@ -63,7 +64,7 @@ namespace Plugghest.Modules.ViewPluggs
             dgDNNGrid.AllowSorting = true;
             dgDNNGrid.AllowPaging = true;
             dgDNNGrid.PagerStyle.Mode = Telerik.Web.UI.GridPagerMode.Slider;
-            dgDNNGrid.DataSource = pc.GetPluggRecords();
+            dgDNNGrid.DataSource = plugghanler.GetPluggList();
             dgDNNGrid.DataBind();
 
             //pnlGrid.Controls.Add(dgDNNGrid);
