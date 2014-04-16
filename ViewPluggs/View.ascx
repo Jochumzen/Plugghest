@@ -20,10 +20,10 @@
          <%--<telerik:GridBoundColumn UniqueName="PluggName" HeaderText="Plugg Name" DataField="PluggName">
         </telerik:GridBoundColumn>--%>
 
-         <telerik:GridTemplateColumn UniqueName="Title"  HeaderText="Plugg Name" SortExpression="Title" >
+         <telerik:GridTemplateColumn UniqueName="PluggName"  HeaderText="Plugg Name" SortExpression="PluggName" >
          <HeaderTemplate>Plugg Name</HeaderTemplate>
          <ItemTemplate>
-           <a href ='<%#"/"+(Page as DotNetNuke.Framework.PageBase).PageCulture.Name+"/"+Eval("PluggId")+".aspx" %>'> <%#Eval("Title")%>  </a>
+           <a href ='<%#"/"+(Page as DotNetNuke.Framework.PageBase).PageCulture.Name+"/"+Eval("PluggId")+".aspx" %>'> <%#Eval("PluggName")%>  </a>
           </ItemTemplate>
           </telerik:GridTemplateColumn>
 
