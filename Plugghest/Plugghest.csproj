@@ -58,6 +58,28 @@
     <Compile Include="Subjects\SubjectItem.cs" />
     <Compile Include="Subjects\SubjectController.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Debug\Plugghest.dll" />
+    <Content Include="bin\Debug\Plugghest.pdb" />
+    <Content Include="bin\Release\ClientDependency.Core.dll" />
+    <Content Include="bin\Release\CountryListBox.dll" />
+    <Content Include="bin\Release\DotNetNuke.dll" />
+    <Content Include="bin\Release\DotNetNuke.Instrumentation.dll" />
+    <Content Include="bin\Release\dotnetnuke.log4net.dll" />
+    <Content Include="bin\Release\DotNetNuke.Services.Syndication.dll" />
+    <Content Include="bin\Release\DotNetNuke.Web.Client.dll" />
+    <Content Include="bin\Release\DotNetNuke.WebControls.dll" />
+    <Content Include="bin\Release\DotNetNuke.WebUtility.dll" />
+    <Content Include="bin\Release\Lucene.Net.Contrib.FastVectorHighlighter.dll" />
+    <Content Include="bin\Release\Lucene.Net.dll" />
+    <Content Include="bin\Release\Microsoft.ApplicationBlocks.Data.dll" />
+    <Content Include="bin\Release\Newtonsoft.Json.dll" />
+    <Content Include="bin\Release\PetaPoco.dll" />
+    <Content Include="bin\Release\Plugghest.dll" />
+    <Content Include="bin\Release\Plugghest.pdb" />
+    <Content Include="bin\Release\SharpZipLib.dll" />
+    <Content Include="bin\Release\Telerik.Web.UI.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

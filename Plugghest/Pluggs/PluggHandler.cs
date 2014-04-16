@@ -26,7 +26,7 @@ namespace Plugghest.Pluggs
             return pluggcntr.CreatePluggContent(plugcontent);
         }
 
-        public List<Plugg> GetPluggList()
+        public List<PluggInfoForDNNGrid> GetPluggList()
         {
             return pluggcntr.GetPluggRecords();
         }
