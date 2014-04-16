@@ -46,6 +46,22 @@ namespace Plugghest.Modules.CreatePlugg
     /// -----------------------------------------------------------------------------
     public partial class View : CreatePluggModuleBase, IActionable
     {
+        //initialize ...
+        public int PluggId;
+        public string Title;
+        public string CreatedInCultureCode;
+        public int WhoCanEdit;
+        public DateTime CreatedOnDate;
+        public int CreatedByUserId;
+        public DateTime ModifiedOnDate;
+        public int ModifiedByUserId;
+        public int? Subject;
+        public string CultureCode;
+        public string YouTubeString;
+        public string HtmlText;
+        public string LatexText;
+        public string LatexTextInHtml;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -71,8 +87,8 @@ namespace Plugghest.Modules.CreatePlugg
                             Boolean IsExist = plugc.CheckIsPlugExist(Convert.ToInt32(PID));
                             if (IsExist)
                             {
-                                Plugg plugg = new Plugg();
-                                plugg = plugc.GetPlugg(Convert.ToInt32(PID));
+                                //Plugg plugg = new Plugg();
+                                Plugg plugg = plugc.GetPlugg(Convert.ToInt32(PID));
                                 if (plugg.WhoCanEdit == 1 || plugg.CreatedByUserId == this.UserId || UserInfo.IsInRole("Administator"))
                                 { //Check that either WhoCanEdit is anyone or the current user is the one who created the Plugg or the current user is a SuperUser.
 
@@ -81,8 +97,7 @@ namespace Plugghest.Modules.CreatePlugg
                                     if (plugg.WhoCanEdit == 2) //check whocanedit is 2 then check 'only me' otherwise default..
                                         rdEditPlug.Items[1].Selected = true;
 
-                                    PluggContent plugcont = new PluggContent();
-                                    plugcont = plugc.GetPlugContent(Convert.ToInt32(PID), plugg.CreatedInCultureCode);
+                                     PluggContent plugcont = plugc.GetPlugContent(Convert.ToInt32(PID), plugg.CreatedInCultureCode);
                                     if (plugcont != null)
                                     {
                                         string str = plugcont.YouTubeString; ;
@@ -195,27 +210,28 @@ namespace Plugghest.Modules.CreatePlugg
                     if (ViewState["PID"] != null)
                     {
                         var plugc = new PluggController();
-                       Plugghest.Pluggs.Plugg plug = new Plugg();
-                        plug.PluggId = Convert.ToInt32(ViewState["PID"].ToString());
-                        plug.Title = txtTitle.Text;
+                        //Plugghest.Pluggs.Plugg plug = new Plugg();
+                        int PluggId = Convert.ToInt32(ViewState["PID"].ToString());
+                        string Title = txtTitle.Text;
 
-                        plug.CreatedInCultureCode = DDLanguage.SelectedValue;
+                        string CreatedInCultureCode = DDLanguage.SelectedValue;
 
                         int whocanedit = 2;//For only me
                         if (rdEditPlug.Text == "Any registered user")
                             whocanedit = 1;
 
-                        plug.WhoCanEdit = whocanedit;
-                        plug.CreatedOnDate = DateTime.Now;
-                        plug.CreatedByUserId = this.UserId;
-                        plug.ModifiedOnDate = DateTime.Now; ;
-                        plug.ModifiedByUserId = this.UserId;
-                        
-                        plugc.UpdatePlugg(plug);
+                        int  WhoCanEdit = whocanedit;
+                        DateTime CreatedOnDate = DateTime.Now;
+                        int CreatedByUserId = this.UserId;
+                        DateTime ModifiedOnDate = DateTime.Now; ;
+                        int ModifiedByUserId = this.UserId;
+
+                        Plugghest.Pluggs.Plugg plugg = new Plugg(PluggId, Title, CreatedInCultureCode, WhoCanEdit, CreatedOnDate, CreatedByUserId, ModifiedOnDate, ModifiedByUserId,null);
+                        plugc.UpdatePlugg(plugg);
                         //To get all Language
                         for (int i = 0; i < DDLanguage.Items.Count; i++)
                         {
-                            UpdatePlugginContent(plug.PluggId, DDLanguage.Items[i].Value);
+                            UpdatePlugginContent(plugg.PluggId, DDLanguage.Items[i].Value);
                         }
 
                         Response.Redirect("/" + (Page as DotNetNuke.Framework.PageBase).PageCulture.Name + "/" + Convert.ToInt32(ViewState["PID"].ToString()) + ".aspx");
@@ -242,40 +258,41 @@ namespace Plugghest.Modules.CreatePlugg
         protected int InsertPluggin()
         {
 
-            var plug = new Plugg();
-            plug.PluggId = 0;
+            //Plugg plug = new Plugg();
+            PluggId = 0;
 
             var plugc = new PluggController();
             PluggHandler plughandler = new PluggHandler();
 
-            plug.Title = txtTitle.Text;
+            Title = txtTitle.Text;
 
-            plug.CreatedInCultureCode = DDLanguage.SelectedValue;
+            CreatedInCultureCode = DDLanguage.SelectedValue;
 
             int whocanedit = 2;//For only me
             if (rdEditPlug.Text == "Any registered user")
                 whocanedit = 1;
 
-            plug.WhoCanEdit = whocanedit;
-            plug.CreatedOnDate = DateTime.Now;
-            plug.CreatedByUserId = this.UserId;
-            plug.ModifiedOnDate = DateTime.Now; ;
-            plug.ModifiedByUserId = this.UserId;
+            WhoCanEdit = whocanedit;
+            CreatedOnDate = DateTime.Now;
+            CreatedByUserId = this.UserId;
+            ModifiedOnDate = DateTime.Now; ;
+            ModifiedByUserId = this.UserId;
 
             if(!string.IsNullOrEmpty(hdnNodeSubjectId.Value))
-            plug.Subject = Convert.ToInt32(hdnNodeSubjectId.Value);
+                Subject = Convert.ToInt32(hdnNodeSubjectId.Value);
 
-            plughandler.AddNewPlugg(plug); //Create plugg
+            Plugghest.Pluggs.Plugg plugg = new Plugg(PluggId, Title, CreatedInCultureCode, WhoCanEdit, CreatedOnDate, CreatedByUserId, ModifiedOnDate, ModifiedByUserId, Subject);
+            int PID = plughandler.AddNewPlugg(plugg); //Create plugg
 
             //To get all Language
             for (int i = 0; i < DDLanguage.Items.Count; i++)
             {
                 //Insert on PluggContent
-                InsertPlugginContent(plug.PluggId, DDLanguage.Items[i].Value);
+                InsertPlugginContent(PID, DDLanguage.Items[i].Value);
             }
 
             //return plugid 
-            return plug.PluggId;
+            return PID;
 
             //InsertPlugginContent(plug.PluggId);
         }
@@ -284,16 +301,15 @@ namespace Plugghest.Modules.CreatePlugg
 
         protected void InsertPlugginContent(int PluggId, string CultureCode)
         {
-            var plugContent = new PluggContent();
 
             var plugc = new PluggController();
 
             var plugghandler = new PluggHandler();
             
 
-            plugContent.PluggId = PluggId;
+            PluggId = PluggId;
 
-            plugContent.CultureCode = CultureCode;
+            CultureCode = CultureCode;
 
 
             //youtube.. Add langugage
@@ -325,9 +341,9 @@ namespace Plugghest.Modules.CreatePlugg
                 link = "<iframe width=" + 640 + " height=" + 390 + " src=" + link + " frameborder=" + 0 + "></iframe>";
             }
 
-            plugContent.YouTubeString = link;
+            YouTubeString = link;
 
-            plugContent.HtmlText = txtHtmlText.Text;
+            HtmlText = txtHtmlText.Text;
 
 
             //plugContent.LatexText = txtDescription.Text; 
@@ -335,31 +351,31 @@ namespace Plugghest.Modules.CreatePlugg
 
             if (txtDescription.Text.Trim() != "")
             {
-                plugContent.LatexText = txtDescription.Text;
+                LatexText = txtDescription.Text;
                 LatexToMathMLConverter myConverter = new LatexToMathMLConverter(txtDescription.Text);
                 myConverter.Convert();
-                plugContent.LatexTextInHtml = myConverter.HTMLOutput;
+                LatexTextInHtml = myConverter.HTMLOutput;
             }
             else
             {
-                plugContent.LatexText = "";
-                plugContent.LatexTextInHtml = "";
+                LatexText = "";
+                LatexTextInHtml = "";
             }
 
-            plugghandler.AddNewPluggContent(plugContent);//create puggin content
+            PluggContent pluggcontent = new PluggContent(PluggId, CultureCode, YouTubeString, HtmlText, LatexText, LatexTextInHtml);
+            plugghandler.AddNewPluggContent(pluggcontent);//create puggin content
 
         }
 
 
         protected void UpdatePlugginContent(int PluggId, string CultureCode)
         {
-            var plugContent = new PluggContent();
 
             var plugc = new PluggController();
 
-            plugContent.PluggId = PluggId;
+            PluggId = PluggId;
 
-            plugContent.CultureCode = CultureCode;
+            CultureCode = CultureCode;
 
 
             //youtube.. Add langugage
@@ -393,9 +409,9 @@ namespace Plugghest.Modules.CreatePlugg
 
             }
 
-            plugContent.YouTubeString = link;
+            YouTubeString = link;
 
-            plugContent.HtmlText = txtHtmlText.Text;
+            HtmlText = txtHtmlText.Text;
 
 
             //plugContent.LatexText = txtDescription.Text; 
@@ -403,18 +419,19 @@ namespace Plugghest.Modules.CreatePlugg
 
             if (txtDescription.Text.Trim() != "")
             {
-                plugContent.LatexText = txtDescription.Text;
+                LatexText = txtDescription.Text;
                 LatexToMathMLConverter myConverter = new LatexToMathMLConverter(txtDescription.Text);
                 myConverter.Convert();
-                plugContent.LatexTextInHtml = myConverter.HTMLOutput;
+                LatexTextInHtml = myConverter.HTMLOutput;
             }
             else
             {
-                plugContent.LatexText = "";
-                plugContent.LatexTextInHtml = "";
+                LatexText = "";
+                LatexTextInHtml = "";
             }
 
-            plugc.UpdatePluggContent(plugContent);//update puggin content
+            PluggContent pluggcontent = new PluggContent(PluggId, CultureCode, YouTubeString, HtmlText, LatexText, LatexTextInHtml);
+            plugc.UpdatePluggContent(pluggcontent);//update puggin content
 
         }
 
@@ -471,6 +488,7 @@ namespace Plugghest.Modules.CreatePlugg
                 e.IsValid = false;
             }
         }
+
 
         public void HideControl()
         {
