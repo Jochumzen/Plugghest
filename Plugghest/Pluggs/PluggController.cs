@@ -154,16 +154,16 @@ namespace Plugghest.Pluggs
 
 
 
-        public List<Plugg> GetPluggRecords()
+        public List<PluggInfoForDNNGrid> GetPluggRecords()
         {
-            List<Plugg> plug = new List<Plugg>();
+            List<PluggInfoForDNNGrid> plug = new List<PluggInfoForDNNGrid>();
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rec = ctx.ExecuteQuery<Plugg>(CommandType.TableDirect, @"select PluggId, Title, username ,pluggs.CreatedByUserId from pluggs join Users on users.UserID=Pluggs.CreatedByUserId ");
+                var rec = ctx.ExecuteQuery<PluggInfoForDNNGrid>(CommandType.TableDirect, @"select PluggId, Title as PluggName, username from pluggs join Users on users.UserID=Pluggs.CreatedByUserId ");
 
                 foreach (var item in rec)
                 {
-                    plug.Add(new Plugg( item.PluggId, item.Title, item.CreatedInCultureCode, item.WhoCanEdit, item.CreatedOnDate, item.CreatedByUserId, item.ModifiedOnDate, item.ModifiedByUserId, item.Subject, item.UserName ));
+                    plug.Add(new PluggInfoForDNNGrid{PluggId= item.PluggId,PluggName= item.PluggName,UserName= item.UserName});
                 }
             }
 

@@ -40,6 +40,22 @@ namespace Plugghest.Modules.CreatePlugg
     /// -----------------------------------------------------------------------------
     public partial class Edit : CreatePluggModuleBase
     {
+        //initialize ...
+        public int PluggId;
+        public string Title;
+        public string CreatedInCultureCode;
+        public int WhoCanEdit;
+        public DateTime CreatedOnDate;
+        public int CreatedByUserId;
+        public DateTime ModifiedOnDate;
+        public int ModifiedByUserId;
+        public int? Subject;
+        public string CultureCode;
+        public string YouTubeString;
+        public string HtmlText;
+        public string LatexText;
+        public string LatexTextInHtml;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -78,7 +94,7 @@ namespace Plugghest.Modules.CreatePlugg
             //tabController.DeleteTab(136, PortalId);
 
             PluggController pc = new PluggController();
-            var pluggrecord = pc.GetAllPlugg_PageName();
+            var pluggrecord = pc.GetAllPluggs();
 
             if (pluggrecord != null)
             {
@@ -123,7 +139,7 @@ namespace Plugghest.Modules.CreatePlugg
             {
 
                 PluggController pc = new PluggController();
-                var pluggrecord = pc.GetAllPlugg_PageName();
+                var pluggrecord = pc.GetAllPluggs();
 
                 if (pluggrecord != null)
                 {
@@ -306,9 +322,6 @@ namespace Plugghest.Modules.CreatePlugg
 
         public void PluggsUsingFile(StreamReader file)
         {
-
-            PluggContent pluggcontent = new PluggContent();
-            Plugg plugg = new Plugg();
             string line;
             //System.IO.StreamReader file = new System.IO.StreamReader(FilePath);
             //System.IO.StreamReader file = new System.IO.StreamReader(Upload_Textfile.FileContent);
@@ -319,7 +332,6 @@ namespace Plugghest.Modules.CreatePlugg
             string HtmlText = "";
             string Latextext = "";
             string LatexTextToHtml = "";
-            string Title = "";
             string Plugg_Id = "";
 
             while ((line = file.ReadLine()) != null)
@@ -334,15 +346,15 @@ namespace Plugghest.Modules.CreatePlugg
                     string tobesearched = "pluggid";
                     Plugg_Id = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
                     if (!string.IsNullOrEmpty(Plugg_Id.Trim()))
-                        plugg.PluggId = Convert.ToInt32(Plugg_Id);
+                        PluggId = Convert.ToInt32(Plugg_Id);
                 }
 
                 if (line.Contains("language"))
                 {
                     string tobesearched = "language";
                     Language = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
-                    plugg.CreatedInCultureCode = Language;
-                    pluggcontent.CultureCode = Language;
+                    CreatedInCultureCode = Language;
+                    CultureCode = Language;
                 }
 
                 if (line.Contains("edit"))
@@ -352,28 +364,27 @@ namespace Plugghest.Modules.CreatePlugg
                     if (WhoCanEdit_ == "Me")
                         WhoCanEdit = 2;
 
-                    plugg.WhoCanEdit = Convert.ToInt32(WhoCanEdit);
+                    WhoCanEdit = Convert.ToInt32(WhoCanEdit);
                 }
 
                 if (line.Contains("youtube"))
                 {
                     string tobesearched = "youtube";
                     youTube = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
-                    pluggcontent.YouTubeString = youTube;
+                    YouTubeString = youTube;
                 }
 
                 if (line.Contains("html"))
                 {
                     string tobesearched = "html";
                     HtmlText = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
-                    pluggcontent.HtmlText = HtmlText;
+                    HtmlText = HtmlText;
                 }
 
                 if (line.Contains("pluggtitle"))
                 {
                     string tobesearched = "pluggtitle";
                     Title = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
-                    plugg.Title = Title;
                 }
             }
             if (!string.IsNullOrEmpty(Latextext.Trim()))
@@ -383,10 +394,11 @@ namespace Plugghest.Modules.CreatePlugg
                 LatexTextToHtml = myConverter.HTMLOutput;
             }
 
-            pluggcontent.LatexText = Latextext;
-            pluggcontent.LatexTextInHtml = LatexTextToHtml;
+            LatexText = Latextext;
+            LatexTextInHtml = LatexTextToHtml;
 
-
+            Plugghest.Pluggs.Plugg plugg = new Plugg(PluggId, Title, CreatedInCultureCode, WhoCanEdit, CreatedOnDate, CreatedByUserId, ModifiedOnDate, ModifiedByUserId, Subject);
+            PluggContent pluggcontent = new PluggContent(PluggId, CultureCode, YouTubeString, HtmlText, LatexText, LatexTextInHtml);
             CreateUpdatePluggs(plugg, pluggcontent);
         }
 

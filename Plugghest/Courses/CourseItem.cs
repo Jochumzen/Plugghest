@@ -44,6 +44,20 @@ namespace Plugghest.Courses
 
     }
 
+    public class PluggInfoForDNNGrid
+    {
+        public int CourseId;
+        public string CourseName;
+        public string UserName;
+
+        public PluggInfoForDNNGrid(int CourseId, string CourseName, string UserName)
+        {
+            this.CourseId = CourseId;
+            this.CourseName = CourseName;
+            this.UserName = UserName;
+        }
+    }
+
 
     [TableName("CoursePlugg")]
     [PrimaryKey("PluggId", AutoIncrement = false)]

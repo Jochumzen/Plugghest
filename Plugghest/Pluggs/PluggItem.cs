@@ -32,11 +32,9 @@ namespace Plugghest.Pluggs
         public DateTime ModifiedOnDate;
         public int ModifiedByUserId;
         public int? Subject;
+        
 
-        //For now show UserName on Grid
-        public string UserName;
-
-        public Plugg(int PluggId, string Title, string CreatedInCultureCode, int WhoCanEdit, DateTime CreatedOnDate, int CreatedByUserId, DateTime ModifiedOnDate, int ModifiedByUserId, int? nullable, string UserName=null)
+        public Plugg(int PluggId, string Title, string CreatedInCultureCode, int WhoCanEdit, DateTime CreatedOnDate, int CreatedByUserId, DateTime ModifiedOnDate, int ModifiedByUserId, int? nullable)
         {
             // TODO: Complete member initialization
             this.PluggId = PluggId;
@@ -48,10 +46,17 @@ namespace Plugghest.Pluggs
             this.ModifiedOnDate = ModifiedOnDate;
             this.ModifiedByUserId = ModifiedByUserId;
             this.Subject = nullable;
-            this.UserName = UserName;
         }
-
     }
+
+    public class PluggInfoForDNNGrid
+    {
+        public int PluggId{get;set;}
+        public string PluggName { get; set; }
+        public string UserName { get; set; }
+    }
+
+
 
     [TableName("PluggsContent")]
     [PrimaryKey("PluggId", AutoIncrement = false)]
