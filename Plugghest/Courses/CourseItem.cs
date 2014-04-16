@@ -54,6 +54,10 @@ namespace Plugghest.Courses
         public int CourseId { get; set; }
 
         public int Orders { get; set; }
+
+        //CourseName add for menu
+        public string PluggName { get; set; }
+
     }
 
 }

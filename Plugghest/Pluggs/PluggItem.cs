@@ -23,23 +23,33 @@ namespace Plugghest.Pluggs
     [PrimaryKey("PluggId", AutoIncrement = true)]
     public class Plugg
     {
-        public int PluggId { get; set; }
+        public int PluggId;
+        public string Title;
+        public string CreatedInCultureCode;
+        public int WhoCanEdit;
+        public DateTime CreatedOnDate;
+        public int CreatedByUserId;
+        public DateTime ModifiedOnDate;
+        public int ModifiedByUserId;
+        public int? Subject;
 
-        public string Title { get; set; }
+        //For now show UserName on Grid
+        public string UserName;
 
-        public string CreatedInCultureCode { get; set; }
-
-        public int WhoCanEdit { get; set; }
-
-        public DateTime CreatedOnDate { get; set; }
-
-        public int CreatedByUserId { get; set; }
-
-        public DateTime ModifiedOnDate { get; set; }
-
-        public int ModifiedByUserId { get; set; }
-
-        public int? Subject { get; set; }
+        public Plugg(int PluggId, string Title, string CreatedInCultureCode, int WhoCanEdit, DateTime CreatedOnDate, int CreatedByUserId, DateTime ModifiedOnDate, int ModifiedByUserId, int? nullable, string UserName=null)
+        {
+            // TODO: Complete member initialization
+            this.PluggId = PluggId;
+            this.Title = Title;
+            this.CreatedInCultureCode = CreatedInCultureCode;
+            this.WhoCanEdit = WhoCanEdit;
+            this.CreatedOnDate = CreatedOnDate;
+            this.CreatedByUserId = CreatedByUserId;
+            this.ModifiedOnDate = ModifiedOnDate;
+            this.ModifiedByUserId = ModifiedByUserId;
+            this.Subject = nullable;
+            this.UserName = UserName;
+        }
 
     }
 
@@ -47,17 +57,25 @@ namespace Plugghest.Pluggs
     [PrimaryKey("PluggId", AutoIncrement = false)]
     public class PluggContent
     {
-        public int PluggId { get; set; }
 
-        public string CultureCode { get; set; }
+        public int PluggId;
+        public string CultureCode;
+        public string YouTubeString;
+        public string HtmlText;
+        public string LatexText;
+        public string LatexTextInHtml;
 
-        public string YouTubeString { get; set; }
 
-        public string HtmlText { get; set; }
-
-        public string LatexText { get; set; }
-
-        public string LatexTextInHtml { get; set; }
+        public PluggContent(int PluggId, string CultureCode, string YouTubeString, string HtmlText, string LatexText, string LatexTextInHtml)
+        {
+            // TODO: Complete member initialization
+            this.PluggId = PluggId;
+            this.CultureCode = CultureCode;
+            this.YouTubeString = YouTubeString;
+            this.HtmlText = HtmlText;
+            this.LatexText = LatexText;
+            this.LatexTextInHtml = LatexTextInHtml;
+        }
 
     }
 

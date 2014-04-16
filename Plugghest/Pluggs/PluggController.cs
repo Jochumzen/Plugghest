@@ -19,14 +19,23 @@ namespace Plugghest.Pluggs
 {
     public class PluggController
     {
-        public Plugg CreatePlug(Plugg t)
+        //public Plugg CreatePlug(Plugg t)
+        //{
+        //    using (IDataContext ctx = DataContext.Instance())
+        //    {
+        //        var rep = ctx.GetRepository<Plugg>();
+        //        rep.Insert(t);
+        //    }
+        //    return t;
+        //}
+
+        public int CreatePlug(Plugg p)
         {
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rep = ctx.GetRepository<Plugg>();
-                rep.Insert(t);
+                int PID = ctx.ExecuteScalar<int>(CommandType.Text, "insert into pluggs values('" + p.Title + "','" + p.CreatedInCultureCode + "','" + p.WhoCanEdit + "','" + p.CreatedOnDate + "','" + p.CreatedByUserId + "','" + p.ModifiedOnDate + "','" + p.ModifiedByUserId + "','" + p.Subject + "') SELECT SCOPE_IDENTITY() as PID");
+                return PID;
             }
-            return t;
         }
 
         public Plugg GetPlugg(int? plugid)
@@ -50,37 +59,8 @@ namespace Plugghest.Pluggs
             }
         }
 
-        //P.J. Remove. If you need PluggTitle you simply do
-        //PluggHandler myPluggHandler = new PluggHandler();
-        //public string myPluggTitle = myPluggHandler.GetPlugg(pluggId).Title;
-        public string GetPlugTitle(int PluggId)
-        {
-            string plugtitle = "";
-            List<Course> plug = new List<Course>();
-            using (IDataContext ctx = DataContext.Instance())
-            {
-                var rec = ctx.ExecuteQuery<Course>(CommandType.TableDirect, "select Title from Pluggs where PluggId=" + PluggId);
-                foreach (var item in rec)
-                {
-                    plug.Add(new Course { Title = item.Title });
-                }
-                if (plug.Count > 0)
-                {
-                    plugtitle = plug[0].Title; ;
-                }
-            }
-            return plugtitle;
-        }
-
-        //P.J. Why do you name the method "GetPluggsByCourseID" when it gets CoursePluggs??
-        //Method names are VERY impportant
-        //Also, the use of local variable "plug" is unfortunate. As this is a very short method, use Very short names (maybe "cp") but no MISLEADING names
-        //Finally, Make a constructor for the CoursePlugg class and 
-        //      plug.Add(new CoursePlugg { CourseId = item.CourseId, PluggId = item.PluggId,Orders=item.Orders });
-        //can be written
-        //      plug.Add(new CoursePlugg(item.CourseId, item.PluggId, item.Orders));
-        //which is simpler to read
-        public List<CoursePlugg> GetPluggsByCourseID(int CourseID)
+   
+        public List<CoursePlugg> CoursePluggs(int CourseID)
         {
             List<CoursePlugg> plug = new List<CoursePlugg>();
             using (IDataContext ctx = DataContext.Instance())
@@ -94,7 +74,8 @@ namespace Plugghest.Pluggs
             return plug;
         }
 
-        //P.J. I added this method. Remove this comment if you accept it.
+
+
         //This method will get all the Pluggs
         public IEnumerable<Plugg> GetAllPluggs()
         {
@@ -107,23 +88,6 @@ namespace Plugghest.Pluggs
             return t;
         }
 
-        //P.J. Can you remove this method and use GetAllPluggs above?
-        //It seems very strange to get only the PluggId of all Pluggs - why would you want to do that?
-        public List<Plugg> GetAllPlugg_PageName()
-        {
-            List<Plugg> plug = new List<Plugg>();
-            using (IDataContext ctx = DataContext.Instance())
-            {
-                var rec = ctx.ExecuteQuery<Plugg>(CommandType.TableDirect, "select PluggId from Pluggs");
-                foreach (var item in rec)
-                {
-                    plug.Add(new Plugg { PluggId = item.PluggId });
-                }
-            }
-            return plug;
-        }
-
-
 
         public void DeleteAllPluggsContent()
         {
@@ -133,8 +97,6 @@ namespace Plugghest.Pluggs
             }
         }
 
-
-
         public void DeleteAllPluggRecord()
         {
             using (IDataContext ctx = DataContext.Instance())
@@ -143,7 +105,6 @@ namespace Plugghest.Pluggs
                 //use DBCC CHECKIDENT  for start with 0 ............
             }
         }
-
 
 
         public Boolean CheckIsPlugExist(int PID)
@@ -160,13 +121,13 @@ namespace Plugghest.Pluggs
 
         public PluggContent GetPlugContent(int PluggId, string CultureCode)
         {
-            PluggContent pluggcontent = new PluggContent();
+            PluggContent pluggcontent=null;
             using (IDataContext ctx = DataContext.Instance())
             {
                 var rec = ctx.ExecuteQuery<PluggContent>(CommandType.TableDirect, "select * from PluggsContent where pluggid=" + PluggId+" and culturecode='"+CultureCode+"' ");
                 foreach (var item in rec)
                 {
-                    pluggcontent.CultureCode = item.CultureCode; pluggcontent.HtmlText = item.HtmlText; pluggcontent.LatexText = item.LatexText; pluggcontent.YouTubeString = item.YouTubeString;
+                    pluggcontent = new PluggContent(item.PluggId, item.CultureCode, item.YouTubeString, item.HtmlText, item.LatexText, item.LatexTextInHtml);
                 }
             }
             return pluggcontent;
@@ -192,25 +153,25 @@ namespace Plugghest.Pluggs
         }
 
 
-        //P.J. This will not work as PLugg does not have Username. See comments in mail.
+
         public List<Plugg> GetPluggRecords()
         {
             List<Plugg> plug = new List<Plugg>();
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rec = ctx.ExecuteQuery<Plugg>(CommandType.TableDirect, @"select PluggId, Title ,pluggs.CreatedByUserId from pluggs join Users on users.UserID=Pluggs.CreatedByUserId ");
+                var rec = ctx.ExecuteQuery<Plugg>(CommandType.TableDirect, @"select PluggId, Title, username ,pluggs.CreatedByUserId from pluggs join Users on users.UserID=Pluggs.CreatedByUserId ");
 
                 foreach (var item in rec)
                 {
-                    plug.Add(new Plugg { Title = item.Title, PluggId = item.PluggId, CreatedByUserId = item.CreatedByUserId});
+                    plug.Add(new Plugg( item.PluggId, item.Title, item.CreatedInCultureCode, item.WhoCanEdit, item.CreatedOnDate, item.CreatedByUserId, item.ModifiedOnDate, item.ModifiedByUserId, item.Subject, item.UserName ));
                 }
             }
 
             return plug;
         }
 
-        //P.J. Naming problem...
-        public List<CoursePlugg> GetPluggsByCourseIDForMenu(int CourseID)
+
+        public List<CoursePlugg> GetCoursePlugg(int CourseID)
         {
             List<CoursePlugg> plug = new List<CoursePlugg>();
             using (IDataContext ctx = DataContext.Instance())
@@ -224,7 +185,7 @@ namespace Plugghest.Pluggs
             return plug;
         }
 
-        //P.J. Constructor...
+
         public List<PluggContent> GetPluggincontents(int PluggId)
         {
             List<PluggContent> plug = new List<PluggContent>();
@@ -234,7 +195,7 @@ namespace Plugghest.Pluggs
                                                                                       on pluggs.PluggId=PluggsContent.PluggId  where Pluggs.PluggId=" + PluggId);
                 foreach (var item in rec)
                 {
-                    plug.Add(new PluggContent {CultureCode = item.CultureCode, YouTubeString = item.YouTubeString, HtmlText = item.HtmlText, LatexText = item.LatexText, LatexTextInHtml = item.LatexTextInHtml });
+                    plug.Add(new PluggContent (item.PluggId,item.CultureCode, item.YouTubeString, item.HtmlText, item.LatexText,item.LatexTextInHtml));
                 }
                 //remove .... Title = item.Title,
             }

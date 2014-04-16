@@ -40,24 +40,7 @@ namespace Plugghest.Courses
                 return true;
             }
         }
-
-        //P.J. You do not need this - use GetCourse
-        //Get Course Detail.....
-        public List<Course> GetCourseDetail(int CourseId)
-        {
-            List<Course> crs = new List<Course>();
-            using (IDataContext ctx = DataContext.Instance())
-            {
-                var rec = ctx.ExecuteQuery<Course>(CommandType.TableDirect, @"select Title,description from Courses where CourseId=" + CourseId);
-
-                foreach (var item in rec)
-                {
-                    crs.Add(new Course { CourseId = item.CourseId, Title = item.Title, Description = item.Description });
-                }
-            }
-            return crs;
-        }
-
+   
         //Get Course.....
         public Course GetCourse(int? courseId)
         {
