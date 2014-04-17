@@ -19,25 +19,18 @@ namespace Plugghest.Pluggs
 {
     public class PluggController
     {
-        //public Plugg CreatePlug(Plugg t)
-        //{
-        //    using (IDataContext ctx = DataContext.Instance())
-        //    {
-        //        var rep = ctx.GetRepository<Plugg>();
-        //        rep.Insert(t);
-        //    }
-        //    return t;
-        //}
 
-        public int CreatePlug(Plugg p)
+        //Plugg
+
+        public void CreatePlugg(Plugg t)
         {
             using (IDataContext ctx = DataContext.Instance())
             {
-                int PID = ctx.ExecuteScalar<int>(CommandType.Text, "insert into pluggs values('" + p.Title + "','" + p.CreatedInCultureCode + "','" + p.WhoCanEdit + "','" + p.CreatedOnDate + "','" + p.CreatedByUserId + "','" + p.ModifiedOnDate + "','" + p.ModifiedByUserId + "','" + p.Subject + "') SELECT SCOPE_IDENTITY() as PID");
-                return PID;
+                var rep = ctx.GetRepository<Plugg>();
+                rep.Insert(t);
             }
         }
-
+        
         public Plugg GetPlugg(int? plugid)
         {
             Plugg p;
@@ -49,34 +42,15 @@ namespace Plugghest.Pluggs
             return p;
         }
 
-        public Boolean CreatePluggContent(PluggContent t)
+        public void UpdatePlugg(Plugg plug)
         {
-            using (IDataContext ctx = DataContext.Instance())
+            using (IDataContext db = DataContext.Instance())
             {
-                var rep = ctx.GetRepository<PluggContent>();
-                rep.Insert(t);
-                return true;
+                var rep = db.GetRepository<Plugg>();
+                rep.Update(plug);
             }
         }
 
-   
-        public List<CoursePlugg> CoursePluggs(int CourseID)
-        {
-            List<CoursePlugg> plug = new List<CoursePlugg>();
-            using (IDataContext ctx = DataContext.Instance())
-            {
-                var rec = ctx.ExecuteQuery<CoursePlugg>(CommandType.TableDirect, "select CourseId,Pluggs.PluggId,Orders from CoursePlugg join Pluggs on CoursePlugg.PluggId=Pluggs.PluggId where CourseId=" + CourseID + "order by Orders");
-                foreach (var item in rec)
-                {
-                    plug.Add(new CoursePlugg { CourseId = item.CourseId, PluggId = item.PluggId,Orders=item.Orders });
-                }
-            }
-            return plug;
-        }
-
-
-
-        //This method will get all the Pluggs
         public IEnumerable<Plugg> GetAllPluggs()
         {
             IEnumerable<Plugg> t;
@@ -88,16 +62,7 @@ namespace Plugghest.Pluggs
             return t;
         }
 
-
-        public void DeleteAllPluggsContent()
-        {
-            using (IDataContext ctx = DataContext.Instance())
-            {
-                ctx.ExecuteQuery<Plugg>(CommandType.TableDirect, "truncate table PluggsContent");
-            }
-        }
-
-        public void DeleteAllPluggRecord()
+        public void DeleteAllPluggs()
         {
             using (IDataContext ctx = DataContext.Instance())
             {
@@ -106,25 +71,23 @@ namespace Plugghest.Pluggs
             }
         }
 
+        //PluggContent
 
-        public Boolean CheckIsPlugExist(int PID)
+        public void CreatePluggContent(PluggContent t)
         {
-            Boolean isexist;
             using (IDataContext ctx = DataContext.Instance())
             {
-                isexist = ctx.ExecuteScalar<Boolean>(CommandType.Text, "select count(PluggId) as isexist from Pluggs where pluggid=" + PID);
+                var rep = ctx.GetRepository<PluggContent>();
+                rep.Insert(t);
             }
-            return isexist;
         }
 
-
-
-        public PluggContent GetPlugContent(int PluggId, string CultureCode)
+        public PluggContent GetPluggContent(int pluggId, string cultureCode)
         {
-            PluggContent pluggcontent=null;
+            PluggContent pluggcontent = null;
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rec = ctx.ExecuteQuery<PluggContent>(CommandType.TableDirect, "select * from PluggsContent where pluggid=" + PluggId+" and culturecode='"+CultureCode+"' ");
+                var rec = ctx.ExecuteQuery<PluggContent>(CommandType.TableDirect, "select * from PluggsContent where pluggid=" + pluggId + " and culturecode='" + cultureCode + "' ");
                 foreach (var item in rec)
                 {
                     pluggcontent = new PluggContent(item.PluggId, item.CultureCode, item.YouTubeString, item.HtmlText, item.LatexText, item.LatexTextInHtml);
@@ -133,26 +96,69 @@ namespace Plugghest.Pluggs
             return pluggcontent;
         }
 
-
-        public void UpdatePlugg(Plugg plug)
+        public List<PluggContent> GetPluggContent(int pluggId)
         {
-            using (IDataContext db = DataContext.Instance())
+            List<PluggContent> pc = new List<PluggContent>();
+            using (IDataContext ctx = DataContext.Instance())
             {
-                var rep = db.GetRepository<Plugg>();
-                rep.Update(plug);
+                var rec = ctx.ExecuteQuery<PluggContent>(CommandType.TableDirect, @"select Title,CultureCode,YouTubeString,HtmlText,LatexText,LatexTextInHtml from Pluggs inner join PluggsContent
+                                                                                      on pluggs.PluggId=PluggsContent.PluggId  where Pluggs.PluggId=" + pluggId);
+                foreach (var item in rec)
+                {
+                    pc.Add(new PluggContent(item.PluggId, item.CultureCode, item.YouTubeString, item.HtmlText, item.LatexText, item.LatexTextInHtml));
+                }
+                //remove .... Title = item.Title,
             }
+            return pc;
         }
-
 
         public void UpdatePluggContent(PluggContent plugContent)
         {
             using (IDataContext db = DataContext.Instance())
             {
-                db.Execute(CommandType.Text, "update pluggscontent set YoutubeString='" + plugContent.YouTubeString + "', Htmltext='" + plugContent.HtmlText + "',LatexText='" + plugContent.LatexText + "',LatexTextInHtml='" + plugContent.LatexTextInHtml + "' where pluggid="+plugContent.PluggId +" and Culturecode='"+plugContent.CultureCode+"' ");
+                db.Execute(CommandType.Text, "update pluggscontent set YoutubeString='" + plugContent.YouTubeString + "', Htmltext='" + plugContent.HtmlText + "',LatexText='" + plugContent.LatexText + "',LatexTextInHtml='" + plugContent.LatexTextInHtml + "' where pluggid=" + plugContent.PluggId + " and Culturecode='" + plugContent.CultureCode + "' ");
             }
         }
 
+        public void DeleteAllPluggContent()
+        {
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                ctx.ExecuteQuery<PluggContent>(CommandType.TableDirect, "truncate table PluggsContent");
+            }
+        }
 
+        //CoursePluggs
+
+        //public List<CoursePlugg> CoursePluggs(int CourseID)
+        //{
+        //    List<CoursePlugg> plug = new List<CoursePlugg>();
+        //    using (IDataContext ctx = DataContext.Instance())
+        //    {
+        //        var rec = ctx.ExecuteQuery<CoursePlugg>(CommandType.TableDirect, "select CourseId,Pluggs.PluggId,Orders from CoursePlugg join Pluggs on CoursePlugg.PluggId=Pluggs.PluggId where CourseId=" + CourseID + "order by Orders");
+        //        foreach (var item in rec)
+        //        {
+        //            plug.Add(new CoursePlugg { CourseId = item.CourseId, PluggId = item.PluggId,Orders=item.Orders });
+        //        }
+        //    }
+        //    return plug;
+        //}
+
+        public List<CoursePlugg> GetCoursePluggs(int CourseID)
+        {
+            List<CoursePlugg> cp = new List<CoursePlugg>();
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rec = ctx.ExecuteQuery<CoursePlugg>(CommandType.TableDirect, "select CourseId,Pluggs.PluggId,pluggs.Title,Orders from CoursePlugg join Pluggs on CoursePlugg.PluggId=Pluggs.PluggId where CourseId=" + CourseID + "order by Orders");
+                foreach (var item in rec)
+                {
+                    cp.Add(new CoursePlugg { CourseId = item.CourseId, PluggId = item.PluggId, Orders = item.Orders });
+                }
+            }
+            return cp;
+        }
+
+        //PluggForDNN
 
         public List<PluggInfoForDNNGrid> GetPluggRecords()
         {
@@ -171,36 +177,10 @@ namespace Plugghest.Pluggs
         }
 
 
-        public List<CoursePlugg> GetCoursePlugg(int CourseID)
-        {
-            List<CoursePlugg> plug = new List<CoursePlugg>();
-            using (IDataContext ctx = DataContext.Instance())
-            {
-                var rec = ctx.ExecuteQuery<CoursePlugg>(CommandType.TableDirect, "select CourseId,Pluggs.PluggId,pluggs.Title,Orders from CoursePlugg join Pluggs on CoursePlugg.PluggId=Pluggs.PluggId where CourseId=" + CourseID + "order by Orders");
-                foreach (var item in rec)
-                {
-                    plug.Add(new CoursePlugg { CourseId = item.CourseId, PluggId = item.PluggId, Orders = item.Orders });
-                }
-            }
-            return plug;
-        }
+ 
 
 
-        public List<PluggContent> GetPluggincontents(int PluggId)
-        {
-            List<PluggContent> plug = new List<PluggContent>();
-            using (IDataContext ctx = DataContext.Instance())
-            {
-                var rec = ctx.ExecuteQuery<PluggContent>(CommandType.TableDirect, @"select Title,CultureCode,YouTubeString,HtmlText,LatexText,LatexTextInHtml from Pluggs inner join PluggsContent
-                                                                                      on pluggs.PluggId=PluggsContent.PluggId  where Pluggs.PluggId=" + PluggId);
-                foreach (var item in rec)
-                {
-                    plug.Add(new PluggContent (item.PluggId,item.CultureCode, item.YouTubeString, item.HtmlText, item.LatexText,item.LatexTextInHtml));
-                }
-                //remove .... Title = item.Title,
-            }
-            return plug;
-        }
+
 
     }
 }

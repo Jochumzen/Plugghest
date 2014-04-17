@@ -5,8 +5,8 @@ C:\websites\dnndev.me\DesktopModules\PLH\bin\L2H.dll
 C:\websites\dnndev.me\DesktopModules\PLH\bin\L2H.pdb
 C:\Users\peter\Documents\Visual Studio 2013\Projects\L2H\obj\Debug\L2H.dll
 C:\Users\peter\Documents\Visual Studio 2013\Projects\L2H\obj\Debug\L2H.pdb
+C:\websites\dnndev.me\bin\L2H.dll
+C:\websites\dnndev.me\bin\L2H.pdb
 C:\websites\dnndev.me\DesktopModules\L2H\obj\Debug\L2H.csprojResolveAssemblyReference.cache
 C:\websites\dnndev.me\DesktopModules\L2H\obj\Debug\L2H.dll
 C:\websites\dnndev.me\DesktopModules\L2H\obj\Debug\L2H.pdb
-C:\websites\dnndev.me\bin\L2H.dll
-C:\websites\dnndev.me\bin\L2H.pdb

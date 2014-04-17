@@ -47,6 +47,7 @@
     <Compile Include="Courses\FeatureController.cs" />
     <Compile Include="Courses\CourseItem.cs" />
     <Compile Include="Courses\CourseController.cs" />
+    <Compile Include="DNN\DNN.cs" />
     <Compile Include="Pluggs\FeatureController.cs">
       <SubType>Code</SubType>
     </Compile>

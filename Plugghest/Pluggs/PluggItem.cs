@@ -23,16 +23,18 @@ namespace Plugghest.Pluggs
     [PrimaryKey("PluggId", AutoIncrement = true)]
     public class Plugg
     {
-        public int PluggId;
-        public string Title;
-        public string CreatedInCultureCode;
-        public int WhoCanEdit;
-        public DateTime CreatedOnDate;
-        public int CreatedByUserId;
-        public DateTime ModifiedOnDate;
-        public int ModifiedByUserId;
-        public int? Subject;
-        
+        public int PluggId { get; set; }
+        public string Title { get; set; }
+        public string CreatedInCultureCode { get; set; }
+        public int WhoCanEdit { get; set; }
+        public DateTime CreatedOnDate { get; set; }
+        public int CreatedByUserId { get; set; }
+        public DateTime ModifiedOnDate { get; set; }
+        public int ModifiedByUserId { get; set; }
+        public int? Subject { get; set; }
+
+        public Plugg()
+        {}
 
         public Plugg(int PluggId, string Title, string CreatedInCultureCode, int WhoCanEdit, DateTime CreatedOnDate, int CreatedByUserId, DateTime ModifiedOnDate, int ModifiedByUserId, int? nullable)
         {
@@ -63,13 +65,15 @@ namespace Plugghest.Pluggs
     public class PluggContent
     {
 
-        public int PluggId;
-        public string CultureCode;
-        public string YouTubeString;
-        public string HtmlText;
-        public string LatexText;
-        public string LatexTextInHtml;
+        public int PluggId { get; set; }
+        public string CultureCode { get; set; }
+        public string YouTubeString { get; set; }
+        public string HtmlText { get; set; }
+        public string LatexText { get; set; }
+        public string LatexTextInHtml { get; set; }
 
+        public PluggContent()
+        { }
 
         public PluggContent(int PluggId, string CultureCode, string YouTubeString, string HtmlText, string LatexText, string LatexTextInHtml)
         {

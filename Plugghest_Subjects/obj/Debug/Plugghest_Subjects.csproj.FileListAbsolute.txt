@@ -1,5 +1,0 @@
-C:\websites\dnndev.me\bin\Plugghest_Subjects.dll
-C:\websites\dnndev.me\bin\Plugghest_Subjects.pdb
-C:\websites\dnndev.me\DesktopModules\Plugghest_Subjects\obj\Debug\Plugghest_Subjects.dll
-C:\websites\dnndev.me\DesktopModules\Plugghest_Subjects\obj\Debug\Plugghest_Subjects.pdb
-C:\websites\dnndev.me\DesktopModules\Plugghest_Subjects\obj\Debug\Plugghest_Subjects.csprojResolveAssemblyReference.cache

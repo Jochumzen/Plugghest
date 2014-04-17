@@ -1,5 +1,0 @@
-C:\websites\dnndev.me\bin\DisplayPlugg.dll
-C:\websites\dnndev.me\bin\DisplayPlugg.pdb
-C:\websites\dnndev.me\DesktopModules\DisplayPlugg\obj\Release\DisplayPlugg.csprojResolveAssemblyReference.cache
-C:\websites\dnndev.me\DesktopModules\DisplayPlugg\obj\Release\DisplayPlugg.dll
-C:\websites\dnndev.me\DesktopModules\DisplayPlugg\obj\Release\DisplayPlugg.pdb

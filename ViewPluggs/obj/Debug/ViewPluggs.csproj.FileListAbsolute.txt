@@ -1,5 +1,0 @@
-C:\websites\dnndev.me\bin\ViewPluggs.dll
-C:\websites\dnndev.me\bin\ViewPluggs.pdb
-C:\websites\dnndev.me\DesktopModules\ViewPluggs\obj\Debug\ViewPluggs.csprojResolveAssemblyReference.cache
-C:\websites\dnndev.me\DesktopModules\ViewPluggs\obj\Debug\ViewPluggs.dll
-C:\websites\dnndev.me\DesktopModules\ViewPluggs\obj\Debug\ViewPluggs.pdb
