@@ -22,6 +22,7 @@ using Plugghest.Courses;
 using DotNetNuke.Entities.Tabs;
 using DotNetNuke.Security.Permissions;
 using DotNetNuke.Entities.Modules.Definitions;
+using Plugghest.Pluggs;
 
 namespace Plugghest.Modules.CreateCourse
 {
@@ -44,8 +45,7 @@ namespace Plugghest.Modules.CreateCourse
         {
             try
             {
-                //load Culture language....
-                LoadLanguage();
+                LoadCultureDropDownList();
             }
             catch (Exception exc) //Module failed to load
             {
@@ -53,7 +53,7 @@ namespace Plugghest.Modules.CreateCourse
             }
         }
 
-        private void LoadLanguage()
+        private void LoadCultureDropDownList()
         {
             try
             {
@@ -68,10 +68,8 @@ namespace Plugghest.Modules.CreateCourse
 
         protected void btnCheck_Click(object sender, EventArgs e)
         {
-            bool ischeck = checkPlugg();
+            bool ischeck = CheckPlugg();
         }
-
-
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
@@ -96,8 +94,6 @@ namespace Plugghest.Modules.CreateCourse
             }
 
         }
-
-
 
         protected int InsertCourses()
         {
@@ -168,12 +164,12 @@ namespace Plugghest.Modules.CreateCourse
             }
         }
 
-        protected Boolean checkPlugg()
+        protected Boolean CheckPlugg()
         {
             bool ischecked = true;
 
             lblplugss.Text = "";
-            CourseController PC = new CourseController();
+            PluggHandler ph = new PluggHandler();
 
             //string pluggtext = "12,56,34,45k,56";
             string pluggtext = txtPluggs.Text.Trim();
@@ -187,11 +183,11 @@ namespace Plugghest.Modules.CreateCourse
                     bool isNumeric = int.TryParse(itempluggs[i], out num);//check number.....
                     if (isNumeric)
                     {
-                        string pluggTitle = PC.GetPlugTitle(num);
+                        Plugg p = ph.GetPlugg(num);
 
-                        if (!string.IsNullOrEmpty(pluggTitle))
+                        if (p != null)
                         {
-                            lblplugss.Text += num + ": " + pluggTitle + "<br />";
+                            lblplugss.Text += num + ": " + p.Title + "<br />";
                         }
                         else
                         {

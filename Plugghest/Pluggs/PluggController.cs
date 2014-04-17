@@ -62,6 +62,13 @@ namespace Plugghest.Pluggs
             return t;
         }
 
+        public IEnumerable<Plugg> GetPluggsInCourse(int courseId)
+        {
+            IEnumerable<Plugg> t = null;
+            //Todo: 
+            return t;
+        }
+
         public void DeleteAllPluggs()
         {
             using (IDataContext ctx = DataContext.Instance())
@@ -130,32 +137,15 @@ namespace Plugghest.Pluggs
 
         //CoursePluggs
 
-        //public List<CoursePlugg> CoursePluggs(int CourseID)
-        //{
-        //    List<CoursePlugg> plug = new List<CoursePlugg>();
-        //    using (IDataContext ctx = DataContext.Instance())
-        //    {
-        //        var rec = ctx.ExecuteQuery<CoursePlugg>(CommandType.TableDirect, "select CourseId,Pluggs.PluggId,Orders from CoursePlugg join Pluggs on CoursePlugg.PluggId=Pluggs.PluggId where CourseId=" + CourseID + "order by Orders");
-        //        foreach (var item in rec)
-        //        {
-        //            plug.Add(new CoursePlugg { CourseId = item.CourseId, PluggId = item.PluggId,Orders=item.Orders });
-        //        }
-        //    }
-        //    return plug;
-        //}
-
-        public List<CoursePlugg> GetCoursePluggs(int CourseID)
+        public IEnumerable<CoursePlugg> GetCoursePluggsForCourse(int courseId)
         {
-            List<CoursePlugg> cp = new List<CoursePlugg>();
-            using (IDataContext ctx = DataContext.Instance())
+            IEnumerable<CoursePlugg> cps;
+            using (IDataContext context = DataContext.Instance())
             {
-                var rec = ctx.ExecuteQuery<CoursePlugg>(CommandType.TableDirect, "select CourseId,Pluggs.PluggId,pluggs.Title,Orders from CoursePlugg join Pluggs on CoursePlugg.PluggId=Pluggs.PluggId where CourseId=" + CourseID + "order by Orders");
-                foreach (var item in rec)
-                {
-                    cp.Add(new CoursePlugg { CourseId = item.CourseId, PluggId = item.PluggId, Orders = item.Orders });
-                }
+                var repository = context.GetRepository<CoursePlugg>();
+                cps = repository.Find("WHERE CourseID = @0 ORDER BY 'ORDERS'", courseId);
             }
-            return cp;
+            return cps;
         }
 
         //PluggForDNN
@@ -165,7 +155,7 @@ namespace Plugghest.Pluggs
             List<PluggInfoForDNNGrid> plug = new List<PluggInfoForDNNGrid>();
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rec = ctx.ExecuteQuery<PluggInfoForDNNGrid>(CommandType.TableDirect, @"select PluggId, Title as PluggName, username from pluggs join Users on users.UserID=Pluggs.CreatedByUserId ");
+                var rec = ctx.ExecuteQuery<PluggInfoForDNNGrid>(CommandType.TableDirect, @"select PluggId, Title as PluggName, Username from pluggs join Users on users.UserID=Pluggs.CreatedByUserId ");
 
                 foreach (var item in rec)
                 {
@@ -175,12 +165,6 @@ namespace Plugghest.Pluggs
 
             return plug;
         }
-
-
- 
-
-
-
 
     }
 }

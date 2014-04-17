@@ -55,46 +55,40 @@ namespace Plugghest.Modules.CourseMenu
         public void GetMenu()
         {
 
-            //string CurrentUrl = Request.Url.AbsoluteUri;
-
-            //Get current url DNN
             string CurrentUrl = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + HttpContext.Current.Request.RawUrl;
-
             System.Uri uri = new System.Uri(CurrentUrl);
-
+            string uriQuery = uri.Query;
             string str = uri.LocalPath;
 
             //To Get PluggID......from the url : url is always in this form http://xxx.xxx/xxxx/PluggID?c=CourseID
             string PluggId = str.Substring(str.IndexOf('/') + 7);
             PluggId = PluggId.Replace(".aspx", "");
 
-            str = uri.Query;
 
-
-            if (!string.IsNullOrEmpty(str)) //check query string i.e. course exist or not...
+            if (!string.IsNullOrEmpty(uriQuery)) //check query string i.e. course exist or not...
             {
-                string CourseId = str.Replace("?c=", "");
+                string CourseId = uriQuery.Replace("?c=", "");
 
-                List<Course> plug = new List<Course>();
-                CourseController PC = new CourseController();
+                CourseHandler ch = new CourseHandler();
+                Course c = ch.GetCourse(Convert.ToInt32(CourseId));
 
                 //if course exist in the database...
-                Boolean isCourseExist = PC.IsCourseIdExist(Convert.ToInt32(CourseId));
-                if (isCourseExist)
+                if (c != null)
                 {
+                    PluggHandler ph = new PluggHandler();
+                    IEnumerable<CoursePlugg> cps = ph.GetCoursePluggsForCourse(Convert.ToInt32(CourseId));
 
-                    var pluggs = PC.GetPluggsByCourseIDForMenu(Convert.ToInt32(CourseId));
-
-                    if (pluggs.Count > 0)
+                    if (cps != null)
                     {
-                        foreach (var item in pluggs)
+                        foreach (CoursePlugg cp in cps)
                         {
-                            Menu_Pluggs.Items.Add(new MenuItem(item.PluggId.ToString() + ": " + item.PluggName.ToString(), "", "", "/" + (Page as DotNetNuke.Framework.PageBase).PageCulture.Name.ToString().ToLower() + "/" + item.PluggId + "?c=" + CourseId));
+                            Plugg p = ph.GetPlugg(cp.PluggId);
+                            Menu_Pluggs.Items.Add(new MenuItem(p.PluggId.ToString() + ": " + p.Title.ToString(), "", "", "/" + (Page as DotNetNuke.Framework.PageBase).PageCulture.Name.ToString().ToLower() + "/" + p.PluggId + "?c=" + CourseId));
 
 
-                            if (PluggId == item.PluggId.ToString())
+                            if (PluggId == p.PluggId.ToString())
                             {
-                                int index = item.Orders - 1;
+                                int index = cp.Orders - 1;
                                 Menu_Pluggs.Items[index].Selected = true; //active order in menu
                             }
                         }

@@ -11,6 +11,7 @@
 */
 
 using System;
+using System.Linq;
 using System.Web.UI.WebControls;
 using DotNetNuke.Security;
 using DotNetNuke.Services.Exceptions;
@@ -20,6 +21,7 @@ using DotNetNuke.Services.Localization;
 using DotNetNuke.UI.Utilities;
 using Plugghest.Courses;
 using System.Collections.Generic;
+using Plugghest.Pluggs;
 
 namespace Plugghest.Modules.DisplayCourse
 {
@@ -44,27 +46,23 @@ namespace Plugghest.Modules.DisplayCourse
             {
                 if (!IsPostBack)
                 {
-                    CourseController CourceCtrl = new CourseController();
+                    CourseHandler ch = new CourseHandler();
 
                     string CourseTitle = ((DotNetNuke.Framework.CDefault)this.Page).Title;//get Course from page title
                     CourseTitle = CourseTitle.Replace("C", "");
 
                     if (!string.IsNullOrEmpty(CourseTitle))
                     {
-                        int CourseId = Convert.ToInt32(CourseTitle);
+                        Course c = ch.GetCourse(Convert.ToInt32(CourseTitle));
 
-                        List<Course> course = CourceCtrl.GetCourseDetail(CourseId);
+                        lblTitle.Text = c.Title;
+                        lblDescription.Text = Server.HtmlDecode(c.Description); ;
 
-                        foreach (var item in course)
+                        PluggHandler ph = new PluggHandler();
+                        IEnumerable<CoursePlugg> cps = ph.GetCoursePluggsForCourse(c.CourseId);
+                        if (cps != null)
                         {
-                            lblTitle.Text = item.Title;
-                            lblDescription.Text = Server.HtmlDecode(item.Description); ;
-                        }
-
-                        List<Course> coursePluggs = CourceCtrl.GetPluggsByCourseID(CourseId);
-                        if (coursePluggs.Count > 0)
-                        {
-                            LnkBeginCourse.NavigateUrl = "/" + (Page as DotNetNuke.Framework.PageBase).PageCulture.Name.ToString().ToLower() + "/" + coursePluggs[0].PluggId + "?c=" + CourseId;
+                            LnkBeginCourse.NavigateUrl = "/" + (Page as DotNetNuke.Framework.PageBase).PageCulture.Name.ToString().ToLower() + "/" + cps.First().PluggId + "?c=" + c.CourseId ;
                         }
                     }
                 }

@@ -44,18 +44,11 @@ namespace Plugghest.Courses
 
     }
 
-    public class PluggInfoForDNNGrid
+    public class CourseInfoForDNNGrid
     {
-        public int CourseId;
-        public string CourseName;
-        public string UserName;
-
-        public PluggInfoForDNNGrid(int CourseId, string CourseName, string UserName)
-        {
-            this.CourseId = CourseId;
-            this.CourseName = CourseName;
-            this.UserName = UserName;
-        }
+        public int CourseId { get; set; }
+        public string CourseName { get; set; }
+        public string UserName { get; set; }
     }
 
 
@@ -68,10 +61,6 @@ namespace Plugghest.Courses
         public int CourseId { get; set; }
 
         public int Orders { get; set; }
-
-        //CourseName add for menu
-        public string PluggName { get; set; }
-
     }
 
 }

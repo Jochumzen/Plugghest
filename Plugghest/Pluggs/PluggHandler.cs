@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Plugghest.Courses;
 
 namespace Plugghest.Pluggs
 {
@@ -37,6 +38,11 @@ namespace Plugghest.Pluggs
            pluggcntr.DeleteAllPluggs();
        }
 
+       public IEnumerable<Plugg> GetPluggsInCourse(int courseId)
+       {
+           return pluggcntr.GetPluggsInCourse(courseId);
+       }
+
        //PluggContent
 
        public void CreatePluggContent(PluggContent plugcontent)
@@ -64,6 +70,12 @@ namespace Plugghest.Pluggs
            pluggcntr.DeleteAllPluggContent();
        }
 
+       //CoursePluggs
+
+       public IEnumerable<CoursePlugg> GetCoursePluggsForCourse(int courseId)
+       {
+           return pluggcntr.GetCoursePluggsForCourse(courseId);
+       }
        //PluggForDNN
 
        public List<PluggInfoForDNNGrid> GetPluggListForGrid()

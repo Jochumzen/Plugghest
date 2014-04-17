@@ -52,8 +52,8 @@ namespace Plugghest.Modules.ViewCourses
 
         public void bindRadGrid()
         {
-            CourseController pc = new CourseController();
-            RadGrid_ViewPlugg.DataSource = pc.GetPluggRecords();
+            CourseHandler ch = new CourseHandler();
+            RadGrid_ViewPlugg.DataSource = ch.GetCoursesForDNN();
         }
 
 

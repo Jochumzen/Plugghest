@@ -6,18 +6,28 @@ using System.Text;
 namespace Plugghest.Courses
 {
     //Work as a Business Layer.......................
-    class CourseHandler
+    public class CourseHandler
     {
-        CourseController coursecnt = null;
+        CourseController coursecnt = new CourseController();
 
-        public Course AddNewCourses(Course Course)
+        public void CreateCourses(Course c)
         {
-            return coursecnt.CreateCourse(Course);
+            coursecnt.CreateCourse(c);
         }
 
-        public Boolean AddNewCoursePlugg(CoursePlugg Course)
+        public Course GetCourse(int courseId)
         {
-            return coursecnt.CreateCoursePlugg(Course);
+            return coursecnt.GetCourse(courseId);
+        }
+
+        public Boolean CreateCoursePlugg(CoursePlugg cp)
+        {
+            return coursecnt.CreateCoursePlugg(cp);
+        }
+
+        public List<CourseInfoForDNNGrid> GetCoursesForDNN()
+        {
+            return coursecnt.GetCoursesForDNN();
         }
     }
 }

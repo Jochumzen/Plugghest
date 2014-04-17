@@ -1,4 +1,3 @@
-C:\websites\dnndev.me\DesktopModules\Plugghest\obj\Debug\Plugghest.csprojResolveAssemblyReference.cache
 C:\websites\dnndev.me\DesktopModules\Plugghest\bin\Debug\Plugghest.dll
 C:\websites\dnndev.me\DesktopModules\Plugghest\bin\Debug\Plugghest.pdb
 C:\websites\dnndev.me\DesktopModules\Plugghest\bin\Debug\DotNetNuke.dll

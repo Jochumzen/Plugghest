@@ -44,29 +44,20 @@ namespace Plugghest.Modules.DisplayPlugg
             {
                 if (!IsPostBack)
                 {
-                    PluggController pc = new PluggController();
                     PluggHandler plugghandler = new PluggHandler();
 
-                    int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);//get pluggid from page title
+                    int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
 
                     //Get current culture
                     string curlan = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
 
-                    List<PluggContent> pluglist = plugghandler.GetPluggincontentList(pluggid);
-                    //List<PluggContent> pluglist = pc.GetPluggincontents(pluggid);
+                    Plugg p = plugghandler.GetPlugg(pluggid);
+                    PluggContent pc = plugghandler.GetPluggContent(pluggid,curlan);
 
-                    foreach (var item in pluglist)
-                    {
-                        //get current culture records...
-                        if (curlan == item.CultureCode)
-                        {
-                            //lblTitle.Text = item.Title;
-                            lblYoutube.Text = item.YouTubeString;
-                            lblHtmlText.Text = Server.HtmlDecode(item.HtmlText); ;
-                            lblLatexText.Text = item.LatexText;
-                            lblLatexTextInHtml.Text = Server.HtmlDecode(item.LatexTextInHtml);
-                        }
-                    }
+                    lblTitle.Text = p.Title;
+                    lblYoutube.Text = pc.YouTubeString;
+                    lblHtmlText.Text = Server.HtmlDecode(pc.HtmlText); ;
+                    lblLatexTextInHtml.Text = Server.HtmlDecode(pc.LatexTextInHtml);
                 }
             }
             catch (Exception exc) //Module failed to load

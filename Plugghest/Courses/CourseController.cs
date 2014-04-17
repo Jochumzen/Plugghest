@@ -19,18 +19,15 @@ namespace Plugghest.Courses
     public class CourseController
     {
 
-        //For Insert Records into Course
-        public Course CreateCourse(Course t)
+        public void CreateCourse(Course t)
         {
             using (IDataContext ctx = DataContext.Instance())
             {
                 var rep = ctx.GetRepository<Course>();
                 rep.Insert(t);
             }
-            return t;
         }
 
-        //For Insert Records into CoursePlugg
         public Boolean CreateCoursePlugg(CoursePlugg t)
         {
             using (IDataContext ctx = DataContext.Instance())
@@ -41,7 +38,6 @@ namespace Plugghest.Courses
             }
         }
    
-        //Get Course.....
         public Course GetCourse(int? courseId)
         {
             Course p;
@@ -53,16 +49,22 @@ namespace Plugghest.Courses
             return p;
         }
 
-        //Check Course Exist or not
-        public bool IsCourseIdExist(int CourseID)
+        //PluggForDNN
+
+        public List<CourseInfoForDNNGrid> GetCoursesForDNN()
         {
-            Boolean isexist;
+            List<CourseInfoForDNNGrid> cs = new List<CourseInfoForDNNGrid>();
             using (IDataContext ctx = DataContext.Instance())
             {
-                isexist = ctx.ExecuteScalar<Boolean>(CommandType.Text, "select COUNT(courseid) as 'isexist' from Courses where CourseId=" + CourseID);
-            }
-            return isexist;
-        }
+                var rec = ctx.ExecuteQuery<CourseInfoForDNNGrid>(CommandType.TableDirect, @"select CourseId, Title as CourseName, Username from courses join Users on Users.UserID=Courses.CreatedByUserId ");
 
+                foreach (var item in rec)
+                {
+                    cs.Add(new CourseInfoForDNNGrid() {CourseId = item.CourseId, CourseName = item.CourseName , UserName = item.UserName });
+                }
+            }
+
+            return cs;
+        }
     }
 }
