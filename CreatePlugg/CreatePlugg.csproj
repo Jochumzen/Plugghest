@@ -51,9 +51,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Users\cis\Desktop\Ionic.Zip.dll</HintPath>
     </Reference>
-    <Reference Include="L2H, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\L2H.dll</HintPath>
+    <Reference Include="L2H">
+      <HintPath>C:\Users\cis\Desktop\L2H.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=dd516eb3afca1d4c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -62,7 +61,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Plugghest, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Plugghest\bin\Debug\Plugghest.dll</HintPath>
+      <HintPath>..\Plugghest\obj\Debug\Plugghest.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
