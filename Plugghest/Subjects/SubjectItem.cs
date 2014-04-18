@@ -20,26 +20,30 @@ using System.Collections.Generic;
 namespace Plugghest.Subjects
 {
     [TableName("SubjectItems")]
-    //setup the primary key for table
     [PrimaryKey("SubjectID", AutoIncrement = true)]
-    //configure caching using PetaPoco
-    [Cacheable("SubjectItems", CacheItemPriority.Default, 20)]
-    //scope the objects to the ModuleId of a module on a page (or copy of a module on a page)
-    //[Scope("ModuleId")]
-
     public class SubjectItem
     {
-        public int SubjectID { get; set; }
+        public int SubjectID;
+        public string Subject;
+        public int? Mother ;
+        public int Order;
 
-        public string Subject { get; set; }
+         public SubjectItem()
+         {}
 
-        public int? Mother { get; set; }
-
-        public int Order { get; set; }
+         public SubjectItem(int SubjectID, string Subject, int? Mother, int Order)
+         {
+             // TODO: Complete member initialization
+             this.SubjectID = SubjectID;
+             this.Subject = Subject;
+             this.Mother = Mother;
+             this.Order = Order;
+         }
     }
 
-    //P.J. This is not an entity class...
-    public class Subject_Item
+
+    //class for Create Subject tree...
+    public class Subject_Tree
     {
         public int SubjectID { get; set; }
 
@@ -47,7 +51,7 @@ namespace Plugghest.Subjects
 
         public int? Mother { get; set; }
 
-        public List<Subject_Item> children { get; set; }
+        public List<Subject_Tree> children { get; set; }
 
         public int Order { get; set; }
 

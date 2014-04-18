@@ -55,7 +55,7 @@ namespace Plugghest.Modules.CreatePlugg
             try
             {
                 //Show tree();
-                //BindTree();
+                BindTree();
 
                 ViewState["PID"] = null;
                 string CurrentUrl = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + HttpContext.Current.Request.RawUrl;
@@ -73,6 +73,7 @@ namespace Plugghest.Modules.CreatePlugg
 
         private void LoadPlugg(System.Uri uri)
         {
+
             string PID = uri.Query;
             PID = PID.Replace("?PID=", "");
             int PluggIDToEdit;
@@ -83,6 +84,7 @@ namespace Plugghest.Modules.CreatePlugg
                 Plugg p = ph.GetPlugg(PluggIDToEdit);
                 if (p != null)
                 {
+
                     if (p.WhoCanEdit == 1 || p.CreatedByUserId == this.UserId || UserInfo.IsInRole("Administator"))
                     { //Check that either WhoCanEdit is anyone or the current user is the one who created the Plugg or the current user is a SuperUser.
 
@@ -128,8 +130,8 @@ namespace Plugghest.Modules.CreatePlugg
 
         public void BindTree()
         {
-            SubjectController objcontroller = new SubjectController();
-            var subjectlist = objcontroller.GetSubject_Item();
+            SubjectHandler objsubhandler = new SubjectHandler();
+            var subjectlist = objsubhandler.GetSubject_Item();
 
             var tree = BuildTree(subjectlist);
 
@@ -137,10 +139,11 @@ namespace Plugghest.Modules.CreatePlugg
             hdnTreeData.Value = TheSerializer.Serialize(tree);
         }
 
+
         #region Create Tree
 
         //Recursive function for create tree....
-        public IList<Subject_Item> BuildTree(IEnumerable<Subject_Item> source)
+        public IList<Subject_Tree> BuildTree(IEnumerable<Subject_Tree> source)
         {
             var groups = source.GroupBy(i => i.Mother);
 
@@ -157,7 +160,7 @@ namespace Plugghest.Modules.CreatePlugg
         }
 
         //To Add Child
-        private void AddChildren(Subject_Item node, IDictionary<int, List<Subject_Item>> source)
+        private void AddChildren(Subject_Tree node, IDictionary<int, List<Subject_Tree>> source)
         {
             if (source.ContainsKey(node.SubjectID))
             {
@@ -167,11 +170,12 @@ namespace Plugghest.Modules.CreatePlugg
             }
             else
             {
-                node.children = new List<Subject_Item>();
+                node.children = new List<Subject_Tree>();
             }
         }
 
         #endregion
+
 
         private void LoadCultureDropDownList()
         {
@@ -213,15 +217,15 @@ namespace Plugghest.Modules.CreatePlugg
         private Plugg SavePlugg()
         {
             PluggHandler ph = new PluggHandler();
+            Plugg p = new Plugg();
 
             int whocanedit = 2;//For only me
             if (rdEditPlug.Text == "Any registered user")
                 whocanedit = 1;
 
-            //if (!string.IsNullOrEmpty(hdnNodeSubjectId.Value))
-            //    Subject = Convert.ToInt32(hdnNodeSubjectId.Value);
+            if (!string.IsNullOrEmpty(hdnNodeSubjectId.Value))
+                p.Subject = Convert.ToInt32(hdnNodeSubjectId.Value);
 
-            Plugg p = new Plugg();
             p.Title = txtTitle.Text;
             p.CreatedInCultureCode = DDLanguage.SelectedValue;
             p.WhoCanEdit = whocanedit;
@@ -229,7 +233,6 @@ namespace Plugghest.Modules.CreatePlugg
             p.CreatedByUserId = UserId;
             p.ModifiedOnDate = DateTime.Now;
             p.ModifiedByUserId = UserId;
-            p.Subject = 0;
             ph.CreatePlugg(p);
 
             //Save same Pluggcontent in all languages 

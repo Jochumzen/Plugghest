@@ -70,12 +70,6 @@ namespace Plugghest.Pluggs
            pluggcntr.DeleteAllPluggContent();
        }
 
-       //CoursePluggs
-
-       public IEnumerable<CoursePlugg> GetCoursePluggsForCourse(int courseId)
-       {
-           return pluggcntr.GetCoursePluggsForCourse(courseId);
-       }
        //PluggForDNN
 
        public List<PluggInfoForDNNGrid> GetPluggListForGrid()

@@ -135,19 +135,6 @@ namespace Plugghest.Pluggs
             }
         }
 
-        //CoursePluggs
-
-        public IEnumerable<CoursePlugg> GetCoursePluggsForCourse(int courseId)
-        {
-            IEnumerable<CoursePlugg> cps;
-            using (IDataContext context = DataContext.Instance())
-            {
-                var repository = context.GetRepository<CoursePlugg>();
-                cps = repository.Find("WHERE CourseID = @0 ORDER BY 'ORDERS'", courseId);
-            }
-            return cps;
-        }
-
         //PluggForDNN
 
         public List<PluggInfoForDNNGrid> GetPluggRecords()

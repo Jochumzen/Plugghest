@@ -76,7 +76,7 @@ namespace Plugghest.Modules.CourseMenu
                 if (c != null)
                 {
                     PluggHandler ph = new PluggHandler();
-                    IEnumerable<CoursePlugg> cps = ph.GetCoursePluggsForCourse(Convert.ToInt32(CourseId));
+                    IEnumerable<CoursePlugg> cps = ch.GetCoursePluggsForCourse(Convert.ToInt32(CourseId));
 
                     if (cps != null)
                     {

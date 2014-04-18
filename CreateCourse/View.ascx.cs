@@ -22,6 +22,7 @@ using Plugghest.Courses;
 using DotNetNuke.Entities.Tabs;
 using DotNetNuke.Security.Permissions;
 using DotNetNuke.Entities.Modules.Definitions;
+using Plugghest.DNN;
 using Plugghest.Pluggs;
 
 namespace Plugghest.Modules.CreateCourse
@@ -76,16 +77,16 @@ namespace Plugghest.Modules.CreateCourse
 
             try
             {
-                Boolean ischeck = checkPlugg();
+                Boolean ischeck = CheckPlugg();
 
                 if (ischeck)//check validation
                 {
-                    int CourseId = InsertCourses();
+                    Course c = CreateCourses();
 
-                    //Add NEW PAGE(TAB).....
-                    CreatePage(CourseId.ToString(), CourseId.ToString(), null, null, null);
+                    DNNHelper h = new DNNHelper();
+                    h.AddPage(PortalId , "C" + c.CourseId );
 
-                    Response.Redirect("/" + (Page as DotNetNuke.Framework.PageBase).PageCulture.Name + "/" + "C" + CourseId + ".aspx");
+                    Response.Redirect("/" + (Page as DotNetNuke.Framework.PageBase).PageCulture.Name + "/" + "C" + c.CourseId + ".aspx");
                 }
             }
             catch (Exception exc) //Module failed to load
@@ -95,48 +96,39 @@ namespace Plugghest.Modules.CreateCourse
 
         }
 
-        protected int InsertCourses()
+        protected Course CreateCourses()
         {
+            CourseHandler ch = new CourseHandler();
+            Course c = new Course();
 
-            var course = new Course();
-            course.CourseId = 0;
-
-            var plugc = new CourseController();
-
-            course.Title = txtTitle.Text;
-
-            course.CreatedInCultureCode = DDLanguage.SelectedValue;
+            c.Title = txtTitle.Text;
+            c.CreatedInCultureCode = DDLanguage.SelectedValue;
 
             int whocanedit = 2;//For only me
             if (rdEditPlug.Text == "Any registered user")
                 whocanedit = 1;
 
-            course.WhoCanEdit = whocanedit;
-            course.CreatedOnDate = DateTime.Now;
-            course.CreatedByUserId = this.UserId;
-            course.ModifiedOnDate = DateTime.Now; ;
-            course.ModifiedByUserId = this.UserId;
+            c.WhoCanEdit = whocanedit;
+            c.CreatedOnDate = DateTime.Now;
+            c.CreatedByUserId = this.UserId;
+            c.ModifiedOnDate = DateTime.Now; ;
+            c.ModifiedByUserId = this.UserId;
+            c.Description = txtHtmlText.Text;
 
-            course.Description = txtHtmlText.Text;
-
-            plugc.CreateCourse(course); //Create plugg
+            ch.CreateCourse(c);
 
             //Create Course Plugg
-            InsertCoursePlugg(course.CourseId);
+            InsertCoursePlugg(c);
 
-
-            //return CourseId 
-            return course.CourseId;
-
+            return c;
         }
 
-        protected void InsertCoursePlugg(int CourseId)
+        protected void InsertCoursePlugg(Course c)
         {
-            var courseplugg = new CoursePlugg();
+            CourseHandler ch = new CourseHandler();
+            CoursePlugg cp = new CoursePlugg();
 
-            var plugc = new CourseController();
-
-            courseplugg.CourseId = CourseId;
+            cp.CourseId = c.CourseId;
 
             string pluggtext = txtPluggs.Text.Trim();
             if (!string.IsNullOrEmpty(pluggtext))
@@ -145,9 +137,9 @@ namespace Plugghest.Modules.CreateCourse
 
                 for (int i = 0; i < itempluggs.Length; i++)
                 {
-                    courseplugg.PluggId = Convert.ToInt32(itempluggs[i].ToString());
-                    courseplugg.Orders = i + 1;
-                    plugc.CreateCoursePlugg(courseplugg);//create puggin content           
+                    cp.PluggId = Convert.ToInt32(itempluggs[i].ToString());
+                    cp.Orders = i + 1;
+                    ch.CreateCoursePlugg(cp);   
                 }
             }
         }
@@ -205,96 +197,6 @@ namespace Plugghest.Modules.CreateCourse
 
             return ischecked;
         }
-
-
-
-        #region create page and add module.....
-
-
-
-        private void CreatePage(string PageName, string PageTitle, string Description, string Keywords, TabPermissionCollection Permissions, bool LoadDefaultModules = true)
-        {
-            TabController controller = new TabController();
-            TabInfo newTab = new DotNetNuke.Entities.Tabs.TabInfo();
-            TabPermissionCollection newPermissions = newTab.TabPermissions;
-            PermissionProvider permissionProvider = new PermissionProvider();
-
-
-            // set new page properties
-            newTab.PortalID = this.PortalId;
-
-            newTab.TabName = "C" + PageName;
-
-            newTab.Title = "C" + PageTitle;
-
-            newTab.Description = Description;
-            newTab.KeyWords = Keywords;
-            newTab.IsDeleted = false;
-            newTab.IsSuperTab = false;
-            newTab.IsVisible = false;//for menu...
-            newTab.DisableLink = false;
-            newTab.IconFile = "";
-            newTab.Url = "";
-
-            //Add permission to the page so that all users can view it
-            foreach (PermissionInfo p in PermissionController.GetPermissionsByTab())
-            {
-                if (p.PermissionKey == "VIEW")
-                {
-                    TabPermissionInfo tpi = new TabPermissionInfo();
-                    tpi.PermissionID = p.PermissionID;
-                    tpi.PermissionKey = p.PermissionKey;
-                    tpi.PermissionName = p.PermissionName;
-                    tpi.AllowAccess = true;
-                    tpi.RoleID = -1; //ID of all users
-                    newTab.TabPermissions.Add(tpi);
-                }
-            }
-
-            // create new page
-            int tabId = controller.AddTab(newTab, LoadDefaultModules);
-            DotNetNuke.Common.Utilities.DataCache.ClearModuleCache(tabId);
-
-            //create module on page
-            CreateModule(tabId);
-
-            //Clear Cache
-            DotNetNuke.Common.Utilities.DataCache.ClearModuleCache(TabId);
-            DotNetNuke.Common.Utilities.DataCache.ClearTabsCache(PortalId);
-            DotNetNuke.Common.Utilities.DataCache.ClearPortalCache(PortalId, false);
-            //////..................................
-        }
-
-
-        public void CreateModule(int tabId)
-        {
-
-            ModuleDefinitionInfo moduleDefinitionInfo = new ModuleDefinitionInfo();
-            ModuleInfo moduleInfo = new ModuleInfo();
-            moduleInfo.PortalID = this.PortalId;
-            moduleInfo.TabID = tabId;
-            moduleInfo.ModuleOrder = 1;
-            moduleInfo.ModuleTitle = "";
-            moduleInfo.PaneName = "";
-
-
-            //Get ModuleDefinationId.............
-            CourseController pc = new CourseController();
-            int MDId = pc.GetModuleDefId("DisplayCourse");
-            moduleInfo.ModuleDefID = MDId;
-            ///////////////////////..............
-
-            moduleInfo.CacheTime = moduleDefinitionInfo.DefaultCacheTime;//Default Cache Time is 0
-            moduleInfo.InheritViewPermissions = true;//Inherit View Permissions from Tab
-            moduleInfo.AllTabs = false;
-            moduleInfo.Alignment = "Top";
-
-            ModuleController moduleController = new ModuleController();
-            int moduleId = moduleController.AddModule(moduleInfo);
-        }
-
-
-        #endregion
 
         public ModuleActionCollection ModuleActions
         {

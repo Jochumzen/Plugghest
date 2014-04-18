@@ -13,6 +13,10 @@ namespace Plugghest.DNN
     {
         public void AddPage(int portalId, string PageName)
         {
+            bool IsPluggPage = true;
+            if (PageName[0] == 'C')
+                IsPluggPage = false;
+
             TabInfo newTab = new TabInfo();
 
             // set new page properties
@@ -48,11 +52,17 @@ namespace Plugghest.DNN
             int tabId = controller.AddTab(newTab, true);
             DotNetNuke.Common.Utilities.DataCache.ClearModuleCache(tabId);
 
-            //create content module on page 
-            AddModuleToPage(portalId, tabId, "DisplayPlugg");
+            if (IsPluggPage)
+            {
+                AddModuleToPage(portalId, tabId, "DisplayPlugg");
 
-            //create course module on page
-            AddModuleToPage(portalId, tabId, "CourseMenu");            
+                AddModuleToPage(portalId, tabId, "CourseMenu");
+            }
+            else
+            {
+                AddModuleToPage(portalId, tabId, "DisplayCourse");
+            }
+        
         }
 
         public void AddModuleToPage(int portalId, int tabId, string ModuleFriendlyName)

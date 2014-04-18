@@ -2,8 +2,8 @@
 <%@ Register TagPrefix="dnn" TagName="label" Src="~/controls/LabelControl.ascx" %>
 <%@ Register TagPrefix="dnn" TagName="TextEditor" Src="~/controls/TextEditor.ascx" %>
 
-<link href="../DesktopModules/Plugghest_Subjects/js/jqtree.css" rel="stylesheet" />
-<script src="../DesktopModules/Plugghest_Subjects/js/tree.jquery.js"></script>
+<link href="/DesktopModules/Plugghest_Subjects/js/jqtree.css" rel="stylesheet" />
+<script src="/DesktopModules/Plugghest_Subjects/js/tree.jquery.js"></script>
 <link href="module.css" rel="stylesheet" />
 
 

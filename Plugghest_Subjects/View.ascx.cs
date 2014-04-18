@@ -71,7 +71,7 @@ namespace Plugghest.Modules.Plugghest_Subjects
         #region Create Tree
 
         //Recursive function for create tree....
-        public IList<Subject_Item> BuildTree(IEnumerable<Subject_Item> source)
+        public IList<Subject_Tree> BuildTree(IEnumerable<Subject_Tree> source)
         {
             var groups = source.GroupBy(i => i.Mother);
 
@@ -88,7 +88,7 @@ namespace Plugghest.Modules.Plugghest_Subjects
         }
 
         //To Add Child
-        private void AddChildren(Subject_Item node, IDictionary<int, List<Subject_Item>> source)
+        private void AddChildren(Subject_Tree node, IDictionary<int, List<Subject_Tree>> source)
         {
             if (source.ContainsKey(node.SubjectID))
             {
@@ -98,7 +98,7 @@ namespace Plugghest.Modules.Plugghest_Subjects
             }
             else
             {
-                node.children = new List<Subject_Item>();
+                node.children = new List<Subject_Tree>();
             }
         }
 
@@ -108,7 +108,7 @@ namespace Plugghest.Modules.Plugghest_Subjects
         {
             JavaScriptSerializer js = new JavaScriptSerializer();
             string json = hdnGetJosnResult.Value;
-            var person = js.Deserialize<Subject_Item[]>(json).ToList();
+            var person = js.Deserialize<Subject_Tree[]>(json).ToList();
 
             SubjectController objcontroller = new SubjectController();
             var abc = objcontroller.GetSubject_Item();
@@ -121,7 +121,7 @@ namespace Plugghest.Modules.Plugghest_Subjects
         #endregion
 
         //Recursive function for create tree....
-        public IList<Subject_Item> BuildTreeItem(IEnumerable<Subject_Item> source)
+        public IList<Subject_Tree> BuildTreeItem(IEnumerable<Subject_Tree> source)
         {
             var groups = source.GroupBy(i => i.Mother);
 
@@ -139,7 +139,7 @@ namespace Plugghest.Modules.Plugghest_Subjects
         }
 
         //To Add Child
-        private void AddChildrenItem(Subject_Item node, IDictionary<int, List<Subject_Item>> source)
+        private void AddChildrenItem(Subject_Tree node, IDictionary<int, List<Subject_Tree>> source)
         {
             if (source.ContainsKey(node.SubjectID))
             {
@@ -153,7 +153,7 @@ namespace Plugghest.Modules.Plugghest_Subjects
             }
             else
             {
-                node.children = new List<Subject_Item>();
+                node.children = new List<Subject_Tree>();
             }
         }
 

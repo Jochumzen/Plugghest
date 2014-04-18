@@ -28,16 +28,6 @@ namespace Plugghest.Courses
             }
         }
 
-        public Boolean CreateCoursePlugg(CoursePlugg t)
-        {
-            using (IDataContext ctx = DataContext.Instance())
-            {
-                var rep = ctx.GetRepository<CoursePlugg>();
-                rep.Insert(t);
-                return true;
-            }
-        }
-   
         public Course GetCourse(int? courseId)
         {
             Course p;
@@ -49,7 +39,29 @@ namespace Plugghest.Courses
             return p;
         }
 
-        //PluggForDNN
+        //CoursePluggs
+
+        public void CreateCoursePlugg(CoursePlugg t)
+        {
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<CoursePlugg>();
+                rep.Insert(t);
+            }
+        }
+
+        public IEnumerable<CoursePlugg> GetCoursePluggsForCourse(int courseId)
+        {
+            IEnumerable<CoursePlugg> cps;
+            using (IDataContext context = DataContext.Instance())
+            {
+                var repository = context.GetRepository<CoursePlugg>();
+                cps = repository.Find("WHERE CourseID = @0 ORDER BY 'ORDERS'", courseId);
+            }
+            return cps;
+        }
+
+        //CourseForDNN
 
         public List<CourseInfoForDNNGrid> GetCoursesForDNN()
         {

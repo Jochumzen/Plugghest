@@ -10,7 +10,7 @@ namespace Plugghest.Courses
     {
         CourseController coursecnt = new CourseController();
 
-        public void CreateCourses(Course c)
+        public void CreateCourse(Course c)
         {
             coursecnt.CreateCourse(c);
         }
@@ -20,14 +20,21 @@ namespace Plugghest.Courses
             return coursecnt.GetCourse(courseId);
         }
 
-        public Boolean CreateCoursePlugg(CoursePlugg cp)
-        {
-            return coursecnt.CreateCoursePlugg(cp);
-        }
-
         public List<CourseInfoForDNNGrid> GetCoursesForDNN()
         {
             return coursecnt.GetCoursesForDNN();
+        }
+
+        //CoursePluggs
+
+        public void CreateCoursePlugg(CoursePlugg cp)
+        {
+            coursecnt.CreateCoursePlugg(cp);
+        }
+
+        public IEnumerable<CoursePlugg> GetCoursePluggsForCourse(int courseId)
+        {
+            return coursecnt.GetCoursePluggsForCourse(courseId);
         }
     }
 }

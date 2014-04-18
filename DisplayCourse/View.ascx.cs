@@ -59,7 +59,7 @@ namespace Plugghest.Modules.DisplayCourse
                         lblDescription.Text = Server.HtmlDecode(c.Description); ;
 
                         PluggHandler ph = new PluggHandler();
-                        IEnumerable<CoursePlugg> cps = ph.GetCoursePluggsForCourse(c.CourseId);
+                        IEnumerable<CoursePlugg> cps = ch.GetCoursePluggsForCourse(c.CourseId);
                         if (cps != null)
                         {
                             LnkBeginCourse.NavigateUrl = "/" + (Page as DotNetNuke.Framework.PageBase).PageCulture.Name.ToString().ToLower() + "/" + cps.First().PluggId + "?c=" + c.CourseId ;

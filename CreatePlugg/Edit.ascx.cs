@@ -63,7 +63,7 @@ namespace Plugghest.Modules.CreatePlugg
             {
                 if (!IsPostBack)
                 {
-                    LoadLanguage();
+                    LoadCultureDropDownList();
                 }
             }
             catch (Exception exc) //Module failed to load
@@ -71,7 +71,7 @@ namespace Plugghest.Modules.CreatePlugg
                 Exceptions.ProcessModuleLoadException(this, exc);
             }
         }
-        private void LoadLanguage()
+        private void LoadCultureDropDownList()
         {
             try
             {
@@ -93,7 +93,6 @@ namespace Plugghest.Modules.CreatePlugg
         protected void btnRemovePluggs_Click(object sender, EventArgs e)
         {
             PluggHandler ph = new PluggHandler();
-            //PluggController pc = new PluggController();
             IEnumerable<Plugg> pluggrecord = ph.GetAllPluggs();
 
             foreach (Plugg p in pluggrecord)
@@ -203,84 +202,86 @@ namespace Plugghest.Modules.CreatePlugg
 
         public void PluggsUsingFile(StreamReader file)
         {
-            //string line;
-            ////System.IO.StreamReader file = new System.IO.StreamReader(FilePath);
-            ////System.IO.StreamReader file = new System.IO.StreamReader(Upload_Textfile.FileContent);
+            string line;
+            Plugg p = new Plugg();
+            string Latextext = "";
+            //System.IO.StreamReader file = new System.IO.StreamReader(FilePath);
+            //System.IO.StreamReader file = new System.IO.StreamReader(Upload_Textfile.FileContent);
 
-            //string Language = "en-US";//Default
+            //string Language = "en-US";  //Default
             //int WhoCanEdit = 1;
             //string youTube = "";
             //string HtmlText = "";
-            //string Latextext = "";
             //string LatexTextToHtml = "";
             //string Plugg_Id = "";
+            //int PluggId;
 
-            //while ((line = file.ReadLine()) != null)
-            //{
-            //    Latextext += line + System.Environment.NewLine;
+            while ((line = file.ReadLine()) != null)
+            {
+                Latextext += line + System.Environment.NewLine;
 
-            //    line = line.Replace("{", "");
-            //    line = line.Replace("}", "");
+                line = line.Replace("{", "");
+                line = line.Replace("}", "");
 
-            //    if (line.Contains("pluggid"))
-            //    {
-            //        string tobesearched = "pluggid";
-            //        Plugg_Id = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
-            //        if (!string.IsNullOrEmpty(Plugg_Id.Trim()))
-            //            PluggId = Convert.ToInt32(Plugg_Id);
-            //    }
+                if (line.Contains("pluggid"))
+                {
+                    string tobesearched = "pluggid";
+                    Plugg_Id = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
+                    if (!string.IsNullOrEmpty(Plugg_Id.Trim()))
+                        PluggId = Convert.ToInt32(Plugg_Id);
+                }
 
-            //    if (line.Contains("language"))
-            //    {
-            //        string tobesearched = "language";
-            //        Language = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
-            //        CreatedInCultureCode = Language;
-            //        CultureCode = Language;
-            //    }
+                if (line.Contains("language"))
+                {
+                    string tobesearched = "language";
+                    Language = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
+                    CreatedInCultureCode = Language;
+                    CultureCode = Language;
+                }
 
-            //    if (line.Contains("edit"))
-            //    {
-            //        string tobesearched = "edit";
-            //        string WhoCanEdit_ = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
-            //        if (WhoCanEdit_ == "Me")
-            //            WhoCanEdit = 2;
+                if (line.Contains("edit"))
+                {
+                    string tobesearched = "edit";
+                    string WhoCanEdit_ = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
+                    if (WhoCanEdit_ == "Me")
+                        WhoCanEdit = 2;
 
-            //        WhoCanEdit = Convert.ToInt32(WhoCanEdit);
-            //    }
+                    WhoCanEdit = Convert.ToInt32(WhoCanEdit);
+                }
 
-            //    if (line.Contains("youtube"))
-            //    {
-            //        string tobesearched = "youtube";
-            //        youTube = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
-            //        YouTubeString = youTube;
-            //    }
+                if (line.Contains("youtube"))
+                {
+                    string tobesearched = "youtube";
+                    youTube = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
+                    YouTubeString = youTube;
+                }
 
-            //    if (line.Contains("html"))
-            //    {
-            //        string tobesearched = "html";
-            //        HtmlText = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
-            //        HtmlText = HtmlText;
-            //    }
+                if (line.Contains("html"))
+                {
+                    string tobesearched = "html";
+                    HtmlText = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
+                    HtmlText = HtmlText;
+                }
 
-            //    if (line.Contains("pluggtitle"))
-            //    {
-            //        string tobesearched = "pluggtitle";
-            //        Title = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
-            //    }
-            //}
-            //if (!string.IsNullOrEmpty(Latextext.Trim()))
-            //{
-            //    LatexToMathMLConverter myConverter = new LatexToMathMLConverter(Latextext);
-            //    myConverter.Convert();
-            //    LatexTextToHtml = myConverter.HTMLOutput;
-            //}
+                if (line.Contains("pluggtitle"))
+                {
+                    string tobesearched = "pluggtitle";
+                    Title = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
+                }
+            }
+            if (!string.IsNullOrEmpty(Latextext.Trim()))
+            {
+                LatexToMathMLConverter myConverter = new LatexToMathMLConverter(Latextext);
+                myConverter.Convert();
+                LatexTextToHtml = myConverter.HTMLOutput;
+            }
 
-            //LatexText = Latextext;
-            //LatexTextInHtml = LatexTextToHtml;
+            LatexText = Latextext;
+            LatexTextInHtml = LatexTextToHtml;
 
-            //Plugghest.Pluggs.Plugg plugg = new Plugg(PluggId, Title, CreatedInCultureCode, WhoCanEdit, CreatedOnDate, CreatedByUserId, ModifiedOnDate, ModifiedByUserId, Subject);
-            //PluggContent pluggcontent = new PluggContent(PluggId, CultureCode, YouTubeString, HtmlText, LatexText, LatexTextInHtml);
-            //CreateUpdatePluggs(plugg, pluggcontent);
+            Plugghest.Pluggs.Plugg plugg = new Plugg(PluggId, Title, CreatedInCultureCode, WhoCanEdit, CreatedOnDate, CreatedByUserId, ModifiedOnDate, ModifiedByUserId, Subject);
+            PluggContent pluggcontent = new PluggContent(PluggId, CultureCode, YouTubeString, HtmlText, LatexText, LatexTextInHtml);
+            CreateUpdatePluggs(plugg, pluggcontent);
         }
 
 
