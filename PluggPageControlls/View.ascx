@@ -1,0 +1,2 @@
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="View.ascx.cs" Inherits="Plugghest.Modules.PluggPageControlls.View" %>
+<asp:HyperLink ID="LnkEditPage" runat="server" Text="Edit this Plugg" ></asp:HyperLink>
