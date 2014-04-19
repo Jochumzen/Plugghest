@@ -8,12 +8,28 @@
 
 
 
+<div class="horizontalTab_Top horizontalTab_Top_1">
 
-<div class="CreatePluggBody">
-    <fieldset>
-        <div class="dnnFormItem">
+    <ul class="resp-tabs-list">
+        <li><span>Basic settings</span></li>
+        <li><span>Subject</span></li>
+        <li><span>Advanced</span></li>
+    </ul>
+
+    <div class="resp-tabs-container">
+
+        <br />
+        <div class="resp_container">
+
+          <div class="dnnFormItem">
             <dnn:label id="lblLanguage" runat="server" controlname="DDLanguage" />
             <asp:DropDownList ID="DDLanguage" runat="server"></asp:DropDownList>
+           </div>  
+
+         <div class="dnnFormItem">
+            <dnn:label id="lblYouTube" runat="server" />
+            <asp:TextBox ID="txtYouTube" runat="server" />
+            <asp:CustomValidator runat="server" id="cusCustom" ForeColor="Red" controltovalidate="txtYouTube" onservervalidate="cusCustom_ServerValidate" errormessage="Incorrect format" />
         </div>
 
         <div class="dnnFormItem">
@@ -21,15 +37,25 @@
             <asp:TextBox ID="txtTitle" runat="server" />
             <asp:RequiredFieldValidator ID="val_txtTitle" Display="Dynamic" runat="server" CssClass="valcls" ErrorMessage="Please Enter Title" ControlToValidate="txtTitle"></asp:RequiredFieldValidator>
         </div>
+
         <div class="dnnFormItem">
-            <dnn:label id="lblYouTube" runat="server" />
-            <asp:TextBox ID="txtYouTube" runat="server" />
-            <asp:CustomValidator runat="server" id="cusCustom" ForeColor="Red" controltovalidate="txtYouTube" onservervalidate="cusCustom_ServerValidate" errormessage="Incorrect format" />
+            <dnn:TextEditor ID="txtHtmlText" runat="server" Width="100%" Height="400px" />
         </div>
 
-        <div class="nodediv">
+        </div>
 
-        <div style="float:left">
+
+
+        <div class="resp_container">
+                   <div class="tree">
+       <div id="tree2"></div>
+      </div>
+        <asp:HiddenField ID="hdnTreeData" runat="server" Value="" />
+      </div>
+        </div>
+        <div class="resp_container">
+           
+            <div class="dnnFormItem">
             <dnn:label id="lblEditPlug" runat="server" controlname="rdEditPlug" />
             <asp:RadioButtonList ID="rdEditPlug" runat="server" RepeatDirection="Horizontal" RepeatLayout="Flow">
                 <asp:ListItem resourcekey="Asynchronous" Value="Any registered user" Selected="True" />
@@ -37,43 +63,39 @@
             </asp:RadioButtonList>
         </div>
 
-
-       <div class="tree">
-       <div id="tree2"></div>
-      </div>
-        <asp:HiddenField ID="hdnTreeData" runat="server" Value="" />
-      </div>
-
-        <div style="clear:both"> </div>
-
-
-        <div class="dnnFormItem">
-            <dnn:TextEditor ID="txtHtmlText" runat="server" Width="100%" Height="400px" />
-        </div>
         <div class="dnnFormItem">
             <asp:Label ID="lbldescription" Text="Latex code:" runat="server"></asp:Label> <br />
             <asp:TextBox ID="txtDescription" runat="server" TextMode="MultiLine" Rows="18" Columns="20" />
-           </div>
+       </div>
 
 
         <div class="dnnFormItem">
             <ul class="dnnActions dnnClear">
                 <li>
                     <asp:LinkButton ID="btnSubmit" runat="server" OnClick="btnSubmit_Click"
-                        resourcekey="btnSubmit" CssClass="dnnPrimaryAction" Text="Submit" OnClientClick="return getsubjectid()" /></li>
+                        resourcekey="btnSubmit" CssClass="dnnPrimaryAction" Text="Submit" /></li>
                 <li>
                     <asp:LinkButton ID="btnCancel" runat="server" OnClick="btnCancel_Click"
-                        resourcekey="btnCancel" CssClass="dnnSecondaryAction" Text="Cancel"  /></li>
+                        resourcekey="btnCancel" CssClass="dnnSecondaryAction" Text="Cancel" /></li>
 
                 <li>
             </li>
             </ul>
         </div>
-    </fieldset>
+
+
+        </div>
+</div>
 
 <asp:Label runat="server" ID="lblError" ForeColor="Red"></asp:Label>
- <asp:HiddenField ID="hdnNodeSubjectId" runat="server" />  
-</div>
+<asp:HiddenField ID="hdnNodeSubjectId" runat="server" /> 
+
+<asp:LinkButton ID="LinkButton1" runat="server" OnClick="btnSubmit_Click"
+resourcekey="btnSubmit" CssClass="dnnPrimaryAction" Text="Submit" OnClientClick="return getsubjectid()" />
+
+ <asp:LinkButton ID="LinkButton2" runat="server" OnClick="btnCancel_Click"
+ resourcekey="btnCancel" CssClass="dnnSecondaryAction" Text="Cancel"  />
+
 
 <script type="text/javascript">
 
@@ -96,7 +118,7 @@
 
         if (!node)
             Error = 'Please Select Node \n';
-       
+
         if (Error != "") {
             alert(Error);
             return false;
