@@ -60,7 +60,7 @@ namespace Plugghest.Helpers
         {
             if(CultureCode.Length != 2)
                 throw new Exception("Culture code must have 2 characters");
-            return "<iframe width=\"640\" height=\"390\" src=http//www.youtube.com/embed/HQODPOTikic?cc_load_policy=1&amp;cc_lang_pref=" + CultureCode + "en\" frameborder=\"0\"></iframe>";
+            return "<iframe width=\"640\" height=\"390\" src=http://www.youtube.com/embed/" + YouTubeCode + "?cc_load_policy=1&amp;cc_lang_pref=" + CultureCode + "en\" frameborder=\"0\"></iframe>";
         }
 
         public string GetYouTubeData(string FilterBy, string videoID)

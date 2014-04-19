@@ -18,6 +18,7 @@ using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Modules.Actions;
 using DotNetNuke.Services.Localization;
 using DotNetNuke.UI.Utilities;
+using Plugghest.Helpers;
 using Plugghest.Pluggs;
 using System.Collections.Generic;
 
@@ -53,9 +54,11 @@ namespace Plugghest.Modules.DisplayPlugg
 
                     Plugg p = plugghandler.GetPlugg(pluggid);
                     PluggContent pc = plugghandler.GetPluggContent(pluggid,curlan);
+                    Youtube myYouTube = new Youtube(pc.YouTubeString);
 
                     lblTitle.Text = p.Title;
-                    lblYoutube.Text = pc.YouTubeString;
+                    if (myYouTube.IsValid)
+                        lblYoutube.Text = myYouTube.GetIframeString(curlan.Substring(3,2));
                     lblHtmlText.Text = Server.HtmlDecode(pc.HtmlText); ;
                     lblLatexTextInHtml.Text = Server.HtmlDecode(pc.LatexTextInHtml);
                 }

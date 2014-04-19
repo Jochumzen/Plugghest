@@ -196,7 +196,7 @@ namespace Plugghest.Modules.CreatePlugg
                 {
                     p = SavePlugg();
                 }
-                Response.Redirect("/" + (Page as DotNetNuke.Framework.PageBase).PageCulture.Name + "/" + p.PluggId + ".aspx");
+                Response.Redirect("/" + (Page as DotNetNuke.Framework.PageBase).PageCulture.Name + "/" + p.PluggId.ToString() + ".aspx");
             }
             catch (Exception exc) //Module failed to load
             {
@@ -291,7 +291,8 @@ namespace Plugghest.Modules.CreatePlugg
             pc.CultureCode = cultureCode;
 
             Youtube myYouTube = new Youtube(txtYouTube.Text);
-            pc.YouTubeString = myYouTube.GetIframeString(cultureCodePart);
+            if (myYouTube.IsValid)
+                pc.YouTubeString = myYouTube.YouTubeCode;
 
             pc.HtmlText = txtHtmlText.Text;
             if (txtDescription.Text.Trim() != "")
