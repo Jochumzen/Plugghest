@@ -18,6 +18,7 @@ using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Modules.Actions;
 using DotNetNuke.Services.Localization;
 using DotNetNuke.UI.Utilities;
+using Plugghest.Helpers;
 using Plugghest.Subjects;
 using Plugghest.DNN;
 using System.Web.Script.Serialization;
@@ -96,18 +97,7 @@ namespace Plugghest.Modules.CreatePlugg
                         PluggContent pc = ph.GetPluggContent(p.PluggId, p.CreatedInCultureCode);
                         if (pc != null)
                         {
-                            string str = pc.YouTubeString;
-                            if (str != null && str != "")
-                            {
-                                str = str.Replace("<iframe width='640' height='390' src='http://www.youtube.com/embed/", "");
-                                str = str.Replace("<iframe width=640 height=390 src=http://www.youtube.com/embed/", "");
-                                str = str.Replace("<iframe width='640' height='390' src='https://www.youtube.com/embed/", "");
-                                str = str.Replace("<iframe width=640 height=390 src=https://www.youtube.com/embed/", "");
-
-                                string Code = str.Substring(0, 11);//get 11 keyword character code of youtube.... 
-
-                                txtYouTube.Text = Code;
-                            }
+                            txtYouTube.Text = pc.YouTubeString;
                             txtHtmlText.Text = pc.HtmlText;
                             txtDescription.Text = pc.LatexTextInHtml;
 
@@ -291,6 +281,8 @@ namespace Plugghest.Modules.CreatePlugg
 
         protected void ReadPluggContent(PluggContent pc, Plugg p, string cultureCode)
         {
+            pc.PluggId = p.PluggId;
+
             //manage culture code: CultureCode = en-us => CultureCodePart = en
             string cultureCodePart = cultureCode;
             int index = cultureCodePart.IndexOf("-");
@@ -298,28 +290,9 @@ namespace Plugghest.Modules.CreatePlugg
                 cultureCodePart = cultureCodePart.Substring(0, index);
             pc.CultureCode = cultureCode;
 
-            string link = txtYouTube.Text.Trim();
-            if (!string.IsNullOrEmpty(link))
-            {
+            Youtube myYouTube = new Youtube(txtYouTube.Text);
+            pc.YouTubeString = myYouTube.GetIframeString(cultureCodePart);
 
-                if (link.Length == 11)
-                {
-                    link = "http://www.youtube.com/embed/" + link;
-                }
-                else
-                {
-                    //replace watch?v to embed
-                    link = link.Replace("watch?v=", "embed/");
-                }
-
-                link = link + "?cc_load_policy=1&amp;cc_lang_pref=" + cultureCodePart;
-                //Add Iframe....
-                //link = "<iframe width='640' height='390' src='" + link + "' frameborder='0'></iframe>";
-                link = "<iframe width=" + 640 + " height=" + 390 + " src=" + link + " frameborder=" + 0 + "></iframe>";
-            }
-            pc.YouTubeString = link;
-
-            pc.PluggId = p.PluggId;
             pc.HtmlText = txtHtmlText.Text;
             if (txtDescription.Text.Trim() != "")
             {
@@ -349,42 +322,8 @@ namespace Plugghest.Modules.CreatePlugg
 
         protected void cusCustom_ServerValidate(object sender, ServerValidateEventArgs e)
         {
-            string link = txtYouTube.Text.Trim();
-
-            if ((link.Length == 11))
-            {
-                e.IsValid = true;//take 11 character as youtube code...
-                return;
-            }
-            else
-            {
-                if (link.Contains("www.youtube.com"))
-                {
-                    //Remove protocol(http://,https://) from url
-                    if (link.StartsWith("http://") || link.StartsWith("https://"))
-                    {
-                        System.Uri uri = new Uri(link);
-                        link = uri.Host + uri.PathAndQuery;
-                    }
-
-                    if (link.Length == 35)
-                    {
-                        //read character
-                        string str = link.Substring(0, 24);
-                        if (str == "http://www.youtube.com/watch?v=")
-                        {
-                            e.IsValid = false;
-                        }
-                        else
-                        {
-                            e.IsValid = true;
-                            return;
-                        }
-                    }
-                }
-
-                e.IsValid = false;
-            }
+            Youtube y = new Youtube(txtYouTube.Text);
+            e.IsValid = y.IsValid;
         }
 
         public void HideControl()
@@ -402,8 +341,6 @@ namespace Plugghest.Modules.CreatePlugg
             btnSubmit.Visible = false;
             btnCancel.Visible = false;
             lbldescription.Visible = false;
-
-
         }
 
         public ModuleActionCollection ModuleActions

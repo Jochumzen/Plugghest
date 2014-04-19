@@ -7,8 +7,62 @@ using System.Net;
 
 namespace Plugghest.Helpers
 {
-    class Youtube
+    public class Youtube
     {
+        private string _youTubeCode; //11 character code
+
+        public Youtube()
+        {
+            IsValid = false;
+        }
+
+        public Youtube(string code)
+        {
+            code = code.Trim();
+            if (code.Length == 11)
+            {
+                YouTubeCode = code;
+                IsValid = true;
+            }
+            else
+            {
+                if (code.IndexOf("www.youtube.com") > -1)
+                    //Assume that code is the final 11 characters
+                {
+                    YouTubeCode = code.Substring(code.Length - 11, 11);
+                    IsValid = true;
+                }
+                else
+                {
+                    IsValid = false;
+                }
+            }
+        }
+
+        public string YouTubeCode
+        {
+            get { return _youTubeCode; }
+            set 
+            {
+                if (value.Length == 11)
+                {
+                    _youTubeCode = value;
+                    IsValid = true;
+                }
+                else
+                    throw new Exception("Youtube code must have 11 characters");
+            }
+        }
+
+        public bool IsValid { get; set; }
+
+        public string GetIframeString(string CultureCode)
+        {
+            if(CultureCode.Length != 2)
+                throw new Exception("Culture code must have 2 characters");
+            return "<iframe width=\"640\" height=\"390\" src=http//www.youtube.com/embed/HQODPOTikic?cc_load_policy=1&amp;cc_lang_pref=" + CultureCode + "en\" frameborder=\"0\"></iframe>";
+        }
+
         public string GetYouTubeData(string FilterBy, string videoID)
         {
             int lb = 0;

@@ -272,7 +272,7 @@ namespace Plugghest.Modules.CreatePlugg
             pc.LatexText = latexText;
             if (!string.IsNullOrEmpty(latexText.Trim()))
             {
-                LatexToMathMLConverter myConverter = new LatexToMathMLConverter(Latextext);
+                LatexToMathMLConverter myConverter = new LatexToMathMLConverter(latexText);
                 myConverter.Convert();
                 pc.LatexTextInHtml = myConverter.HTMLOutput;
             }
