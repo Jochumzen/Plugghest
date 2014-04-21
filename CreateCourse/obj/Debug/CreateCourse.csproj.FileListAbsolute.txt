@@ -1,0 +1,5 @@
+D:\Rohit\DemoApps\Dnn7TestApp\bin\CreateCourse.dll
+D:\Rohit\DemoApps\Dnn7TestApp\bin\CreateCourse.pdb
+D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\CreateCourse\obj\Debug\CreateCourse.csprojResolveAssemblyReference.cache
+D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\CreateCourse\obj\Debug\CreateCourse.dll
+D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\CreateCourse\obj\Debug\CreateCourse.pdb

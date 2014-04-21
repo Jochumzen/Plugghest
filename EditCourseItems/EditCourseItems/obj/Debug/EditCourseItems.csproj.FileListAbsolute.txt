@@ -1,0 +1,5 @@
+D:\Rohit\bin\EditCourseItems.dll
+D:\Rohit\bin\EditCourseItems.pdb
+D:\Rohit\EditCourseItems\EditCourseItems\obj\Debug\EditCourseItems.dll
+D:\Rohit\EditCourseItems\EditCourseItems\obj\Debug\EditCourseItems.pdb
+D:\Rohit\EditCourseItems\EditCourseItems\obj\Debug\EditCourseItems.csprojResolveAssemblyReference.cache

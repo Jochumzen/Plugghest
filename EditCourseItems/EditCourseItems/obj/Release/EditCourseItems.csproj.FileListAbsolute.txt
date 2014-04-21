@@ -1,0 +1,8 @@
+D:\Rohit\bin\EditCourseItems.dll
+D:\Rohit\bin\EditCourseItems.pdb
+D:\Rohit\EditCourseItems\EditCourseItems\obj\Release\EditCourseItems.dll
+D:\Rohit\EditCourseItems\EditCourseItems\obj\Release\EditCourseItems.pdb
+D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\EditCourseItems\EditCourseItems\obj\Release\EditCourseItems.dll
+D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\EditCourseItems\EditCourseItems\obj\Release\EditCourseItems.pdb
+D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\bin\EditCourseItems.dll
+D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\bin\EditCourseItems.pdb
