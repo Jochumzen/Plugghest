@@ -84,7 +84,7 @@ namespace Plugghest.Modules.CreateCourse
                     Course c = CreateCourses();
 
                     DNNHelper h = new DNNHelper();
-                    h.AddPage("C" + c.CourseId.ToString() + ": " + c.Title , "C" + c.CourseId );
+                    h.AddPage("C" + c.CourseId.ToString() + ": " + c.Title, "C" + c.CourseId);
 
                     Response.Redirect("/" + (Page as DotNetNuke.Framework.PageBase).PageCulture.Name + "/" + "C" + c.CourseId + ".aspx");
                 }
@@ -126,9 +126,9 @@ namespace Plugghest.Modules.CreateCourse
         protected void InsertCoursePlugg(Course c)
         {
             CourseHandler ch = new CourseHandler();
-            CoursePlugg cp = new CoursePlugg();
+            CourseItems cp = new CourseItems();
 
-            cp.CourseId = c.CourseId;
+            cp.CourseID = c.CourseId;
 
             string pluggtext = txtPluggs.Text.Trim();
             if (!string.IsNullOrEmpty(pluggtext))
@@ -137,9 +137,10 @@ namespace Plugghest.Modules.CreateCourse
 
                 for (int i = 0; i < itempluggs.Length; i++)
                 {
-                    cp.PluggId = Convert.ToInt32(itempluggs[i].ToString());
-                    cp.Orders = i + 1;
-                    ch.CreateCoursePlugg(cp);   
+                    cp.ItemType = 0;
+                    cp.ItemID = Convert.ToInt32(itempluggs[i].ToString());
+                    cp.Order = i + 1;
+                    ch.CreateCoursePlugg(cp);
                 }
             }
         }
