@@ -232,7 +232,9 @@ namespace Plugghest.Modules.CreatePlugg
             }
 
             DNNHelper d = new DNNHelper();
-            d.AddPage(PortalId, p.PluggId.ToString());
+            string pageUrl = p.PluggId.ToString();
+            string pageName = pageUrl + ": " + p.Title;
+            d.AddPage(pageName, pageUrl);
 
             return p;
         }

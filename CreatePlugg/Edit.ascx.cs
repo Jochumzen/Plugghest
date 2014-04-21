@@ -163,7 +163,9 @@ namespace Plugghest.Modules.CreatePlugg
 
                     //Add NEW PAGE(TAB).....
                     DNNHelper d = new DNNHelper();
-                    d.AddPage(PortalId, p.PluggId.ToString());
+                    string pageUrl = p.PluggId.ToString();
+                    string pageName = pageUrl + ": " + p.Title;
+                    d.AddPage(pageName, pageUrl);
                 }
 
                 Response.Redirect(DotNetNuke.Common.Globals.NavigateURL());
@@ -299,8 +301,10 @@ namespace Plugghest.Modules.CreatePlugg
                 CreatePluggContent(pc);
             }
 
-            DNNHelper h = new DNNHelper();
-            h.AddPage(PortalId,p.PluggId.ToString());
+            DNNHelper d = new DNNHelper();
+            string pageUrl = p.PluggId.ToString();
+            string pageName = pageUrl + ": " + p.Title;
+            d.AddPage(pageName, pageUrl);
 
             lblError.Visible = true;
             lblError.Text = "Plugg has been Successfully created.";

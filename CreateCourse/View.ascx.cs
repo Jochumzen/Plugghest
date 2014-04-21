@@ -84,7 +84,7 @@ namespace Plugghest.Modules.CreateCourse
                     Course c = CreateCourses();
 
                     DNNHelper h = new DNNHelper();
-                    h.AddPage(PortalId , "C" + c.CourseId );
+                    h.AddPage("C" + c.CourseId.ToString() + ": " + c.Title , "C" + c.CourseId );
 
                     Response.Redirect("/" + (Page as DotNetNuke.Framework.PageBase).PageCulture.Name + "/" + "C" + c.CourseId + ".aspx");
                 }

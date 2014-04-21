@@ -1,5 +1,6 @@
 ﻿using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Modules.Definitions;
+using DotNetNuke.Entities.Portals;
 using DotNetNuke.Entities.Tabs;
 using DotNetNuke.Security.Permissions;
 using System;
@@ -11,18 +12,36 @@ namespace Plugghest.DNN
 {
     public class DNNHelper
     {
-        public void AddPage(int portalId, string PageName)
+        public void AddPage(string PageName, string PageUrl)
         {
+            PortalSettings portalSettings = new PortalSettings();
+            int portalId = portalSettings.PortalId;
+  
             bool IsPluggPage = true;
-            if (PageName[0] == 'C')
+            if (PageUrl[0] == 'C')
                 IsPluggPage = false;
+
+
+            // set skin
+            string myPortalSkin;
+            string myPortalContainer;
+            if (IsPluggPage)
+            {
+                myPortalSkin = "[G]Skins/20047-UnlimitedColorPack-033/InsidePage-leftmenu.ascx";
+                myPortalContainer = portalSettings.DefaultPortalContainer;
+            }
+            else
+            {
+                myPortalSkin = portalSettings.DefaultPortalSkin;
+                myPortalContainer = portalSettings.DefaultPortalContainer;
+            }
 
             TabInfo newTab = new TabInfo();
 
             // set new page properties
             newTab.PortalID = portalId;
             newTab.TabName = PageName;
-            newTab.Title = PageName;
+            newTab.Title = PageUrl;
             newTab.Description = "";
             newTab.KeyWords = "";
             newTab.IsDeleted = false;
@@ -31,6 +50,8 @@ namespace Plugghest.DNN
             newTab.DisableLink = false;
             newTab.IconFile = "";
             newTab.Url = "";
+            newTab.SkinSrc = myPortalSkin;
+            newTab.ContainerSrc = myPortalContainer;
 
             //Add permission to the page so that all users can view it
             foreach (PermissionInfo p in PermissionController.GetPermissionsByTab())
@@ -52,6 +73,23 @@ namespace Plugghest.DNN
             int tabId = controller.AddTab(newTab, true);
             DotNetNuke.Common.Utilities.DataCache.ClearModuleCache(tabId);
 
+            // temporary solution: Change Page URL to ID of Plugg/Course Page directly in DB
+            TabUrl tu = new TabUrl();
+            TabUrlController tc = new TabUrlController();
+            tu.TabId = tabId;
+            tu.SeqNum = 0;
+            tu.Url = "/" + PageUrl;
+            tu.QueryString = "";
+            tu.HttpStatus = "200";
+            tu.IsSystem = true;
+            tu.PortalAliasUsage = 0;
+            tu.CreatedByUserID = 1;
+            tu.CreatedOnDate = DateTime.Now;
+            tu.LastModifiedByUserID = 1;
+            tu.LastModifiedOnDate = DateTime.Now;
+            tc.CreateTabUrl(tu);
+
+            // add modules to new page
             if (IsPluggPage)
             {
                 AddModuleToPage(portalId, tabId, "DisplayPlugg");
@@ -74,6 +112,7 @@ namespace Plugghest.DNN
             moduleInfo.ModuleOrder = 1;
             moduleInfo.ModuleTitle = "";
             moduleInfo.PaneName = "";
+            moduleInfo.DisplayPrint = false;
 
             DesktopModuleInfo myModule = null;
             foreach (KeyValuePair<int, DesktopModuleInfo> kvp in DesktopModuleController.GetDesktopModules(portalId))

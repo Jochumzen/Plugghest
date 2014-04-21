@@ -31,13 +31,13 @@ namespace Plugghest.Pluggs
             }
         }
         
-        public Plugg GetPlugg(int? plugid)
+        public Plugg GetPlugg(int? pluggid)
         {
             Plugg p;
             using (IDataContext ctx = DataContext.Instance())
             {
                 var rep = ctx.GetRepository<Plugg>();
-                p = rep.GetById(plugid);
+                p = rep.GetById(pluggid);
             }
             return p;
         }

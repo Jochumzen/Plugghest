@@ -53,12 +53,13 @@ namespace Plugghest.Courses
 
 
     [TableName("CoursePlugg")]
-    [PrimaryKey("PluggId", AutoIncrement = false)]
+    [PrimaryKey("CourseId,PluggId", AutoIncrement = false)]
+    [Cacheable("CoursePlugg", CacheItemPriority.Normal, 20)]
     public class CoursePlugg
     {
-        public int PluggId { get; set; }
-
         public int CourseId { get; set; }
+
+        public int PluggId { get; set; }
 
         public int Orders { get; set; }
     }

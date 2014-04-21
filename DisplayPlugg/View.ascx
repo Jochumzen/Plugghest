@@ -2,7 +2,6 @@
 
 <style>
     .dispalyplug {
-    font-size: 17px;
     margin-bottom: 8px;
 }
 
@@ -30,14 +29,10 @@
 
 <div style="width:642px">
 
-    <div class="dispalyplug title1"><asp:Label runat="server" ID="lblTitle"></asp:Label></div>
-    <br />
-
    <div class="dispalyplug"><asp:Label runat="server" ID="lblYoutube"></asp:Label></div>
 
     <br />
-    <span  class="dispalyplug title1">Summary</span>
-    <br /><br />
+    <h2>Summary</h2>
 
    <div class="dispalyplug"><asp:Label runat="server" ID="lblHtmlText" ></asp:Label></div> 
 

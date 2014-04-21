@@ -11,6 +11,7 @@
 */
 
 using System;
+using System.Linq;
 using System.Web.UI.WebControls;
 using DotNetNuke.Security;
 using DotNetNuke.Services.Exceptions;
@@ -22,6 +23,7 @@ using System.Web;
 using System.Collections.Generic;
 using Plugghest.Courses;
 using Plugghest.Pluggs;
+using DotNetNuke.Entities.Tabs;
 
 namespace Plugghest.Modules.CourseMenu
 {
@@ -44,7 +46,8 @@ namespace Plugghest.Modules.CourseMenu
         {
             try
             {
-                GetMenu();
+                if(!IsPostBack)
+                    GetMenu();
             }
             catch (Exception exc) //Module failed to load
             {
@@ -54,56 +57,54 @@ namespace Plugghest.Modules.CourseMenu
 
         public void GetMenu()
         {
+            string courseIdStr = Page.Request.QueryString["c"];
+            if (courseIdStr == null)    //This is a Plugg outside a course: no menu
+                return;
 
-            string CurrentUrl = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + HttpContext.Current.Request.RawUrl;
-            System.Uri uri = new System.Uri(CurrentUrl);
-            string uriQuery = uri.Query;
-            string str = uri.LocalPath;
-
-            //To Get PluggID......from the url : url is always in this form http://xxx.xxx/xxxx/PluggID?c=CourseID
-            string PluggId = str.Substring(str.IndexOf('/') + 7);
-            PluggId = PluggId.Replace(".aspx", "");
-
-
-            if (!string.IsNullOrEmpty(uriQuery)) //check query string i.e. course exist or not...
+            int courseId;
+            bool isNum = int.TryParse(courseIdStr, out courseId);
+            if (!isNum)
             {
-                string CourseId = uriQuery.Replace("?c=", "");
-
-                CourseHandler ch = new CourseHandler();
-                Course c = ch.GetCourse(Convert.ToInt32(CourseId));
-
-                //if course exist in the database...
-                if (c != null)
-                {
-                    PluggHandler ph = new PluggHandler();
-                    IEnumerable<CoursePlugg> cps = ch.GetCoursePluggsForCourse(Convert.ToInt32(CourseId));
-
-                    if (cps != null)
-                    {
-                        foreach (CoursePlugg cp in cps)
-                        {
-                            Plugg p = ph.GetPlugg(cp.PluggId);
-                            Menu_Pluggs.Items.Add(new MenuItem(p.PluggId.ToString() + ": " + p.Title.ToString(), "", "", "/" + (Page as DotNetNuke.Framework.PageBase).PageCulture.Name.ToString().ToLower() + "/" + p.PluggId + "?c=" + CourseId));
-
-
-                            if (PluggId == p.PluggId.ToString())
-                            {
-                                int index = cp.Orders - 1;
-                                Menu_Pluggs.Items[index].Selected = true; //active order in menu
-                            }
-                        }
-                    }
-                    else
-                    {
-                        lbltest.Text = "This Plugg is not in this course";
-                    }
-                }
-                else
-                {
-                    lbltest.Text = "No such course";
-                }
+                lbltest.Text = "Incorrect format for URL. Format should be http://plugghest.com/12/c/6 where the first number is the PluggID and the second number is the CourseID";
+                return;
             }
 
+            CourseHandler ch = new CourseHandler();
+            Course c = ch.GetCourse(courseId);
+
+            //if course exist in the database...
+            if (c == null)
+            {
+                lbltest.Text = "There is no course with ID " + courseId;
+                return;
+            }
+
+            PluggHandler ph = new PluggHandler();
+            string pluggIdstr = DotNetNuke.Entities.Tabs.TabController.CurrentPage.Title;
+            int pluggId = Convert.ToInt32(pluggIdstr);
+
+            IEnumerable<CoursePlugg> cpExist = ch.GetCoursePlugg(courseId, pluggId);
+            if (!cpExist.Any())
+            {
+                lbltest.Text = "Plugg " + pluggId + " is not in course " + courseId;
+                return;
+            }
+
+            var tc = new TabController();
+            IEnumerable<CoursePlugg> cps = ch.GetCoursePluggsForCourse(courseId);
+            foreach (CoursePlugg cp in cps)
+            {
+                Plugg p = ph.GetPlugg(cp.PluggId);
+                TabInfo ti = tc.GetTabByName(p.PluggId.ToString() + ": " + p.Title , PortalId);
+                string myUrl = DotNetNuke.Common.Globals.NavigateURL(ti.TabID, "", "", "&c=" + courseId);
+                Menu_Pluggs.Items.Add(new MenuItem(p.PluggId.ToString() + ": " + p.Title, "", "", myUrl));
+
+                if (pluggId == p.PluggId)
+                {
+                    int index = cp.Orders - 1;
+                    Menu_Pluggs.Items[index].Selected = true; //active order in menu
+                }
+            }
 
         } 
 

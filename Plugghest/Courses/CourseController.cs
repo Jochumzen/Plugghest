@@ -61,6 +61,17 @@ namespace Plugghest.Courses
             return cps;
         }
 
+        public IEnumerable<CoursePlugg> GetCoursePlugg(int courseId, int pluggId)
+        {
+            IEnumerable<CoursePlugg> cp;
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<CoursePlugg>();
+                cp = rep.Find("WHERE CourseId = @0 AND PluggId = @1", courseId,pluggId );
+            }
+            return cp;
+        }
+
         //CourseForDNN
 
         public List<CourseInfoForDNNGrid> GetCoursesForDNN()

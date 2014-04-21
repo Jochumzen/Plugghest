@@ -11,7 +11,11 @@
 */
 
 using System;
+using System.Collections;
+using System.Security.Cryptography.X509Certificates;
 using System.Web.UI.WebControls;
+using DotNetNuke.Entities.Tabs;
+using DotNetNuke.Framework;
 using DotNetNuke.Security;
 using DotNetNuke.Services.Exceptions;
 using DotNetNuke.Entities.Modules;
@@ -21,6 +25,7 @@ using DotNetNuke.UI.Utilities;
 using Plugghest.Helpers;
 using Plugghest.Pluggs;
 using System.Collections.Generic;
+using Plugghest.DNN;
 
 namespace Plugghest.Modules.DisplayPlugg
 {
@@ -54,11 +59,18 @@ namespace Plugghest.Modules.DisplayPlugg
 
                     Plugg p = plugghandler.GetPlugg(pluggid);
                     PluggContent pc = plugghandler.GetPluggContent(pluggid,curlan);
-                    Youtube myYouTube = new Youtube(pc.YouTubeString);
 
-                    lblTitle.Text = p.Title;
-                    if (myYouTube.IsValid)
-                        lblYoutube.Text = myYouTube.GetIframeString(curlan.Substring(3,2));
+                    if (pc.YouTubeString == null)
+                    {
+                        lblYoutube.Text = "[No Video]";
+                    }
+                    else
+                    {
+                        Youtube myYouTube = new Youtube(pc.YouTubeString);
+                        if (myYouTube.IsValid)
+                            lblYoutube.Text = myYouTube.GetIframeString(curlan.Substring(3, 2));
+                    }
+
                     lblHtmlText.Text = Server.HtmlDecode(pc.HtmlText); ;
                     lblLatexTextInHtml.Text = Server.HtmlDecode(pc.LatexTextInHtml);
                 }
@@ -68,7 +80,6 @@ namespace Plugghest.Modules.DisplayPlugg
                 Exceptions.ProcessModuleLoadException(this, exc);
             }
         }
-
 
         public ModuleActionCollection ModuleActions
         {

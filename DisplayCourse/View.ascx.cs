@@ -22,6 +22,7 @@ using DotNetNuke.UI.Utilities;
 using Plugghest.Courses;
 using System.Collections.Generic;
 using Plugghest.Pluggs;
+using DotNetNuke.Entities.Tabs;
 
 namespace Plugghest.Modules.DisplayCourse
 {
@@ -53,20 +54,25 @@ namespace Plugghest.Modules.DisplayCourse
 
                     if (!string.IsNullOrEmpty(CourseTitle))
                     {
-                        Course c = ch.GetCourse(Convert.ToInt32(CourseTitle));
+                        int courseId = Convert.ToInt32(CourseTitle);
+                        Course c = ch.GetCourse(courseId);
 
-                        lblTitle.Text = c.Title;
                         lblDescription.Text = Server.HtmlDecode(c.Description); ;
 
                         PluggHandler ph = new PluggHandler();
+                        var tc = new TabController();
+
                         IEnumerable<CoursePlugg> cps = ch.GetCoursePluggsForCourse(c.CourseId);
                         if (cps != null)
                         {
-                            LnkBeginCourse.NavigateUrl = "/" + (Page as DotNetNuke.Framework.PageBase).PageCulture.Name.ToString().ToLower() + "/" + cps.First().PluggId + "?c=" + c.CourseId ;
+                            Plugg p = ph.GetPlugg(cps.First().PluggId);
+                            TabInfo ti = tc.GetTabByName(p.PluggId.ToString() + ": " + p.Title , PortalId);
+                            LnkBeginCourse.NavigateUrl = DotNetNuke.Common.Globals.NavigateURL(ti.TabID, "", "", "&c=" + courseId);
                         }
                     }
                 }
             }
+
             catch (Exception exc) //Module failed to load
             {
                 Exceptions.ProcessModuleLoadException(this, exc);

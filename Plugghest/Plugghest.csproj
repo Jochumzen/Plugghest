@@ -48,6 +48,8 @@
     <Compile Include="Courses\CourseItem.cs" />
     <Compile Include="Courses\CourseController.cs" />
     <Compile Include="DNN\DNN.cs" />
+    <Compile Include="DNN\TabUrlController.cs" />
+    <Compile Include="DNN\TabUrlItem.cs" />
     <Compile Include="Helpers\Youtube.cs" />
     <Compile Include="Pluggs\FeatureController.cs">
       <SubType>Code</SubType>

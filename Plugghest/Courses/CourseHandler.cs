@@ -32,6 +32,11 @@ namespace Plugghest.Courses
             coursecnt.CreateCoursePlugg(cp);
         }
 
+        public IEnumerable<CoursePlugg> GetCoursePlugg(int courseId, int pluggId)
+        {
+            return coursecnt.GetCoursePlugg(courseId,pluggId );
+        }
+
         public IEnumerable<CoursePlugg> GetCoursePluggsForCourse(int courseId)
         {
             return coursecnt.GetCoursePluggsForCourse(courseId);
