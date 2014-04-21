@@ -41,33 +41,33 @@ namespace Plugghest.Courses
 
         //CoursePluggs
 
-        public void CreateCoursePlugg(CoursePlugg t)
+        public void CreateCoursePlugg(CourseItems t)
         {
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rep = ctx.GetRepository<CoursePlugg>();
+                var rep = ctx.GetRepository<CourseItems>();
                 rep.Insert(t);
             }
         }
 
-        public IEnumerable<CoursePlugg> GetCoursePluggsForCourse(int courseId)
+        public IEnumerable<CourseItems> GetCoursePluggsForCourse(int CourseID)
         {
-            IEnumerable<CoursePlugg> cps;
+            IEnumerable<CourseItems> cps;
             using (IDataContext context = DataContext.Instance())
             {
-                var repository = context.GetRepository<CoursePlugg>();
-                cps = repository.Find("WHERE CourseID = @0 ORDER BY 'ORDERS'", courseId);
+                var repository = context.GetRepository<CourseItems>();
+                cps = repository.Find("WHERE CourseID = @0 ORDER BY [ORDER]", CourseID);
             }
             return cps;
         }
 
-        public IEnumerable<CoursePlugg> GetCoursePlugg(int courseId, int pluggId)
+        public IEnumerable<CourseItems> GetCoursePlugg(int courseId, int pluggId)
         {
-            IEnumerable<CoursePlugg> cp;
+            IEnumerable<CourseItems> cp;
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rep = ctx.GetRepository<CoursePlugg>();
-                cp = rep.Find("WHERE CourseId = @0 AND PluggId = @1", courseId,pluggId );
+                var rep = ctx.GetRepository<CourseItems>();
+                cp = rep.Find("WHERE CourseId = @0 AND PluggId = @1", courseId, pluggId);
             }
             return cp;
         }
@@ -83,11 +83,27 @@ namespace Plugghest.Courses
 
                 foreach (var item in rec)
                 {
-                    cs.Add(new CourseInfoForDNNGrid() {CourseId = item.CourseId, CourseName = item.CourseName , UserName = item.UserName });
+                    cs.Add(new CourseInfoForDNNGrid() { CourseId = item.CourseId, CourseName = item.CourseName, UserName = item.UserName });
                 }
             }
 
             return cs;
         }
+
+
+        public List<Course_Tree> GetCourseItems(int CourseID)
+        {
+            List<Course_Tree> objsubjectitem = new List<Course_Tree>();
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rec = ctx.ExecuteQuery<Course_Tree>(CommandType.TableDirect, "select Pluggs.Title ,Mother,ItemType,itemid ,[Order] from CourseItems join Pluggs on Pluggs.PluggId=CourseItems.Itemid where CourseID= " + CourseID + " order by [Order]");
+                foreach (var val in rec)
+                {
+                    objsubjectitem.Add(new Course_Tree { ItemID = val.ItemID, label = val.Title, Title = val.Title, Mother = val.Mother, Order = val.Order });
+                }
+            }
+            return objsubjectitem;
+        }
+
     }
 }

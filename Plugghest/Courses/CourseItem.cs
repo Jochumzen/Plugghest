@@ -15,6 +15,7 @@ using System.Web.Caching;
 using DotNetNuke.Common.Utilities;
 using DotNetNuke.ComponentModel.DataAnnotations;
 using DotNetNuke.Entities.Content;
+using System.Collections.Generic;
 
 namespace Plugghest.Courses
 {
@@ -40,7 +41,7 @@ namespace Plugghest.Courses
 
         public int ModifiedByUserId { get; set; }
 
-        public string  Description { get; set; }
+        public string Description { get; set; }
 
     }
 
@@ -52,16 +53,43 @@ namespace Plugghest.Courses
     }
 
 
-    [TableName("CoursePlugg")]
-    [PrimaryKey("CourseId,PluggId", AutoIncrement = false)]
-    [Cacheable("CoursePlugg", CacheItemPriority.Normal, 20)]
-    public class CoursePlugg
+    [TableName("CourseItems")]
+    [PrimaryKey("CourseItemID", AutoIncrement = true)]
+    [Cacheable("CourseItems", CacheItemPriority.Normal, 20)]
+    public class CourseItems
+    {
+
+        public int CourseItemID { get; set; }
+
+        public int CourseID { get; set; }
+
+        public int ItemID { get; set; }
+
+        public int Order { get; set; }
+
+        public int ItemType { get; set; }
+
+        public int Mother { get; set; }
+    }
+
+    //class for Create Course tree...
+    public class Course_Tree
     {
         public int CourseId { get; set; }
 
-        public int PluggId { get; set; }
+        public int ItemID { get; set; }
 
-        public int Orders { get; set; }
+        public int? Mother { get; set; }
+
+        public int CourseItemID { get; set; }
+
+        public List<Course_Tree> children { get; set; }
+
+        public int Order { get; set; }
+
+        public string label { get; set; }
+        public string Title { get; set; }
+
     }
 
 }

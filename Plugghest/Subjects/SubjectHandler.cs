@@ -14,7 +14,7 @@ namespace Plugghest.Subjects
             return subjectcntr.GetSubject_Item();
         }
 
-        public void  CreateSubject(SubjectItem t)
+        public void CreateSubject(SubjectItem t)
         {
             subjectcntr.CreateSubject(t);
         }
@@ -33,6 +33,6 @@ namespace Plugghest.Subjects
         {
             subjectcntr.UpdateSubjectOrder(SubjectId, Order);
         }
-    
+
     }
 }

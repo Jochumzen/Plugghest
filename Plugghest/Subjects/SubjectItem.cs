@@ -25,20 +25,20 @@ namespace Plugghest.Subjects
     {
         public int SubjectID;
         public string Subject;
-        public int? Mother ;
+        public int? Mother;
         public int Order;
 
-         public SubjectItem()
-         {}
+        public SubjectItem()
+        { }
 
-         public SubjectItem(int SubjectID, string Subject, int? Mother, int Order)
-         {
-             // TODO: Complete member initialization
-             this.SubjectID = SubjectID;
-             this.Subject = Subject;
-             this.Mother = Mother;
-             this.Order = Order;
-         }
+        public SubjectItem(int SubjectID, string Subject, int? Mother, int Order)
+        {
+            // TODO: Complete member initialization
+            this.SubjectID = SubjectID;
+            this.Subject = Subject;
+            this.Mother = Mother;
+            this.Order = Order;
+        }
     }
 
 

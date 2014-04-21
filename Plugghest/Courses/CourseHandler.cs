@@ -15,9 +15,9 @@ namespace Plugghest.Courses
             coursecnt.CreateCourse(c);
         }
 
-        public Course GetCourse(int courseId)
+        public Course GetCourse(int CourseID)
         {
-            return coursecnt.GetCourse(courseId);
+            return coursecnt.GetCourse(CourseID);
         }
 
         public List<CourseInfoForDNNGrid> GetCoursesForDNN()
@@ -27,19 +27,24 @@ namespace Plugghest.Courses
 
         //CoursePluggs
 
-        public void CreateCoursePlugg(CoursePlugg cp)
+        public void CreateCoursePlugg(CourseItems cp)
         {
             coursecnt.CreateCoursePlugg(cp);
         }
 
-        public IEnumerable<CoursePlugg> GetCoursePlugg(int courseId, int pluggId)
+        public IEnumerable<CourseItems> GetCoursePlugg(int CourseID, int ItemID)
         {
-            return coursecnt.GetCoursePlugg(courseId,pluggId );
+            return coursecnt.GetCoursePlugg(CourseID, ItemID);
         }
 
-        public IEnumerable<CoursePlugg> GetCoursePluggsForCourse(int courseId)
+        public IEnumerable<CourseItems> GetCoursePluggsForCourse(int CourseID)
         {
-            return coursecnt.GetCoursePluggsForCourse(courseId);
+            return coursecnt.GetCoursePluggsForCourse(CourseID);
+        }
+
+        public List<Course_Tree> GetCourseItems(int CourseID)
+        {
+            return coursecnt.GetCourseItems(CourseID);
         }
     }
 }

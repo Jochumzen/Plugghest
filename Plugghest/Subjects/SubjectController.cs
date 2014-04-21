@@ -78,7 +78,7 @@ namespace Plugghest.Subjects
                 var rec = ctx.ExecuteQuery<SubjectItem>(CommandType.TableDirect, "select * from SubjectItems where Mother=" + MotherName + "AND [ORDER] >=" + order + " order by [order]");
                 foreach (var val in rec)
                 {
-                    sublist.Add(new SubjectItem(val.SubjectID,val.Subject,val.Mother,val.Order));
+                    sublist.Add(new SubjectItem(val.SubjectID, val.Subject, val.Mother, val.Order));
                 }
             }
             return sublist;
