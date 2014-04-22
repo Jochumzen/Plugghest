@@ -72,12 +72,11 @@ namespace Plugghest.Courses
         public int Mother { get; set; }
     }
 
+
+
     //class for Create Course tree...
     public class Course_Tree
     {
-        public int CourseId { get; set; }
-
-        public int ItemID { get; set; }
 
         public int? Mother { get; set; }
 
@@ -88,6 +87,7 @@ namespace Plugghest.Courses
         public int Order { get; set; }
 
         public string label { get; set; }
+
         public string Title { get; set; }
 
     }
