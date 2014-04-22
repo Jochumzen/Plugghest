@@ -96,10 +96,11 @@ namespace Plugghest.Courses
             List<Course_Tree> objsubjectitem = new List<Course_Tree>();
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rec = ctx.ExecuteQuery<Course_Tree>(CommandType.TableDirect, "select Pluggs.Title ,Mother,ItemType,itemid ,[Order] from CourseItems join Pluggs on Pluggs.PluggId=CourseItems.Itemid where CourseID= " + CourseID + " order by [Order]");
+                var rec = ctx.ExecuteQuery<Course_Tree>(CommandType.TableDirect, @"select Pluggs.Title,Mother,ItemType,CourseItemID, [Order] from CourseItems join Pluggs on Pluggs.PluggId=CourseItems.Itemid  where CourseID=" + CourseID + " and ItemType = 0 union select CourseHeadings.Title,Mother,ItemType,CourseItemID,[Order] from CourseItems join CourseHeadings on CourseHeadings.HeadingID = CourseItems.ItemID where CourseID=" + CourseID + " and ItemType = 1 order by [Order]");
+
                 foreach (var val in rec)
                 {
-                    objsubjectitem.Add(new Course_Tree { ItemID = val.ItemID, label = val.Title, Title = val.Title, Mother = val.Mother, Order = val.Order });
+                    objsubjectitem.Add(new Course_Tree { label = val.Title, Title = val.Title, Mother = val.Mother, Order = val.Order, CourseItemID = val.CourseItemID });
                 }
             }
             return objsubjectitem;
