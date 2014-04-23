@@ -83,7 +83,7 @@ namespace Plugghest.Modules.CourseMenu
             string pluggIdstr = DotNetNuke.Entities.Tabs.TabController.CurrentPage.Title;
             int pluggId = Convert.ToInt32(pluggIdstr);
 
-            IEnumerable<CoursePlugg> cpExist = ch.GetCoursePlugg(courseId, pluggId);
+            IEnumerable<CourseItem> cpExist = ch.GetCoursePlugg(courseId, pluggId);
             if (!cpExist.Any())
             {
                 lbltest.Text = "Plugg " + pluggId + " is not in course " + courseId;
@@ -91,17 +91,17 @@ namespace Plugghest.Modules.CourseMenu
             }
 
             var tc = new TabController();
-            IEnumerable<CoursePlugg> cps = ch.GetCoursePluggsForCourse(courseId);
-            foreach (CoursePlugg cp in cps)
+            IEnumerable<CourseItem> cps = ch.GetCoursePluggsForCourse(courseId);
+            foreach (CourseItem cp in cps)
             {
-                Plugg p = ph.GetPlugg(cp.PluggId);
+                Plugg p = ph.GetPlugg(cp.ItemID);
                 TabInfo ti = tc.GetTabByName(p.PluggId.ToString() + ": " + p.Title , PortalId);
                 string myUrl = DotNetNuke.Common.Globals.NavigateURL(ti.TabID, "", "", "&c=" + courseId);
                 Menu_Pluggs.Items.Add(new MenuItem(p.PluggId.ToString() + ": " + p.Title, "", "", myUrl));
 
                 if (pluggId == p.PluggId)
                 {
-                    int index = cp.Orders - 1;
+                    int index = cp.Order - 1;
                     Menu_Pluggs.Items[index].Selected = true; //active order in menu
                 }
             }

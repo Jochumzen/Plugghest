@@ -41,32 +41,32 @@ namespace Plugghest.Courses
 
         //CoursePluggs
 
-        public void CreateCoursePlugg(CourseItems t)
+        public void CreateCoursePlugg(CourseItem t)
         {
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rep = ctx.GetRepository<CourseItems>();
+                var rep = ctx.GetRepository<CourseItem>();
                 rep.Insert(t);
             }
         }
 
-        public IEnumerable<CourseItems> GetCoursePluggsForCourse(int CourseID)
+        public IEnumerable<CourseItem> GetCoursePluggsForCourse(int CourseID)
         {
-            IEnumerable<CourseItems> cps;
+            IEnumerable<CourseItem> cps;
             using (IDataContext context = DataContext.Instance())
             {
-                var repository = context.GetRepository<CourseItems>();
+                var repository = context.GetRepository<CourseItem>();
                 cps = repository.Find("WHERE CourseID = @0 ORDER BY [ORDER]", CourseID);
             }
             return cps;
         }
 
-        public IEnumerable<CourseItems> GetCoursePlugg(int courseId, int pluggId)
+        public IEnumerable<CourseItem> GetCoursePlugg(int courseId, int pluggId)
         {
-            IEnumerable<CourseItems> cp;
+            IEnumerable<CourseItem> cp;
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rep = ctx.GetRepository<CourseItems>();
+                var rep = ctx.GetRepository<CourseItem>();
                 cp = rep.Find("WHERE CourseId = @0 AND PluggId = @1", courseId, pluggId);
             }
             return cp;

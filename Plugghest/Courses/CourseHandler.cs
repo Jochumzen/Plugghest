@@ -27,17 +27,17 @@ namespace Plugghest.Courses
 
         //CoursePluggs
 
-        public void CreateCoursePlugg(CourseItems cp)
+        public void CreateCoursePlugg(CourseItem cp)
         {
             coursecnt.CreateCoursePlugg(cp);
         }
 
-        public IEnumerable<CourseItems> GetCoursePlugg(int CourseID, int ItemID)
+        public IEnumerable<CourseItem> GetCoursePlugg(int CourseID, int ItemID)
         {
             return coursecnt.GetCoursePlugg(CourseID, ItemID);
         }
 
-        public IEnumerable<CourseItems> GetCoursePluggsForCourse(int CourseID)
+        public IEnumerable<CourseItem> GetCoursePluggsForCourse(int CourseID)
         {
             return coursecnt.GetCoursePluggsForCourse(CourseID);
         }

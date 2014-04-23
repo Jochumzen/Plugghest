@@ -126,7 +126,7 @@ namespace Plugghest.Modules.CreateCourse
         protected void InsertCoursePlugg(Course c)
         {
             CourseHandler ch = new CourseHandler();
-            CourseItems cp = new CourseItems();
+            CourseItem cp = new CourseItem();
 
             cp.CourseID = c.CourseId;
 
@@ -140,6 +140,8 @@ namespace Plugghest.Modules.CreateCourse
                     cp.ItemType = 0;
                     cp.ItemID = Convert.ToInt32(itempluggs[i].ToString());
                     cp.Order = i + 1;
+                    cp.ItemType = 0;
+                    cp.Mother = 0;
                     ch.CreateCoursePlugg(cp);
                 }
             }

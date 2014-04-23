@@ -56,7 +56,7 @@ namespace Plugghest.Courses
     [TableName("CourseItems")]
     [PrimaryKey("CourseItemID", AutoIncrement = true)]
     [Cacheable("CourseItems", CacheItemPriority.Normal, 20)]
-    public class CourseItems
+    public class CourseItem
     {
 
         public int CourseItemID { get; set; }

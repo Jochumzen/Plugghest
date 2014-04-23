@@ -30,6 +30,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewCourses", "..\ViewCours
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "L2H", "..\L2H\L2H.csproj", "{B92E9ADB-B5B7-4063-935D-545FE5478252}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNNDal", "..\DNNDal\DNNDal.csproj", "{42A1A8A5-3B8E-4E6C-A1F9-77684395B3BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +78,10 @@ Global
 		{B92E9ADB-B5B7-4063-935D-545FE5478252}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B92E9ADB-B5B7-4063-935D-545FE5478252}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B92E9ADB-B5B7-4063-935D-545FE5478252}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42A1A8A5-3B8E-4E6C-A1F9-77684395B3BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42A1A8A5-3B8E-4E6C-A1F9-77684395B3BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42A1A8A5-3B8E-4E6C-A1F9-77684395B3BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42A1A8A5-3B8E-4E6C-A1F9-77684395B3BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -74,6 +74,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\FeatureController.cs" />
     <Compile Include="ViewPluggsModuleBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

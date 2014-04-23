@@ -67,6 +67,7 @@
     <Reference Include="System.Web.ApplicationServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\FeatureController.cs" />
     <Compile Include="CourseMenuModuleBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>

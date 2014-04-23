@@ -79,6 +79,7 @@
     <Reference Include="System.Web.ApplicationServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\FeatureController.cs" />
     <Compile Include="CreatePluggModuleBase.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
