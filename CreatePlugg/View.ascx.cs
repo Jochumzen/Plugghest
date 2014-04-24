@@ -234,7 +234,7 @@ namespace Plugghest.Modules.CreatePlugg
             DNNHelper d = new DNNHelper();
             string pageUrl = p.PluggId.ToString();
             string pageName = pageUrl + ": " + p.Title;
-            d.AddPage(pageName, pageUrl);
+            d.AddPluggPage(pageName, pageUrl);
 
             return p;
         }

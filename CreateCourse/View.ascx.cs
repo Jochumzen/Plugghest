@@ -84,7 +84,7 @@ namespace Plugghest.Modules.CreateCourse
                     Course c = CreateCourses();
 
                     DNNHelper h = new DNNHelper();
-                    h.AddPage("C" + c.CourseId.ToString() + ": " + c.Title, "C" + c.CourseId);
+                    h.AddCoursePage("C" + c.CourseId.ToString() + ": " + c.Title, "C" + c.CourseId);
 
                     Response.Redirect("/" + (Page as DotNetNuke.Framework.PageBase).PageCulture.Name + "/" + "C" + c.CourseId + ".aspx");
                 }
@@ -117,32 +117,35 @@ namespace Plugghest.Modules.CreateCourse
 
             ch.CreateCourse(c);
 
-            //Create Course Plugg
-            InsertCoursePlugg(c);
+            //Create Courseitems (only Pluggs)
+            InsertCourseItems(c);
 
             return c;
         }
 
-        protected void InsertCoursePlugg(Course c)
+        protected void InsertCourseItems(Course c)
         {
             CourseHandler ch = new CourseHandler();
-            CourseItem cp = new CourseItem();
 
-            cp.CourseID = c.CourseId;
-
+            // string is in form "44,45,48,52" holding PluggIDs
             string pluggtext = txtPluggs.Text.Trim();
+
+            // Todo: Check that pluggtext is in the correct format before creating the 
+
+            CourseItem ci;
             if (!string.IsNullOrEmpty(pluggtext))
             {
                 string[] itempluggs = pluggtext.Split(',');
 
                 for (int i = 0; i < itempluggs.Length; i++)
                 {
-                    cp.ItemType = 0;
-                    cp.ItemID = Convert.ToInt32(itempluggs[i].ToString());
-                    cp.Order = i + 1;
-                    cp.ItemType = 0;
-                    cp.Mother = 0;
-                    ch.CreateCoursePlugg(cp);
+                    ci = new CourseItem();
+                    ci.CourseID = c.CourseId;
+                    ci.ItemID = Convert.ToInt32(itempluggs[i].ToString());
+                    ci.CIOrder = i + 1;
+                    ci.ItemType = 0;
+                    ci.Mother = 0;
+                    ch.CreateCoursePlugg(ci);
                 }
             }
         }

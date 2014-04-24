@@ -8,43 +8,48 @@ namespace Plugghest.Courses
     //Work as a Business Layer.......................
     public class CourseHandler
     {
-        CourseController coursecnt = new CourseController();
+        CourseController cc = new CourseController();
 
         public void CreateCourse(Course c)
         {
-            coursecnt.CreateCourse(c);
+            cc.CreateCourse(c);
         }
 
         public Course GetCourse(int CourseID)
         {
-            return coursecnt.GetCourse(CourseID);
+            return cc.GetCourse(CourseID);
+        }
+
+        public void DeleteCourse(Course c)
+        {
+            cc.DeleteCourse(c);
         }
 
         public List<CourseInfoForDNNGrid> GetCoursesForDNN()
         {
-            return coursecnt.GetCoursesForDNN();
+            return cc.GetCoursesForDNN();
         }
 
         //CoursePluggs
 
         public void CreateCoursePlugg(CourseItem cp)
         {
-            coursecnt.CreateCoursePlugg(cp);
+            cc.CreateCourseItem(cp);
         }
 
         public IEnumerable<CourseItem> GetCoursePlugg(int CourseID, int ItemID)
         {
-            return coursecnt.GetCoursePlugg(CourseID, ItemID);
+            return cc.GetCoursePlugg(CourseID, ItemID);
         }
 
         public IEnumerable<CourseItem> GetCoursePluggsForCourse(int CourseID)
         {
-            return coursecnt.GetCoursePluggsForCourse(CourseID);
+            return cc.GetCoursePluggsForCourse(CourseID);
         }
 
         public List<Course_Tree> GetCourseItems(int CourseID)
         {
-            return coursecnt.GetCourseItems(CourseID);
+            return cc.GetCourseItems(CourseID);
         }
     }
 }

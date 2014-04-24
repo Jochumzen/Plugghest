@@ -1,4 +1,5 @@
 ﻿using System.Runtime.InteropServices;
+using System.Web.Configuration;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Modules.Definitions;
 using DotNetNuke.Entities.Portals;
@@ -8,66 +9,131 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DotNetNuke.Common.Utilities;
 
 namespace Plugghest.DNN
 {
 
     public class DNNHelper
     {
-        protected struct ModuleSettings
+        public enum ModuleType
         {
-            public string SettingName;
-            public string SettingValue;
-
-            public ModuleSettings(string name, string value)
-            {
-                SettingName = name;
-                SettingValue = value;
-            }
+            DisplayPlugg = 0,
+            DisplayCourse,
+            CourseMenu,
+            Rating,
+            Comments
         }
 
-        public void AddPage(string PageName, string PageUrl)
+        public void DeleteTab(TabInfo t)
         {
             PortalSettings portalSettings = new PortalSettings();
             int portalId = portalSettings.PortalId;
 
-            bool IsPluggPage = true;
-            if (PageUrl[0] == 'C')
-                IsPluggPage = false;
-
-
-            // set skin
-            string myPortalSkin;
-            string myPortalContainer;
-            if (IsPluggPage)
+            if (t != null)
             {
-                myPortalSkin = "[G]Skins/20047-UnlimitedColorPack-033/PluggPage.ascx";
-                myPortalContainer = portalSettings.DefaultPortalContainer;
+                TabController tc = new TabController();
+                if (t != null)
+                {
+                    if (t.Modules != null)
+                    {
+                        foreach (ModuleInfo mod in t.Modules)
+                        {
+                            ModuleController moduleC = new ModuleController();
+                            moduleC.DeleteModule(mod.ModuleID);
+                            moduleC.DeleteModuleSettings(mod.ModuleID);
+                        }
+                    }
+
+                    tc.DeleteTab(t.TabID, portalId);
+                    tc.DeleteTabSettings(t.TabID);
+                    DataCache.ClearModuleCache(t.TabID);
+                }
             }
-            else
-            {
-                myPortalSkin = "[G]Skins/20047-UnlimitedColorPack-033/CoursePage.ascx";
-                myPortalContainer = portalSettings.DefaultPortalContainer;
-            }
+        }
+
+        public void AddPluggPage(string tabName, string tabTitle)
+        {
+            PortalSettings portalSettings = new PortalSettings();
+            int portalId = portalSettings.PortalId;
+
+            TabController tabController = new TabController();
+            TabInfo getTab = tabController.GetTabByName(tabName, portalId);
+            if (getTab != null)
+                throw new Exception("Cannot create Page. Page with this PageName already exists");
 
             TabInfo newTab = new TabInfo();
-
-            // set new page properties
             newTab.PortalID = portalId;
-            newTab.TabName = PageName;
-            newTab.Title = PageUrl;
-            newTab.Description = "";
-            newTab.KeyWords = "";
-            newTab.IsDeleted = false;
-            newTab.IsSuperTab = false;
-            newTab.IsVisible = false;//for menu...
-            newTab.DisableLink = false;
-            newTab.IconFile = "";
-            newTab.Url = "";
-            newTab.SkinSrc = myPortalSkin;
-            newTab.ContainerSrc = myPortalContainer;
+            newTab.TabName = tabName;
+            newTab.Title = tabTitle;
+            newTab.SkinSrc = "[G]Skins/20047-UnlimitedColorPack-033/CoursePage.ascx";
+            newTab.ContainerSrc = portalSettings.DefaultPortalContainer;
+            CommonTabSettings(newTab);
+            AddViewPermissions(newTab);
 
-            //Add permission to the page so that all users can view it
+            int tabId = tabController.AddTab(newTab, true);
+            DotNetNuke.Common.Utilities.DataCache.ClearModuleCache(tabId);
+
+            AddTabURL(newTab); //Makes the URL of Page /4 or /C4
+
+            // add modules to new page
+
+            AddModuleToPage(newTab, ModuleType.DisplayPlugg);
+
+            AddModuleToPage(newTab, ModuleType.CourseMenu);
+
+            AddModuleToPage(newTab, ModuleType.Rating);
+
+            AddModuleToPage(newTab, ModuleType.Comments);
+        }
+
+        public void AddCoursePage(string tabName, string tabTitle)
+        {
+            PortalSettings portalSettings = new PortalSettings();
+            int portalId = portalSettings.PortalId;
+
+            TabController tabController = new TabController();
+            TabInfo getTab = tabController.GetTabByName(tabName, portalId);
+            if (getTab != null)
+                throw new Exception("Cannot create Page. Page with this PageName already exists");
+
+            TabInfo newTab = new TabInfo();
+            newTab.PortalID = portalId;
+            newTab.TabName = tabName;
+            newTab.Title = tabTitle;
+            newTab.SkinSrc = "[G]Skins/20047-UnlimitedColorPack-033/CoursePage.ascx";
+            newTab.ContainerSrc = portalSettings.DefaultPortalContainer;
+            CommonTabSettings(newTab);
+            AddViewPermissions(newTab);
+
+            int tabId = tabController.AddTab(newTab, true);
+            DotNetNuke.Common.Utilities.DataCache.ClearModuleCache(tabId);
+
+            AddTabURL(newTab); //Makes the URL of Page /4 or /C4
+
+            // add modules to new page
+
+            AddModuleToPage(newTab, ModuleType.DisplayCourse);
+
+            AddModuleToPage(newTab, ModuleType.Rating);
+
+            AddModuleToPage(newTab, ModuleType.Comments);
+        }
+
+        protected void CommonTabSettings(TabInfo t)
+        {
+            t.Description = "";
+            t.KeyWords = "";
+            t.IsDeleted = false;
+            t.IsSuperTab = false;
+            t.IsVisible = false;//for menu...
+            t.DisableLink = false;
+            t.IconFile = "";
+            t.Url = "";
+        }
+
+        protected void AddViewPermissions(TabInfo t)
+        {
             foreach (PermissionInfo p in PermissionController.GetPermissionsByTab())
             {
                 if (p.PermissionKey == "VIEW")
@@ -78,21 +144,21 @@ namespace Plugghest.DNN
                     tpi.PermissionName = p.PermissionName;
                     tpi.AllowAccess = true;
                     tpi.RoleID = -1; //ID of all users
-                    newTab.TabPermissions.Add(tpi);
+                    t.TabPermissions.Add(tpi);
                 }
             }
+        }
 
-            // create new page
-            TabController controller = new TabController();
-            int tabId = controller.AddTab(newTab, true);
-            DotNetNuke.Common.Utilities.DataCache.ClearModuleCache(tabId);
+        protected void AddTabURL(TabInfo t)
+        {
+            //Temporary solution: Writing directly to table TabUrls
+            //Dont know how to do this in DNN
 
-            // temporary solution: Change Page URL to ID of Plugg/Course Page directly in DB
             TabUrl tu = new TabUrl();
             TabUrlController tc = new TabUrlController();
-            tu.TabId = tabId;
+            tu.TabId = t.TabID;
             tu.SeqNum = 0;
-            tu.Url = "/" + PageUrl;
+            tu.Url = "/" + t.Title;
             tu.QueryString = "";
             tu.HttpStatus = "200";
             tu.IsSystem = true;
@@ -102,151 +168,54 @@ namespace Plugghest.DNN
             tu.LastModifiedByUserID = 1;
             tu.LastModifiedOnDate = DateTime.Now;
             tc.CreateTabUrl(tu);
-
-            // add modules to new page
-            //int RnCRatingModuleId = 0;
-            int RnCCommentModuleId = 0;
-            if (IsPluggPage)
-            {
-                AddModuleToPage(portalId, tabId, "DisplayPlugg", "DisplayPlugg", "RowTwo_Grid8_Pane");
-
-                AddModuleToPage(portalId, tabId, "CourseMenu", "CourseMenu", "RowTwo_Grid4_Pane");
-
-                //RnCRatingModuleId = AddModuleToPage(portalId, tabId, "DNNCentric RnC", "DNNCentric.RatingAndComments", "RowTwo_Grid4_Pane");
-
-                RnCCommentModuleId = AddModuleToPage(portalId, tabId, "DNNCentric RnC", "DNNCentric.RatingAndComments", "RowTwo_Grid8_Pane");
-            }
-            else
-            {
-                AddModuleToPage(portalId, tabId, "DisplayCourse", "DisplayCourse", "TopPane");
-            }
-
-            //// do settings for DNNCentric Rating
-            //if (IsPluggPage & RnCRatingModuleId != 0)
-            //{
-            //    ModuleController m = new ModuleController();
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingCommentLength", "1000");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingCommentsPerPage", "10");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingCaptchaForAnonyComments", "TRUE");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingDisplayedName", "DN");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingPersistComObjInSession", "FALSE");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingEnabledNotifications", "1,2,3,4,5,6,7");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingNewCommentNotificationForReplies", "TRUE");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingCommentModRoleID", "1");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingOwnerRoleID", "1");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingCommentModeration", "ModNone");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingModUserID", "1");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingDisplayTemplate", "Classic");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingOwnerUserID", "1");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingAnonyComments", "FALSE");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingAnonyRatings", "FALSE");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingShowHideCommentPoint", "FALSE");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingShowHideNameEmailWebsite", "TRUE");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingShowHideRatingPoints", "FALSE");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingShowHideViews", "FALSE");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingCommentObject", "tabid:174");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingTheme", "Smart");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingShow", "OnlyRatings");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingRatingChangeAllowed", "TRUE");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingHTMLAllowed", "FALSE");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingHideCommentOnReport", "TRUE");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingRoleAllowedPostingComment", "all");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingRoleAllowedToRate", "all");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingProfileLink", "/Activity-Feed/userId/[UserID]");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingProfileLinkAnonymous", "[WebSite]");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingLinkTarget", "_blank");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingProfileLinkNoFollow", "FALSE");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingShowProfileImage", "TRUE");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingImageSourceType", "DNNProfileImage");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingDNNProfileImageWidth", "80");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingImageWidth", "80");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingImageMaxRated", "pg");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingCustomImageUrl", "");
-            //    //Ugly way of building http://mywebsite/DesktopModules/DNNCentric-RatingAndComments/images/noProfile.jpg
-            //    string s = DotNetNuke.Common.Globals.NavigateURL();
-            //    s = s.Replace("http://", "");
-            //    s = "http://" + s.Substring(0, s.IndexOf('/')) + DotNetNuke.Common.Globals.DesktopModulePath + "DNNCentric-RatingAndComments/images/noProfile.jpg";
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingDefaultImage", s);
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingRncWidth", "357");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingRncAlignment", "left");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingPermaLinkEnabled", "FALSE");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingSortingOrderValue", "5");
-            //    m.UpdateModuleSetting(RnCRatingModuleId, "PRC_settingPostCommentsAnonymously", "FALSE");                   
-            //}
-
-            // do settings for DNNCentric Comments
-            if (IsPluggPage & RnCCommentModuleId != 0)
-            {
-                ModuleController m = new ModuleController();
-                m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingCommentLength", "1000");
-                m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingCommentsPerPage", "10");
-                m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingCaptchaForAnonyComments", "true");
-                m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingDisplayedName", "U");
-                m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingPersistComObjInSession", "false");
-                m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingEnabledNotifications", "1,2,3,4,5,6,7");
-                m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingNewCommentNotificationForReplies", "true");
-
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingCommentModRoleID", "1");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingOwnerRoleID", "1");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingCommentModeration", "ModNone");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingModUserID", "1");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingDisplayTemplate", "Classic");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingOwnerUserID", "1");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingAnonyComments", "FALSE");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingAnonyRatings", "FALSE");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingShowHideCommentPoint", "FALSE");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingShowHideNameEmailWebsite", "TRUE");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingShowHideRatingPoints", "FALSE");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingShowHideViews", "FALSE");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingCommentObject", "tabid:174");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingTheme", "Smart");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingShow", "OnlyComments");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingRatingChangeAllowed", "TRUE");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingHTMLAllowed", "FALSE");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingHideCommentOnReport", "TRUE");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingRoleAllowedPostingComment", "all");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingRoleAllowedToRate", "all");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingProfileLink", "/Activity-Feed/userId/[UserID]");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingProfileLinkAnonymous", "[WebSite]");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingLinkTarget", "_blank");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingProfileLinkNoFollow", "FALSE");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingShowProfileImage", "TRUE");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingImageSourceType", "DNNProfileImage");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingDNNProfileImageWidth", "80");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingImageWidth", "80");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingImageMaxRated", "pg");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingCustomImageUrl", "");
-                ////Ugly way of building http://mywebsite/DesktopModules/DNNCentric-RatingAndComments/images/noProfile.jpg
-                //string s = DotNetNuke.Common.Globals.NavigateURL();
-                //s = s.Replace("http://", "");
-                //s = "http://" + s.Substring(0, s.IndexOf('/')) + DotNetNuke.Common.Globals.DesktopModulePath + "DNNCentric-RatingAndComments/images/noProfile.jpg";
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingDefaultImage", s);
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingRncWidth", "600");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingRncAlignment", "left");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingPermaLinkEnabled", "FALSE");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingSortingOrderValue", "5");
-                //m.UpdateModuleSetting(RnCCommentModuleId, "PRC_settingPostCommentsAnonymously", "FALSE");
-            }
         }
 
-        public int AddModuleToPage(int portalId, int tabId, string DesktopModuleFriendlyName, string ModuleDefFriendlyName, string paneName)
+        public int AddModuleToPage(TabInfo t, ModuleType type)
         {
-            int moduleId = 0;
+            string DesktopModuleFriendlyName="";
+            string ModuleDefFriendlyName="";
+
             ModuleDefinitionInfo moduleDefinitionInfo = new ModuleDefinitionInfo();
             ModuleInfo moduleInfo = new ModuleInfo();
-            moduleInfo.PortalID = portalId;
-            moduleInfo.TabID = tabId;
+            moduleInfo.PortalID = t.PortalID;
+            moduleInfo.TabID = t.TabID;
             moduleInfo.ModuleOrder = 1;
             moduleInfo.ModuleTitle = "";
-            moduleInfo.PaneName = paneName;
             moduleInfo.DisplayPrint = false;
             moduleInfo.IsShareable = true;
             moduleInfo.IsShareableViewOnly = true;
-            if (DesktopModuleFriendlyName == "DNNCentric.RatingAndComments")
-                moduleInfo.Content = "DNNCentric.RatingAndComments";
+
+            switch (type)
+            {
+                case ModuleType.DisplayPlugg:
+                    moduleInfo.PaneName = "RowTwo_Grid8_Pane";
+                    DesktopModuleFriendlyName = "DisplayPlugg";
+                    ModuleDefFriendlyName = "DisplayPlugg";
+                    break;
+                case ModuleType.DisplayCourse:
+                    moduleInfo.PaneName = "RowTwo_Grid8_Pane";
+                    DesktopModuleFriendlyName = "DisplayCourse";
+                    ModuleDefFriendlyName = "DisplayCourse";
+                    break;
+                case ModuleType.CourseMenu:
+                    moduleInfo.PaneName = "RowTwo_Grid4_Pane";
+                    DesktopModuleFriendlyName = "CourseMenu";
+                    ModuleDefFriendlyName = "CourseMenu";
+                    break;
+                case ModuleType.Rating:
+                    moduleInfo.PaneName = "RowTwo_Grid4_Pane";
+                    DesktopModuleFriendlyName = "DNNCentric RnC";
+                    ModuleDefFriendlyName = "DNNCentric.RatingAndComments";
+                    break;
+                case ModuleType.Comments:
+                    moduleInfo.PaneName = "RowTwo_Grid8_Pane";
+                    DesktopModuleFriendlyName = "DNNCentric RnC";
+                    ModuleDefFriendlyName = "DNNCentric.RatingAndComments";
+                    break;
+           }
 
             DesktopModuleInfo myModule = null;
-            foreach (KeyValuePair<int, DesktopModuleInfo> kvp in DesktopModuleController.GetDesktopModules(portalId))
+            foreach (KeyValuePair<int, DesktopModuleInfo> kvp in DesktopModuleController.GetDesktopModules(t.PortalID))
             {
                 DesktopModuleInfo mod = kvp.Value;
                 if (mod != null)
@@ -257,6 +226,7 @@ namespace Plugghest.DNN
                     }
             }
 
+            int moduleId=0;
             if (myModule != null)
             {
                 var mc = new ModuleDefinitionController();
@@ -274,10 +244,74 @@ namespace Plugghest.DNN
             }
 
             //Clear Cache
-            DotNetNuke.Common.Utilities.DataCache.ClearModuleCache(tabId);
-            DotNetNuke.Common.Utilities.DataCache.ClearTabsCache(portalId);
-            DotNetNuke.Common.Utilities.DataCache.ClearPortalCache(portalId, false);
+            DotNetNuke.Common.Utilities.DataCache.ClearModuleCache(t.TabID);
+            DotNetNuke.Common.Utilities.DataCache.ClearTabsCache(t.PortalID);
+            DotNetNuke.Common.Utilities.DataCache.ClearPortalCache(t.PortalID, false);
+
+            ModuleController m = new ModuleController();
+            if (type == ModuleType.Rating)
+            {
+                AddModuleSettingsRnCCommon(moduleId);
+                m.UpdateModuleSetting(moduleId, "PRC_settingCommentObject", "tabid:" + t.TabID);
+                m.UpdateModuleSetting(moduleId, "PRC_settingShow", "OnlyRatings");
+            }
+            if (type == ModuleType.Comments)
+            {
+                AddModuleSettingsRnCCommon(moduleId);
+                m.UpdateModuleSetting(moduleId, "PRC_settingCommentObject", "tabid:" + t.TabID);
+                m.UpdateModuleSetting(moduleId, "PRC_settingShow", "OnlyComments");
+            }
             return moduleId;
+        }
+
+        protected void AddModuleSettingsRnCCommon(int moduleId)
+        {
+            ModuleController m = new ModuleController();
+            m.UpdateModuleSetting(moduleId, "PRC_settingCommentLength", "1000");
+            m.UpdateModuleSetting(moduleId, "PRC_settingCommentsPerPage", "10");
+            m.UpdateModuleSetting(moduleId, "PRC_settingCaptchaForAnonyComments", "TRUE");
+            m.UpdateModuleSetting(moduleId, "PRC_settingDisplayedName", "DN");
+            m.UpdateModuleSetting(moduleId, "PRC_settingPersistComObjInSession", "FALSE");
+            m.UpdateModuleSetting(moduleId, "PRC_settingEnabledNotifications", "1,2,3,4,5,6,7");
+            m.UpdateModuleSetting(moduleId, "PRC_settingNewCommentNotificationForReplies", "TRUE");
+            m.UpdateModuleSetting(moduleId, "PRC_settingCommentModRoleID", "1");
+            m.UpdateModuleSetting(moduleId, "PRC_settingOwnerRoleID", "1");
+            m.UpdateModuleSetting(moduleId, "PRC_settingCommentModeration", "ModNone");
+            m.UpdateModuleSetting(moduleId, "PRC_settingModUserID", "1");
+            m.UpdateModuleSetting(moduleId, "PRC_settingDisplayTemplate", "Classic");
+            m.UpdateModuleSetting(moduleId, "PRC_settingOwnerUserID", "1");
+            m.UpdateModuleSetting(moduleId, "PRC_settingAnonyComments", "FALSE");
+            m.UpdateModuleSetting(moduleId, "PRC_settingAnonyRatings", "FALSE");
+            m.UpdateModuleSetting(moduleId, "PRC_settingShowHideCommentPoint", "FALSE");
+            m.UpdateModuleSetting(moduleId, "PRC_settingShowHideNameEmailWebsite", "TRUE");
+            m.UpdateModuleSetting(moduleId, "PRC_settingShowHideRatingPoints", "FALSE");
+            m.UpdateModuleSetting(moduleId, "PRC_settingShowHideViews", "FALSE");
+            m.UpdateModuleSetting(moduleId, "PRC_settingTheme", "Smart");
+            m.UpdateModuleSetting(moduleId, "PRC_settingRatingChangeAllowed", "TRUE");
+            m.UpdateModuleSetting(moduleId, "PRC_settingHTMLAllowed", "FALSE");
+            m.UpdateModuleSetting(moduleId, "PRC_settingHideCommentOnReport", "TRUE");
+            m.UpdateModuleSetting(moduleId, "PRC_settingRoleAllowedPostingComment", "all");
+            m.UpdateModuleSetting(moduleId, "PRC_settingRoleAllowedToRate", "all");
+            m.UpdateModuleSetting(moduleId, "PRC_settingProfileLink", "/Activity-Feed/userId/[UserID]");
+            m.UpdateModuleSetting(moduleId, "PRC_settingProfileLinkAnonymous", "[WebSite]");
+            m.UpdateModuleSetting(moduleId, "PRC_settingLinkTarget", "_blank");
+            m.UpdateModuleSetting(moduleId, "PRC_settingProfileLinkNoFollow", "FALSE");
+            m.UpdateModuleSetting(moduleId, "PRC_settingShowProfileImage", "TRUE");
+            m.UpdateModuleSetting(moduleId, "PRC_settingImageSourceType", "DNNProfileImage");
+            m.UpdateModuleSetting(moduleId, "PRC_settingDNNProfileImageWidth", "80");
+            m.UpdateModuleSetting(moduleId, "PRC_settingImageWidth", "80");
+            m.UpdateModuleSetting(moduleId, "PRC_settingImageMaxRated", "pg");
+            m.UpdateModuleSetting(moduleId, "PRC_settingCustomImageUrl", "");
+            //Ugly way of building http://mywebsite/DesktopModules/DNNCentric-RatingAndComments/images/noProfile.jpg
+            string s = DotNetNuke.Common.Globals.NavigateURL();
+            s = s.Replace("http://", "");
+            s = "http://" + s.Substring(0, s.IndexOf('/')) + DotNetNuke.Common.Globals.DesktopModulePath + "DNNCentric-RatingAndComments/images/noProfile.jpg";
+            m.UpdateModuleSetting(moduleId, "PRC_settingDefaultImage", s);
+            m.UpdateModuleSetting(moduleId, "PRC_settingRncWidth", "357");
+            m.UpdateModuleSetting(moduleId, "PRC_settingRncAlignment", "left");
+            m.UpdateModuleSetting(moduleId, "PRC_settingPermaLinkEnabled", "FALSE");
+            m.UpdateModuleSetting(moduleId, "PRC_settingSortingOrderValue", "5");
+            m.UpdateModuleSetting(moduleId, "PRC_settingPostCommentsAnonymously", "FALSE");          
         }
     }
 }

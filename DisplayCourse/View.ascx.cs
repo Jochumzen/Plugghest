@@ -67,7 +67,14 @@ namespace Plugghest.Modules.DisplayCourse
                         {
                             Plugg p = ph.GetPlugg(cps.First().ItemID);
                             TabInfo ti = tc.GetTabByName(p.PluggId.ToString() + ": " + p.Title , PortalId);
-                            LnkBeginCourse.NavigateUrl = DotNetNuke.Common.Globals.NavigateURL(ti.TabID, "", "", "&c=" + courseId);
+                            if (ti != null)
+                                LnkBeginCourse.NavigateUrl = DotNetNuke.Common.Globals.NavigateURL(ti.TabID, "", "",
+                                    "&c=" + courseId);
+                            else
+                            {
+                                LnkBeginCourse.Text = "Could not find PluggPage for first Plugg";
+                                LnkBeginCourse.CssClass = "btn btn-warning";
+                            }
                         }
                     }
                 }

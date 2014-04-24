@@ -2,4 +2,3 @@ C:\websites\dnndev.me\DesktopModules\Plugghest\bin\Release\Plugghest.dll
 C:\websites\dnndev.me\DesktopModules\Plugghest\bin\Release\Plugghest.pdb
 C:\websites\dnndev.me\DesktopModules\Plugghest\obj\Release\Plugghest.dll
 C:\websites\dnndev.me\DesktopModules\Plugghest\obj\Release\Plugghest.pdb
-C:\websites\dnndev.me\DesktopModules\Plugghest\obj\Release\Plugghest.csprojResolveAssemblyReference.cache

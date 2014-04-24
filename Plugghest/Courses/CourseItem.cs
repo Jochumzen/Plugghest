@@ -65,14 +65,12 @@ namespace Plugghest.Courses
 
         public int ItemID { get; set; }
 
-        public int Order { get; set; }
+        public int CIOrder { get; set; }
 
         public int ItemType { get; set; }
 
         public int Mother { get; set; }
     }
-
-
 
     //class for Create Course tree...
     public class Course_Tree

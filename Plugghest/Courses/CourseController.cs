@@ -19,12 +19,23 @@ namespace Plugghest.Courses
     public class CourseController
     {
 
+        //Course 
+
         public void CreateCourse(Course t)
         {
             using (IDataContext ctx = DataContext.Instance())
             {
                 var rep = ctx.GetRepository<Course>();
                 rep.Insert(t);
+            }
+        }
+
+        public void DeleteCourse(Course t)
+        {
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<Course>();
+                rep.Delete(t);
             }
         }
 
@@ -41,7 +52,7 @@ namespace Plugghest.Courses
 
         //CoursePluggs
 
-        public void CreateCoursePlugg(CourseItem t)
+        public void CreateCourseItem(CourseItem t)
         {
             using (IDataContext ctx = DataContext.Instance())
             {
@@ -56,7 +67,7 @@ namespace Plugghest.Courses
             using (IDataContext context = DataContext.Instance())
             {
                 var repository = context.GetRepository<CourseItem>();
-                cps = repository.Find("WHERE CourseID = @0 ORDER BY [ORDER]", CourseID);
+                cps = repository.Find("WHERE CourseID = @0 ORDER BY CIOrder", CourseID);
             }
             return cps;
         }

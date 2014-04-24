@@ -101,7 +101,7 @@ namespace Plugghest.Modules.CourseMenu
 
                 if (pluggId == p.PluggId)
                 {
-                    int index = cp.Order - 1;
+                    int index = cp.CIOrder - 1;
                     Menu_Pluggs.Items[index].Selected = true; //active order in menu
                 }
             }
