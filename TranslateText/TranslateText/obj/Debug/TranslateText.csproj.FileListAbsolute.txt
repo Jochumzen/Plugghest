@@ -1,0 +1,8 @@
+D:\NewModule\bin\TranslateText.dll
+D:\NewModule\bin\TranslateText.pdb
+D:\NewModule\TranslateText\TranslateText\obj\Debug\TranslateText.dll
+D:\NewModule\TranslateText\TranslateText\obj\Debug\TranslateText.pdb
+D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\bin\TranslateText.dll
+D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\bin\TranslateText.pdb
+D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\TranslateText\TranslateText\obj\Debug\TranslateText.dll
+D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\TranslateText\TranslateText\obj\Debug\TranslateText.pdb

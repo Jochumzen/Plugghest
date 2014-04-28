@@ -1,0 +1,4 @@
+D:\NewModule\bin\TranslateText.dll
+D:\NewModule\bin\TranslateText.pdb
+D:\NewModule\TranslateText\TranslateText\obj\Release\TranslateText.dll
+D:\NewModule\TranslateText\TranslateText\obj\Release\TranslateText.pdb
