@@ -11,19 +11,17 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.Web.UI.WebControls;
 using DotNetNuke.Security;
 using DotNetNuke.Services.Exceptions;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Modules.Actions;
 using DotNetNuke.Services.Localization;
-using DotNetNuke.UI.Utilities;
-using Plugghest.Courses;
-using DotNetNuke.Entities.Tabs;
-using DotNetNuke.Security.Permissions;
-using DotNetNuke.Entities.Modules.Definitions;
+using Plugghest.Base;
 using Plugghest.DNN;
-using Plugghest.Pluggs;
+using DotNetNuke.Common;
+
 
 namespace Plugghest.Modules.CreateCourse
 {
@@ -75,62 +73,65 @@ namespace Plugghest.Modules.CreateCourse
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
 
-            try
-            {
-                Boolean ischeck = CheckPlugg();
+            Boolean ischeck = CheckPlugg();
 
-                if (ischeck)//check validation
-                {
-                    Course c = CreateCourses();
+            if (!ischeck) //check validation
+                return;
 
-                    DNNHelper h = new DNNHelper();
-                    h.AddCoursePage("C" + c.CourseId.ToString() + ": " + c.Title, "C" + c.CourseId);
+            Course c;
+            c = SaveCourse();
+            if (c.CourseId != 0) //0 means Error in Update/Save
+                Response.Redirect(Globals.NavigateURL(c.TabId));
 
-                    Response.Redirect("/" + (Page as DotNetNuke.Framework.PageBase).PageCulture.Name + "/" + "C" + c.CourseId + ".aspx");
-                }
-            }
-            catch (Exception exc) //Module failed to load
-            {
-                Exceptions.ProcessModuleLoadException(this, exc);
-            }
+
+            //DNNHelper h = new DNNHelper();
+            //h.AddCoursePage("C" + c.CourseId.ToString() + ": " + c.Title, "C" + c.CourseId);
+
+            //Response.Redirect("/" + (Page as DotNetNuke.Framework.PageBase).PageCulture.Name + "/" + "C" + c.CourseId + ".aspx");
 
         }
 
-        protected Course CreateCourses()
+        protected Course SaveCourse()
         {
-            CourseHandler ch = new CourseHandler();
+            BaseHandler bh = new BaseHandler();
             Course c = new Course();
+            List<CourseItem> cis = new List<CourseItem>();
+            ReadFromControls(c, cis);
 
+            try
+            {
+                bh.CreateCourse(c, cis);  //Create CoursePage, Course and CourseItems (only Pluggs)
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = "Failed to create a Course: " + ex.Message;
+                Exceptions.LogException(ex);
+                c.CourseId = 0;
+            }
+
+            return c;
+        }
+
+        protected void ReadFromControls(Course c, List<CourseItem>  cis)
+        {
             c.Title = txtTitle.Text;
             c.CreatedInCultureCode = DDLanguage.SelectedValue;
 
-            int whocanedit = 2;//For only me
             if (rdEditPlug.Text == "Any registered user")
-                whocanedit = 1;
-
-            c.WhoCanEdit = whocanedit;
+                c.WhoCanEdit = EWhoCanEdit.Anyone;
+            else
+                c.WhoCanEdit = EWhoCanEdit.OnlyMe;
+            
             c.CreatedOnDate = DateTime.Now;
             c.CreatedByUserId = this.UserId;
             c.ModifiedOnDate = DateTime.Now; ;
             c.ModifiedByUserId = this.UserId;
             c.Description = txtHtmlText.Text;
 
-            ch.CreateCourse(c);
-
-            //Create Courseitems (only Pluggs)
-            InsertCourseItems(c);
-
-            return c;
-        }
-
-        protected void InsertCourseItems(Course c)
-        {
-            CourseHandler ch = new CourseHandler();
-
             // string is in form "44,45,48,52" holding PluggIDs
             string pluggtext = txtPluggs.Text.Trim();
 
-            // Todo: Check that pluggtext is in the correct format before creating the 
+            // Todo: Check that pluggtext is in the correct format before creating the Course
 
             CourseItem ci;
             if (!string.IsNullOrEmpty(pluggtext))
@@ -140,34 +141,26 @@ namespace Plugghest.Modules.CreateCourse
                 for (int i = 0; i < itempluggs.Length; i++)
                 {
                     ci = new CourseItem();
-                    ci.CourseID = c.CourseId;
-                    ci.ItemID = Convert.ToInt32(itempluggs[i].ToString());
+                    ci.ItemID = Convert.ToInt32(itempluggs[i]);
                     ci.CIOrder = i + 1;
                     ci.ItemType = 0;
                     ci.Mother = 0;
-                    ch.CreateCoursePlugg(ci);
+                    cis.Add(ci);
                 }
             }
         }
 
         protected void btnCancel_Click(object sender, EventArgs e)
         {
-            try
-            {
-                Response.Redirect(DotNetNuke.Common.Globals.NavigateURL());
-            }
-            catch (Exception exc) //Module failed to load
-            {
-                Exceptions.ProcessModuleLoadException(this, exc);
-            }
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL());
         }
 
         protected Boolean CheckPlugg()
         {
             bool ischecked = true;
 
-            lblplugss.Text = "";
-            PluggHandler ph = new PluggHandler();
+            CIInfo.Text = "";
+            BaseHandler ph = new BaseHandler();
 
             //string pluggtext = "12,56,34,45k,56";
             string pluggtext = txtPluggs.Text.Trim();
@@ -185,17 +178,17 @@ namespace Plugghest.Modules.CreateCourse
 
                         if (p != null)
                         {
-                            lblplugss.Text += num + ": " + p.Title + "<br />";
+                            CIInfo.Text += num + ": " + p.Title + "<br />";
                         }
                         else
                         {
-                            lblplugss.Text += num + ": Error – Plugg " + num + " does not exist" + "<br />";
+                            CIInfo.Text += num + ": Error – Plugg " + num + " does not exist" + "<br />";
                             ischecked = false;
                         }
                     }
                     else
                     {
-                        lblplugss.Text = "Pluggs in wrong format.";
+                        CIInfo.Text = "Pluggs in wrong format.";
                         ischecked = false;
                     }
                 }

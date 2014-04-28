@@ -14,14 +14,12 @@ using System;
 using DotNetNuke.Entities.Users;
 using DotNetNuke.Services.Exceptions;
 using DotNetNuke.Services.Localization;
-using Plugghest.Pluggs;
+using Plugghest.Base;
 using DotNetNuke.Entities.Tabs;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Security.Permissions;
 using DotNetNuke.Entities.Modules.Definitions;
 using System.IO;
-using Latex2MathML;
-using Ionic.Zip;
 using System.Collections.Generic;
 using Plugghest.DNN;
 
@@ -92,89 +90,89 @@ namespace Plugghest.Modules.CreatePlugg
 
         protected void btnRemovePluggs_Click(object sender, EventArgs e)
         {
-            PluggHandler ph = new PluggHandler();
-            IEnumerable<Plugg> pluggrecord = ph.GetAllPluggs();
+            //PluggHandler ph = new PluggHandler();
+            //IEnumerable<Plugg> pluggrecord = ph.GetAllPluggs();
 
-            foreach (Plugg p in pluggrecord)
-            {
-                string tabName = p.PluggId.ToString();
+            //foreach (Plugg p in pluggrecord)
+            //{
+            //    string tabName = p.PluggId.ToString();
 
-                TabController tabController = new TabController();
-                TabInfo oldTab = tabController.GetTabByName(tabName, PortalId);
-                if (oldTab != null)
-                {
-                    if (oldTab.Modules != null)
-                    {
-                        foreach (DotNetNuke.Entities.Modules.ModuleInfo mod in oldTab.Modules)
-                        {
-                            ModuleController moduleC = new ModuleController();
-                            moduleC.DeleteModule(mod.ModuleID);
-                            moduleC.DeleteModuleSettings(mod.ModuleID);
-                        }
-                    }
+            //    TabController tabController = new TabController();
+            //    TabInfo oldTab = tabController.GetTabByName(tabName, PortalId);
+            //    if (oldTab != null)
+            //    {
+            //        if (oldTab.Modules != null)
+            //        {
+            //            foreach (DotNetNuke.Entities.Modules.ModuleInfo mod in oldTab.Modules)
+            //            {
+            //                ModuleController moduleC = new ModuleController();
+            //                moduleC.DeleteModule(mod.ModuleID);
+            //                moduleC.DeleteModuleSettings(mod.ModuleID);
+            //            }
+            //        }
 
-                    tabController.DeleteTab(oldTab.TabID, PortalId);
-                    tabController.DeleteTabSettings(oldTab.TabID);
-                    //DataCache.RemoveCache(oldTab.TabID);
-                }
-            }
+            //        tabController.DeleteTab(oldTab.TabID, PortalId);
+            //        tabController.DeleteTabSettings(oldTab.TabID);
+            //        //DataCache.RemoveCache(oldTab.TabID);
+            //    }
+            //}
 
-            //Remove record from plugg and pluggscontent....
-            ph.DeleteAllPluggContent();//Remove all records PluggsContent
+            ////Remove record from plugg and pluggscontent....
+            //ph.DeleteAllPluggContent();//Remove all records PluggsContent
 
-            ph.DeleteAllPluggs();//Remove all records Pluggs
+            //ph.DeleteAllPluggs();//Remove all records Pluggs
 
-            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL());
+            //Response.Redirect(DotNetNuke.Common.Globals.NavigateURL());
         }
 
 
         protected void CreatePages_Click(object sender, EventArgs e)
         {
-            try
-            {
+            //try
+            //{
 
-                PluggHandler ph = new PluggHandler();
-                IEnumerable<Plugg> pluggrecord = ph.GetAllPluggs();
+            //    PluggHandler ph = new PluggHandler();
+            //    IEnumerable<Plugg> pluggrecord = ph.GetAllPluggs();
 
-                foreach (Plugg p in pluggrecord)
-                {
+            //    foreach (Plugg p in pluggrecord)
+            //    {
 
-                    string tabName = p.PluggId.ToString();
+            //        string tabName = p.PluggId.ToString();
 
-                    //Remove tab(page) if allready exist................
-                    TabController tabController = new TabController();
-                    TabInfo oldTab = tabController.GetTabByName(tabName, PortalId);
-                    if (oldTab != null)
-                    {
-                        if (oldTab.Modules != null)
-                        {
-                            foreach (DotNetNuke.Entities.Modules.ModuleInfo mod in oldTab.Modules)
-                            {
-                                ModuleController moduleC = new ModuleController();
-                                moduleC.DeleteModule(mod.ModuleID);
-                                moduleC.DeleteModuleSettings(mod.ModuleID);
-                            }
-                        }
+            //        //Remove tab(page) if allready exist................
+            //        TabController tabController = new TabController();
+            //        TabInfo oldTab = tabController.GetTabByName(tabName, PortalId);
+            //        if (oldTab != null)
+            //        {
+            //            if (oldTab.Modules != null)
+            //            {
+            //                foreach (DotNetNuke.Entities.Modules.ModuleInfo mod in oldTab.Modules)
+            //                {
+            //                    ModuleController moduleC = new ModuleController();
+            //                    moduleC.DeleteModule(mod.ModuleID);
+            //                    moduleC.DeleteModuleSettings(mod.ModuleID);
+            //                }
+            //            }
 
-                        tabController.DeleteTab(oldTab.TabID, PortalId);
-                        tabController.DeleteTabSettings(oldTab.TabID);
-                        //DataCache.RemoveCache(oldTab.TabID);
-                    }
+            //            tabController.DeleteTab(oldTab.TabID, PortalId);
+            //            tabController.DeleteTabSettings(oldTab.TabID);
+            //            //DataCache.RemoveCache(oldTab.TabID);
+            //        }
 
-                    //Add NEW PAGE(TAB).....
-                    DNNHelper d = new DNNHelper();
-                    string pageUrl = p.PluggId.ToString();
-                    string pageName = pageUrl + ": " + p.Title;
-                    d.AddPluggPage(pageName, pageUrl);
-                }
+            //        //Add NEW PAGE(TAB).....
+            //        DNNHelper d = new DNNHelper();
+            //        string pageUrl = p.PluggId.ToString();
+            //        string pageName = pageUrl + ": " + p.Title;
+            //        d.AddPluggPage(pageName, pageUrl);
+            //    }
 
-                Response.Redirect(DotNetNuke.Common.Globals.NavigateURL());
-            }
+            //    Response.Redirect(DotNetNuke.Common.Globals.NavigateURL());
+            //}
 
-            catch (Exception exc) //Module failed to load
-            {
-                Exceptions.ProcessModuleLoadException(this, exc);
-            }
+            //catch (Exception exc) //Module failed to load
+            //{
+            //    Exceptions.ProcessModuleLoadException(this, exc);
+            //}
         }
 
 
@@ -204,190 +202,190 @@ namespace Plugghest.Modules.CreatePlugg
 
         public void PluggsUsingFile(StreamReader file)
         {
-            string line;
-            Plugg p = new Plugg();
-            PluggContent pc = new PluggContent();
+            //string line;
+            //Plugg p = new Plugg();
+            //PluggContent pc = new PluggContent();
 
-            //string htmlText = "";
-            string latexText = "";
-            //string youTube = "";
-            //string latexTextInHtml = "";
+            ////string htmlText = "";
+            //string latexText = "";
+            ////string youTube = "";
+            ////string latexTextInHtml = "";
 
-            while ((line = file.ReadLine()) != null)
-            {
-                latexText += line + System.Environment.NewLine;
+            //while ((line = file.ReadLine()) != null)
+            //{
+            //    latexText += line + System.Environment.NewLine;
 
-                line = line.Replace("{", "");
-                line = line.Replace("}", "");
+            //    line = line.Replace("{", "");
+            //    line = line.Replace("}", "");
 
-                //Plugg
-                if (line.Contains("pluggid"))
-                {
-                    string pluggIdStr;
-                    string tobesearched = "pluggid";
-                    pluggIdStr = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
-                    if (!string.IsNullOrEmpty(pluggIdStr.Trim()))
-                        p.PluggId = Convert.ToInt32(pluggIdStr);
-                } 
+            //    //Plugg
+            //    if (line.Contains("pluggid"))
+            //    {
+            //        string pluggIdStr;
+            //        string tobesearched = "pluggid";
+            //        pluggIdStr = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
+            //        if (!string.IsNullOrEmpty(pluggIdStr.Trim()))
+            //            p.PluggId = Convert.ToInt32(pluggIdStr);
+            //    } 
                 
-                if (line.Contains("pluggtitle"))
-                {
-                    string tobesearched = "pluggtitle";
-                    p.Title = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
-                }
+            //    if (line.Contains("pluggtitle"))
+            //    {
+            //        string tobesearched = "pluggtitle";
+            //        p.Title = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
+            //    }
 
 
-                if (line.Contains("language"))
-                {
-                    string tobesearched = "language";
-                    p.CreatedInCultureCode = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
-                }
+            //    if (line.Contains("language"))
+            //    {
+            //        string tobesearched = "language";
+            //        p.CreatedInCultureCode = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
+            //    }
 
-                if (line.Contains("edit"))
-                {
-                    string tobesearched = "edit";
-                    string WhoCanEdit_ = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
-                    if (WhoCanEdit_ == "Me")
-                        p.WhoCanEdit = 2;
-                    else
-                        p.WhoCanEdit = 1;
-                }
+            //    if (line.Contains("edit"))
+            //    {
+            //        string tobesearched = "edit";
+            //        string WhoCanEdit_ = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
+            //        if (WhoCanEdit_ == "Me")
+            //            p.WhoCanEdit = 2;
+            //        else
+            //            p.WhoCanEdit = 1;
+            //    }
 
-                //Pluggcontent
-                if (line.Contains("youtube"))
-                {
-                    string tobesearched = "youtube";
-                    pc.YouTubeString = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
-                }
+            //    //Pluggcontent
+            //    if (line.Contains("youtube"))
+            //    {
+            //        string tobesearched = "youtube";
+            //        pc.YouTubeString = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
+            //    }
 
-                if (line.Contains("html"))
-                {
-                    string tobesearched = "html";
-                    pc.HtmlText = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
-                }
+            //    if (line.Contains("html"))
+            //    {
+            //        string tobesearched = "html";
+            //        pc.HtmlText = line.Substring(line.IndexOf(tobesearched) + tobesearched.Length);
+            //    }
 
-            }
+            //}
 
-            p.ModifiedOnDate = DateTime.Now; ;
-            p.ModifiedByUserId = UserId;
+            //p.ModifiedOnDate = DateTime.Now; ;
+            //p.ModifiedByUserId = UserId;
 
-            pc.LatexText = latexText;
-            if (!string.IsNullOrEmpty(latexText.Trim()))
-            {
-                LatexToMathMLConverter myConverter = new LatexToMathMLConverter(latexText);
-                myConverter.Convert();
-                pc.LatexTextInHtml = myConverter.HTMLOutput;
-            }
+            //pc.LatexText = latexText;
+            //if (!string.IsNullOrEmpty(latexText.Trim()))
+            //{
+            //    LatexToMathMLConverter myConverter = new LatexToMathMLConverter(latexText);
+            //    myConverter.Convert();
+            //    pc.LatexTextInHtml = myConverter.HTMLOutput;
+            //}
 
-            if (p.PluggId > 0)
-                UpdatePlugg(p,pc);
-            else
-                CreatePlugg(p,pc);
+            //if (p.PluggId > 0)
+            //    UpdatePlugg(p,pc);
+            //else
+            //    CreatePlugg(p,pc);
         }
 
         public void CreatePlugg(Plugg p, PluggContent pc)
         {
-            p.CreatedOnDate = DateTime.Now;
-            p.CreatedByUserId = UserId;
+            //p.CreatedOnDate = DateTime.Now;
+            //p.CreatedByUserId = UserId;
 
-            PluggHandler ph = new PluggHandler();
+            //PluggHandler ph = new PluggHandler();
 
-            ph.CreatePlugg(p);
-            pc.PluggId = p.PluggId;
+            //ph.CreatePlugg(p);
+            //pc.PluggId = p.PluggId;
 
-            for (int i = 0; i < DDLanguage.Items.Count; i++)
-            {
-                pc.CultureCode = DDLanguage.Items[i].Value;
-                CreatePluggContent(pc);
-            }
+            //for (int i = 0; i < DDLanguage.Items.Count; i++)
+            //{
+            //    pc.CultureCode = DDLanguage.Items[i].Value;
+            //    CreatePluggContent(pc);
+            //}
 
-            DNNHelper d = new DNNHelper();
-            string pageUrl = p.PluggId.ToString();
-            string pageName = pageUrl + ": " + p.Title;
-            d.AddPluggPage(pageName, pageUrl);
+            //DNNHelper d = new DNNHelper();
+            //string pageUrl = p.PluggId.ToString();
+            //string pageName = pageUrl + ": " + p.Title;
+            //d.AddPluggPage(pageName, pageUrl);
 
-            lblError.Visible = true;
-            lblError.Text = "Plugg has been Successfully created.";
+            //lblError.Visible = true;
+            //lblError.Text = "Plugg has been Successfully created.";
         }
 
         public void UpdatePlugg(Plugg p, PluggContent pc)
         {
-            PluggHandler ph = new PluggHandler();
-            ph.UpdatePlugg(p);
+            //PluggHandler ph = new PluggHandler();
+            //ph.UpdatePlugg(p);
 
-            ph.UpdatePlugg(p);
-            pc.PluggId = p.PluggId;
+            //ph.UpdatePlugg(p);
+            //pc.PluggId = p.PluggId;
 
-            for (int i = 0; i < DDLanguage.Items.Count; i++)
-            {
-                pc.CultureCode = DDLanguage.Items[i].Value;
-                UpdatePluggContent(pc);
-            }
-            lblError.Visible = true;
-            lblError.Text = "Plugg has been Successfully Updated.";
+            //for (int i = 0; i < DDLanguage.Items.Count; i++)
+            //{
+            //    pc.CultureCode = DDLanguage.Items[i].Value;
+            //    UpdatePluggContent(pc);
+            //}
+            //lblError.Visible = true;
+            //lblError.Text = "Plugg has been Successfully Updated.";
         }
 
         public void CreatePluggContent(PluggContent pc) 
         {
-            //manage culture code
-            string cul_code = pc.CultureCode;
-            int index = cul_code.IndexOf("-");
-            if (index > 0)
-                cul_code = cul_code.Substring(0, index);
+            ////manage culture code
+            //string cul_code = pc.CultureCode;
+            //int index = cul_code.IndexOf("-");
+            //if (index > 0)
+            //    cul_code = cul_code.Substring(0, index);
 
-            string link = pc.YouTubeString;
-            if (!string.IsNullOrEmpty(link))
-            {
+            //string link = pc.YouTubeString;
+            //if (!string.IsNullOrEmpty(link))
+            //{
 
-                if (link.Length == 11)
-                {
-                    link = "http://www.youtube.com/embed/" + link;
-                }
-                else
-                {
-                    //replace watch?v to embed
-                    link = link.Replace("watch?v=", "embed/");
-                }
+            //    if (link.Length == 11)
+            //    {
+            //        link = "http://www.youtube.com/embed/" + link;
+            //    }
+            //    else
+            //    {
+            //        //replace watch?v to embed
+            //        link = link.Replace("watch?v=", "embed/");
+            //    }
 
-                link = link + "?cc_load_policy=1&amp;cc_lang_pref=" + cul_code;
-                //Add Iframe....
-                //link = "<iframe width='640' height='390' src='" + link + "' frameborder='0'></iframe>";
-                link = "<iframe width=" + 640 + " height=" + 390 + " src=" + link + " frameborder=" + 0 + "></iframe>";
-            }
+            //    link = link + "?cc_load_policy=1&amp;cc_lang_pref=" + cul_code;
+            //    //Add Iframe....
+            //    //link = "<iframe width='640' height='390' src='" + link + "' frameborder='0'></iframe>";
+            //    link = "<iframe width=" + 640 + " height=" + 390 + " src=" + link + " frameborder=" + 0 + "></iframe>";
+            //}
 
-            pc.YouTubeString = link;
+            //pc.YouTubeString = link;
 
-            PluggHandler ph = new PluggHandler();
-            ph.CreatePluggContent(pc);
+            //PluggHandler ph = new PluggHandler();
+            //ph.CreatePluggContent(pc);
         }
 
         public void UpdatePluggContent(PluggContent pc) 
         {
-            //manage culture code
-            string cul_code = pc.CultureCode;
-            int index = cul_code.IndexOf("-");
-            if (index > 0)
-                cul_code = cul_code.Substring(0, index);
+            ////manage culture code
+            //string cul_code = pc.CultureCode;
+            //int index = cul_code.IndexOf("-");
+            //if (index > 0)
+            //    cul_code = cul_code.Substring(0, index);
 
-            string link = pc.YouTubeString;
-            if (!string.IsNullOrEmpty(link))
-            {
+            //string link = pc.YouTubeString;
+            //if (!string.IsNullOrEmpty(link))
+            //{
 
-                if (link.Length == 11)
-                {
-                    link = "http://www.youtube.com/embed/" + link;
-                }
-                else
-                {
-                    //replace watch?v to embed
-                    link = link.Replace("watch?v=", "embed/");
-                }
+            //    if (link.Length == 11)
+            //    {
+            //        link = "http://www.youtube.com/embed/" + link;
+            //    }
+            //    else
+            //    {
+            //        //replace watch?v to embed
+            //        link = link.Replace("watch?v=", "embed/");
+            //    }
 
-                link = link + "?cc_load_policy=1&amp;cc_lang_pref=" + cul_code;
-                //Add Iframe....
-                //link = "<iframe width='640' height='390' src='" + link + "' frameborder='0'></iframe>";
-                link = "<iframe width=" + 640 + " height=" + 390 + " src=" + link + " frameborder=" + 0 + "></iframe>";
-            }
+            //    link = link + "?cc_load_policy=1&amp;cc_lang_pref=" + cul_code;
+            //    //Add Iframe....
+            //    //link = "<iframe width='640' height='390' src='" + link + "' frameborder='0'></iframe>";
+            //    link = "<iframe width=" + 640 + " height=" + 390 + " src=" + link + " frameborder=" + 0 + "></iframe>";
+            //}
 
             //pc.YouTubeString = link;
 
@@ -411,45 +409,45 @@ namespace Plugghest.Modules.CreatePlugg
 
         protected void btnReadZipFile_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (Upload_Textfile.HasFile)
-                {
-                    Stream fs = Upload_Textfile.FileContent;
+            //try
+            //{
+            //    if (Upload_Textfile.HasFile)
+            //    {
+            //        Stream fs = Upload_Textfile.FileContent;
 
-                    //For Read zip code : DotNetZip http://dotnetzip.codeplex.com/
-                    using (ZipFile zip = ZipFile.Read(fs))
-                    {
-                        foreach (ZipEntry zipentry in zip)
-                        {
+            //        For Read zip code : DotNetZip http://dotnetzip.codeplex.com/
+            //        using (ZipFile zip = ZipFile.Read(fs))
+            //        {
+            //            foreach (ZipEntry zipentry in zip)
+            //            {
 
-                            using (var ms = new MemoryStream())
-                            {
-                                zipentry.Extract(ms);
-                                // The StreamReader will read from the current position of the MemoryStream which is currently 
-                                // set at the end of the string we just wrote to it. We need to set the position to 0 in order to read 
-                                ms.Position = 0;// from the beginning.
-                                StreamReader mystream = new StreamReader(ms);
+            //                using (var ms = new MemoryStream())
+            //                {
+            //                    zipentry.Extract(ms);
+            //                     The StreamReader will read from the current position of the MemoryStream which is currently 
+            //                     set at the end of the string we just wrote to it. We need to set the position to 0 in order to read 
+            //                    ms.Position = 0;// from the beginning.
+            //                    StreamReader mystream = new StreamReader(ms);
 
-                                //Create/Update Pluggs
-                                PluggsUsingFile(mystream);
-                            }
-                        }
+            //                    Create/Update Pluggs
+            //                    PluggsUsingFile(mystream);
+            //                }
+            //            }
 
-                        lblError.Visible = true;
-                        lblError.Text = "Pluggs has been Successfully created.";
-                    }
-                }
-                else
-                {
-                    lblError.Visible = true;
-                    lblError.Text = "Please upload a Zip file.";
-                }
-            }
-            catch (Exception ex)
-            {
+            //            lblError.Visible = true;
+            //            lblError.Text = "Pluggs has been Successfully created.";
+            //        }
+            //    }
+            //    else
+            //    {
+            //        lblError.Visible = true;
+            //        lblError.Text = "Please upload a Zip file.";
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
 
-            }
+            //}
         }
 
         #endregion

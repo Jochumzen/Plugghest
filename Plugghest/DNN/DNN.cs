@@ -52,7 +52,7 @@ namespace Plugghest.DNN
             }
         }
 
-        public void AddPluggPage(string tabName, string tabTitle)
+        public TabInfo AddPluggPage(string tabName, string tabTitle)
         {
             PortalSettings portalSettings = new PortalSettings();
             int portalId = portalSettings.PortalId;
@@ -66,7 +66,7 @@ namespace Plugghest.DNN
             newTab.PortalID = portalId;
             newTab.TabName = tabName;
             newTab.Title = tabTitle;
-            newTab.SkinSrc = "[G]Skins/20047-UnlimitedColorPack-033/CoursePage.ascx";
+            newTab.SkinSrc = "[G]Skins/20047-UnlimitedColorPack-033/PluggPage.ascx";
             newTab.ContainerSrc = portalSettings.DefaultPortalContainer;
             CommonTabSettings(newTab);
             AddViewPermissions(newTab);
@@ -85,9 +85,11 @@ namespace Plugghest.DNN
             AddModuleToPage(newTab, ModuleType.Rating);
 
             AddModuleToPage(newTab, ModuleType.Comments);
+
+            return newTab;
         }
 
-        public void AddCoursePage(string tabName, string tabTitle)
+        public TabInfo AddCoursePage(string tabName, string tabTitle)
         {
             PortalSettings portalSettings = new PortalSettings();
             int portalId = portalSettings.PortalId;
@@ -118,6 +120,8 @@ namespace Plugghest.DNN
             AddModuleToPage(newTab, ModuleType.Rating);
 
             AddModuleToPage(newTab, ModuleType.Comments);
+
+            return newTab;
         }
 
         protected void CommonTabSettings(TabInfo t)
@@ -243,23 +247,35 @@ namespace Plugghest.DNN
                 moduleId = moduleController.AddModule(moduleInfo);
             }
 
-            //Clear Cache
             DotNetNuke.Common.Utilities.DataCache.ClearModuleCache(t.TabID);
             DotNetNuke.Common.Utilities.DataCache.ClearTabsCache(t.PortalID);
             DotNetNuke.Common.Utilities.DataCache.ClearPortalCache(t.PortalID, false);
 
+            //Add settings for RnC
             ModuleController m = new ModuleController();
             if (type == ModuleType.Rating)
             {
                 AddModuleSettingsRnCCommon(moduleId);
                 m.UpdateModuleSetting(moduleId, "PRC_settingCommentObject", "tabid:" + t.TabID);
                 m.UpdateModuleSetting(moduleId, "PRC_settingShow", "OnlyRatings");
+                m.UpdateModuleSetting(moduleId, "PRC_settingRncWidth", "357");
             }
             if (type == ModuleType.Comments)
             {
                 AddModuleSettingsRnCCommon(moduleId);
                 m.UpdateModuleSetting(moduleId, "PRC_settingCommentObject", "tabid:" + t.TabID);
                 m.UpdateModuleSetting(moduleId, "PRC_settingShow", "OnlyComments");
+                m.UpdateModuleSetting(moduleId, "PRC_settingRncWidth", "744");
+            }
+
+            if (type == ModuleType.Rating || type == ModuleType.Comments)
+            {
+                RnCController c = new RnCController();
+                DCC_PRC_CommentObject myCO = new DCC_PRC_CommentObject();
+                myCO.CommentObject = "tabid:" + t.TabID;
+                myCO.CommentObjectViewCount = 0;
+                myCO.PortalID = t.PortalID;
+                c.CreateCommentObject(myCO);
             }
             return moduleId;
         }
@@ -269,34 +285,34 @@ namespace Plugghest.DNN
             ModuleController m = new ModuleController();
             m.UpdateModuleSetting(moduleId, "PRC_settingCommentLength", "1000");
             m.UpdateModuleSetting(moduleId, "PRC_settingCommentsPerPage", "10");
-            m.UpdateModuleSetting(moduleId, "PRC_settingCaptchaForAnonyComments", "TRUE");
+            m.UpdateModuleSetting(moduleId, "PRC_settingCaptchaForAnonyComments", "True");
             m.UpdateModuleSetting(moduleId, "PRC_settingDisplayedName", "DN");
-            m.UpdateModuleSetting(moduleId, "PRC_settingPersistComObjInSession", "FALSE");
+            m.UpdateModuleSetting(moduleId, "PRC_settingPersistComObjInSession", "false");
             m.UpdateModuleSetting(moduleId, "PRC_settingEnabledNotifications", "1,2,3,4,5,6,7");
-            m.UpdateModuleSetting(moduleId, "PRC_settingNewCommentNotificationForReplies", "TRUE");
+            m.UpdateModuleSetting(moduleId, "PRC_settingNewCommentNotificationForReplies", "true");
             m.UpdateModuleSetting(moduleId, "PRC_settingCommentModRoleID", "1");
             m.UpdateModuleSetting(moduleId, "PRC_settingOwnerRoleID", "1");
             m.UpdateModuleSetting(moduleId, "PRC_settingCommentModeration", "ModNone");
             m.UpdateModuleSetting(moduleId, "PRC_settingModUserID", "1");
             m.UpdateModuleSetting(moduleId, "PRC_settingDisplayTemplate", "Classic");
             m.UpdateModuleSetting(moduleId, "PRC_settingOwnerUserID", "1");
-            m.UpdateModuleSetting(moduleId, "PRC_settingAnonyComments", "FALSE");
-            m.UpdateModuleSetting(moduleId, "PRC_settingAnonyRatings", "FALSE");
-            m.UpdateModuleSetting(moduleId, "PRC_settingShowHideCommentPoint", "FALSE");
-            m.UpdateModuleSetting(moduleId, "PRC_settingShowHideNameEmailWebsite", "TRUE");
-            m.UpdateModuleSetting(moduleId, "PRC_settingShowHideRatingPoints", "FALSE");
-            m.UpdateModuleSetting(moduleId, "PRC_settingShowHideViews", "FALSE");
-            m.UpdateModuleSetting(moduleId, "PRC_settingTheme", "Smart");
-            m.UpdateModuleSetting(moduleId, "PRC_settingRatingChangeAllowed", "TRUE");
-            m.UpdateModuleSetting(moduleId, "PRC_settingHTMLAllowed", "FALSE");
-            m.UpdateModuleSetting(moduleId, "PRC_settingHideCommentOnReport", "TRUE");
+            m.UpdateModuleSetting(moduleId, "PRC_settingAnonyComments", "False");
+            m.UpdateModuleSetting(moduleId, "PRC_settingAnonyRatings", "False");
+            m.UpdateModuleSetting(moduleId, "PRC_settingShowHideCommentPoint", "False");
+            m.UpdateModuleSetting(moduleId, "PRC_settingShowHideNameEmailWebsite", "True");
+            m.UpdateModuleSetting(moduleId, "PRC_settingShowHideRatingPoints", "False");
+            m.UpdateModuleSetting(moduleId, "PRC_settingShowHideViews", "False");
+            m.UpdateModuleSetting(moduleId, "PRC_settingTheme", "Facebook_theme");
+            m.UpdateModuleSetting(moduleId, "PRC_settingRatingChangeAllowed", "True");
+            m.UpdateModuleSetting(moduleId, "PRC_settingHTMLAllowed", "False");
+            m.UpdateModuleSetting(moduleId, "PRC_settingHideCommentOnReport", "True");
             m.UpdateModuleSetting(moduleId, "PRC_settingRoleAllowedPostingComment", "all");
             m.UpdateModuleSetting(moduleId, "PRC_settingRoleAllowedToRate", "all");
             m.UpdateModuleSetting(moduleId, "PRC_settingProfileLink", "/Activity-Feed/userId/[UserID]");
             m.UpdateModuleSetting(moduleId, "PRC_settingProfileLinkAnonymous", "[WebSite]");
             m.UpdateModuleSetting(moduleId, "PRC_settingLinkTarget", "_blank");
-            m.UpdateModuleSetting(moduleId, "PRC_settingProfileLinkNoFollow", "FALSE");
-            m.UpdateModuleSetting(moduleId, "PRC_settingShowProfileImage", "TRUE");
+            m.UpdateModuleSetting(moduleId, "PRC_settingProfileLinkNoFollow", "False");
+            m.UpdateModuleSetting(moduleId, "PRC_settingShowProfileImage", "True");
             m.UpdateModuleSetting(moduleId, "PRC_settingImageSourceType", "DNNProfileImage");
             m.UpdateModuleSetting(moduleId, "PRC_settingDNNProfileImageWidth", "80");
             m.UpdateModuleSetting(moduleId, "PRC_settingImageWidth", "80");
@@ -307,11 +323,60 @@ namespace Plugghest.DNN
             s = s.Replace("http://", "");
             s = "http://" + s.Substring(0, s.IndexOf('/')) + DotNetNuke.Common.Globals.DesktopModulePath + "DNNCentric-RatingAndComments/images/noProfile.jpg";
             m.UpdateModuleSetting(moduleId, "PRC_settingDefaultImage", s);
-            m.UpdateModuleSetting(moduleId, "PRC_settingRncWidth", "357");
             m.UpdateModuleSetting(moduleId, "PRC_settingRncAlignment", "left");
-            m.UpdateModuleSetting(moduleId, "PRC_settingPermaLinkEnabled", "FALSE");
+            m.UpdateModuleSetting(moduleId, "PRC_settingPermaLinkEnabled", "False");
             m.UpdateModuleSetting(moduleId, "PRC_settingSortingOrderValue", "5");
-            m.UpdateModuleSetting(moduleId, "PRC_settingPostCommentsAnonymously", "FALSE");          
+            m.UpdateModuleSetting(moduleId, "PRC_settingPostCommentsAnonymously", "False");
         }
+
+        //protected void AddModuleSettingsRnCCommon(int moduleId)
+        //{
+        //    ModuleController m = new ModuleController();
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingCommentLength", "1000");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingCommentsPerPage", "10");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingCaptchaForAnonyComments", "True");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingDisplayedName", "U");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingPersistComObjInSession", "false");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingEnabledNotifications", "1,2,3,4,5,6,7");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingNewCommentNotificationForReplies", "true");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingCommentModRoleID", "1");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingOwnerRoleID", "1");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingCommentModeration", "ModNone");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingModUserID", "1");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingDisplayTemplate", "Classic");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingOwnerUserID", "1");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingAnonyComments", "True");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingAnonyRatings", "True");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingShowHideCommentPoint", "False");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingShowHideNameEmailWebsite", "True");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingShowHideRatingPoints", "False");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingShowHideViews", "False");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingTheme", "Smart");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingRatingChangeAllowed", "True");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingHTMLAllowed", "False");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingHideCommentOnReport", "True");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingRoleAllowedPostingComment", "all");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingRoleAllowedToRate", "all");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingProfileLink", "[WebSite]");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingProfileLinkAnonymous", "[WebSite]");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingLinkTarget", "_blank");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingProfileLinkNoFollow", "False");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingShowProfileImage", "True");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingImageSourceType", "gravatar");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingDNNProfileImageWidth", "80");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingImageWidth", "80");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingImageMaxRated", "pg");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingCustomImageUrl", "");
+        //    //Ugly way of building http://mywebsite/DesktopModules/DNNCentric-RatingAndComments/images/noProfile.jpg
+        //    string s = DotNetNuke.Common.Globals.NavigateURL();
+        //    s = s.Replace("http://", "");
+        //    s = "http://" + s.Substring(0, s.IndexOf('/')) + DotNetNuke.Common.Globals.DesktopModulePath + "DNNCentric-RatingAndComments/images/noProfile.jpg";
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingDefaultImage", s);
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingRncWidth", "500");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingRncAlignment", "left");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingPermaLinkEnabled", "False");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingSortingOrderValue", "2");
+        //    m.UpdateModuleSetting(moduleId, "PRC_settingPostCommentsAnonymously", "False");
+        //}
     }
 }

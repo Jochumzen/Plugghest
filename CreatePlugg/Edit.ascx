@@ -18,7 +18,7 @@
 
 <br /><br /><br />
 
- <div class="dnnFormItem">
+<div class="dnnFormItem">
             <asp:FileUpload ID="Upload_Textfile" runat="server"  />
 </div>
 <br />

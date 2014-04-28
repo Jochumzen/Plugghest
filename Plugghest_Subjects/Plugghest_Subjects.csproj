@@ -50,7 +50,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Plugghest, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Plugghest\bin\Debug\Plugghest.dll</HintPath>
+      <HintPath>..\..\bin\Plugghest.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -139,7 +139,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>49356</DevelopmentServerPort>
           <DevelopmentServerVPath>
           </DevelopmentServerVPath>
           <IISUrl>http://dnndev.me/desktopmodules/Plugghest_Subjects</IISUrl>

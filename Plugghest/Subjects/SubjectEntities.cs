@@ -19,41 +19,40 @@ using System.Collections.Generic;
 
 namespace Plugghest.Subjects
 {
-    [TableName("SubjectItems")]
+    [TableName("Subjects")]
     [PrimaryKey("SubjectID", AutoIncrement = true)]
-    public class SubjectItem
+    public class Subject
     {
         public int SubjectID;
-        public string Subject;
+        public string Title;
         public int? Mother;
-        public int Order;
+        public int SubjectOrder;
 
-        public SubjectItem()
+        public Subject()
         { }
 
-        public SubjectItem(int SubjectID, string Subject, int? Mother, int Order)
+        public Subject(int SubjectID, string Title, int? Mother, int Order)
         {
             // TODO: Complete member initialization
             this.SubjectID = SubjectID;
-            this.Subject = Subject;
+            this.Title = Title;
             this.Mother = Mother;
-            this.Order = Order;
+            this.SubjectOrder = Order;
         }
     }
 
-
     //class for Create Subject tree...
-    public class Subject_Tree
+    public class SubjectTree
     {
         public int SubjectID { get; set; }
 
-        public string Subject { get; set; }
+        public string Title { get; set; }
 
         public int? Mother { get; set; }
 
-        public List<Subject_Tree> children { get; set; }
+        public List<SubjectTree> children { get; set; }
 
-        public int Order { get; set; }
+        public int SubjectOrder { get; set; }
 
         public string label { get; set; }
 

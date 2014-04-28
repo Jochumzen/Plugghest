@@ -33,6 +33,9 @@
     <Reference Include="DotNetNuke">
       <HintPath>..\..\bin\DotNetNuke.dll</HintPath>
     </Reference>
+    <Reference Include="L2H">
+      <HintPath>..\..\bin\L2H.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -43,24 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Courses\CourseHandler.cs" />
-    <Compile Include="Courses\FeatureController.cs" />
-    <Compile Include="Courses\CourseItem.cs" />
-    <Compile Include="Courses\CourseController.cs" />
+    <Compile Include="Base\BaseHandler.cs" />
+    <Compile Include="Base\BaseEntities.cs" />
+    <Compile Include="Base\BaseRepository.cs" />
     <Compile Include="DNN\DNN.cs" />
-    <Compile Include="DNN\TabUrlController.cs" />
-    <Compile Include="DNN\TabUrlItem.cs" />
+    <Compile Include="DNN\DNNRepository.cs" />
+    <Compile Include="DNN\DNNENtities.cs" />
     <Compile Include="Helpers\Youtube.cs" />
-    <Compile Include="Pluggs\FeatureController.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Pluggs\PluggHandler.cs" />
-    <Compile Include="Pluggs\PluggItem.cs" />
-    <Compile Include="Pluggs\PluggController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Subjects\FeatureController.cs" />
     <Compile Include="Subjects\SubjectHandler.cs" />
-    <Compile Include="Subjects\SubjectItem.cs" />
+    <Compile Include="Subjects\SubjectEntities.cs" />
     <Compile Include="Subjects\SubjectController.cs" />
   </ItemGroup>
   <ItemGroup>

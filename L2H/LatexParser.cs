@@ -929,7 +929,6 @@ namespace Latex2MathML
                         else                        
                         #region Parameters were expected
                         {
-                            // TODO: check
                             int optCount = int.Parse(value.Options.AsKeyValue.Keys.GetEnumerator().Current);
                             for (int j = 0; j < optCount; j++)
                             {
@@ -956,7 +955,6 @@ namespace Latex2MathML
                     {
                         _customCommands.Add(cmd.Expressions[0][0].Name, new LatexExpression(cmd));
                     }
-                    // TODO: renewcommand
                     #endregion
                 }
                 if (outline[i].ExprType == ExpressionType.InlineMath ||

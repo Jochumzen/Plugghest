@@ -6,6 +6,14 @@
     </file>
     <file>
       <path />
+      <name>jqtree.css</name>
+    </file>
+    <file>
+      <path />
+      <name>jquery.min.js</name>
+    </file>
+    <file>
+      <path />
       <name>License.txt</name>
     </file>
     <file>
@@ -22,6 +30,10 @@
     </file>
     <file>
       <path />
+      <name>tree.jquery.js</name>
+    </file>
+    <file>
+      <path />
       <name>View.ascx</name>
     </file>
     <file>
@@ -35,6 +47,18 @@
     <file>
       <path>App_LocalResources/</path>
       <name>View.ascx.resx</name>
+    </file>
+    <file>
+      <path>js/</path>
+      <name>jqtree.css</name>
+    </file>
+    <file>
+      <path>js/</path>
+      <name>jquery.min.js</name>
+    </file>
+    <file>
+      <path>js/</path>
+      <name>tree.jquery.js</name>
     </file>
   </files>
 </dotnetnuke>

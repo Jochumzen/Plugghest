@@ -9,22 +9,22 @@ namespace Plugghest.Subjects
     {
         SubjectController subjectcntr = new SubjectController();
 
-        public List<Subject_Tree> GetSubject_Item()
+        public List<SubjectTree> GetSubject_Item()
         {
             return subjectcntr.GetSubject_Item();
         }
 
-        public void CreateSubject(SubjectItem t)
+        public void CreateSubject(Subject t)
         {
             subjectcntr.CreateSubject(t);
         }
 
-        public SubjectItem GetSubject(int SubjectId)
+        public Subject GetSubject(int SubjectId)
         {
             return subjectcntr.GetSubject(SubjectId);
         }
 
-        public List<SubjectItem> GetSubjectFromMother(int? MotherName, int order)
+        public List<Subject> GetSubjectFromMother(int? MotherName, int order)
         {
             return subjectcntr.GetSubjectFromMother(MotherName, order);
         }

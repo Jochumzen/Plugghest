@@ -17,19 +17,13 @@ using DotNetNuke.Services.Exceptions;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Modules.Actions;
 using DotNetNuke.Services.Localization;
-using DotNetNuke.UI.Utilities;
 using Plugghest.Helpers;
 using Plugghest.Subjects;
-using Plugghest.DNN;
 using System.Web.Script.Serialization;
 using System.Collections.Generic;
 using System.Linq;
-using Plugghest.Pluggs;
-using System.Web;
-using Latex2MathML;
-using DotNetNuke.Entities.Tabs;
-using DotNetNuke.Security.Permissions;
-using DotNetNuke.Entities.Modules.Definitions;
+using Plugghest.Base;
+using DotNetNuke.Common;
 
 namespace Plugghest.Modules.CreatePlugg
 {
@@ -55,16 +49,18 @@ namespace Plugghest.Modules.CreatePlugg
                 return;
             try
             {
-                //Show tree();
                 BindTree();
-
                 ViewState["PID"] = null;
-                string CurrentUrl = HttpContext.Current.Request.Url.Scheme + "://" + HttpContext.Current.Request.Url.Authority + HttpContext.Current.Request.RawUrl;
-                System.Uri uri = new System.Uri(CurrentUrl);
-                if (string.IsNullOrEmpty(uri.Query))
-                    LoadCultureDropDownList();
-                else
-                    LoadPlugg(uri);
+                LoadCultureDropDownList();
+
+                string pluggIdStr = Page.Request.QueryString["PID"];
+                if (pluggIdStr != null)
+                {
+                    int pluggId;
+                    bool isNum = int.TryParse(pluggIdStr, out pluggId);
+                    if (isNum)
+                        LoadPlugg(pluggId);
+                }
             }
             catch (Exception exc) //Module failed to load
             {
@@ -72,50 +68,49 @@ namespace Plugghest.Modules.CreatePlugg
             }
         }
 
-        private void LoadPlugg(System.Uri uri)
+        private void LoadPlugg(int pluggId)
         {
-
-            string PID = uri.Query;
-            PID = PID.Replace("?PID=", "");
-            int PluggIDToEdit;
-            bool isNumeric = int.TryParse(PID, out PluggIDToEdit);//check Pid value is number
-            if (isNumeric)
+            BaseHandler bh = new BaseHandler();
+            Plugg p = bh.GetPlugg(pluggId);
+            if (p != null)
             {
-                PluggHandler ph = new PluggHandler();
-                Plugg p = ph.GetPlugg(PluggIDToEdit);
-                if (p != null)
-                {
 
-                    if (p.WhoCanEdit == 1 || p.CreatedByUserId == this.UserId || UserInfo.IsInRole("Administator"))
-                    { //Check that either WhoCanEdit is anyone or the current user is the one who created the Plugg or the current user is a SuperUser.
+                if (p.WhoCanEdit == EWhoCanEdit.Anyone || p.CreatedByUserId == this.UserId || UserInfo.IsInRole("Administator"))
+                { //Check that either WhoCanEdit is anyone or the current user is the one who created the Plugg or the current user is a SuperUser.
 
-                        txtTitle.Text = p.Title;
+                    DDLanguage.SelectedValue = p.CreatedInCultureCode;
+                    txtTitle.Text = p.Title;
 
-                        if (p.WhoCanEdit == 2) //check whocanedit is 2 then check 'only me' otherwise default..
-                            rdEditPlug.Items[1].Selected = true;
+                    if (p.WhoCanEdit == EWhoCanEdit.OnlyMe)
+                        rdEditPlug.Items[1].Selected = true;
 
-                        PluggContent pc = ph.GetPluggContent(p.PluggId, p.CreatedInCultureCode);
-                        if (pc != null)
-                        {
-                            txtYouTube.Text = pc.YouTubeString;
-                            txtHtmlText.Text = pc.HtmlText;
-                            txtDescription.Text = pc.LatexTextInHtml;
+                    if (p.YouTubeCode != null)
+                        txtYouTube.Text = p.YouTubeCode;
 
-                            ViewState["PID"] = PID;
-                        }
-                    }
-                    else
+                    PluggContent pc = bh.GetPluggContent(p.PluggId, p.CreatedInCultureCode);
+                    if (pc != null)
                     {
-                        lblError.Text = "You do not have permissions to edit this Plugg.";
-                        HideControl();
+                        txtHtmlText.Text = pc.HtmlText;
+                        txtDescription.Text = pc.LatexText;
+
+                        ViewState["PID"] = pluggId.ToString();
                     }
+
+                    //You cannot update in which language Plugg is created or the YouTube
+                    DDLanguage.Enabled = false;
+                    txtYouTube.Enabled = false;
                 }
                 else
                 {
-                    lblError.Text = "No such Plugg";
+                    lblError.Text = "You do not have permissions to edit this Plugg.";
                     HideControl();
                 }
-            }            
+            }
+            else
+            {
+                lblError.Text = "No such Plugg";
+                HideControl();
+            }
         }
 
         public void BindTree()
@@ -129,11 +124,10 @@ namespace Plugghest.Modules.CreatePlugg
             hdnTreeData.Value = TheSerializer.Serialize(tree);
         }
 
-
         #region Create Tree
 
         //Recursive function for create tree....
-        public IList<Subject_Tree> BuildTree(IEnumerable<Subject_Tree> source)
+        public IList<SubjectTree> BuildTree(IEnumerable<SubjectTree> source)
         {
             var groups = source.GroupBy(i => i.Mother);
 
@@ -150,7 +144,7 @@ namespace Plugghest.Modules.CreatePlugg
         }
 
         //To Add Child
-        private void AddChildren(Subject_Tree node, IDictionary<int, List<Subject_Tree>> source)
+        private void AddChildren(SubjectTree node, IDictionary<int, List<SubjectTree>> source)
         {
             if (source.ContainsKey(node.SubjectID))
             {
@@ -160,12 +154,11 @@ namespace Plugghest.Modules.CreatePlugg
             }
             else
             {
-                node.children = new List<Subject_Tree>();
+                node.children = new List<SubjectTree>();
             }
         }
 
         #endregion
-
 
         private void LoadCultureDropDownList()
         {
@@ -182,133 +175,95 @@ namespace Plugghest.Modules.CreatePlugg
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
-            try
-            {
-                if (!Page.IsValid) //check validation
-                    return;
+            if (!Page.IsValid) //check validation
+                return;
 
-                Plugg p;
-                if (ViewState["PID"] != null)
-                {
-                    p = UpdatePlugg();
-                }
-                else
-                {
-                    p = SavePlugg();
-                }
-                Response.Redirect("/" + (Page as DotNetNuke.Framework.PageBase).PageCulture.Name + "/" + p.PluggId.ToString() + ".aspx");
-            }
-            catch (Exception exc) //Module failed to load
+            Plugg p;
+            if (ViewState["PID"] != null)
             {
-                Exceptions.ProcessModuleLoadException(this, exc);
+                p = UpdatePlugg();
             }
+            else
+            {
+                p = SavePlugg();
+            }
+            if (p.PluggId != 0) //0 means Error in Update/Save
+                Response.Redirect(Globals.NavigateURL(p.TabId));
         }
 
         private Plugg SavePlugg()
         {
-            PluggHandler ph = new PluggHandler();
+            BaseHandler ph = new BaseHandler();
             Plugg p = new Plugg();
+            PluggContent pc = new PluggContent();
 
-            int whocanedit = 2;//For only me
-            if (rdEditPlug.Text == "Any registered user")
-                whocanedit = 1;
-
-            if (!string.IsNullOrEmpty(hdnNodeSubjectId.Value))
-                p.Subject = Convert.ToInt32(hdnNodeSubjectId.Value);
-
-            p.Title = txtTitle.Text;
-            p.CreatedInCultureCode = DDLanguage.SelectedValue;
-            p.WhoCanEdit = whocanedit;
+            ReadFromControls(p, pc);
             p.CreatedOnDate = DateTime.Now;
             p.CreatedByUserId = UserId;
-            p.ModifiedOnDate = DateTime.Now;
-            p.ModifiedByUserId = UserId;
-            ph.CreatePlugg(p);
 
-            //Save same Pluggcontent in all languages 
-            for (int i = 0; i < DDLanguage.Items.Count; i++)
+            try
             {
-                SavePluggContent(p , DDLanguage.Items[i].Value);
+                ph.CreatePlugg(p, pc);  //Create PluggPage, Plugg and PluggContent (same for every language)
             }
-
-            DNNHelper d = new DNNHelper();
-            string pageUrl = p.PluggId.ToString();
-            string pageName = pageUrl + ": " + p.Title;
-            d.AddPluggPage(pageName, pageUrl);
+            catch (Exception ex)
+            {
+                lblError.Text = "Failed to create a Plugg: " + ex.Message;
+                Exceptions.LogException(ex);
+                HideControl();
+                p.PluggId = 0;
+            }
 
             return p;
         }
 
         private Plugg UpdatePlugg()
         {
-            PluggHandler ph = new PluggHandler();
-            Plugg p = ph.GetPlugg(Convert.ToInt32(ViewState["PID"].ToString()));
-            
-            p.Title = txtTitle.Text;
+            BaseHandler ph = new BaseHandler();
+            Plugg p = ph.GetPlugg(Convert.ToInt32(ViewState["PID"].ToString()));  //We know from LoadPlugg that Plugg exists
 
-            int whocanedit = 2;//For only me
-            if (rdEditPlug.Text == "Any registered user")
-                whocanedit = 1;
-            p.WhoCanEdit = whocanedit;
-            p.ModifiedOnDate = DateTime.Now;
-            p.ModifiedByUserId = UserId;
+            //For now, update all PluggContent with content from controls. Fix this when we can deal with translations
+            PluggContent pc = new PluggContent();
 
-            ph.UpdatePlugg(p);
-            //To get all Language
-            for (int i = 0; i < DDLanguage.Items.Count; i++)
+            ReadFromControls(p, pc);
+
+            try
             {
-                UpdatePluggContent(p, DDLanguage.Items[i].Value);
+                ph.UpdatePlugg(p, pc);  //Update PluggPage, Plugg and PluggContent (same for every language)
+            }
+            catch (Exception ex)
+            {
+                lblError.Text = "Failed to update Plugg: " + ex.Message;
+                Exceptions.LogException(ex);
+                HideControl();
+                p.PluggId = 0;
             }
 
             return p;
         }
 
-        protected void SavePluggContent(Plugg p, string cultureCode)
+        protected void ReadFromControls(Plugg p, PluggContent pc)
         {
-            PluggHandler ph = new PluggHandler();
-            PluggContent pc = new PluggContent();
-            ReadPluggContent(pc, p, cultureCode);
+            p.CreatedInCultureCode = DDLanguage.SelectedValue;
+            if (rdEditPlug.Text == "Any registered user")
+                p.WhoCanEdit = EWhoCanEdit.Anyone;
+            else
+                p.WhoCanEdit = EWhoCanEdit.OnlyMe;
 
-            ph.CreatePluggContent(pc); 
-        }
-
-        protected void UpdatePluggContent(Plugg p, string cultureCode)
-        {
-            PluggHandler ph = new PluggHandler();
-            PluggContent pc = ph.GetPluggContent(p.PluggId, cultureCode);
-            ReadPluggContent(pc, p, cultureCode);
-
-            ph.UpdatePluggContent(pc); 
-        }
-
-        protected void ReadPluggContent(PluggContent pc, Plugg p, string cultureCode)
-        {
-            pc.PluggId = p.PluggId;
-
-            //manage culture code: CultureCode = en-us => CultureCodePart = en
-            string cultureCodePart = cultureCode;
-            int index = cultureCodePart.IndexOf("-");
-            if (index > 0)
-                cultureCodePart = cultureCodePart.Substring(0, index);
-            pc.CultureCode = cultureCode;
+            if (!string.IsNullOrEmpty(hdnNodeSubjectId.Value))
+                p.SubjectId = Convert.ToInt32(hdnNodeSubjectId.Value);
 
             Youtube myYouTube = new Youtube(txtYouTube.Text);
             if (myYouTube.IsValid)
-                pc.YouTubeString = myYouTube.YouTubeCode;
+                p.YouTubeCode = myYouTube.YouTubeCode;
 
-            pc.HtmlText = txtHtmlText.Text;
+            p.Title = txtTitle.Text;
+            p.ModifiedOnDate = DateTime.Now;
+            p.ModifiedByUserId = UserId;
+
+            if (txtHtmlText.Text.Trim() != "")
+                pc.HtmlText = txtHtmlText.Text;
             if (txtDescription.Text.Trim() != "")
-            {
                 pc.LatexText = txtDescription.Text;
-                LatexToMathMLConverter myConverter = new LatexToMathMLConverter(txtDescription.Text);
-                myConverter.Convert();
-                pc.LatexTextInHtml = myConverter.HTMLOutput;
-            }
-            else
-            {
-                pc.LatexText = "";
-                pc.LatexTextInHtml = "";
-            } 
         }
 
         protected void btnCancel_Click(object sender, EventArgs e)
@@ -344,6 +299,8 @@ namespace Plugghest.Modules.CreatePlugg
             btnSubmit.Visible = false;
             btnCancel.Visible = false;
             lbldescription.Visible = false;
+            LinkButton2.Visible = false;
+            LinkButton3.Visible = false;
         }
 
         public ModuleActionCollection ModuleActions

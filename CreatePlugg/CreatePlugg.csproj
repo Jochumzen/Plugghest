@@ -47,22 +47,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\bin\DotNetNuke.WebUtility.dll</HintPath>
     </Reference>
-    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\cis\Desktop\Ionic.Zip.dll</HintPath>
-    </Reference>
-    <Reference Include="L2H, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\L2H.dll</HintPath>
-    </Reference>
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=dd516eb3afca1d4c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Users\cis\Desktop\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Plugghest, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Plugghest\bin\Debug\Plugghest.dll</HintPath>
+      <HintPath>..\..\bin\Plugghest.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

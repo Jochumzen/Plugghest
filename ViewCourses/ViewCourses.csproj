@@ -54,7 +54,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Plugghest, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Plugghest\bin\Debug\Plugghest.dll</HintPath>
+      <HintPath>..\..\bin\Plugghest.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

@@ -20,25 +20,25 @@ namespace Plugghest.Subjects
     {
 
 
-        public void UpdateItem(SubjectItem t)
+        public void UpdateItem(Subject t)
         {
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rep = ctx.GetRepository<SubjectItem>();
+                var rep = ctx.GetRepository<Subject>();
                 rep.Update(t);
             }
         }
 
 
-        public List<Subject_Tree> GetSubject_Item()
+        public List<SubjectTree> GetSubject_Item()
         {
-            List<Subject_Tree> objsubjectitem = new List<Subject_Tree>();
+            List<SubjectTree> objsubjectitem = new List<SubjectTree>();
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rec = ctx.ExecuteQuery<Subject_Tree>(CommandType.TableDirect, "select * from SubjectItems order by [Order]");
+                var rec = ctx.ExecuteQuery<SubjectTree>(CommandType.TableDirect, "select * from Subjects order by SubjectOrder");
                 foreach (var val in rec)
                 {
-                    objsubjectitem.Add(new Subject_Tree { SubjectID = val.SubjectID, Subject = val.Subject, label = val.Subject, Mother = val.Mother, Order = val.Order });
+                    objsubjectitem.Add(new SubjectTree { SubjectID = val.SubjectID, Title = val.Title, label = val.Title, Mother = val.Mother, SubjectOrder = val.SubjectOrder });
                 }
             }
             return objsubjectitem;
@@ -46,39 +46,39 @@ namespace Plugghest.Subjects
 
 
         //insert on subject
-        public void CreateSubject(SubjectItem t)
+        public void CreateSubject(Subject t)
         {
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rep = ctx.GetRepository<SubjectItem>();
+                var rep = ctx.GetRepository<Subject>();
                 rep.Insert(t);
             }
         }
 
-        public SubjectItem GetSubject(int SubjectId)
+        public Subject GetSubject(int SubjectId)
         {
-            SubjectItem subitem = new SubjectItem();
+            Subject subitem = new Subject();
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rec = ctx.ExecuteQuery<SubjectItem>(CommandType.TableDirect, "select * from SubjectItems where subjectid=" + SubjectId);
+                var rec = ctx.ExecuteQuery<Subject>(CommandType.TableDirect, "select * from SubjectItems where subjectid=" + SubjectId);
                 foreach (var val in rec)
                 {
-                    subitem.Subject = val.Subject; subitem.Mother = val.Mother; subitem.Order = val.Order;
+                    subitem.Title = val.Title; subitem.Mother = val.Mother; subitem.SubjectOrder = val.SubjectOrder;
                 }
             }
 
             return subitem;
         }
 
-        public List<SubjectItem> GetSubjectFromMother(int? MotherName, int order)
+        public List<Subject> GetSubjectFromMother(int? MotherName, int order)
         {
-            List<SubjectItem> sublist = new List<SubjectItem>();
+            List<Subject> sublist = new List<Subject>();
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rec = ctx.ExecuteQuery<SubjectItem>(CommandType.TableDirect, "select * from SubjectItems where Mother=" + MotherName + "AND [ORDER] >=" + order + " order by [order]");
+                var rec = ctx.ExecuteQuery<Subject>(CommandType.TableDirect, "select * from SubjectItems where Mother=" + MotherName + "AND [ORDER] >=" + order + " order by [order]");
                 foreach (var val in rec)
                 {
-                    sublist.Add(new SubjectItem(val.SubjectID, val.Subject, val.Mother, val.Order));
+                    sublist.Add(new Subject(val.SubjectID, val.Title, val.Mother, val.SubjectOrder));
                 }
             }
             return sublist;

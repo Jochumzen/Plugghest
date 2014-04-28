@@ -76,13 +76,13 @@ namespace Plugghest.Modules.CreateCourse {
         protected global::System.Web.UI.WebControls.TextBox txtPluggs;
         
         /// <summary>
-        /// lblplugss control.
+        /// CIInfo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblplugss;
+        protected global::System.Web.UI.WebControls.Label CIInfo;
         
         /// <summary>
         /// btnCheck control.
@@ -137,5 +137,14 @@ namespace Plugghest.Modules.CreateCourse {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton btnCancel;
+        
+        /// <summary>
+        /// lblError control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblError;
     }
 }

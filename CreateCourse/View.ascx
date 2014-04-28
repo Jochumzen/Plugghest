@@ -23,7 +23,7 @@
             <asp:TextBox ID="txtPluggs" runat="server" />
         </div>
 
-        <div style="margin-left:413px"><asp:Label ID="lblplugss" runat="server"></asp:Label></div>
+        <div style="margin-left:413px"><asp:Label ID="CIInfo" runat="server"></asp:Label></div>
 
         <div style="margin-left:413px"><asp:LinkButton ID="btnCheck" runat="server" OnClick="btnCheck_Click" 
                         resourcekey="btnCheck" CssClass="dnnPrimaryAction" Text="Check" /></div>
@@ -57,6 +57,6 @@
         </div>
     </fieldset>
 
-
+    <asp:Label ID="lblError" runat="server" ForeColor="Red"></asp:Label>
    
 </div>

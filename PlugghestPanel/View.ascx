@@ -1,5 +1,19 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="View.ascx.cs" Inherits="Plugghest.Modules.PlugghestPanel.View" %>
 
+<p>
+    Read Plugg from file:&nbsp;
+    <asp:FileUpload ID="fuLatexFile" runat="server" />
+&nbsp;&nbsp;
+    <asp:LinkButton ID="lbReadLatexFile" runat="server" OnClick="lbReadLatexFile_Click">Read from textfile</asp:LinkButton>
+&nbsp;&nbsp;
+    <asp:LinkButton ID="lbReadZip" runat="server" OnClick="lbReadZip_Click">Read from zipfile</asp:LinkButton>
+    &nbsp;
+    <asp:Label ID="lblError" runat="server" ForeColor="Red"></asp:Label>
+</p>
+<p>
+    Delete All Pluggs:&nbsp; <asp:Button ID="btnDeleteAllPluggs" runat="server" OnClick="btnDeleteAllPluggs_Click" Text="Delete" />
+</p>
+
 Delete Course:&nbsp;&nbsp;
 <asp:TextBox ID="tbDeleteCourseID" runat="server" Width="56px"></asp:TextBox>
 &nbsp;

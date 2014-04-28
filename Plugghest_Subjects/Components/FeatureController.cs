@@ -1,5 +1,5 @@
 /*
-' Copyright (c) 2014 Plugghest.com
+' Copyright (c) 2014 Christoc.com
 '  All rights reserved.
 ' 
 ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
@@ -15,12 +15,12 @@ using System.Collections.Generic;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Services.Search;
 
-namespace Plugghest.Subjects
+namespace Plugghest.Modules.DisplayCourse.Components
 {
 
     /// -----------------------------------------------------------------------------
     /// <summary>
-    /// The Controller class for Plugghest_Subjects
+    /// The Controller class for DNNTemplate
     /// 
     /// The FeatureController class is defined as the BusinessController in the manifest file (.dnn)
     /// DotNetNuke will poll this class to find out which Interfaces the class implements. 
@@ -53,18 +53,18 @@ namespace Plugghest.Subjects
         //{
         //string strXML = "";
 
-        //List<Plugghest_SubjectsInfo> colPlugghest_Subjectss = GetPlugghest_Subjectss(ModuleID);
-        //if (colPlugghest_Subjectss.Count != 0)
+        //List<DNNTemplateInfo> colDNNTemplates = GetDNNTemplates(ModuleID);
+        //if (colDNNTemplates.Count != 0)
         //{
-        //    strXML += "<Plugghest_Subjectss>";
+        //    strXML += "<DNNTemplates>";
 
-        //    foreach (Plugghest_SubjectsInfo objPlugghest_Subjects in colPlugghest_Subjectss)
+        //    foreach (DNNTemplateInfo objDNNTemplate in colDNNTemplates)
         //    {
-        //        strXML += "<Plugghest_Subjects>";
-        //        strXML += "<content>" + DotNetNuke.Common.Utilities.XmlUtils.XMLEncode(objPlugghest_Subjects.Content) + "</content>";
-        //        strXML += "</Plugghest_Subjects>";
+        //        strXML += "<DNNTemplate>";
+        //        strXML += "<content>" + DotNetNuke.Common.Utilities.XmlUtils.XMLEncode(objDNNTemplate.Content) + "</content>";
+        //        strXML += "</DNNTemplate>";
         //    }
-        //    strXML += "</Plugghest_Subjectss>";
+        //    strXML += "</DNNTemplates>";
         //}
 
         //return strXML;
@@ -83,14 +83,14 @@ namespace Plugghest.Subjects
         /// -----------------------------------------------------------------------------
         //public void ImportModule(int ModuleID, string Content, string Version, int UserID)
         //{
-        //XmlNode xmlPlugghest_Subjectss = DotNetNuke.Common.Globals.GetContent(Content, "Plugghest_Subjectss");
-        //foreach (XmlNode xmlPlugghest_Subjects in xmlPlugghest_Subjectss.SelectNodes("Plugghest_Subjects"))
+        //XmlNode xmlDNNTemplates = DotNetNuke.Common.Globals.GetContent(Content, "DNNTemplates");
+        //foreach (XmlNode xmlDNNTemplate in xmlDNNTemplates.SelectNodes("DNNTemplate"))
         //{
-        //    Plugghest_SubjectsInfo objPlugghest_Subjects = new Plugghest_SubjectsInfo();
-        //    objPlugghest_Subjects.ModuleId = ModuleID;
-        //    objPlugghest_Subjects.Content = xmlPlugghest_Subjects.SelectSingleNode("content").InnerText;
-        //    objPlugghest_Subjects.CreatedByUser = UserID;
-        //    AddPlugghest_Subjects(objPlugghest_Subjects);
+        //    DNNTemplateInfo objDNNTemplate = new DNNTemplateInfo();
+        //    objDNNTemplate.ModuleId = ModuleID;
+        //    objDNNTemplate.Content = xmlDNNTemplate.SelectSingleNode("content").InnerText;
+        //    objDNNTemplate.CreatedByUser = UserID;
+        //    AddDNNTemplate(objDNNTemplate);
         //}
 
         //	throw new System.NotImplementedException("The method or operation is not implemented.");
@@ -106,11 +106,11 @@ namespace Plugghest.Subjects
         //{
         //SearchItemInfoCollection SearchItemCollection = new SearchItemInfoCollection();
 
-        //List<Plugghest_SubjectsInfo> colPlugghest_Subjectss = GetPlugghest_Subjectss(ModInfo.ModuleID);
+        //List<DNNTemplateInfo> colDNNTemplates = GetDNNTemplates(ModInfo.ModuleID);
 
-        //foreach (Plugghest_SubjectsInfo objPlugghest_Subjects in colPlugghest_Subjectss)
+        //foreach (DNNTemplateInfo objDNNTemplate in colDNNTemplates)
         //{
-        //    SearchItemInfo SearchItem = new SearchItemInfo(ModInfo.ModuleTitle, objPlugghest_Subjects.Content, objPlugghest_Subjects.CreatedByUser, objPlugghest_Subjects.CreatedDate, ModInfo.ModuleID, objPlugghest_Subjects.ItemId.ToString(), objPlugghest_Subjects.Content, "ItemId=" + objPlugghest_Subjects.ItemId.ToString());
+        //    SearchItemInfo SearchItem = new SearchItemInfo(ModInfo.ModuleTitle, objDNNTemplate.Content, objDNNTemplate.CreatedByUser, objDNNTemplate.CreatedDate, ModInfo.ModuleID, objDNNTemplate.ItemId.ToString(), objDNNTemplate.Content, "ItemId=" + objDNNTemplate.ItemId.ToString());
         //    SearchItemCollection.Add(SearchItem);
         //}
 

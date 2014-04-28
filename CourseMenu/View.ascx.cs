@@ -21,8 +21,7 @@ using DotNetNuke.Services.Localization;
 using DotNetNuke.UI.Utilities;
 using System.Web;
 using System.Collections.Generic;
-using Plugghest.Courses;
-using Plugghest.Pluggs;
+using Plugghest.Base;
 using DotNetNuke.Entities.Tabs;
 
 namespace Plugghest.Modules.CourseMenu
@@ -69,8 +68,8 @@ namespace Plugghest.Modules.CourseMenu
                 return;
             }
 
-            CourseHandler ch = new CourseHandler();
-            Course c = ch.GetCourse(courseId);
+            BaseHandler bh = new BaseHandler();
+            Course c = bh.GetCourse(courseId);
 
             //if course exist in the database...
             if (c == null)
@@ -79,11 +78,10 @@ namespace Plugghest.Modules.CourseMenu
                 return;
             }
 
-            PluggHandler ph = new PluggHandler();
             string pluggIdstr = DotNetNuke.Entities.Tabs.TabController.CurrentPage.Title;
             int pluggId = Convert.ToInt32(pluggIdstr);
 
-            IEnumerable<CourseItem> cpExist = ch.GetCoursePlugg(courseId, pluggId);
+            IEnumerable<CourseItem> cpExist = bh.GetCourseItems(courseId, pluggId);
             if (!cpExist.Any())
             {
                 lbltest.Text = "Plugg " + pluggId + " is not in course " + courseId;
@@ -91,10 +89,10 @@ namespace Plugghest.Modules.CourseMenu
             }
 
             var tc = new TabController();
-            IEnumerable<CourseItem> cps = ch.GetCoursePluggsForCourse(courseId);
+            IEnumerable<CourseItem> cps = bh.GetCourseItemsForCourse(courseId);
             foreach (CourseItem cp in cps)
             {
-                Plugg p = ph.GetPlugg(cp.ItemID);
+                Plugg p = bh.GetPlugg(cp.ItemID);
                 TabInfo ti = tc.GetTabByName(p.PluggId.ToString() + ": " + p.Title , PortalId);
                 string myUrl = DotNetNuke.Common.Globals.NavigateURL(ti.TabID, "", "", "&c=" + courseId);
                 Menu_Pluggs.Items.Add(new MenuItem(p.PluggId.ToString() + ": " + p.Title, "", "", myUrl));

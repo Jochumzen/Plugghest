@@ -90,8 +90,11 @@
 <asp:Label runat="server" ID="lblError" ForeColor="Red"></asp:Label>
 <asp:HiddenField ID="hdnNodeSubjectId" runat="server" /> 
 
-<asp:LinkButton ID="LinkButton1" runat="server" OnClick="btnSubmit_Click"
-resourcekey="btnSubmit" CssClass="dnnPrimaryAction" Text="Submit" OnClientClick="return getsubjectid()" />
+<%--<asp:LinkButton ID="LinkButton1" runat="server" OnClick="btnSubmit_Click"
+resourcekey="btnSubmit" CssClass="dnnPrimaryAction" Text="Submit" OnClientClick="return getsubjectid()" />--%>
+
+<asp:LinkButton ID="LinkButton3" runat="server" OnClick="btnSubmit_Click"
+resourcekey="btnSubmit" CssClass="dnnPrimaryAction" Text="Submit"  />
 
  <asp:LinkButton ID="LinkButton2" runat="server" OnClick="btnCancel_Click"
  resourcekey="btnCancel" CssClass="dnnSecondaryAction" Text="Cancel"  />
@@ -120,7 +123,7 @@ resourcekey="btnSubmit" CssClass="dnnPrimaryAction" Text="Submit" OnClientClick=
             Error = 'Please Select Node \n';
 
         if (Error != "") {
-            alert(Error);
+            //alert(Error);
             return false;
         }
         //alert(node.SubjectID);

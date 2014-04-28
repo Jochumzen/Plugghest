@@ -29,7 +29,6 @@ namespace Latex2MathML
         /// <returns>The conversion result.</returns>
         public override string Convert(LatexExpression expr)
         {
-            //TODO: add warning comment, write to log
             return BlockConverters["{}"].Convert(expr);
         }
     }

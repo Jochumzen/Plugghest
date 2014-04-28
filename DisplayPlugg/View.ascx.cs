@@ -23,7 +23,7 @@ using DotNetNuke.Entities.Modules.Actions;
 using DotNetNuke.Services.Localization;
 using DotNetNuke.UI.Utilities;
 using Plugghest.Helpers;
-using Plugghest.Pluggs;
+using Plugghest.Base;
 using System.Collections.Generic;
 using Plugghest.DNN;
 
@@ -50,7 +50,7 @@ namespace Plugghest.Modules.DisplayPlugg
             {
                 if (!IsPostBack)
                 {
-                    PluggHandler plugghandler = new PluggHandler();
+                    BaseHandler plugghandler = new BaseHandler();
 
                     int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
 
@@ -60,13 +60,13 @@ namespace Plugghest.Modules.DisplayPlugg
                     Plugg p = plugghandler.GetPlugg(pluggid);
                     PluggContent pc = plugghandler.GetPluggContent(pluggid,curlan);
 
-                    if (pc.YouTubeString == null)
+                    if (p.YouTubeCode == null)
                     {
                         lblYoutube.Text = "[No Video]";
                     }
                     else
                     {
-                        Youtube myYouTube = new Youtube(pc.YouTubeString);
+                        Youtube myYouTube = new Youtube(p.YouTubeCode);
                         if (myYouTube.IsValid)
                             lblYoutube.Text = myYouTube.GetIframeString(curlan.Substring(3, 2));
                     }

@@ -18,7 +18,7 @@ using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Modules.Actions;
 using DotNetNuke.Services.Localization;
 using DotNetNuke.UI.Utilities;
-using Plugghest.Courses;
+using Plugghest.Base;
 using Telerik.Web.UI;
 
 namespace Plugghest.Modules.ViewCourses
@@ -52,7 +52,7 @@ namespace Plugghest.Modules.ViewCourses
 
         public void bindRadGrid()
         {
-            CourseHandler ch = new CourseHandler();
+            BaseHandler ch = new BaseHandler();
             RadGrid_ViewPlugg.DataSource = ch.GetCoursesForDNN();
         }
 

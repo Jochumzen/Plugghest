@@ -12,8 +12,6 @@ namespace Plugghest.DNN
     [PrimaryKey("TabId", AutoIncrement = false)]
     //configure caching using PetaPoco
     [Cacheable("TabUrls", CacheItemPriority.Default, 20)]
-    //scope the objects to the ModuleId of a module on a page (or copy of a module on a page)
-    //[Scope("ModuleId")]
     public class TabUrl
     {
         ///<summary>
@@ -81,5 +79,33 @@ namespace Plugghest.DNN
         ///</summary>
         public DateTime LastModifiedOnDate { get; set; }
 
+    }
+
+    [TableName("DCC_PRC_CommentObject")]
+    //setup the primary key for table
+    [PrimaryKey("CommentObjectID", AutoIncrement = true)]
+    //configure caching using PetaPoco
+    [Cacheable("DCC_PRC_CommentObject", CacheItemPriority.Default, 20)]
+    public class DCC_PRC_CommentObject
+    {
+        ///<summary>
+        /// 
+        ///</summary>
+        public int CommentObjectID { get; set; }
+
+        ///<summary>
+        /// 
+        ///</summary>
+        public string CommentObject { get; set; }
+
+        ///<summary>
+        /// 
+        ///</summary>
+        public int CommentObjectViewCount { get; set; }
+
+        ///<summary>
+        /// 
+        ///</summary>
+        public int PortalID { get; set; }
     }
 }

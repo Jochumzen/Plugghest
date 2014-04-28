@@ -19,9 +19,8 @@ using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Modules.Actions;
 using DotNetNuke.Services.Localization;
 using DotNetNuke.UI.Utilities;
-using Plugghest.Courses;
+using Plugghest.Base;
 using System.Collections.Generic;
-using Plugghest.Pluggs;
 using DotNetNuke.Entities.Tabs;
 
 namespace Plugghest.Modules.DisplayCourse
@@ -47,7 +46,7 @@ namespace Plugghest.Modules.DisplayCourse
             {
                 if (!IsPostBack)
                 {
-                    CourseHandler ch = new CourseHandler();
+                    BaseHandler bh = new BaseHandler();
 
                     string CourseTitle = ((DotNetNuke.Framework.CDefault)this.Page).Title;//get Course from page title
                     CourseTitle = CourseTitle.Replace("C", "");
@@ -55,17 +54,16 @@ namespace Plugghest.Modules.DisplayCourse
                     if (!string.IsNullOrEmpty(CourseTitle))
                     {
                         int courseId = Convert.ToInt32(CourseTitle);
-                        Course c = ch.GetCourse(courseId);
+                        Course c = bh.GetCourse(courseId);
 
                         lblDescription.Text = Server.HtmlDecode(c.Description); ;
 
-                        PluggHandler ph = new PluggHandler();
                         var tc = new TabController();
 
-                        IEnumerable<CourseItem> cps = ch.GetCoursePluggsForCourse(c.CourseId);
+                        IEnumerable<CourseItem> cps = bh.GetCourseItemsForCourse(c.CourseId);
                         if (cps != null)
                         {
-                            Plugg p = ph.GetPlugg(cps.First().ItemID);
+                            Plugg p = bh.GetPlugg(cps.First().ItemID);
                             TabInfo ti = tc.GetTabByName(p.PluggId.ToString() + ": " + p.Title , PortalId);
                             if (ti != null)
                                 LnkBeginCourse.NavigateUrl = DotNetNuke.Common.Globals.NavigateURL(ti.TabID, "", "",

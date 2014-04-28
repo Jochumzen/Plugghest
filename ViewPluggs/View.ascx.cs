@@ -18,7 +18,7 @@ using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Modules.Actions;
 using DotNetNuke.Services.Localization;
 using DotNetNuke.UI.Utilities;
-using Plugghest.Pluggs;
+using Plugghest.Base;
 using DotNetNuke.Web.UI.WebControls;
 using Telerik.Web.UI;
 
@@ -48,7 +48,7 @@ namespace Plugghest.Modules.ViewPluggs
 
         public void bindgrid()
         {
-            PluggHandler ph = new PluggHandler();
+            BaseHandler ph = new BaseHandler();
 
             //var pc = new PluggController();
             DnnGrid dgDNNGrid;
@@ -72,7 +72,7 @@ namespace Plugghest.Modules.ViewPluggs
 
         public void bindRadGrid()
         {
-            PluggHandler ph = new PluggHandler();
+            BaseHandler ph = new BaseHandler();
             RadGrid_ViewPlugg.DataSource = ph.GetPluggListForGrid();
         }
 

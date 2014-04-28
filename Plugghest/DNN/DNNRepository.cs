@@ -17,4 +17,16 @@ namespace Plugghest.DNN
             }
         }
     }
+
+    public class RnCController
+    {
+        public void CreateCommentObject(DCC_PRC_CommentObject t)
+        {
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<DCC_PRC_CommentObject>();
+                rep.Insert(t);
+            }
+        }
+    }
 }
