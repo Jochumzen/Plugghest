@@ -105,7 +105,7 @@ namespace Plugghest.Base
         public void UpdatePlugg(Plugg p, PluggContent pc)
         {
             //For restore if something goes wrong
-            Plugg oldP = GetPlugg(p.PluggId );
+            Plugg oldP = GetPlugg(p.PluggId);
             IEnumerable<PluggContent> oldPCs = GetAllContentInPlugg(p.PluggId);
 
             rep.UpdatePlugg(p); //No repair necessary if this fails
@@ -147,7 +147,7 @@ namespace Plugghest.Base
                 rep.CreatePlugg(oldP);
                 foreach (PluggContent oldPC in oldPCs)
                     rep.CreatePluggContent(oldPC);
-                throw; 
+                throw;
             }
 
         }
@@ -285,6 +285,20 @@ namespace Plugghest.Base
             return rep.GetCourseItemsForCourse(CourseID);
         }
 
+        public void CreateCourseItem(CourseItem ci)
+        {
+            rep.CreateCourseItem(ci);
+        }
+
+        public void UpdateCourseItem(CourseItem ci)
+        {
+            rep.UpdateCourseItem(ci);
+        }
+
+        public void DeleteCourseItem(CourseItem ci)
+        {
+            rep.DeleteCourseItem(ci);
+        }
         #endregion
 
         #region Other
@@ -305,6 +319,17 @@ namespace Plugghest.Base
         }
 
         #endregion
+        #region CourseHeading
+        public CourseHeadings CreateHeading(CourseHeadings h)
+        {
+            return rep.CreateHeading(h);
+        }
 
+        public void UpdateHeading(CourseHeadings h)
+        {
+            rep.UpdateHeading(h);
+        }
+
+        #endregion
     }
 }

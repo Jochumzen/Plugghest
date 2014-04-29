@@ -34,7 +34,7 @@
       <HintPath>..\..\bin\DotNetNuke.dll</HintPath>
     </Reference>
     <Reference Include="L2H">
-      <HintPath>..\..\bin\L2H.dll</HintPath>
+      <HintPath>C:\Users\cis\Desktop\rohit\L2H.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

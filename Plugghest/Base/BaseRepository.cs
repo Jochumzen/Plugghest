@@ -203,6 +203,14 @@ namespace Plugghest.Base
             }
         }
 
+        public void UpdateCourseItem(CourseItem t)
+        {
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<CourseItem>();
+                rep.Update(t);
+            }
+        }
         public void DeleteCourseItem(CourseItem t)
         {
             using (IDataContext ctx = DataContext.Instance())
@@ -234,6 +242,8 @@ namespace Plugghest.Base
             }
             return cis;
         }
+
+
 
         #endregion
 
@@ -278,16 +288,41 @@ namespace Plugghest.Base
             List<CourseTree> objsubjectitem = new List<CourseTree>();
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rec = ctx.ExecuteQuery<CourseTree>(CommandType.TableDirect, @"select Pluggs.Title,Mother,ItemType,CourseItemID, [Order] from CourseItems join Pluggs on Pluggs.PluggId=CourseItems.Itemid  where CourseID=" + CourseID + " and ItemType = 0 union select CourseHeadings.Title,Mother,ItemType,CourseItemID,[Order] from CourseItems join CourseHeadings on CourseHeadings.HeadingID = CourseItems.ItemID where CourseID=" + CourseID + " and ItemType = 1 order by [Order]");
+                var rec = ctx.ExecuteQuery<CourseTree>(CommandType.TableDirect, @"select Pluggs.Title,Mother,ItemType,CourseItemID, CIOrder as [Order] ,ItemID  from CourseItems join Pluggs on Pluggs.PluggId=CourseItems.Itemid  where CourseID=" + CourseID + " and ItemType = 0 union select CourseHeadings.Title,Mother,ItemType,CourseItemID,CIOrder as [Order],ItemID  from CourseItems join CourseHeadings on CourseHeadings.HeadingID = CourseItems.ItemID where CourseID=" + CourseID + " and ItemType = 1 order by CIOrder");
 
                 foreach (var val in rec)
                 {
-                    objsubjectitem.Add(new CourseTree { label = val.Title, Title = val.Title, Mother = val.Mother, Order = val.Order, CourseItemID = val.CourseItemID });
+                    objsubjectitem.Add(new CourseTree { label = val.Title, Title = val.Title, Mother = val.Mother, Order = val.Order, CourseItemID = val.CourseItemID, ItemType = val.ItemType, ItemID = val.ItemID });
                 }
             }
             return objsubjectitem;
         }
 
+        #endregion
+
+
+
+
+        #region CourseHeading
+        public CourseHeadings CreateHeading(CourseHeadings t)
+        {
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<CourseHeadings>();
+                rep.Insert(t);
+            }
+            return t;
+        }
+
+
+        public void UpdateHeading(CourseHeadings t)
+        {
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<CourseHeadings>();
+                rep.Update(t);
+            }
+        }
         #endregion
     }
 }
