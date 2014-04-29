@@ -81,10 +81,12 @@ namespace Plugghest.Base
 
         public int ItemType { get; set; }
 
-        public int Mother { get; set; }
+        public int? Mother { get; set; }
+
+
     }
 
-#region TemporaryDNN
+    #region TemporaryDNN
 
     public class PluggInfoForDNNGrid
     {
@@ -92,14 +94,14 @@ namespace Plugghest.Base
         public string PluggName { get; set; }
         public string UserName { get; set; }
     }
-    
+
     public class CourseInfoForDNNGrid
     {
         public int CourseId { get; set; }
         public string CourseName { get; set; }
         public string UserName { get; set; }
     }
-#endregion
+    #endregion
 
     //class for Create Course tree...
     public class CourseTree
@@ -110,5 +112,20 @@ namespace Plugghest.Base
         public int Order { get; set; }
         public string label { get; set; }
         public string Title { get; set; }
+        public int CourseID { get; set; }
+        public int ItemType { get; set; }
+        public int HeadingID { get; set; }
+        public int ItemID { get; set; }
     }
+
+    #region  CourseHeading
+    [TableName("CourseHeadings")]
+    [PrimaryKey("HeadingID", AutoIncrement = true)]
+    public class CourseHeadings
+    {
+        public int HeadingID { get; set; }
+
+        public string Title { get; set; }
+    }
+    #endregion
 }
