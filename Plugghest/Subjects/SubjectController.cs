@@ -10,6 +10,7 @@
 ' 
 */
 using System.Collections.Generic;
+using DotNetNuke.Common.Utilities;
 using DotNetNuke.Data;
 using System.Data;
 using DotNetNuke.Entities.Users;
@@ -18,33 +19,6 @@ namespace Plugghest.Subjects
 {
     public class SubjectController
     {
-
-
-        public void UpdateItem(Subject t)
-        {
-            using (IDataContext ctx = DataContext.Instance())
-            {
-                var rep = ctx.GetRepository<Subject>();
-                rep.Update(t);
-            }
-        }
-
-
-        public List<SubjectTree> GetSubject_Item()
-        {
-            List<SubjectTree> objsubjectitem = new List<SubjectTree>();
-            using (IDataContext ctx = DataContext.Instance())
-            {
-                var rec = ctx.ExecuteQuery<SubjectTree>(CommandType.TableDirect, "select * from Subjects order by SubjectOrder");
-                foreach (var val in rec)
-                {
-                    objsubjectitem.Add(new SubjectTree { SubjectID = val.SubjectID, Title = val.Title, label = val.Title, Mother = val.Mother, SubjectOrder = val.SubjectOrder });
-                }
-            }
-            return objsubjectitem;
-        }
-
-
         //insert on subject
         public void CreateSubject(Subject t)
         {
@@ -54,43 +28,59 @@ namespace Plugghest.Subjects
                 rep.Insert(t);
             }
         }
-
-        public Subject GetSubject(int SubjectId)
+        
+        public Subject GetSubject(int subjectId)
         {
-            Subject subitem = new Subject();
+            Subject p;
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rec = ctx.ExecuteQuery<Subject>(CommandType.TableDirect, "select * from SubjectItems where subjectid=" + SubjectId);
-                foreach (var val in rec)
-                {
-                    subitem.Title = val.Title; subitem.Mother = val.Mother; subitem.SubjectOrder = val.SubjectOrder;
-                }
+                var rep = ctx.GetRepository<Subject>();
+                p = rep.GetById(subjectId);
             }
-
-            return subitem;
+            return p;
+        }
+        
+        public void UpdateItem(Subject t)
+        {
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<Subject>();
+                rep.Update(t);
+            }
         }
 
-        public List<Subject> GetSubjectFromMother(int? MotherName, int order)
+        public IEnumerable<Subject> GetAllSubjects()
         {
-            List<Subject> sublist = new List<Subject>();
+            IEnumerable<Subject> objsubjectitem;
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rec = ctx.ExecuteQuery<Subject>(CommandType.TableDirect, "select * from SubjectItems where Mother=" + MotherName + "AND [ORDER] >=" + order + " order by [order]");
-                foreach (var val in rec)
-                {
-                    sublist.Add(new Subject(val.SubjectID, val.Title, val.Mother, val.SubjectOrder));
-                }
+                var repository = ctx.GetRepository<Subject>();
+                objsubjectitem = repository.Find("ORDER BY SubjectOrder");
+            }
+            return objsubjectitem;
+        }
+
+        public IEnumerable<Subject> GetSubjectsFromMotherWhereOrderGreaterThan(int? mother, int order)
+        {
+            IEnumerable<Subject> sublist;
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var repository = ctx.GetRepository<Subject>();
+                if (mother == null)
+                    sublist = repository.Find("WHERE Mother IS NULL AND SubjectOrder >" + order + " ORDER BY SubjectOrder");
+                else
+                    sublist = repository.Find("WHERE Mother=" + mother + "AND SubjectOrder >" + order + " ORDER BY SubjectOrder");
             }
             return sublist;
         }
 
-        public void UpdateSubjectOrder(int SubjectId, int Order)
-        {
-            using (IDataContext ctx = DataContext.Instance())
-            {
-                ctx.Execute(CommandType.Text, "update SubjectItems set [Order]=" + Order + " where Subjectid=" + SubjectId);
-            }
-        }
+        //public void UpdateSubjectOrder(int SubjectId, int Order)
+        //{
+        //    using (IDataContext ctx = DataContext.Instance())
+        //    {
+        //        ctx.Execute(CommandType.Text, "update SubjectItems set [Order]=" + Order + " where Subjectid=" + SubjectId);
+        //    }
+        //}
 
     }
 }

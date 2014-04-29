@@ -3,7 +3,6 @@ D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\Plugghest\bin\Debug\Plugghest.pdb
 D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\Plugghest\bin\Debug\DotNetNuke.dll
 D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\Plugghest\obj\Debug\Plugghest.dll
 D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\Plugghest\obj\Debug\Plugghest.pdb
-C:\websites\dnndev.me\DesktopModules\Plugghest\obj\Debug\Plugghest.csprojResolveAssemblyReference.cache
 C:\websites\dnndev.me\DesktopModules\Plugghest\bin\Debug\Plugghest.dll
 C:\websites\dnndev.me\DesktopModules\Plugghest\bin\Debug\Plugghest.pdb
 C:\websites\dnndev.me\DesktopModules\Plugghest\bin\Debug\DotNetNuke.dll
@@ -12,3 +11,6 @@ C:\websites\dnndev.me\DesktopModules\Plugghest\bin\Debug\log4net.dll
 C:\websites\dnndev.me\DesktopModules\Plugghest\bin\Debug\L2H.pdb
 C:\websites\dnndev.me\DesktopModules\Plugghest\obj\Debug\Plugghest.dll
 C:\websites\dnndev.me\DesktopModules\Plugghest\obj\Debug\Plugghest.pdb
+C:\websites\dnndev.me\bin\Plugghest.dll
+C:\websites\dnndev.me\bin\Plugghest.pdb
+C:\websites\dnndev.me\DesktopModules\Plugghest\obj\Debug\Plugghest.csprojResolveAssemblyReference.cache

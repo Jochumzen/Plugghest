@@ -131,7 +131,7 @@ namespace Plugghest.Base
 
         public IEnumerable<PluggContent> GetAllContentInPlugg(int pluggId)
         {
-            IEnumerable<PluggContent> pc = new List<PluggContent>();
+            IEnumerable<PluggContent> pc;
             using (IDataContext ctx = DataContext.Instance())
             {
                 var repository = ctx.GetRepository<PluggContent>();

@@ -9,9 +9,9 @@ namespace Plugghest.Subjects
     {
         SubjectController subjectcntr = new SubjectController();
 
-        public List<SubjectTree> GetSubject_Item()
+        public IEnumerable<Subject> GetAllSubjects()
         {
-            return subjectcntr.GetSubject_Item();
+            return subjectcntr.GetAllSubjects();
         }
 
         public void CreateSubject(Subject t)
@@ -19,19 +19,53 @@ namespace Plugghest.Subjects
             subjectcntr.CreateSubject(t);
         }
 
-        public Subject GetSubject(int SubjectId)
+        public void UpdateSubject(Subject t)
         {
-            return subjectcntr.GetSubject(SubjectId);
+            subjectcntr.UpdateItem(t);
         }
 
-        public List<Subject> GetSubjectFromMother(int? MotherName, int order)
+        public Subject GetSubject(int subjectId)
         {
-            return subjectcntr.GetSubjectFromMother(MotherName, order);
+            return subjectcntr.GetSubject(subjectId);
         }
 
-        public void UpdateSubjectOrder(int SubjectId, int Order)
+        public IEnumerable<Subject> GetSubjectsFromMotherWhereOrderGreaterThan(int? mother, int order)
         {
-            subjectcntr.UpdateSubjectOrder(SubjectId, Order);
+            return subjectcntr.GetSubjectsFromMotherWhereOrderGreaterThan(mother, order);
+        }
+
+        //Recursive function for create tree....
+        public IList<Subject> GetSubjectsAsTree()
+        {
+            IEnumerable<Subject> source = GetAllSubjects();
+
+            var groups = source.GroupBy(i => i.Mother);
+
+            var roots = groups.FirstOrDefault(g => g.Key.HasValue == false).ToList();
+
+            if (roots.Count > 0)
+            {
+                var dict = groups.Where(g => g.Key.HasValue).ToDictionary(g => g.Key.Value, g => g.ToList());
+                for (int i = 0; i < roots.Count; i++)
+                    AddChildren(roots[i], dict);
+            }
+
+            return roots;
+        }
+
+        //To Add Child
+        private void AddChildren(Subject node, IDictionary<int, List<Subject>> source)
+        {
+            if (source.ContainsKey(node.SubjectID))
+            {
+                node.children = source[node.SubjectID];
+                for (int i = 0; i < node.children.Count; i++)
+                    AddChildren(node.children[i], source);
+            }
+            else
+            {
+                node.children = new List<Subject>();
+            }
         }
 
     }

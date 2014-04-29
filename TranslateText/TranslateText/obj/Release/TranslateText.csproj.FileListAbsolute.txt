@@ -2,3 +2,8 @@ D:\NewModule\bin\TranslateText.dll
 D:\NewModule\bin\TranslateText.pdb
 D:\NewModule\TranslateText\TranslateText\obj\Release\TranslateText.dll
 D:\NewModule\TranslateText\TranslateText\obj\Release\TranslateText.pdb
+C:\websites\dnndev.me\DesktopModules\bin\TranslateText.dll
+C:\websites\dnndev.me\DesktopModules\bin\TranslateText.pdb
+C:\websites\dnndev.me\DesktopModules\TranslateText\TranslateText\obj\Release\TranslateText.csprojResolveAssemblyReference.cache
+C:\websites\dnndev.me\DesktopModules\TranslateText\TranslateText\obj\Release\TranslateText.dll
+C:\websites\dnndev.me\DesktopModules\TranslateText\TranslateText\obj\Release\TranslateText.pdb

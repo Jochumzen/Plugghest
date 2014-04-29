@@ -7,6 +7,7 @@
 <%@ Register TagPrefix="dnn" TagName="User" Src="~/DesktopModules/Admin/Security/User.ascx" %>
 <div class="dnnForm dnnLogin dnnClear">
     <asp:panel id="pnlLogin" runat="server" Visible="false">
+        Hello
         <div class="loginContent">
             <dnn:DNNTabStrip ID="tsLogin" runat="server" TabRenderMode="All" CssTabContainer="LoginTabGroup" CssContentContainer="LoginContainerGroup" DefaultContainerCssClass="LoginContainer" DefaultLabel-CssClass="LoginTab" DefaultLabel-CssClassHover="LoginTabHover" DefaultLabel-CssClassSelected="LoginTabSelected" visible="false" />
             <asp:Panel ID="pnlLoginContainer" runat="server" CssClass="LoginPanel" Visible="false" />

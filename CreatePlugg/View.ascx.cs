@@ -116,49 +116,11 @@ namespace Plugghest.Modules.CreatePlugg
         public void BindTree()
         {
             SubjectHandler objsubhandler = new SubjectHandler();
-            var subjectlist = objsubhandler.GetSubject_Item();
 
-            var tree = BuildTree(subjectlist);
-
+            var tree = objsubhandler.GetSubjectsAsTree();
             JavaScriptSerializer TheSerializer = new JavaScriptSerializer();
             hdnTreeData.Value = TheSerializer.Serialize(tree);
         }
-
-        #region Create Tree
-
-        //Recursive function for create tree....
-        public IList<SubjectTree> BuildTree(IEnumerable<SubjectTree> source)
-        {
-            var groups = source.GroupBy(i => i.Mother);
-
-            var roots = groups.FirstOrDefault(g => g.Key.HasValue == false).ToList();
-
-            if (roots.Count > 0)
-            {
-                var dict = groups.Where(g => g.Key.HasValue).ToDictionary(g => g.Key.Value, g => g.ToList());
-                for (int i = 0; i < roots.Count; i++)
-                    AddChildren(roots[i], dict);
-            }
-
-            return roots;
-        }
-
-        //To Add Child
-        private void AddChildren(SubjectTree node, IDictionary<int, List<SubjectTree>> source)
-        {
-            if (source.ContainsKey(node.SubjectID))
-            {
-                node.children = source[node.SubjectID];
-                for (int i = 0; i < node.children.Count; i++)
-                    AddChildren(node.children[i], source);
-            }
-            else
-            {
-                node.children = new List<SubjectTree>();
-            }
-        }
-
-        #endregion
 
         private void LoadCultureDropDownList()
         {

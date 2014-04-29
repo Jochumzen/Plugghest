@@ -23,38 +23,17 @@ namespace Plugghest.Subjects
     [PrimaryKey("SubjectID", AutoIncrement = true)]
     public class Subject
     {
-        public int SubjectID;
-        public string Title;
-        public int? Mother;
-        public int SubjectOrder;
-
-        public Subject()
-        { }
-
-        public Subject(int SubjectID, string Title, int? Mother, int Order)
-        {
-            // TODO: Complete member initialization
-            this.SubjectID = SubjectID;
-            this.Title = Title;
-            this.Mother = Mother;
-            this.SubjectOrder = Order;
-        }
-    }
-
-    //class for Create Subject tree...
-    public class SubjectTree
-    {
         public int SubjectID { get; set; }
 
-        public string Title { get; set; }
+        [ColumnName("Title")]
+        public string label { get; set; }
 
         public int? Mother { get; set; }
 
-        public List<SubjectTree> children { get; set; }
+        [IgnoreColumn]
+        public List<Subject> children { get; set; }
 
         public int SubjectOrder { get; set; }
-
-        public string label { get; set; }
 
     }
 

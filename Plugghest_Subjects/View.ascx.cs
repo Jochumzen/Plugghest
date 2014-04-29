@@ -12,6 +12,7 @@
 
 using System;
 using System.Web.UI.WebControls;
+using DotNetNuke.Common.Utilities;
 using Plugghest.Subjects;
 using DotNetNuke.Security;
 using DotNetNuke.Services.Exceptions;
@@ -59,59 +60,21 @@ namespace Plugghest.Modules.Plugghest_Subjects
 
         public void BindTree()
         {
-            SubjectController objcontroller = new SubjectController();
-            var subjectlist = objcontroller.GetSubject_Item();
+            SubjectHandler sh = new SubjectHandler();
 
-            var tree = BuildTree(subjectlist);
-
+            var tree = sh.GetSubjectsAsTree();
             JavaScriptSerializer TheSerializer = new JavaScriptSerializer();
             hdnTreeData.Value = TheSerializer.Serialize(tree);
         }
-
-        #region Create Tree
-
-        //Recursive function for create tree....
-        public IList<SubjectTree> BuildTree(IEnumerable<SubjectTree> source)
-        {
-            var groups = source.GroupBy(i => i.Mother);
-
-            var roots = groups.FirstOrDefault(g => g.Key.HasValue == false).ToList();
-
-            if (roots.Count > 0)
-            {
-                var dict = groups.Where(g => g.Key.HasValue).ToDictionary(g => g.Key.Value, g => g.ToList());
-                for (int i = 0; i < roots.Count; i++)
-                    AddChildren(roots[i], dict);
-            }
-
-            return roots;
-        }
-
-        //To Add Child
-        private void AddChildren(SubjectTree node, IDictionary<int, List<SubjectTree>> source)
-        {
-            if (source.ContainsKey(node.SubjectID))
-            {
-                node.children = source[node.SubjectID];
-                for (int i = 0; i < node.children.Count; i++)
-                    AddChildren(node.children[i], source);
-            }
-            else
-            {
-                node.children = new List<SubjectTree>();
-            }
-        }
-
-        #endregion
 
         protected void btnSaveSubjects_Click(object sender, EventArgs e)
         {
             JavaScriptSerializer js = new JavaScriptSerializer();
             string json = hdnGetJosnResult.Value;
-            var person = js.Deserialize<SubjectTree[]>(json).ToList();
+            var person = js.Deserialize<Subject[]>(json).ToList();
 
             SubjectController objcontroller = new SubjectController();
-            var abc = objcontroller.GetSubject_Item();
+            var abc = objcontroller.GetAllSubjects() ;
 
             var tree = BuildTreeItem(person);
         }
@@ -121,7 +84,7 @@ namespace Plugghest.Modules.Plugghest_Subjects
         #endregion
 
         //Recursive function for create tree....
-        public IList<SubjectTree> BuildTreeItem(IEnumerable<SubjectTree> source)
+        public IList<Subject> BuildTreeItem(IEnumerable<Subject> source)
         {
             var groups = source.GroupBy(i => i.Mother);
 
@@ -139,7 +102,7 @@ namespace Plugghest.Modules.Plugghest_Subjects
         }
 
         //To Add Child
-        private void AddChildrenItem(SubjectTree node, IDictionary<int, List<SubjectTree>> source)
+        private void AddChildrenItem(Subject node, IDictionary<int, List<Subject>> source)
         {
             if (source.ContainsKey(node.SubjectID))
             {
@@ -153,7 +116,7 @@ namespace Plugghest.Modules.Plugghest_Subjects
             }
             else
             {
-                node.children = new List<SubjectTree>();
+                node.children = new List<Subject>();
             }
         }
 
@@ -161,32 +124,25 @@ namespace Plugghest.Modules.Plugghest_Subjects
         {
             if (hdnNodeSubjectId.Value != "")
             {
-                SubjectController controll = new SubjectController();
-                Subject subitem = new Subject();
+                SubjectHandler h = new SubjectHandler();
 
-                subitem = controll.GetSubject(Convert.ToInt32(hdnNodeSubjectId.Value));
+                Subject SelectedSubject = h.GetSubject(Convert.ToInt32(hdnNodeSubjectId.Value));
 
-                subitem.Title  = txtAddSubject.Text;
-
-                subitem.SubjectOrder = subitem.SubjectOrder + 1;
-
-                subitem.Mother = subitem.Mother;
-
-                //Add Subject...........
-                controll.CreateSubject(subitem);
-
-                //update order for other nodes....
-                var Records = controll.GetSubjectFromMother(subitem.Mother, subitem.SubjectOrder);
-                if (Records != null)
+                //Get All subjects with same mother as selected but with higher Order
+                var updateSubjects = h.GetSubjectsFromMotherWhereOrderGreaterThan(SelectedSubject.Mother, SelectedSubject.SubjectOrder);
+                //Increase Order by one to make room for new subject
+                foreach (Subject s in updateSubjects)
                 {
-                    foreach (var item in Records)
-                    {
-                        subitem.SubjectOrder = subitem.SubjectOrder + 1;
-                        controll.UpdateSubjectOrder(item.SubjectID, subitem.SubjectOrder);
-                    }
+                    s.SubjectOrder += 1;
+                    h.UpdateSubject(s);
                 }
+                
+                Subject newSubject = new Subject();
+                newSubject.label = txtAddSubject.Text;
+                newSubject.SubjectOrder = SelectedSubject.SubjectOrder + 1;
+                newSubject.Mother = SelectedSubject.Mother;
+                h.CreateSubject(newSubject);
 
-                //Bind Tree...
                 BindTree();
             }
         }

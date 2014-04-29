@@ -3,3 +3,6 @@ D:\Rohit\bin\EditCourseItems.pdb
 D:\Rohit\EditCourseItems\EditCourseItems\obj\Debug\EditCourseItems.dll
 D:\Rohit\EditCourseItems\EditCourseItems\obj\Debug\EditCourseItems.pdb
 D:\Rohit\EditCourseItems\EditCourseItems\obj\Debug\EditCourseItems.csprojResolveAssemblyReference.cache
+C:\websites\dnndev.me\DesktopModules\EditCourseItems\EditCourseItems\obj\Debug\EditCourseItems.csprojResolveAssemblyReference.cache
+C:\websites\dnndev.me\DesktopModules\EditCourseItems\EditCourseItems\obj\Debug\EditCourseItems.dll
+C:\websites\dnndev.me\DesktopModules\EditCourseItems\EditCourseItems\obj\Debug\EditCourseItems.pdb

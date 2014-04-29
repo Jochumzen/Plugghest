@@ -34,6 +34,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DNNDal", "..\DNNDal\DNNDal.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlugghestPanel", "..\PlugghestPanel\PlugghestPanel.csproj", "{6D4D7605-2B8E-42CE-8AFA-83BE2CAA3748}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslateText", "..\TranslateText\TranslateText\TranslateText.csproj", "{B07EC1E0-6122-403E-B8A8-27C79B310ABA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditCourseItems", "..\EditCourseItems\EditCourseItems\EditCourseItems.csproj", "{D059F9CF-4304-4383-A9EA-79FA7AAB3F8A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,6 +92,14 @@ Global
 		{6D4D7605-2B8E-42CE-8AFA-83BE2CAA3748}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D4D7605-2B8E-42CE-8AFA-83BE2CAA3748}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D4D7605-2B8E-42CE-8AFA-83BE2CAA3748}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B07EC1E0-6122-403E-B8A8-27C79B310ABA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B07EC1E0-6122-403E-B8A8-27C79B310ABA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B07EC1E0-6122-403E-B8A8-27C79B310ABA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B07EC1E0-6122-403E-B8A8-27C79B310ABA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D059F9CF-4304-4383-A9EA-79FA7AAB3F8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D059F9CF-4304-4383-A9EA-79FA7AAB3F8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D059F9CF-4304-4383-A9EA-79FA7AAB3F8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D059F9CF-4304-4383-A9EA-79FA7AAB3F8A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

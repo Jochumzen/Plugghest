@@ -6,3 +6,8 @@ D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\bin\TranslateText.dll
 D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\bin\TranslateText.pdb
 D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\TranslateText\TranslateText\obj\Debug\TranslateText.dll
 D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\TranslateText\TranslateText\obj\Debug\TranslateText.pdb
+C:\websites\dnndev.me\DesktopModules\bin\TranslateText.dll
+C:\websites\dnndev.me\DesktopModules\bin\TranslateText.pdb
+C:\websites\dnndev.me\DesktopModules\TranslateText\TranslateText\obj\Debug\TranslateText.csprojResolveAssemblyReference.cache
+C:\websites\dnndev.me\DesktopModules\TranslateText\TranslateText\obj\Debug\TranslateText.dll
+C:\websites\dnndev.me\DesktopModules\TranslateText\TranslateText\obj\Debug\TranslateText.pdb
