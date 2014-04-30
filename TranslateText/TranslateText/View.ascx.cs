@@ -1,5 +1,5 @@
 ﻿/*
-' Copyright (c) 2014  Christoc.com
+' Copyright (c) 2014  Plugghest.com
 '  All rights reserved.
 ' 
 ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
@@ -12,7 +12,7 @@
 
 using System;
 using System.Web.UI.WebControls;
-using Christoc.Modules.TranslateText.Components;
+using Plugghest.Modules.TranslateText.Components;
 using DotNetNuke.Security;
 using DotNetNuke.Services.Exceptions;
 using DotNetNuke.Entities.Modules;
@@ -20,7 +20,7 @@ using DotNetNuke.Entities.Modules.Actions;
 using DotNetNuke.Services.Localization;
 using DotNetNuke.UI.Utilities;
 
-namespace Christoc.Modules.TranslateText
+namespace Plugghest.Modules.TranslateText
 {
     /// -----------------------------------------------------------------------------
     /// <summary>

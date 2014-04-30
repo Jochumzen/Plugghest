@@ -6,3 +6,8 @@ D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\EditCourseItems\EditCourseItems\obj
 D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\EditCourseItems\EditCourseItems\obj\Release\EditCourseItems.pdb
 D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\bin\EditCourseItems.dll
 D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\bin\EditCourseItems.pdb
+C:\websites\dnndev.me\DesktopModules\bin\EditCourseItems.dll
+C:\websites\dnndev.me\DesktopModules\bin\EditCourseItems.pdb
+C:\websites\dnndev.me\DesktopModules\EditCourseItems\EditCourseItems\obj\Release\EditCourseItems.csprojResolveAssemblyReference.cache
+C:\websites\dnndev.me\DesktopModules\EditCourseItems\EditCourseItems\obj\Release\EditCourseItems.dll
+C:\websites\dnndev.me\DesktopModules\EditCourseItems\EditCourseItems\obj\Release\EditCourseItems.pdb

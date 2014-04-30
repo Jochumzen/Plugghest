@@ -29,6 +29,7 @@
             <td>&nbsp;&nbsp;&nbsp;
                 <asp:TextBox ID="txtAddPlugg" runat="server"></asp:TextBox></td>
             <asp:Label ID="lblPlugg" runat="server"></asp:Label>
+            <asp:Label ID="lblTest" runat="server" Text="Label"></asp:Label>
             <td></td>
         </ContentTemplate>
         <Triggers>

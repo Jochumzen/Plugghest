@@ -1,5 +1,5 @@
 ﻿/*
-' Copyright (c) 2014 Christoc.com
+' Copyright (c) 2014 Plugghest.com
 '  All rights reserved.
 ' 
 ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
@@ -16,7 +16,7 @@ using DotNetNuke.Common.Utilities;
 using DotNetNuke.ComponentModel.DataAnnotations;
 using DotNetNuke.Entities.Content;
 
-namespace Christoc.Modules.TranslateText.Components
+namespace Plugghest.Modules.TranslateText.Components
 {
     [TableName("TranslateText_Items")]
     //setup the primary key for table

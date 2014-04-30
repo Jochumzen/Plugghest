@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Christoc.Modules.TranslateText {
+namespace Plugghest.Modules.TranslateText {
     
     
     public partial class View {
