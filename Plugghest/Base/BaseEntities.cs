@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Web.Caching;
 
+
 namespace Plugghest.Base
 {
     public enum EWhoCanEdit
@@ -82,8 +83,15 @@ namespace Plugghest.Base
         public int ItemType { get; set; }
 
         public int? Mother { get; set; }
+        [IgnoreColumn]
+        public List<CourseItem> children { get; set; }
+        [IgnoreColumn]
+        public string label { get; set; }
 
-
+        [IgnoreColumn]
+        public string Title { get; set; }
+        [IgnoreColumn]
+        public int HeadingID { get; set; }
     }
 
     #region TemporaryDNN
@@ -104,19 +112,7 @@ namespace Plugghest.Base
     #endregion
 
     //class for Create Course tree...
-    public class CourseTree
-    {
-        public int? Mother { get; set; }
-        public int CourseItemID { get; set; }
-        public List<CourseTree> children { get; set; }
-        public int Order { get; set; }
-        public string label { get; set; }
-        public string Title { get; set; }
-        public int CourseID { get; set; }
-        public int ItemType { get; set; }
-        public int HeadingID { get; set; }
-        public int ItemID { get; set; }
-    }
+
 
     #region  CourseHeading
     [TableName("CourseHeadings")]

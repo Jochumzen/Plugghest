@@ -313,9 +313,9 @@ namespace Plugghest.Base
             return rep.GetCoursesForDNN();
         }
 
-        public List<CourseTree> GetCourseItems(int CourseID)
+        public List<CourseItem> GetCourseItemsForTree(int CourseID)
         {
-            return rep.GetCourseItems(CourseID);
+            return rep.GetCourseItemsForTree(CourseID);
         }
 
         #endregion

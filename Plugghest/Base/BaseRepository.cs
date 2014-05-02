@@ -198,6 +198,7 @@ namespace Plugghest.Base
         {
             using (IDataContext ctx = DataContext.Instance())
             {
+
                 var rep = ctx.GetRepository<CourseItem>();
                 rep.Insert(t);
             }
@@ -208,7 +209,13 @@ namespace Plugghest.Base
             using (IDataContext ctx = DataContext.Instance())
             {
                 var rep = ctx.GetRepository<CourseItem>();
-                rep.Update(t);
+                try
+                {
+                    rep.Update(t);
+                }
+                catch (Exception ex)
+                {
+                }
             }
         }
         public void DeleteCourseItem(CourseItem t)
@@ -283,16 +290,16 @@ namespace Plugghest.Base
             return cs;
         }
 
-        public List<CourseTree> GetCourseItems(int CourseID)
+        public List<CourseItem> GetCourseItemsForTree(int CourseID)
         {
-            List<CourseTree> objsubjectitem = new List<CourseTree>();
+            List<CourseItem> objsubjectitem = new List<CourseItem>();
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rec = ctx.ExecuteQuery<CourseTree>(CommandType.TableDirect, @"select Pluggs.Title,Mother,ItemType,CourseItemID, CIOrder as [Order] ,ItemID  from CourseItems join Pluggs on Pluggs.PluggId=CourseItems.Itemid  where CourseID=" + CourseID + " and ItemType = 0 union select CourseHeadings.Title,Mother,ItemType,CourseItemID,CIOrder as [Order],ItemID  from CourseItems join CourseHeadings on CourseHeadings.HeadingID = CourseItems.ItemID where CourseID=" + CourseID + " and ItemType = 1 order by CIOrder");
+                var rec = ctx.ExecuteQuery<CourseItem>(CommandType.Text, @"select Pluggs.Title as Title,Mother,ItemType,CourseItemID, CIOrder ,ItemID  from CourseItems join Pluggs on Pluggs.PluggId=CourseItems.Itemid  where CourseID=" + CourseID + " and ItemType = 0 union select CourseHeadings.Title as Title,Mother,ItemType,CourseItemID,CIOrder,ItemID  from CourseItems join CourseHeadings on CourseHeadings.HeadingID = CourseItems.ItemID where CourseID=" + CourseID + " and ItemType = 1 order by CIOrder");
 
                 foreach (var val in rec)
                 {
-                    objsubjectitem.Add(new CourseTree { label = val.Title, Title = val.Title, Mother = val.Mother, Order = val.Order, CourseItemID = val.CourseItemID, ItemType = val.ItemType, ItemID = val.ItemID });
+                    objsubjectitem.Add(new CourseItem { label = val.Title, Title = val.Title, Mother = val.Mother, CIOrder = val.CIOrder, CourseItemID = val.CourseItemID, ItemType = val.ItemType, ItemID = val.ItemID });
                 }
             }
             return objsubjectitem;
