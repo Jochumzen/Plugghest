@@ -44,21 +44,28 @@ namespace Plugghest.Modules.EditCourse
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            try
+            if (!Page.IsPostBack)
             {
-                if (this.Request.QueryString["cid"] != null)
+                try
                 {
-                    string CID = this.Request.QueryString["cid"].ToString();
-                    int courseid;
-                    if (int.TryParse(CID, out courseid))//check is number...
+                    if (this.Request.QueryString["cid"] != null && this.Request.QueryString["cid"].ToString().Trim() != "")
                     {
-                        BindTree(courseid);
+                        string CID = this.Request.QueryString["cid"].ToString();
+                        int courseid;
+                        if (int.TryParse(CID, out courseid))//check is number...
+                        {
+                            BindTree(courseid);
+                        }
+                    }
+                    else
+                    {
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "StartupScriptforTree", "alert('Please Select Course');", true);
                     }
                 }
-            }
-            catch (Exception exc) //Module failed to load
-            {
-                Exceptions.ProcessModuleLoadException(this, exc);
+                catch (Exception exc) //Module failed to load
+                {
+                    Exceptions.ProcessModuleLoadException(this, exc);
+                }
             }
         }
 
@@ -79,20 +86,23 @@ namespace Plugghest.Modules.EditCourse
         public void BindTree(int courseid)
         {
             BaseHandler objcoursehdler = new BaseHandler();
-            var Courselist = objcoursehdler.GetCourseItems(courseid);
+            var Courselist = objcoursehdler.GetCourseItemsForTree(courseid);
 
             var tree = BuildTree(Courselist);
 
             JavaScriptSerializer TheSerializer = new JavaScriptSerializer();
 
             hdnTreeData.Value = TheSerializer.Serialize(tree);
+
+
+
         }
 
 
         #region Create Tree
 
         //Recursive function for create tree....
-        public IList<CourseTree> BuildTree(IEnumerable<CourseTree> source)
+        public IList<CourseItem> BuildTree(IEnumerable<CourseItem> source)
         {
             var groups = source.GroupBy(i => i.Mother);
 
@@ -110,7 +120,7 @@ namespace Plugghest.Modules.EditCourse
         }
 
         //To Add Child
-        private void AddChildren(CourseTree node, IDictionary<int, List<CourseTree>> source)
+        private void AddChildren(CourseItem node, IDictionary<int, List<CourseItem>> source)
         {
             if (source.ContainsKey(node.CourseItemID))
             {
@@ -120,7 +130,7 @@ namespace Plugghest.Modules.EditCourse
             }
             else
             {
-                node.children = new List<CourseTree>();
+                node.children = new List<CourseItem>();
             }
         }
 
@@ -185,14 +195,14 @@ namespace Plugghest.Modules.EditCourse
             return ischecked;
         }
 
-        public string SaveCourse(List<CourseTree> data)
+        public string SaveCourse(List<CourseItem> data)
         {
             System.Text.StringBuilder intReturnId = new System.Text.StringBuilder();
             if (data != null)
             {
                 if (data.Count > 0)
                 {
-                    foreach (CourseTree item in data)
+                    foreach (CourseItem item in data)
                     {
                         // save code 
                         Plugghest.Base.BaseHandler objCourseHandler = new BaseHandler();
@@ -204,7 +214,7 @@ namespace Plugghest.Modules.EditCourse
                         {
                             objcourseitem.Mother = Convert.ToInt32(item.Mother);
                         }
-                        objcourseitem.CIOrder = item.Order;
+                        objcourseitem.CIOrder = item.CIOrder;
                         objcourseitem.CourseID = Convert.ToInt32(this.Request.QueryString["cid"]);
                         objcourseitem.CourseID = 25;
                         if (item.ItemType == 1 && objcourseitem.CourseItemID == 0)
@@ -220,6 +230,8 @@ namespace Plugghest.Modules.EditCourse
 
                         if (objcourseitem.CourseItemID == 0)
                         {
+
+
                             objCourseHandler.CreateCourseItem(objcourseitem);
                         }
                         else
@@ -241,7 +253,7 @@ namespace Plugghest.Modules.EditCourse
             Plugghest.Base.BaseHandler objCourseHandler = new BaseHandler();
             string jsonTreeRecord = hdnGetJosnResult.Value;
             var jss = new JavaScriptSerializer();
-            var data = jss.Deserialize<List<CourseTree>>(jsonTreeRecord);
+            var data = jss.Deserialize<List<CourseItem>>(jsonTreeRecord);
 
             List<string> strIDs = SaveCourse(data).Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToList();
 
