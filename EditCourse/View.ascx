@@ -1,8 +1,10 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="View.ascx.cs" Inherits="Plugghest.Modules.EditCourse.View" %>
 
+<%--<link href="../DesktopModules/Plugghest_Subjects/js/jqtree.css" rel="stylesheet" />
+<script src="../DesktopModules/Plugghest_Subjects/js/tree.jquery.js"></script>--%>
 
-<link href="/DesktopModules/Plugghest_Subjects/js/jqtree.css" rel="stylesheet" />
-<script src="/DesktopModules/Plugghest_Subjects/js/tree.jquery.js"></script>
+<link href="../js/js_tree/jqtree.css" rel="stylesheet" />
+<script src="../js/js_tree/tree.jquery.js"></script>
 
 <div class="resp_container">
     <div class="tree">
@@ -13,15 +15,15 @@
 <asp:HiddenField ID="hdnGetJosnResult" runat="server" />
 <asp:HiddenField ID="hdnNodeCourseItemID" runat="server" />
 <br />
-<asp:Label runat="server" ID="lblError" ForeColor="Red"></asp:Label>
+<asp:Label runat="server" ID="lblError"  ForeColor="Red"></asp:Label>
 <div>
     Heading&nbsp;&nbsp; 
             &nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:TextBox ID="txtHeading" runat="server"></asp:TextBox></td>
+                <asp:TextBox ID="txtHeading" runat="server"></asp:TextBox>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <asp:Button ID="btnAddHeading" runat="server" Text="Insert Heading" OnClientClick="return AddTempHeading();" />
-    <%--<asp:Button ID="btnAddHeading" runat="server" OnClientClick="return AddTempHeading();" Text="Insert Heading" OnClick="btnAddHeading_Click" />--%></td>
+    <%--<asp:Button ID="btnAddHeading" runat="server" OnClientClick="return AddTempHeading();" Text="Insert Heading" OnClick="btnAddHeading_Click" />--%>
                         <br />
     <br />
     <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
@@ -59,6 +61,7 @@
             autoEscape: false,
             autoOpen: true
         });
+        $("#lblError").hide();
     });
 
     function getjson() {
@@ -81,7 +84,7 @@
         $('#tree2').tree(
            'addNodeAfter',
            {
-               CourseItemID: node.CourseItemID,
+               CourseItemID: 0,
                ItemID: node.ItemID, // It is HeadingID here 
                CIOrder: node.CIOrder, // Manage leter
                ItemType: 1, // 1 for Heading              
@@ -111,7 +114,7 @@
         $('#tree2').tree(
            'addNodeAfter',
            {
-               CourseItemID: node.CourseItemID,
+               CourseItemID: 0,
                ItemID: $("#<%=txtAddPlugg.ClientID%>").val(),
                CIOrder: node.CIOrder, // Manage leter
                ItemType: 0, // 0 for plugg              
