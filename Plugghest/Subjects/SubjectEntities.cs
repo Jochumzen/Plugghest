@@ -20,20 +20,23 @@ using System.Collections.Generic;
 namespace Plugghest.Subjects
 {
     [TableName("Subjects")]
-    [PrimaryKey("SubjectID", AutoIncrement = true)]
+    [PrimaryKey("SubjectId", AutoIncrement = true)]
     public class Subject
     {
-        public int SubjectID { get; set; }
+        public int SubjectId { get; set; }
 
         [ColumnName("Title")]
         public string label { get; set; }
 
-        public int? Mother { get; set; }
-
-        [IgnoreColumn]
-        public List<Subject> children { get; set; }
+        public int? MotherId { get; set; }
 
         public int SubjectOrder { get; set; }
+
+        [IgnoreColumn]
+        public Subject Mother { get; set; }
+
+        [IgnoreColumn]
+        public IList<Subject> children { get; set; }
 
     }
 

@@ -67,20 +67,12 @@ namespace Plugghest.Subjects
             {
                 var repository = ctx.GetRepository<Subject>();
                 if (mother == null)
-                    sublist = repository.Find("WHERE Mother IS NULL AND SubjectOrder >" + order + " ORDER BY SubjectOrder");
+                    sublist = repository.Find("WHERE MotherId IS NULL AND SubjectOrder >" + order + " ORDER BY SubjectOrder");
                 else
-                    sublist = repository.Find("WHERE Mother=" + mother + "AND SubjectOrder >" + order + " ORDER BY SubjectOrder");
+                    sublist = repository.Find("WHERE MotherId=" + mother + "AND SubjectOrder >" + order + " ORDER BY SubjectOrder");
             }
             return sublist;
         }
-
-        //public void UpdateSubjectOrder(int SubjectId, int Order)
-        //{
-        //    using (IDataContext ctx = DataContext.Instance())
-        //    {
-        //        ctx.Execute(CommandType.Text, "update SubjectItems set [Order]=" + Order + " where Subjectid=" + SubjectId);
-        //    }
-        //}
 
     }
 }

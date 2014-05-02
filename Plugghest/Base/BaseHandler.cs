@@ -36,6 +36,7 @@ namespace Plugghest.Base
             try
             {
                 pc.PluggId = p.PluggId;
+                pc.Title = p.Title;
                 if (pc.LatexText != null)
                 {
                     LatexToMathMLConverter myConverter = new LatexToMathMLConverter(pc.LatexText);

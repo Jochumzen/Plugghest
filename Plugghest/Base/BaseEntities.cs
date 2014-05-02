@@ -13,6 +13,7 @@ namespace Plugghest.Base
         OnlyMe
     }
 
+    // https://github.com/Jochumzen/Plugghest/wiki/Plugg
     [TableName("Pluggs")]
     //setup the primary key for table
     [PrimaryKey("PluggId", AutoIncrement = true)]
@@ -34,6 +35,7 @@ namespace Plugghest.Base
         { }
     }
 
+    // https://github.com/Jochumzen/Plugghest/wiki/PluggContent
     [TableName("PluggContents")]
     [PrimaryKey("PluggContentId", AutoIncrement = true)]
     public class PluggContent
@@ -41,6 +43,7 @@ namespace Plugghest.Base
         public int PluggContentId { get; set; }
         public int PluggId { get; set; }
         public string CultureCode { get; set; }
+        public string Title { get; set; }
         public string HtmlText { get; set; }
         public string LatexText { get; set; }
         public string LatexTextInHtml { get; set; }

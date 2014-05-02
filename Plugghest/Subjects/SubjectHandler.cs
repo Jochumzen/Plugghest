@@ -34,38 +34,25 @@ namespace Plugghest.Subjects
             return subjectcntr.GetSubjectsFromMotherWhereOrderGreaterThan(mother, order);
         }
 
-        //Recursive function for create tree....
+        public IList<Subject> FlatToHierarchy(IEnumerable<Subject> list, int motherId = 0)
+        {
+            return (from i in list
+                    where i.MotherId == motherId
+                    select new Subject
+                    {
+                        SubjectId = i.SubjectId,
+                        SubjectOrder = i.SubjectOrder,
+                        MotherId = i.MotherId,
+                        label = i.label,
+                        Mother = i,
+                        children = FlatToHierarchy(list, i.SubjectId)
+                    }).ToList();
+        }
+
         public IList<Subject> GetSubjectsAsTree()
         {
             IEnumerable<Subject> source = GetAllSubjects();
-
-            var groups = source.GroupBy(i => i.Mother);
-
-            var roots = groups.FirstOrDefault(g => g.Key.HasValue == false).ToList();
-
-            if (roots.Count > 0)
-            {
-                var dict = groups.Where(g => g.Key.HasValue).ToDictionary(g => g.Key.Value, g => g.ToList());
-                for (int i = 0; i < roots.Count; i++)
-                    AddChildren(roots[i], dict);
-            }
-
-            return roots;
-        }
-
-        //To Add Child
-        private void AddChildren(Subject node, IDictionary<int, List<Subject>> source)
-        {
-            if (source.ContainsKey(node.SubjectID))
-            {
-                node.children = source[node.SubjectID];
-                for (int i = 0; i < node.children.Count; i++)
-                    AddChildren(node.children[i], source);
-            }
-            else
-            {
-                node.children = new List<Subject>();
-            }
+            return FlatToHierarchy(source.ToList());
         }
 
     }

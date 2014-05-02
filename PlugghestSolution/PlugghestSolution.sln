@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugghest_Subjects", "..\Plugghest_Subjects\Plugghest_Subjects.csproj", "{7D61A32C-0F21-453F-A981-BD8E5A3A5304}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".build", ".build", "{4149E2A2-D638-4070-B191-5B7536EA3146}"
 	ProjectSection(SolutionItems) = preProject
 		Build.proj = Build.proj
@@ -38,16 +36,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslateText", "..\Transla
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditCourse", "..\EditCourse\EditCourse.csproj", "{D533107B-AB08-4889-90C3-60E444A143A6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EditSubjects", "..\EditSubjects\EditSubjects.csproj", "{86C4AB59-64AA-47FA-9845-6EEFCC4CE67B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7D61A32C-0F21-453F-A981-BD8E5A3A5304}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D61A32C-0F21-453F-A981-BD8E5A3A5304}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7D61A32C-0F21-453F-A981-BD8E5A3A5304}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7D61A32C-0F21-453F-A981-BD8E5A3A5304}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FB57AF86-0993-4BBF-9281-784BF3232F41}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FB57AF86-0993-4BBF-9281-784BF3232F41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB57AF86-0993-4BBF-9281-784BF3232F41}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -100,6 +96,10 @@ Global
 		{D533107B-AB08-4889-90C3-60E444A143A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D533107B-AB08-4889-90C3-60E444A143A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D533107B-AB08-4889-90C3-60E444A143A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86C4AB59-64AA-47FA-9845-6EEFCC4CE67B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86C4AB59-64AA-47FA-9845-6EEFCC4CE67B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86C4AB59-64AA-47FA-9845-6EEFCC4CE67B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86C4AB59-64AA-47FA-9845-6EEFCC4CE67B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
