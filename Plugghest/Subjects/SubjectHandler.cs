@@ -29,11 +29,6 @@ namespace Plugghest.Subjects
             return subjectcntr.GetSubject(subjectId);
         }
 
-        public IEnumerable<Subject> GetSubjectsFromMotherWhereOrderGreaterThan(int? mother, int order)
-        {
-            return subjectcntr.GetSubjectsFromMotherWhereOrderGreaterThan(mother, order);
-        }
-
         public IList<Subject> FlatToHierarchy(IEnumerable<Subject> list, int motherId = 0)
         {
             return (from i in list
@@ -52,7 +47,7 @@ namespace Plugghest.Subjects
         public IList<Subject> GetSubjectsAsTree()
         {
             IEnumerable<Subject> source = GetAllSubjects();
-            return FlatToHierarchy(source.ToList());
+            return FlatToHierarchy(source);
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using DotNetNuke.Entities.Tabs;
+﻿using System.Security.Cryptography.X509Certificates;
+using DotNetNuke.Entities.Tabs;
 using DotNetNuke.Services.Localization;
 using Latex2MathML;
 using Plugghest.DNN;
@@ -161,10 +162,10 @@ namespace Plugghest.Base
                 DeletePlugg(p);
         }
 
-        public IEnumerable<Plugg> GetPluggsInCourse(int courseId)
-        {
-            return rep.GetPluggsInCourse(courseId);
-        }
+        //public IEnumerable<Plugg> GetPluggsInCourse(int courseId)
+        //{
+        //    return rep.GetPluggsInCourse(courseId);
+        //}
 
         #endregion
 
@@ -207,7 +208,7 @@ namespace Plugghest.Base
             {
                 foreach (CourseItem ci in cis)
                 {
-                    ci.CourseID = c.CourseId;
+                    ci.CourseId = c.CourseId;
                     rep.CreateCourseItem(ci);
                 }
             }
@@ -258,7 +259,7 @@ namespace Plugghest.Base
                 h.DeleteTab(getTab);
             }
 
-            var cis = rep.GetCourseItemsForCourse(c.CourseId);
+            var cis = rep.GetItemsInCourse(c.CourseId);
             foreach (CourseItem ciDelete in cis)
             {
                 rep.DeleteCourseItem(ciDelete);
@@ -271,19 +272,69 @@ namespace Plugghest.Base
 
         #region CourseItem
 
-        public void CreateCoursePlugg(CourseItem cp)
-        {
-            rep.CreateCourseItem(cp);
-        }
-
         public IEnumerable<CourseItem> GetCourseItems(int CourseID, int ItemID)
         {
             return rep.GetCourseItems(CourseID, ItemID);
         }
 
-        public IEnumerable<CourseItem> GetCourseItemsForCourse(int CourseID)
+        public List<CourseItem> GetItemsInCourse(int courseId)
         {
-            return rep.GetCourseItemsForCourse(CourseID);
+            return rep.GetItemsInCourse(courseId);
+        }
+
+        public IList<CourseItem> FlatToHierarchy(IEnumerable<CourseItem> list, int motherId = 0)
+        {
+            return (from i in list
+                    where i.MotherId == motherId
+                    select new CourseItem
+                    {
+                        CourseItemId = i.CourseItemId,
+                        CourseId = i.CourseId,
+                        ItemId = i.ItemId,
+                        CIOrder = i.CIOrder,
+                        ItemType = i.ItemType,
+                        MotherId = i.MotherId,
+                        //Mother = i,
+                        label = i.label,
+                        name = i.name,
+                        children = FlatToHierarchy(list, i.CourseItemId)
+                    }).ToList();
+        }
+
+        public IList<CourseItem> GetCourseItemsAsTree(int courseId)
+        {
+            List<CourseItem> source = GetItemsInCourse(courseId);
+            return FlatToHierarchy(source);
+        }
+
+        //It is assumed that all CourseItems are in the same course
+        public void SaveCourseItems(IList<CourseItem> cis, int courseId, int motherId = 0)
+        {
+            CourseItemEntity cie = new CourseItemEntity();
+            int ciOrder = 1;
+            foreach (CourseItem ci in cis)
+            {
+                DeleteCourseItem(ci); //Deletes heading as well if item is a heading
+
+                if (ci.ItemType == ECourseItemType.Heading)
+                {
+                    CourseHeadings ch = new CourseHeadings();
+                    ch.Title = ci.name;
+                    rep.CreateHeading(ch);
+                    cie.ItemId = ch.HeadingID;
+                }
+                else
+                    cie.ItemId = ci.ItemId; 
+                
+                cie.CourseId = courseId;
+                cie.CIOrder = ciOrder;
+                cie.ItemType = ci.ItemType;
+                cie.MotherId = motherId;
+                rep.CreateCourseItem(cie);
+                ciOrder += 1;
+                if (ci.children != null)
+                    SaveCourseItems(ci.children, courseId, cie.CourseItemId);
+            }
         }
 
         public void CreateCourseItem(CourseItem ci)
@@ -298,8 +349,11 @@ namespace Plugghest.Base
 
         public void DeleteCourseItem(CourseItem ci)
         {
+            if (ci.ItemType == ECourseItemType.Heading)
+                rep.DeleteHeading(new CourseHeadings() {HeadingID =ci.ItemId});
             rep.DeleteCourseItem(ci);
         }
+
         #endregion
 
         #region Other
@@ -314,10 +368,10 @@ namespace Plugghest.Base
             return rep.GetCoursesForDNN();
         }
 
-        public List<CourseItem> GetCourseItemsForTree(int CourseID)
-        {
-            return rep.GetCourseItemsForTree(CourseID);
-        }
+        //public List<CourseItem> GetCourseItemsForTree(int CourseID)
+        //{
+        //    return rep.GetCourseItemsForTree(CourseID);
+        //}
 
         #endregion
         #region CourseHeading

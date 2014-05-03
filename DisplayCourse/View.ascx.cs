@@ -60,10 +60,10 @@ namespace Plugghest.Modules.DisplayCourse
 
                         var tc = new TabController();
 
-                        IEnumerable<CourseItem> cps = bh.GetCourseItemsForCourse(c.CourseId);
+                        IEnumerable<CourseItem> cps = bh.GetItemsInCourse(c.CourseId);
                         if (cps != null)
                         {
-                            Plugg p = bh.GetPlugg(cps.First().ItemID);
+                            Plugg p = bh.GetPlugg(cps.First().ItemId);
                             TabInfo ti = tc.GetTabByName(p.PluggId.ToString() + ": " + p.Title , PortalId);
                             if (ti != null)
                                 LnkBeginCourse.NavigateUrl = DotNetNuke.Common.Globals.NavigateURL(ti.TabID, "", "",

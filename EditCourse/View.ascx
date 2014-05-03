@@ -1,10 +1,10 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="View.ascx.cs" Inherits="Plugghest.Modules.EditCourse.View" %>
 
-<%--<link href="../DesktopModules/Plugghest_Subjects/js/jqtree.css" rel="stylesheet" />
-<script src="../DesktopModules/Plugghest_Subjects/js/tree.jquery.js"></script>--%>
+<%-- <link href="/DesktopModules/Plugghest_Subjects/js/jqtree.css" rel="stylesheet" />
+<script src="/DesktopModules/Plugghest_Subjects/js/tree.jquery.js"></script>--%>
 
-<link href="../js/js_tree/jqtree.css" rel="stylesheet" />
-<script src="../js/js_tree/tree.jquery.js"></script>
+<link href="/js/js_tree/jqtree.css" rel="stylesheet" />
+<script src="/js/js_tree/tree.jquery.js"></script> 
 
 <div class="resp_container">
     <div class="tree">
@@ -22,7 +22,8 @@
                 <asp:TextBox ID="txtHeading" runat="server"></asp:TextBox>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <asp:Button ID="btnAddHeading" runat="server" Text="Insert Heading" OnClientClick="return AddTempHeading();" />
+          <input type="button" id="addheading" value="Add Heading" onclick="return addHeading()" />
+
     <%--<asp:Button ID="btnAddHeading" runat="server" OnClientClick="return AddTempHeading();" Text="Insert Heading" OnClick="btnAddHeading_Click" />--%>
                         <br />
     <br />
@@ -32,7 +33,6 @@
             <td>&nbsp;&nbsp;&nbsp;
                 <asp:TextBox ID="txtAddPlugg" runat="server"></asp:TextBox></td>
             <asp:Label ID="lblPlugg" runat="server"></asp:Label>
-            <asp:Label ID="lblTest" runat="server" Text="Label"></asp:Label>
             <td></td>
         </ContentTemplate>
         <Triggers>
@@ -53,13 +53,13 @@
 </div>
 
 <script type="text/javascript">
-
     $(document).ready(function () {
         $('#tree2').tree({
             data: eval($("#" + '<%=hdnTreeData.ClientID%>').attr('value')),
             selectable: true,
             autoEscape: false,
-            autoOpen: true
+            autoOpen: true,
+            dragAndDrop: true
         });
         $("#lblError").hide();
     });
@@ -67,10 +67,9 @@
     function getjson() {
         var record = $('#tree2').tree('toJson');
         $("#<%=hdnGetJosnResult.ClientID%>").val(record);
-        alert($("#<%=hdnGetJosnResult.ClientID%>").val());
-        //return false;
     }
-    function AddTempHeading() {
+
+    function addHeading() {
         var node = $('#tree2').tree('getSelectedNode');
         var Error = "";
         if (!node)
@@ -82,24 +81,15 @@
             return false;
         }
         $('#tree2').tree(
-           'addNodeAfter',
-           {
-               CourseItemID: 0,
-               ItemID: node.ItemID, // It is HeadingID here 
-               CIOrder: node.CIOrder, // Manage leter
-               ItemType: 1, // 1 for Heading              
-               Mother: node.Mother,
-               label: $("#<%=txtHeading.ClientID%>").val(), // No need for heading
-               HeadingID: node.HeadingID,
-               Title: $("#<%=txtHeading.ClientID%>").val(),
-           },
-           node
-       );
-           $("#<%=hdnNodeCourseItemID.ClientID%>").val(node.CourseItemID);
-        //var record = $('#tree2').tree('toJson');
-        //alert(record);
-        return false;
+            'addNodeAfter',
+            {
+                label: $("#<%=txtHeading.ClientID%>").val(),
+                ItemType: 1, // 1 for Heading
+            },
+            node
+        );
     }
+
     function AddTempPlugg() {
         var node = $('#tree2').tree('getSelectedNode');
         var Error = "";
@@ -114,21 +104,12 @@
         $('#tree2').tree(
            'addNodeAfter',
            {
-               CourseItemID: 0,
                ItemID: $("#<%=txtAddPlugg.ClientID%>").val(),
-               CIOrder: node.CIOrder, // Manage leter
                ItemType: 0, // 0 for plugg              
-               Mother: node.Mother,
                label: $("#<%=lblPlugg.ClientID%>").text(),
-               HeadingID: node.HeadingID, // No need here
-               Title: $("#<%=lblPlugg.ClientID%>").text(),
            },
            node
-       );
-           $("#<%=hdnNodeCourseItemID.ClientID%>").val(node.CourseItemID);
-        //var record = $('#tree2').tree('toJson');
-        //alert(record);
-        return false;
+        );
     }
 
     function RemoveNode() {

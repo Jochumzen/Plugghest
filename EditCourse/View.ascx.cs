@@ -23,6 +23,7 @@ using DotNetNuke.UI.Utilities;
 using System.Web.Script.Serialization;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.UI;
 
 namespace Plugghest.Modules.EditCourse
 {
@@ -48,18 +49,19 @@ namespace Plugghest.Modules.EditCourse
             {
                 try
                 {
-                    if (this.Request.QueryString["cid"] != null && this.Request.QueryString["cid"].ToString().Trim() != "")
+                    if (Request.QueryString["cid"] != null && Request.QueryString["cid"].Trim() != "")
                     {
                         string CID = this.Request.QueryString["cid"].ToString();
                         int courseid;
-                        if (int.TryParse(CID, out courseid))//check is number...
+                        if (int.TryParse(CID, out courseid)) //check is number...
                         {
                             BindTree(courseid);
                         }
                     }
                     else
                     {
-                        Page.ClientScript.RegisterStartupScript(this.GetType(), "StartupScriptforTree", "alert('Please Select Course');", true);
+                        Page.ClientScript.RegisterStartupScript(this.GetType(), "StartupScriptforTree",
+                            "alert('Please Select Course');", true);
                     }
                 }
                 catch (Exception exc) //Module failed to load
@@ -68,7 +70,6 @@ namespace Plugghest.Modules.EditCourse
                 }
             }
         }
-
 
         protected void btnAddHeading_Click(object sender, EventArgs e)
         {
@@ -82,82 +83,24 @@ namespace Plugghest.Modules.EditCourse
             //var tree = BuildTree(person);
         }
 
-
-        public void BindTree(int courseid)
+        public void BindTree(int courseId)
         {
-            BaseHandler objcoursehdler = new BaseHandler();
-            var Courselist = objcoursehdler.GetCourseItemsForTree(courseid);
-
-            var tree = BuildTree(Courselist);
+            BaseHandler bh = new BaseHandler();
+            var tree = bh.GetCourseItemsAsTree(courseId);
 
             JavaScriptSerializer TheSerializer = new JavaScriptSerializer();
-
             hdnTreeData.Value = TheSerializer.Serialize(tree);
 
-
-
-        }
-
-
-        #region Create Tree
-
-        //Recursive function for create tree....
-        public IList<CourseItem> BuildTree(IEnumerable<CourseItem> source)
-        {
-            var groups = source.GroupBy(i => i.Mother);
-
-
-            var roots = groups.FirstOrDefault(g => g.Key.HasValue == false).ToList();
-
-            if (roots.Count > 0)
-            {
-                var dict = groups.Where(g => g.Key.HasValue).ToDictionary(g => g.Key.Value, g => g.ToList());
-                for (int i = 0; i < roots.Count; i++)
-                    AddChildren(roots[i], dict);
-            }
-
-            return roots;
-        }
-
-        //To Add Child
-        private void AddChildren(CourseItem node, IDictionary<int, List<CourseItem>> source)
-        {
-            if (source.ContainsKey(node.CourseItemID))
-            {
-                node.children = source[node.CourseItemID];
-                for (int i = 0; i < node.children.Count; i++)
-                    AddChildren(node.children[i], source);
-            }
-            else
-            {
-                node.children = new List<CourseItem>();
-            }
-        }
-
-        #endregion
-
-        public ModuleActionCollection ModuleActions
-        {
-            get
-            {
-                var actions = new ModuleActionCollection
-                    {
-                        {
-                            GetNextActionID(), Localization.GetString("EditModule", LocalResourceFile), "", "", "",
-                            EditUrl(), false, SecurityAccessLevel.Edit, true, false
-                        }
-                    };
-                return actions;
-            }
         }
 
         protected void btnAddplugg_Click(object sender, EventArgs e)
         {
-            //bool ischeck = CheckPlugg();
-            //if (ischeck)
-            //{
-            //    ScriptManager.RegisterStartupScript(this.UpdatePanel1, GetType(), "Callfunction", "AddTempPlugg();", true);
-            //}
+            bool ischeck = CheckPlugg();
+            if (ischeck)
+            {
+                ScriptManager.RegisterStartupScript(this.UpdatePanel1, GetType(), "Callfunction", "AddTempPlugg();",
+                    true);
+            }
         }
 
         protected Boolean CheckPlugg()
@@ -170,7 +113,7 @@ namespace Plugghest.Modules.EditCourse
             if (!string.IsNullOrEmpty(txtAddPlugg.Text))
             {
                 int num;
-                bool isNumeric = int.TryParse(txtAddPlugg.Text, out num);//check number.....
+                bool isNumeric = int.TryParse(txtAddPlugg.Text, out num); //check number.....
                 if (isNumeric)
                 {
                     Plugg p = ph.GetPlugg(num);
@@ -195,75 +138,28 @@ namespace Plugghest.Modules.EditCourse
             return ischecked;
         }
 
-        public string SaveCourse(List<CourseItem> data)
-        {
-            System.Text.StringBuilder intReturnId = new System.Text.StringBuilder();
-            if (data != null)
-            {
-                if (data.Count > 0)
-                {
-                    foreach (CourseItem item in data)
-                    {
-                        // save code 
-                        Plugghest.Base.BaseHandler objCourseHandler = new BaseHandler();
-                        CourseItem objcourseitem = new CourseItem();
-                        objcourseitem.CourseItemID = item.CourseItemID;
-                        objcourseitem.ItemID = item.ItemID;
-                        objcourseitem.ItemType = item.ItemType;
-                        if (item.Mother != null)
-                        {
-                            objcourseitem.Mother = Convert.ToInt32(item.Mother);
-                        }
-                        objcourseitem.CIOrder = item.CIOrder;
-                        objcourseitem.CourseID = Convert.ToInt32(this.Request.QueryString["cid"]);
-                        objcourseitem.CourseID = 25;
-                        if (item.ItemType == 1 && objcourseitem.CourseItemID == 0)
-                        {
-                            CourseHeadings objcourseHeading = new CourseHeadings();
-                            objcourseHeading.Title = item.Title;
-                            objcourseHeading = objCourseHandler.CreateHeading(objcourseHeading);
-
-                            objcourseitem.ItemID = objcourseHeading.HeadingID;
-                        }
-
-                        //txtAddPlugg.Text = (item.CourseItemID + item.CourseID + item.ItemType).ToString();
-
-                        if (objcourseitem.CourseItemID == 0)
-                        {
-
-
-                            objCourseHandler.CreateCourseItem(objcourseitem);
-                        }
-                        else
-                        {
-                            objCourseHandler.UpdateCourseItem(objcourseitem);
-                        }
-                        intReturnId.Append(objcourseitem.CourseItemID).Append(",");
-                        //List<CourseTree> data1 = data.Where(x => x.Mother == item.CourseItemID).ToList();
-                        intReturnId.Append(SaveCourse(item.children));
-                    }
-                }
-            }
-            return intReturnId.ToString();
-        }
-
-
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            Plugghest.Base.BaseHandler objCourseHandler = new BaseHandler();
-            string jsonTreeRecord = hdnGetJosnResult.Value;
+            BaseHandler bh = new BaseHandler();
             var jss = new JavaScriptSerializer();
-            var data = jss.Deserialize<List<CourseItem>>(jsonTreeRecord);
+            int courseId = Convert.ToInt32(Page.Request.QueryString["cid"]);
+            bh.SaveCourseItems(jss.Deserialize<List<CourseItem>>(hdnGetJosnResult.Value), courseId);
+            BindTree(courseId);
+        }
 
-            List<string> strIDs = SaveCourse(data).Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries).ToList();
-
-            List<CourseItem> objAllCourseItem = (List<CourseItem>)objCourseHandler.GetCourseItemsForCourse(Convert.ToInt32(this.Request.QueryString["cid"])).ToList();
-            List<CourseItem> objCourseToDelete = objAllCourseItem.Where(x => !strIDs.Contains(x.CourseItemID.ToString())).ToList();
-            foreach (CourseItem item in objCourseToDelete)
+        public ModuleActionCollection ModuleActions
+        {
+            get
             {
-                objCourseHandler.DeleteCourseItem(item);
+                var actions = new ModuleActionCollection
+                {
+                    {
+                        GetNextActionID(), Localization.GetString("EditModule", LocalResourceFile), "", "", "",
+                        EditUrl(), false, SecurityAccessLevel.Edit, true, false
+                    }
+                };
+                return actions;
             }
-            BindTree(Convert.ToInt32(this.Request.QueryString["cid"].ToString()));
         }
     }
 }

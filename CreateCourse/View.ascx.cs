@@ -141,10 +141,10 @@ namespace Plugghest.Modules.CreateCourse
                 for (int i = 0; i < itempluggs.Length; i++)
                 {
                     ci = new CourseItem();
-                    ci.ItemID = Convert.ToInt32(itempluggs[i]);
+                    ci.ItemId = Convert.ToInt32(itempluggs[i]);
                     ci.CIOrder = i + 1;
                     ci.ItemType = 0;
-                    ci.Mother = 0;
+                    ci.MotherId = 0;
                     cis.Add(ci);
                 }
             }

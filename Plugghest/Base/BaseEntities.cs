@@ -14,6 +14,12 @@ namespace Plugghest.Base
         OnlyMe
     }
 
+    public enum ECourseItemType
+    {
+        Plugg = 0,
+        Heading
+    }
+
     // https://github.com/Jochumzen/Plugghest/wiki/Plugg
     [TableName("Pluggs")]
     //setup the primary key for table
@@ -70,31 +76,25 @@ namespace Plugghest.Base
     }
 
     [TableName("CourseItems")]
-    [PrimaryKey("CourseItemID", AutoIncrement = true)]
+    [PrimaryKey("CourseItemId", AutoIncrement = true)]
     [Cacheable("CourseItems", CacheItemPriority.Normal, 20)]
-    public class CourseItem
+    public class CourseItemEntity
     {
 
-        public int CourseItemID { get; set; }
-
-        public int CourseID { get; set; }
-
-        public int ItemID { get; set; }
-
+        public int CourseItemId { get; set; }
+        public int CourseId { get; set; }
+        public int ItemId { get; set; }
         public int CIOrder { get; set; }
+        public ECourseItemType ItemType { get; set; }
+        public int MotherId { get; set; }
+    }
 
-        public int ItemType { get; set; }
-
-        public int? Mother { get; set; }
-        [IgnoreColumn]
-        public List<CourseItem> children { get; set; }
-        [IgnoreColumn]
+    public class CourseItem : CourseItemEntity
+    {
+        public CourseItem Mother { get; set; }
+        public IList<CourseItem> children { get; set; }
         public string label { get; set; }
-
-        [IgnoreColumn]
-        public string Title { get; set; }
-        [IgnoreColumn]
-        public int HeadingID { get; set; }
+        public string name { get; set; }
     }
 
     #region TemporaryDNN

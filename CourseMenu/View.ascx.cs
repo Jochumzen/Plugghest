@@ -89,10 +89,10 @@ namespace Plugghest.Modules.CourseMenu
             }
 
             var tc = new TabController();
-            IEnumerable<CourseItem> cps = bh.GetCourseItemsForCourse(courseId);
+            IEnumerable<CourseItem> cps = bh.GetItemsInCourse(courseId);
             foreach (CourseItem cp in cps)
             {
-                Plugg p = bh.GetPlugg(cp.ItemID);
+                Plugg p = bh.GetPlugg(cp.ItemId);
                 TabInfo ti = tc.GetTabByName(p.PluggId.ToString() + ": " + p.Title , PortalId);
                 string myUrl = DotNetNuke.Common.Globals.NavigateURL(ti.TabID, "", "", "&c=" + courseId);
                 Menu_Pluggs.Items.Add(new MenuItem(p.PluggId.ToString() + ": " + p.Title, "", "", myUrl));

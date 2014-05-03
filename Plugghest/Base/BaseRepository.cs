@@ -60,13 +60,6 @@ namespace Plugghest.Base
             return t;
         }
 
-        public IEnumerable<Plugg> GetPluggsInCourse(int courseId)
-        {
-            IEnumerable<Plugg> t = null;
-            //Todo: Complete GetPluggsInCourse
-            return t;
-        }
-
         public void DeleteAllPluggs()
         {
             using (IDataContext ctx = DataContext.Instance())
@@ -194,46 +187,58 @@ namespace Plugghest.Base
 
         #region CourseItem
 
-        public void CreateCourseItem(CourseItem t)
+        public void CreateCourseItem(CourseItemEntity t)
         {
             using (IDataContext ctx = DataContext.Instance())
             {
-
-                var rep = ctx.GetRepository<CourseItem>();
+                var rep = ctx.GetRepository<CourseItemEntity>();
                 rep.Insert(t);
             }
         }
 
-        public void UpdateCourseItem(CourseItem t)
+        public void UpdateCourseItem(CourseItemEntity t)
         {
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rep = ctx.GetRepository<CourseItem>();
-                try
-                {
-                    rep.Update(t);
-                }
-                catch (Exception ex)
-                {
-                }
+                var rep = ctx.GetRepository<CourseItemEntity>();
+                rep.Update(t);
             }
         }
-        public void DeleteCourseItem(CourseItem t)
+
+        public void DeleteCourseItem(CourseItemEntity t)
         {
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rep = ctx.GetRepository<CourseItem>();
+                var rep = ctx.GetRepository<CourseItemEntity>();
                 rep.Delete(t);
             }
         }
 
-        public IEnumerable<CourseItem> GetCourseItemsForCourse(int CourseID)
+        public CourseItemEntity GetCourseItem(int courseItemId)
         {
-            IEnumerable<CourseItem> cps;
+            CourseItemEntity p;
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<CourseItemEntity>();
+                p = rep.GetById(courseItemId);
+            }
+            return p;
+        }
+
+        public List<CourseItem> GetItemsInCourse(int courseId)
+        {
+            List<CourseItem> cps = new List<CourseItem>();
+
             using (IDataContext context = DataContext.Instance())
             {
-                var repository = context.GetRepository<CourseItem>();
-                cps = repository.Find("WHERE CourseID = @0 ORDER BY CIOrder", CourseID);
+                string sqlPlugg = "SELECT Title AS label, CourseItemId, CourseId, ItemId, CIOrder, ItemType, MotherId FROM CourseItems INNER JOIN Pluggs ON PluggID=ItemId WHERE ItemType=" + (int)ECourseItemType.Plugg + " AND CourseId=" + courseId;
+                string sqlHeading = "SELECT Title AS label, CourseItemId, CourseId, ItemId, CIOrder, ItemType, MotherId FROM CourseItems INNER JOIN CourseHeadings ON HeadingID=ItemId WHERE ItemType=" + (int)ECourseItemType.Heading + " AND CourseId=" + courseId;
+                var rec = context.ExecuteQuery<CourseItem>(CommandType.Text , sqlPlugg + " UNION " + sqlHeading + " ORDER BY CIOrder");
+
+                foreach (var ci in rec)
+                {
+                    cps.Add(new CourseItem { CourseItemId = ci.CourseItemId, CourseId = ci.CourseId, ItemId = ci.ItemId, CIOrder = ci.CIOrder, ItemType = ci.ItemType, MotherId = ci.MotherId, label = ci.label, name = ci.label});
+                } 
             }
             return cps;
         }
@@ -249,8 +254,6 @@ namespace Plugghest.Base
             }
             return cis;
         }
-
-
 
         #endregion
 
@@ -290,25 +293,7 @@ namespace Plugghest.Base
             return cs;
         }
 
-        public List<CourseItem> GetCourseItemsForTree(int CourseID)
-        {
-            List<CourseItem> objsubjectitem = new List<CourseItem>();
-            using (IDataContext ctx = DataContext.Instance())
-            {
-                var rec = ctx.ExecuteQuery<CourseItem>(CommandType.Text, @"select Pluggs.Title as Title,Mother,ItemType,CourseItemID, CIOrder ,ItemID  from CourseItems join Pluggs on Pluggs.PluggId=CourseItems.Itemid  where CourseID=" + CourseID + " and ItemType = 0 union select CourseHeadings.Title as Title,Mother,ItemType,CourseItemID,CIOrder,ItemID  from CourseItems join CourseHeadings on CourseHeadings.HeadingID = CourseItems.ItemID where CourseID=" + CourseID + " and ItemType = 1 order by CIOrder");
-
-                foreach (var val in rec)
-                {
-                    objsubjectitem.Add(new CourseItem { label = val.Title, Title = val.Title, Mother = val.Mother, CIOrder = val.CIOrder, CourseItemID = val.CourseItemID, ItemType = val.ItemType, ItemID = val.ItemID });
-                }
-            }
-            return objsubjectitem;
-        }
-
         #endregion
-
-
-
 
         #region CourseHeading
         public CourseHeadings CreateHeading(CourseHeadings t)
@@ -328,6 +313,15 @@ namespace Plugghest.Base
             {
                 var rep = ctx.GetRepository<CourseHeadings>();
                 rep.Update(t);
+            }
+        }
+
+        public void DeleteHeading(CourseHeadings t)
+        {
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<CourseHeadings>();
+                rep.Delete(t);
             }
         }
         #endregion
