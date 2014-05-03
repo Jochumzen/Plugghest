@@ -50,35 +50,81 @@ namespace Plugghest.Modules.DisplayPlugg
             {
                 if (!IsPostBack)
                 {
-                    BaseHandler plugghandler = new BaseHandler();
-
-                    int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
-
-                    //Get current culture
-                    string curlan = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
-
-                    Plugg p = plugghandler.GetPlugg(pluggid);
-                    PluggContent pc = plugghandler.GetPluggContent(pluggid,curlan);
-
-                    if (p.YouTubeCode == null)
-                    {
-                        lblYoutube.Text = "[No Video]";
-                    }
-                    else
-                    {
-                        Youtube myYouTube = new Youtube(p.YouTubeCode);
-                        if (myYouTube.IsValid)
-                            lblYoutube.Text = myYouTube.GetIframeString(curlan.Substring(3, 2));
-                    }
-
-                    lblHtmlText.Text = Server.HtmlDecode(pc.HtmlText); ;
-                    lblLatexTextInHtml.Text = Server.HtmlDecode(pc.LatexTextInHtml);
+                    PageLoadFun();
                 }
             }
             catch (Exception exc) //Module failed to load
             {
                 Exceptions.ProcessModuleLoadException(this, exc);
             }
+        }
+
+        private void PageLoadFun()
+        {
+            BaseHandler plugghandler = new BaseHandler();
+
+            int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
+
+            //Get current culture
+            string curlan = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
+
+            Plugg p = plugghandler.GetPlugg(pluggid);
+            PluggContent pc = plugghandler.GetPluggContent(pluggid, curlan);
+
+            SetPageText(curlan, p, pc);
+        }
+
+        private void SetPageText(string curlan, Plugg p, PluggContent pc)
+        {
+            if (p.YouTubeCode == null)
+            {
+                lblYoutube.Text = "[No Video]";
+            }
+            else
+            {
+                Youtube myYouTube = new Youtube(p.YouTubeCode);
+                if (myYouTube.IsValid)
+                    lblYoutube.Text = myYouTube.GetIframeString(curlan.Substring(3, 2));
+            }
+            hdLatextText.Value = pc.LatexText;
+            lblHtmlText.Text = Server.HtmlDecode(pc.HtmlText); ;
+            lblLatexTextInHtml.Text = Server.HtmlDecode(pc.LatexTextInHtml);
+
+            //lblLatexText.Text = pc.LatexText;
+            if (Request.QueryString["c"] != null && !string.IsNullOrWhiteSpace(Request.QueryString["c"]) && Request.QueryString["c"].ToString().ToLower() == "edit")
+            {
+                lblTitle.Text = p.Title;
+                divTitle.Style.Add("display", "block");
+                lblLatexSepretor.Style.Add("display", "block");
+
+            }
+            else
+            {
+                divTitle.Style.Add("display", "none");
+                lblLatexSepretor.Style.Add("display", "none");
+            }
+            //            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "init", @" $('#' + '<%=btnSaveTitle.ClientID%>').hide();
+            //        $('#' + '<%=txtSaveTitle.ClientID%>').hide();
+            //
+            //        $('#' + '<%=btnSaveLatext.ClientID%>').hide();
+            //        $('#' + '<%=txtLatextText.ClientID%>').hide();
+            //
+            //        $('#' + '<%=btnSaveHtmltext.ClientID%>').hide();
+            //        $('#' + '<%=txtHtmlText.ClientID%>').hide();",true);
+
+            //            System.Web.UI.ScriptManager.RegisterClientScriptBlock(
+            //          this,
+            //          typeof(System.Web.UI.Page),
+            //          "ToggleScript",
+            //          @" $('#' + '<%=btnSaveTitle.ClientID%>').hide();
+            //        $('#' + '<%=txtSaveTitle.ClientID%>').hide();
+            //        $('#' + '<%=btnSaveLatext.ClientID%>').hide();
+            //        $('#' + '<%=txtLatextText.ClientID%>').hide();
+            //        $('#' + '<%=btnSaveHtmltext.ClientID%>').hide();
+            //        $('#' + '<%=txtHtmlText.ClientID%>').hide();",
+            //          true);
+            //txtHtmlText.Visible = false;
+
         }
 
         public ModuleActionCollection ModuleActions
@@ -95,5 +141,65 @@ namespace Plugghest.Modules.DisplayPlugg
                 return actions;
             }
         }
+
+        protected void btnSaveTitle_Click(object sender, EventArgs e)
+        {
+            BaseHandler plugghandler = new BaseHandler();
+
+            int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
+
+            string curlan = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
+
+            Plugg p = plugghandler.GetPlugg(pluggid);
+            PluggContent pc = plugghandler.GetPluggContent(pluggid, curlan);
+
+            p.Title = txtSaveTitle.Text;
+            plugghandler.UpdatePlugg(p, pc);
+            SetPageText(curlan, p, pc);
+
+            btnSaveTitle.Style.Add("display", "none");
+            txtSaveTitle.Style.Add("display", "none");
+
+        }
+
+        protected void btnSaveLatext_Click(object sender, EventArgs e)
+        {
+            BaseHandler plugghandler = new BaseHandler();
+
+            int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
+
+            string curlan = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
+
+            Plugg p = plugghandler.GetPlugg(pluggid);
+            PluggContent pc = plugghandler.GetPluggContent(pluggid, curlan);
+
+            pc.LatexText = txtLatextText.Text;
+            plugghandler.UpdatePlugg(p, pc);
+            SetPageText(curlan, p, pc);
+            btnSaveLatext.Style.Add("display", "none");
+            txtLatextText.Style.Add("display", "none");
+        }
+
+        protected void btnSaveHtmltext_Click(object sender, EventArgs e)
+        {
+            BaseHandler plugghandler = new BaseHandler();
+
+            int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
+
+            string curlan = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
+
+            Plugg p = plugghandler.GetPlugg(pluggid);
+            PluggContent pc = plugghandler.GetPluggContent(pluggid, curlan);
+
+            pc.HtmlText = txtHtmlText.Text;
+            plugghandler.UpdatePlugg(p, pc);
+            SetPageText(curlan, p, pc);
+            btnSaveHtmltext.Style.Add("display", "none");
+            //txtHtmlText.Style.Add("display", "none");
+            //txtHtmlText.Visible = false;
+        }
+
+
+
     }
 }
