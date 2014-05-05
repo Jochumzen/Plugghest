@@ -44,6 +44,7 @@ namespace Plugghest.Modules.DisplayPlugg
     /// -----------------------------------------------------------------------------
     public partial class View : DisplayPluggModuleBase, IActionable
     {
+            
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -89,57 +90,35 @@ namespace Plugghest.Modules.DisplayPlugg
             hdLatextText.Value = pc.LatexText;
             lblHtmlText.Text = Server.HtmlDecode(pc.HtmlText); ;
             lblLatexTextInHtml.Text = Server.HtmlDecode(pc.LatexTextInHtml);
-
-            //lblLatexText.Text = pc.LatexText;
-            if (Request.QueryString["c"] != null && !string.IsNullOrWhiteSpace(Request.QueryString["c"]) && Request.QueryString["c"].ToString().ToLower() == "edit")
+            string strPluggTitle = "";
+            strPluggTitle = p.Title;
+            bool IsAuthorized = false;
+            IsAuthorized = (p.WhoCanEdit == EWhoCanEdit.Anyone || p.CreatedByUserId == this.UserId || UserInfo.IsInRole("Administator"));
+            string editQS = Request.QueryString["edit"];
+            if (editQS != null && !string.IsNullOrWhiteSpace(editQS) && editQS.ToLower() == "true" && IsAuthorized)
             {
-                lblTitle.Text = p.Title;
                 divTitle.Style.Add("display", "block");
                 lblLatexSepretor.Style.Add("display", "block");
-
+                btnEditLatextText.Style.Add("display", "block");
+                btnEditHtmlText.Style.Add("display", "block");
+                lblTitle.Text = strPluggTitle;
             }
             else
             {
+                if (IsAuthorized)
+                {
+                    btnEditPlugg.Visible = true;
+                }
                 divTitle.Style.Add("display", "none");
                 lblLatexSepretor.Style.Add("display", "none");
+                btnEditLatextText.Style.Add("display", "none");
+                btnEditHtmlText.Style.Add("display", "none");
             }
-            //            Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "init", @" $('#' + '<%=btnSaveTitle.ClientID%>').hide();
-            //        $('#' + '<%=txtSaveTitle.ClientID%>').hide();
-            //
-            //        $('#' + '<%=btnSaveLatext.ClientID%>').hide();
-            //        $('#' + '<%=txtLatextText.ClientID%>').hide();
-            //
-            //        $('#' + '<%=btnSaveHtmltext.ClientID%>').hide();
-            //        $('#' + '<%=txtHtmlText.ClientID%>').hide();",true);
+            btnCancelLatext.Style.Add("display", "none");
+            btnCancelTitle.Style.Add("display", "none");
+            btnCancelHtmlText.Style.Add("display", "none");
 
-            //            System.Web.UI.ScriptManager.RegisterClientScriptBlock(
-            //          this,
-            //          typeof(System.Web.UI.Page),
-            //          "ToggleScript",
-            //          @" $('#' + '<%=btnSaveTitle.ClientID%>').hide();
-            //        $('#' + '<%=txtSaveTitle.ClientID%>').hide();
-            //        $('#' + '<%=btnSaveLatext.ClientID%>').hide();
-            //        $('#' + '<%=txtLatextText.ClientID%>').hide();
-            //        $('#' + '<%=btnSaveHtmltext.ClientID%>').hide();
-            //        $('#' + '<%=txtHtmlText.ClientID%>').hide();",
-            //          true);
-            //txtHtmlText.Visible = false;
-
-        }
-
-        public ModuleActionCollection ModuleActions
-        {
-            get
-            {
-                var actions = new ModuleActionCollection
-                    {
-                        {
-                            GetNextActionID(), Localization.GetString("EditModule", LocalResourceFile), "", "", "",
-                            EditUrl(), false, SecurityAccessLevel.Edit, true, false
-                        }
-                    };
-                return actions;
-            }
+            System.Web.UI.ScriptManager.RegisterStartupScript(UpdatePanel2, UpdatePanel2.GetType(), "inithide", "$('.dnnForm.dnnTextEditor.dnnClear').hide();", true);
         }
 
         protected void btnSaveTitle_Click(object sender, EventArgs e)
@@ -195,11 +174,31 @@ namespace Plugghest.Modules.DisplayPlugg
             plugghandler.UpdatePlugg(p, pc);
             SetPageText(curlan, p, pc);
             btnSaveHtmltext.Style.Add("display", "none");
-            //txtHtmlText.Style.Add("display", "none");
-            //txtHtmlText.Visible = false;
+
         }
 
+        protected void btnEditPlugg_Click(object sender, EventArgs e)
+        {
+            int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
+            //DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=true");
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=true"));
+            //Response.Redirect("/" + pluggid + "/tabid/"+this.TabId+"/c/edit");
 
+        }
 
+        public ModuleActionCollection ModuleActions
+        {
+            get
+            {
+                var actions = new ModuleActionCollection
+                    {
+                        {
+                            GetNextActionID(), Localization.GetString("EditModule", LocalResourceFile), "", "", "",
+                            EditUrl(), false, SecurityAccessLevel.Edit, true, false
+                        }
+                    };
+                return actions;
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Net.Sockets;
+using System.Security.Cryptography.X509Certificates;
 using DotNetNuke.Entities.Tabs;
 using DotNetNuke.Services.Localization;
 using Latex2MathML;
@@ -28,50 +29,81 @@ namespace Plugghest.Base
             return rep.GetAllPluggs();
         }
 
-        //Create a Plugg, identical PluggContent in all languages and PluggPage
-        public void CreatePlugg(Plugg p, PluggContent pc)
+        public void SavePlugg(PluggContainer p)
         {
-            rep.CreatePlugg(p);
-
-            //Create identical PluggContent in all locales from the single pc (translation later)
             try
             {
-                pc.PluggId = p.PluggId;
-                pc.Title = p.Title;
-                if (pc.LatexText != null)
+                bool isNew = p.ThePlugg.PluggId == 0;
+
+                //Temporary - remove soon
+                p.ThePlugg.Title = "Title no longer here";
+                p.ThePlugg.CreatedByUserId = 1;
+                p.ThePlugg.ModifiedByUserId = 1;
+
+                if (isNew)
+                    rep.CreatePlugg(p.ThePlugg);
+                else
+                    rep.UpdatePlugg(p.ThePlugg);
+
+                //Todo: Update..
+                p.TheTitle.ItemId = p.ThePlugg.PluggId;
+                p.TheTitle.ItemType = ETextItemType.PluggTitle;
+                p.TheTitle.CcStatus = ECCStatus.InCreationLanguage;
+                p.TheTitle.CreatedByUserId = p.ThePlugg.CreatedByUserId;
+                p.TheTitle.ModifiedByUserId = p.ThePlugg.ModifiedByUserId;
+                SavePhText(p.TheTitle);
+
+                //Todo: Update..
+                if (p.TheHtmlText != null)
                 {
-                    LatexToMathMLConverter myConverter = new LatexToMathMLConverter(pc.LatexText);
+                    p.TheHtmlText.ItemId = p.ThePlugg.PluggId;
+                    p.TheHtmlText.ItemType = ETextItemType.PluggHtml;
+                    p.TheHtmlText.CcStatus = ECCStatus.InCreationLanguage;
+                    p.TheHtmlText.CreatedByUserId = p.ThePlugg.CreatedByUserId;
+                    p.TheHtmlText.ModifiedByUserId = p.ThePlugg.ModifiedByUserId;
+                    SavePhText(p.TheHtmlText);
+                }
+
+                //Todo: Update..
+                if (p.TheLatex != null)
+                {
+                    p.TheLatex.ItemId = p.ThePlugg.PluggId;
+                    p.TheLatex.ItemType = ELatexType.Plugg;
+                    p.TheLatex.CcStatus = ECCStatus.InCreationLanguage;
+                    p.TheLatex.CreatedByUserId = p.ThePlugg.CreatedByUserId;
+                    p.TheLatex.ModifiedByUserId = p.ThePlugg.ModifiedByUserId;
+                    LatexToMathMLConverter myConverter = new LatexToMathMLConverter(p.TheLatex.Text);
                     myConverter.Convert();
-                    pc.LatexTextInHtml = myConverter.HTMLOutput;
+                    p.TheLatex.HtmlText = myConverter.HTMLOutput;
+                    SaveLatexText(p.TheLatex);
                 }
 
                 LocaleController lc = new LocaleController();
                 var locales = lc.GetLocales(PortalID);
                 foreach (var locale in locales)
                 {
-                    pc.CultureCode = locale.Key;
-                    rep.CreatePluggContent(pc);
+                    if (locale.Key != p.ThePlugg.CreatedInCultureCode)
+                    {
+                        GoogleTranslate(p.TheTitle, locale.Key);
+                        if(p.TheHtmlText != null)
+                            GoogleTranslate(p.TheHtmlText, locale.Key);
+                        if(p.TheLatex != null)
+                            GoogleTranslate(p.TheLatex, locale.Key);
+                    }
                 }
-            }
-            catch (Exception)
-            {
-                DeletePlugg(p);
-                throw;
-            }
 
-            //Create PluggPage
-            DNNHelper d = new DNNHelper();
-            string pageUrl = p.PluggId.ToString();
-            string pageName = pageUrl + ": " + p.Title;
-            try
-            {
+                //Create PluggPage
+                DNNHelper d = new DNNHelper();
+                string pageUrl = p.ThePlugg.PluggId.ToString();
+                string pageName = pageUrl + ": " + p.TheTitle.Text;
                 TabInfo newTab = d.AddPluggPage(pageName, pageUrl);
-                p.TabId = newTab.TabID;
-                rep.UpdatePlugg(p);
+                p.ThePlugg.TabId = newTab.TabID;
+                rep.UpdatePlugg(p.ThePlugg);
             }
             catch (Exception)
             {
-                DeletePlugg(p);
+                //Todo: Update
+                DeletePlugg(p.ThePlugg);
                 throw;
             }
         }
@@ -95,11 +127,9 @@ namespace Plugghest.Base
                 h.DeleteTab(getTab);
             }
 
-            var pcs = GetAllContentInPlugg(p.PluggId);
-            foreach (PluggContent pcDelete in pcs)
-            {
-                rep.DeletePluggContent(pcDelete);
-            }
+            rep.DeleteAllPhTextForItem(p.PluggId, (int)ETextItemType.PluggTitle);
+            rep.DeleteAllPhTextForItem(p.PluggId, (int)ETextItemType.PluggHtml);
+            rep.DeleteAllLatexForItem(p.PluggId, (int)ELatexType.Plugg);
 
             rep.DeletePlugg(p);
         }
@@ -318,7 +348,7 @@ namespace Plugghest.Base
 
                 if (ci.ItemType == ECourseItemType.Heading)
                 {
-                    CourseHeadings ch = new CourseHeadings();
+                    CourseMenuHeadings ch = new CourseMenuHeadings();
                     ch.Title = ci.name;
                     rep.CreateHeading(ch);
                     cie.ItemId = ch.HeadingID;
@@ -350,17 +380,145 @@ namespace Plugghest.Base
         public void DeleteCourseItem(CourseItem ci)
         {
             if (ci.ItemType == ECourseItemType.Heading)
-                rep.DeleteHeading(new CourseHeadings() {HeadingID =ci.ItemId});
+                rep.DeleteHeading(new CourseMenuHeadings() {HeadingID =ci.ItemId});
             rep.DeleteCourseItem(ci);
+        }
+
+        #endregion
+
+        #region PHText
+
+        public void SavePhText(PHText t)
+        {
+            if (t.Text == null || t.ItemId == 0 || t.ItemType == ETextItemType.NotSet || t.CultureCode == null || t.CcStatus == ECCStatus.NotSet || t.CreatedByUserId == 0)
+                throw new Exception("Cannot save text - need Text, ItemId, ItemType, CultureCode, CreatedByUserId and CcStatus");
+
+            if (t.ModifiedByUserId == 0)
+                t.ModifiedByUserId = t.CreatedByUserId;
+            t.ModifiedOnDate = DateTime.Now;
+            t.CurrentVersion = true;
+            bool isVersioned = t.ItemType == ETextItemType.PluggHtml;
+
+            if (isVersioned)
+            {
+                var prevText = rep.GetPhText(t.CultureCode, t.ItemId, (int)t.ItemType);
+                if (prevText == null)
+                {
+                    t.Version = 1;
+                }
+                else
+                {
+                    t.Version = prevText.Version++;
+                    prevText.CurrentVersion = false;
+                    rep.UpdatePhText(prevText);
+                }
+                t.CreatedOnDate = DateTime.Now;
+                rep.CreatePhText(t);                 
+            }
+            else
+            {
+                t.Version = 0;
+                if (t.TextId == 0)
+                {
+                    t.CreatedOnDate = DateTime.Now;
+                    rep.CreatePhText(t);
+                }
+                else
+                    rep.UpdatePhText(t);
+            }
+        }
+
+        public void SaveLatexText(PHLatex t)
+        {
+            if (t.Text == null || t.ItemId == 0 || t.ItemType == ELatexType.NotSet || t.CultureCode == null || t.CcStatus == ECCStatus.NotSet || t.CreatedByUserId == 0)
+                throw new Exception("Cannot save Latex - need Text, ItemId, ItemType, CultureCode, CreatedByUserId and CcStatus");
+
+            if (t.ModifiedByUserId == 0)
+                t.ModifiedByUserId = t.CreatedByUserId;
+            t.ModifiedOnDate = DateTime.Now;
+            t.CurrentVersion = true;
+            bool isVersioned = (t.ItemType == ELatexType.Plugg || t.ItemType == ELatexType.Course);
+
+            if (isVersioned)
+            {
+                var prevText = rep.GetLatexText(t.CultureCode, t.ItemId, (int)t.ItemType);
+                if (prevText == null)
+                {
+                    t.Version = 1;
+                }
+                else
+                {
+                    t.Version = prevText.Version++;
+                    prevText.CurrentVersion = false;
+                    rep.UpdateLatexText(prevText);
+                }
+                t.CreatedOnDate = DateTime.Now;
+                rep.CreateLatexText(t);
+            }
+            else
+            {
+                t.Version = 0;
+                if (t.LatexId == 0)
+                {
+                    t.CreatedOnDate = DateTime.Now;
+                    rep.CreateLatexText(t);
+                }
+                else
+                    rep.UpdateLatexText(t);
+            }
+        }
+
+        //translates t into culture code cc
+        public void GoogleTranslate(PHText t, string cc)
+        {
+            if (t.CultureCode == cc)
+                throw new Exception("Cannot translate text to the same language");
+
+            PHText currentText = rep.GetPhText(cc, t.ItemId, (int)t.ItemType);
+
+            if (currentText == null)
+            {
+                //Todo: Translate. For now: same
+                t.CultureCode = cc;
+                //t.Text = (Translation of t.Text from t.CultureCode into cc)
+                rep.CreatePhText(t);
+            }
+            else
+            {
+                currentText.Text = t.Text;
+                rep.UpdatePhText(currentText);
+            }
+        }
+
+        //translates t into culture code cc
+        public void GoogleTranslate(PHLatex t, string cc)
+        {
+            if (t.CultureCode == cc)
+                throw new Exception("Cannot translate text to the same language");
+
+            PHLatex currentText = rep.GetLatexText(cc, t.ItemId, (int)t.ItemType);
+
+            if (currentText == null)
+            {
+                //Todo: Translate. For now: same
+                t.CultureCode = cc;
+                //t.Text = (Translation of t.Text from t.CultureCode into cc)
+                rep.CreateLatexText(t);
+            }
+            else
+            {
+                currentText.Text = t.Text;
+                rep.UpdateLatexText(currentText);
+            }
         }
 
         #endregion
 
         #region Other
 
-        public List<PluggInfoForDNNGrid> GetPluggListForGrid()
+        public IEnumerable<PluggInfoForDNNGrid> GetPluggListForGrid(string cultureCode)
         {
-            return rep.GetPluggRecords();
+            return rep.GetPluggRecords(cultureCode);
         }
 
         public List<CourseInfoForDNNGrid> GetCoursesForDNN()
@@ -374,13 +532,15 @@ namespace Plugghest.Base
         //}
 
         #endregion
-        #region CourseHeading
-        public CourseHeadings CreateHeading(CourseHeadings h)
+
+        #region CourseMenuHeading
+
+        public CourseMenuHeadings CreateHeading(CourseMenuHeadings h)
         {
             return rep.CreateHeading(h);
         }
 
-        public void UpdateHeading(CourseHeadings h)
+        public void UpdateHeading(CourseMenuHeadings h)
         {
             rep.UpdateHeading(h);
         }

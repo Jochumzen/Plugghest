@@ -13,6 +13,15 @@ namespace Plugghest.Modules.DisplayPlugg {
     public partial class View {
         
         /// <summary>
+        /// btnEditPlugg control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnEditPlugg;
+        
+        /// <summary>
         /// lblYoutube control.
         /// </summary>
         /// <remarks>
@@ -76,6 +85,15 @@ namespace Plugghest.Modules.DisplayPlugg {
         protected global::System.Web.UI.WebControls.Button btnSaveTitle;
         
         /// <summary>
+        /// btnCancelTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancelTitle;
+        
+        /// <summary>
         /// UpdatePanel2 control.
         /// </summary>
         /// <remarks>
@@ -119,6 +137,15 @@ namespace Plugghest.Modules.DisplayPlugg {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSaveHtmltext;
+        
+        /// <summary>
+        /// btnCancelHtmlText control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancelHtmlText;
         
         /// <summary>
         /// lblLatexSepretor control.
@@ -191,5 +218,14 @@ namespace Plugghest.Modules.DisplayPlugg {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnSaveLatext;
+        
+        /// <summary>
+        /// btnCancelLatext control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnCancelLatext;
     }
 }

@@ -1,4 +1,5 @@
-﻿using DotNetNuke.Data;
+﻿using System.Globalization;
+using DotNetNuke.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -95,13 +96,16 @@ namespace Plugghest.Base
 
         public PluggContent GetPluggContent(int pluggId, string cultureCode)
         {
+            PluggContent ThePC = null;
             IEnumerable<PluggContent> pcs;
             using (IDataContext ctx = DataContext.Instance())
             {
                 var rep = ctx.GetRepository<PluggContent>();
                 pcs = rep.Find("Where PluggId = @0 AND CultureCode = @1", pluggId, cultureCode);
             }
-            return pcs.First();  //There can be only one. PetaPoco does not handle composite key
+            if (pcs.Any())
+                ThePC = pcs.First();  //There can be only one. PetaPoco does not handle composite key
+            return ThePC;
         }
 
         public void UpdatePluggContent(PluggContent pc)
@@ -232,7 +236,7 @@ namespace Plugghest.Base
             using (IDataContext context = DataContext.Instance())
             {
                 string sqlPlugg = "SELECT Title AS label, CourseItemId, CourseId, ItemId, CIOrder, ItemType, MotherId FROM CourseItems INNER JOIN Pluggs ON PluggID=ItemId WHERE ItemType=" + (int)ECourseItemType.Plugg + " AND CourseId=" + courseId;
-                string sqlHeading = "SELECT Title AS label, CourseItemId, CourseId, ItemId, CIOrder, ItemType, MotherId FROM CourseItems INNER JOIN CourseHeadings ON HeadingID=ItemId WHERE ItemType=" + (int)ECourseItemType.Heading + " AND CourseId=" + courseId;
+                string sqlHeading = "SELECT Title AS label, CourseItemId, CourseId, ItemId, CIOrder, ItemType, MotherId FROM CourseItems INNER JOIN CourseMenuHeadings ON HeadingID=ItemId WHERE ItemType=" + (int)ECourseItemType.Heading + " AND CourseId=" + courseId;
                 var rec = context.ExecuteQuery<CourseItem>(CommandType.Text , sqlPlugg + " UNION " + sqlHeading + " ORDER BY CIOrder");
 
                 foreach (var ci in rec)
@@ -257,22 +261,166 @@ namespace Plugghest.Base
 
         #endregion
 
-        #region Other
+        #region PHText
 
-        public List<PluggInfoForDNNGrid> GetPluggRecords()
+        public void CreatePhText(PHText p)
         {
-            List<PluggInfoForDNNGrid> plug = new List<PluggInfoForDNNGrid>();
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rec = ctx.ExecuteQuery<PluggInfoForDNNGrid>(CommandType.TableDirect, @"select PluggId, Title as PluggName, Username from pluggs join Users on users.UserID=Pluggs.CreatedByUserId ");
+                var rep = ctx.GetRepository<PHText>();
+                rep.Insert(p);
+            }
+        }
 
-                foreach (var item in rec)
-                {
-                    plug.Add(new PluggInfoForDNNGrid { PluggId = item.PluggId, PluggName = item.PluggName, UserName = item.UserName });
-                }
+        public PHText GetPhText(int textId)
+        {
+            PHText p;
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<PHText>();
+                p = rep.GetById(textId);
+            }
+            return p;
+        }
+
+        public PHText GetPhText(string cultureCode, int itemId, int itemType)
+        {
+            IEnumerable<PHText> txt;
+            PHText theText = null;
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<PHText>();
+                txt = rep.Find("WHERE CultureCode = @0 AND ItemId = @1 AND ItemType = @2", cultureCode, itemId, itemType);
             }
 
-            return plug;
+            if (txt.Any())
+                theText = txt.First(); //Can only be at most one. PetaPoco does not handle composite key
+
+            return theText;
+        }
+
+        public void UpdatePhText(PHText p)
+        {
+            using (IDataContext db = DataContext.Instance())
+            {
+                var rep = db.GetRepository<PHText>();
+                rep.Update(p);
+            }
+        }
+
+        public void DeletePhText(PHText p)
+        {
+            using (IDataContext db = DataContext.Instance())
+            {
+                var rep = db.GetRepository<PHText>();
+                rep.Delete(p);
+            }
+        }
+
+        public void DeleteAllPhTextForItem(int itemId, int itemType)
+        {
+            using (IDataContext context = DataContext.Instance())
+            {
+                var rec = context.ExecuteQuery<PHText>(CommandType.Text,
+                    "DELETE FROM PHTexts WHERE ItemId=@0 AND ItemType=@1", itemId, itemType);
+            }
+        }
+
+        #endregion
+
+        #region LatexText
+
+        public void CreateLatexText(PHLatex p)
+        {
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<PHLatex>();
+                rep.Insert(p);
+            }
+        }
+
+        public PHLatex GetLatexText(int textId)
+        {
+            PHLatex p;
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<PHLatex>();
+                p = rep.GetById(textId);
+            }
+            return p;
+        }
+
+        public PHLatex GetLatexText(string cultureCode, int itemId, int itemType)
+        {
+            IEnumerable<PHLatex> txt;
+            PHLatex theText = null;
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<PHLatex>();
+                txt = rep.Find("WHERE CultureCode = @0 AND ItemId = @1 AND ItemType = @2", cultureCode, itemId, itemType);
+            }
+
+            if (txt.Any())
+                theText = txt.First(); //Can only be at most one. PetaPoco does not handle composite key
+
+            return theText;
+        }
+
+        public void UpdateLatexText(PHLatex p)
+        {
+            using (IDataContext db = DataContext.Instance())
+            {
+                var rep = db.GetRepository<PHLatex>();
+                rep.Update(p);
+            }
+        }
+
+        public void DeleteLatexText(PHLatex p)
+        {
+            using (IDataContext db = DataContext.Instance())
+            {
+                var rep = db.GetRepository<PHLatex>();
+                rep.Delete(p);
+            }
+        }
+
+        public void DeleteAllLatexForItem(int itemId, int itemType)
+        {
+            using (IDataContext context = DataContext.Instance())
+            {
+                var rec = context.ExecuteQuery<PHText>(CommandType.Text,
+                    "DELETE FROM PHLatex WHERE ItemId=@0 AND ItemType=@1", itemId, itemType);
+            }
+        }
+
+        #endregion
+
+        #region Other
+
+        //public List<PluggInfoForDNNGrid> GetPluggRecords(string cultureCode)
+        //{
+        //    List<PluggInfoForDNNGrid> pluggs = new List<PluggInfoForDNNGrid>();
+        //    using (IDataContext ctx = DataContext.Instance())
+        //    {
+        //        var rec = ctx.ExecuteQuery<PluggInfoForDNNGrid>(CommandType.Text, "SELECT PluggId, Text, Username FROM pluggs JOIN Users ON users.UserID=Pluggs.CreatedByUserId JOIN PHTexts ON ItemId=Pluggs.PluggId WHERE ItemType=@0 AND CultureCode=@1" , (int)ETextItemType.PluggTitle , cultureCode);
+
+        //        foreach (var item in rec)
+        //        {
+        //            pluggs.Add(new PluggInfoForDNNGrid { PluggId = item.PluggId, PluggName = item.PluggName , UserName = item.UserName });
+        //        }
+        //    }
+
+        //    return pluggs;
+        //}
+
+        public IEnumerable<PluggInfoForDNNGrid> GetPluggRecords(string cultureCode)
+        {
+            IEnumerable<PluggInfoForDNNGrid> pluggs; 
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                pluggs = ctx.ExecuteQuery<PluggInfoForDNNGrid>(CommandType.Text, "SELECT PluggId, Text, Username FROM Pluggs JOIN Users ON Users.UserID=Pluggs.CreatedByUserId JOIN PHTexts ON ItemId=Pluggs.PluggId WHERE ItemType=" + (int)ETextItemType.PluggTitle + " AND CultureCode='" + cultureCode + "'");
+            }
+            return pluggs;
         }
 
         //CourseForDNN
@@ -296,31 +444,31 @@ namespace Plugghest.Base
         #endregion
 
         #region CourseHeading
-        public CourseHeadings CreateHeading(CourseHeadings t)
+        public CourseMenuHeadings CreateHeading(CourseMenuHeadings t)
         {
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rep = ctx.GetRepository<CourseHeadings>();
+                var rep = ctx.GetRepository<CourseMenuHeadings>();
                 rep.Insert(t);
             }
             return t;
         }
 
 
-        public void UpdateHeading(CourseHeadings t)
+        public void UpdateHeading(CourseMenuHeadings t)
         {
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rep = ctx.GetRepository<CourseHeadings>();
+                var rep = ctx.GetRepository<CourseMenuHeadings>();
                 rep.Update(t);
             }
         }
 
-        public void DeleteHeading(CourseHeadings t)
+        public void DeleteHeading(CourseMenuHeadings t)
         {
             using (IDataContext ctx = DataContext.Instance())
             {
-                var rep = ctx.GetRepository<CourseHeadings>();
+                var rep = ctx.GetRepository<CourseMenuHeadings>();
                 rep.Delete(t);
             }
         }

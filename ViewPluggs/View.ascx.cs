@@ -46,34 +46,34 @@ namespace Plugghest.Modules.ViewPluggs
 
         }
 
-        public void bindgrid()
-        {
-            BaseHandler ph = new BaseHandler();
+        //public void bindgrid()
+        //{
+        //    BaseHandler ph = new BaseHandler();
 
-            //var pc = new PluggController();
-            DnnGrid dgDNNGrid;
-            dgDNNGrid = new DnnGrid();
-            dgDNNGrid.AutoGenerateColumns = true;
-            dgDNNGrid.CellSpacing = 0;
-            dgDNNGrid.GridLines = GridLines.Both;
-            dgDNNGrid.FooterStyle.CssClass = "DataGrid_Footer";
-            dgDNNGrid.HeaderStyle.CssClass = "DataGrid_Header";
-            dgDNNGrid.ItemStyle.CssClass = "DataGrid_Item";
-            dgDNNGrid.AlternatingItemStyle.CssClass = "DataGrid_AlternatingItem";
-            dgDNNGrid.AllowSorting = true;
-            dgDNNGrid.AllowPaging = true;
-            dgDNNGrid.PagerStyle.Mode = Telerik.Web.UI.GridPagerMode.Slider;
-            dgDNNGrid.DataSource = ph.GetPluggListForGrid();
-            dgDNNGrid.DataBind();
+        //    //var pc = new PluggController();
+        //    DnnGrid dgDNNGrid;
+        //    dgDNNGrid = new DnnGrid();
+        //    dgDNNGrid.AutoGenerateColumns = true;
+        //    dgDNNGrid.CellSpacing = 0;
+        //    dgDNNGrid.GridLines = GridLines.Both;
+        //    dgDNNGrid.FooterStyle.CssClass = "DataGrid_Footer";
+        //    dgDNNGrid.HeaderStyle.CssClass = "DataGrid_Header";
+        //    dgDNNGrid.ItemStyle.CssClass = "DataGrid_Item";
+        //    dgDNNGrid.AlternatingItemStyle.CssClass = "DataGrid_AlternatingItem";
+        //    dgDNNGrid.AllowSorting = true;
+        //    dgDNNGrid.AllowPaging = true;
+        //    dgDNNGrid.PagerStyle.Mode = Telerik.Web.UI.GridPagerMode.Slider;
+        //    dgDNNGrid.DataSource = ph.GetPluggListForGrid();
+        //    dgDNNGrid.DataBind();
 
-            //pnlGrid.Controls.Add(dgDNNGrid);
-        }
+        //    //pnlGrid.Controls.Add(dgDNNGrid);
+        //}
 
 
         public void bindRadGrid()
         {
             BaseHandler ph = new BaseHandler();
-            RadGrid_ViewPlugg.DataSource = ph.GetPluggListForGrid();
+            RadGrid_ViewPlugg.DataSource = ph.GetPluggListForGrid("en-US");
         }
 
 

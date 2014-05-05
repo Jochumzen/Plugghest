@@ -55,21 +55,6 @@ namespace Plugghest.Modules.PlugghestPanel
             }
         }
 
-        public ModuleActionCollection ModuleActions
-        {
-            get
-            {
-                var actions = new ModuleActionCollection
-                    {
-                        {
-                            GetNextActionID(), Localization.GetString("EditModule", LocalResourceFile), "", "", "",
-                            EditUrl(), false, SecurityAccessLevel.Edit, true, false
-                        }
-                    };
-                return actions;
-            }
-        }
-
         protected void btnDeleteCourse_Click(object sender, EventArgs e)
         {
 
@@ -202,50 +187,49 @@ namespace Plugghest.Modules.PlugghestPanel
             }
             else
             {
-                Plugg p = new Plugg();
-                PluggContent pc = new PluggContent();
-
-                string title = GetCommand(latex, "pluggtitle");
-                string section = GetCommand(latex, "section");
-                if (title != "")
-                    p.Title = title;
-                else if (section != "")
-                    p.Title = section;
-                else
-                    p.Title = "Untitled";
+                PluggContainer p = new PluggContainer();
 
                 string CultureCode = GetCommand(latex, "culture");
                 if (CultureCode != "")
-                    p.CreatedInCultureCode = CultureCode;
+                    p.ThePlugg.CreatedInCultureCode = CultureCode;
                 else
-                    p.CreatedInCultureCode = "en-US";
+                    p.ThePlugg.CreatedInCultureCode = "en-US"; 
+                                
+                string title = GetCommand(latex, "pluggtitle");
+                string section = GetCommand(latex, "section");
+                if (title != "")
+                    p.SetTitle(title);
+                else if (section != "")
+                    p.SetTitle(section);
+                else
+                    p.SetTitle("Untitled");
 
                 string whoCanEdit = GetCommand(latex, "edit");
                 if (whoCanEdit == "me")
-                    p.WhoCanEdit = EWhoCanEdit.OnlyMe;
+                    p.ThePlugg.WhoCanEdit = EWhoCanEdit.OnlyMe;
                 else if (whoCanEdit == "anyone")
-                    p.WhoCanEdit = EWhoCanEdit.Anyone;
+                    p.ThePlugg.WhoCanEdit = EWhoCanEdit.Anyone;
                 else
-                    p.WhoCanEdit = EWhoCanEdit.Anyone;
+                    p.ThePlugg.WhoCanEdit = EWhoCanEdit.Anyone;
 
                 string youTubeCode = GetCommand(latex, "youtube");
                 if (youTubeCode != "")
-                    p.YouTubeCode = youTubeCode;
+                    p.ThePlugg.YouTubeCode = youTubeCode;
 
                 string html = GetCommand(latex, "html");
                 if (html != "")
-                    pc.HtmlText = html;
+                    p.SetHtmlText(html);
 
-                pc.LatexText = latex;
+                p.SetLatexText(latex);
 
-                p.CreatedByUserId = UserId;
-                p.CreatedOnDate = DateTime.Now;
-                p.ModifiedByUserId = UserId;
-                p.ModifiedOnDate = DateTime.Now;
+                p.ThePlugg.CreatedByUserId = UserId;
+                p.ThePlugg.CreatedOnDate = DateTime.Now;
+                p.ThePlugg.ModifiedByUserId = UserId;
+                p.ThePlugg.ModifiedOnDate = DateTime.Now;
 
-                p.SubjectId = 0;
+                p.ThePlugg.SubjectId = 0;
 
-                bh.CreatePlugg(p, pc);
+                bh.SavePlugg(p);
             }            
         }
 
@@ -259,5 +243,22 @@ namespace Plugghest.Modules.PlugghestPanel
             string s = latex.Substring(pos1 + 1, pos2 - pos1 - 1);
             return s;
         }
+
+
+        public ModuleActionCollection ModuleActions
+        {
+            get
+            {
+                var actions = new ModuleActionCollection
+                    {
+                        {
+                            GetNextActionID(), Localization.GetString("EditModule", LocalResourceFile), "", "", "",
+                            EditUrl(), false, SecurityAccessLevel.Edit, true, false
+                        }
+                    };
+                return actions;
+            }
+        }
+    
     }
 }

@@ -56,53 +56,58 @@ namespace Plugghest.Modules.CourseMenu
 
         public void GetMenu()
         {
-            string courseIdStr = Page.Request.QueryString["c"];
-            if (courseIdStr == null)    //This is a Plugg outside a course: no menu
-                return;
 
-            int courseId;
-            bool isNum = int.TryParse(courseIdStr, out courseId);
-            if (!isNum)
-            {
-                lbltest.Text = "Incorrect format for URL. Format should be http://plugghest.com/12/c/6 where the first number is the PluggID and the second number is the CourseID";
-                return;
-            }
+            //Todo: Fix CourseMenu now that a course can have a hierarchy of items as well as headings.
 
-            BaseHandler bh = new BaseHandler();
-            Course c = bh.GetCourse(courseId);
+            lbltest.Text = "Menu must be updated to deal with hierarchy";
 
-            //if course exist in the database...
-            if (c == null)
-            {
-                lbltest.Text = "There is no course with ID " + courseId;
-                return;
-            }
+            //string courseIdStr = Page.Request.QueryString["c"];
+            //if (courseIdStr == null)    //This is a Plugg outside a course: no menu
+            //    return;
 
-            string pluggIdstr = DotNetNuke.Entities.Tabs.TabController.CurrentPage.Title;
-            int pluggId = Convert.ToInt32(pluggIdstr);
+            //int courseId;
+            //bool isNum = int.TryParse(courseIdStr, out courseId);
+            //if (!isNum)
+            //{
+            //    lbltest.Text = "Incorrect format for URL. Format should be http://plugghest.com/12/c/6 where the first number is the PluggID and the second number is the CourseID";
+            //    return;
+            //}
 
-            IEnumerable<CourseItem> cpExist = bh.GetCourseItems(courseId, pluggId);
-            if (!cpExist.Any())
-            {
-                lbltest.Text = "Plugg " + pluggId + " is not in course " + courseId;
-                return;
-            }
+            //BaseHandler bh = new BaseHandler();
+            //Course c = bh.GetCourse(courseId);
 
-            var tc = new TabController();
-            IEnumerable<CourseItem> cps = bh.GetItemsInCourse(courseId);
-            foreach (CourseItem cp in cps)
-            {
-                Plugg p = bh.GetPlugg(cp.ItemId);
-                TabInfo ti = tc.GetTabByName(p.PluggId.ToString() + ": " + p.Title , PortalId);
-                string myUrl = DotNetNuke.Common.Globals.NavigateURL(ti.TabID, "", "", "&c=" + courseId);
-                Menu_Pluggs.Items.Add(new MenuItem(p.PluggId.ToString() + ": " + p.Title, "", "", myUrl));
+            ////if course exist in the database...
+            //if (c == null)
+            //{
+            //    lbltest.Text = "There is no course with ID " + courseId;
+            //    return;
+            //}
 
-                if (pluggId == p.PluggId)
-                {
-                    int index = cp.CIOrder - 1;
-                    Menu_Pluggs.Items[index].Selected = true; //active order in menu
-                }
-            }
+            //string pluggIdstr = DotNetNuke.Entities.Tabs.TabController.CurrentPage.Title;
+            //int pluggId = Convert.ToInt32(pluggIdstr);
+
+            //IEnumerable<CourseItem> cpExist = bh.GetCourseItems(courseId, pluggId);
+            //if (!cpExist.Any())
+            //{
+            //    lbltest.Text = "Plugg " + pluggId + " is not in course " + courseId;
+            //    return;
+            //}
+
+            //var tc = new TabController();
+            //IEnumerable<CourseItem> cps = bh.GetItemsInCourse(courseId);
+            //foreach (CourseItem cp in cps)
+            //{
+            //    Plugg p = bh.GetPlugg(cp.ItemId);
+            //    TabInfo ti = tc.GetTabByName(p.PluggId.ToString() + ": " + p.Title , PortalId);
+            //    string myUrl = DotNetNuke.Common.Globals.NavigateURL(ti.TabID, "", "", "&c=" + courseId);
+            //    Menu_Pluggs.Items.Add(new MenuItem(p.PluggId.ToString() + ": " + p.Title, "", "", myUrl));
+
+            //    if (pluggId == p.PluggId)
+            //    {
+            //        int index = cp.CIOrder - 1;
+            //        Menu_Pluggs.Items[index].Selected = true; //active order in menu
+            //    }
+            //}
 
         } 
 

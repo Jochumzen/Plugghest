@@ -71,46 +71,54 @@ namespace Plugghest.Modules.CreatePlugg
         private void LoadPlugg(int pluggId)
         {
             BaseHandler bh = new BaseHandler();
-            Plugg p = bh.GetPlugg(pluggId);
-            if (p != null)
-            {
+            PluggContainer p = new PluggContainer();
+            p.ThePlugg = bh.GetPlugg(pluggId);
 
-                if (p.WhoCanEdit == EWhoCanEdit.Anyone || p.CreatedByUserId == this.UserId || UserInfo.IsInRole("Administator"))
-                { //Check that either WhoCanEdit is anyone or the current user is the one who created the Plugg or the current user is a SuperUser.
-
-                    DDLanguage.SelectedValue = p.CreatedInCultureCode;
-                    txtTitle.Text = p.Title;
-
-                    if (p.WhoCanEdit == EWhoCanEdit.OnlyMe)
-                        rdEditPlug.Items[1].Selected = true;
-
-                    if (p.YouTubeCode != null)
-                        txtYouTube.Text = p.YouTubeCode;
-
-                    PluggContent pc = bh.GetPluggContent(p.PluggId, p.CreatedInCultureCode);
-                    if (pc != null)
-                    {
-                        txtHtmlText.Text = pc.HtmlText;
-                        txtDescription.Text = pc.LatexText;
-
-                        ViewState["PID"] = pluggId.ToString();
-                    }
-
-                    //You cannot update in which language Plugg is created or the YouTube
-                    DDLanguage.Enabled = false;
-                    txtYouTube.Enabled = false;
-                }
-                else
-                {
-                    lblError.Text = "You do not have permissions to edit this Plugg.";
-                    HideControl();
-                }
-            }
-            else
+            if (p.ThePlugg == null)
             {
                 lblError.Text = "No such Plugg";
                 HideControl();
+                return;
             }
+
+            if (p.ThePlugg.WhoCanEdit == EWhoCanEdit.OnlyMe && p.ThePlugg.CreatedByUserId != this.UserId && !UserInfo.IsInRole("Administator"))
+            { //Check that either WhoCanEdit is anyone or the current user is the one who created the Plugg or the current user is a SuperUser.
+                lblError.Text = "You do not have permissions to edit this Plugg.";
+                HideControl();
+                return;
+            }
+
+            Localization loc = new Localization();
+            if (p.ThePlugg.CreatedInCultureCode != loc.CurrentCulture)
+            {
+                lblError.Text = "You can only edit the Plugg in the languare it was created. Switch to " + p.ThePlugg.CreatedInCultureCode + " to edit.";
+                HideControl();
+                return;
+            }
+
+            DDLanguage.SelectedValue = p.ThePlugg.CreatedInCultureCode;
+            p.CultureCode = p.ThePlugg.CreatedInCultureCode;
+            p.LoadAllText();
+
+            txtTitle.Text = p.TheTitle.Text;
+
+            if (p.ThePlugg.WhoCanEdit == EWhoCanEdit.OnlyMe)
+                rdEditPlug.Items[1].Selected = true;
+
+            if (p.ThePlugg.YouTubeCode != null)
+                txtYouTube.Text = p.ThePlugg.YouTubeCode;
+
+            if(p.TheHtmlText != null)
+                txtHtmlText.Text = p.TheHtmlText.Text;
+
+            if (p.TheLatex != null)
+                txtDescription.Text = p.TheLatex.Text;
+
+            ViewState["PID"] = pluggId.ToString();
+
+            //You cannot update in which language Plugg is created or the YouTube
+            DDLanguage.Enabled = false;
+            txtYouTube.Enabled = false;
         }
 
         public void BindTree()
@@ -140,7 +148,7 @@ namespace Plugghest.Modules.CreatePlugg
             if (!Page.IsValid) //check validation
                 return;
 
-            Plugg p;
+            PluggContainer p;
             if (ViewState["PID"] != null)
             {
                 p = UpdatePlugg();
@@ -149,83 +157,83 @@ namespace Plugghest.Modules.CreatePlugg
             {
                 p = SavePlugg();
             }
-            if (p.PluggId != 0) //0 means Error in Update/Save
-                Response.Redirect(Globals.NavigateURL(p.TabId));
+            //if (p.ThePlugg.PluggId != 0) //0 means Error in Update/Save
+            //    Response.Redirect(Globals.NavigateURL(p.TabId));
         }
 
-        private Plugg SavePlugg()
+        private PluggContainer SavePlugg()
         {
             BaseHandler ph = new BaseHandler();
-            Plugg p = new Plugg();
-            PluggContent pc = new PluggContent();
+            PluggContainer p = new PluggContainer();
 
-            ReadFromControls(p, pc);
-            p.CreatedOnDate = DateTime.Now;
-            p.CreatedByUserId = UserId;
+            ReadFromControls(p);
+            p.ThePlugg.CreatedOnDate = DateTime.Now;
+            p.ThePlugg.CreatedByUserId = UserId;
 
             try
             {
-                ph.CreatePlugg(p, pc);  //Create PluggPage, Plugg and PluggContent (same for every language)
+                ph.SavePlugg(p);  //Create PluggPage, Plugg and PluggContent (same for every language)
             }
             catch (Exception ex)
             {
                 lblError.Text = "Failed to create a Plugg: " + ex.Message;
                 Exceptions.LogException(ex);
                 HideControl();
-                p.PluggId = 0;
+                p.ThePlugg.PluggId = 0;
             }
 
             return p;
         }
 
-        private Plugg UpdatePlugg()
+        private PluggContainer UpdatePlugg()
         {
-            BaseHandler ph = new BaseHandler();
-            Plugg p = ph.GetPlugg(Convert.ToInt32(ViewState["PID"].ToString()));  //We know from LoadPlugg that Plugg exists
+            //BaseHandler ph = new BaseHandler();
+            //Plugg p = ph.GetPlugg(Convert.ToInt32(ViewState["PID"].ToString()));  //We know from LoadPlugg that Plugg exists
 
-            //For now, update all PluggContent with content from controls. Fix this when we can deal with translations
-            PluggContent pc = new PluggContent();
+            ////For now, update all PluggContent with content from controls. Fix this when we can deal with translations
+            //PluggContent pc = new PluggContent();
 
-            ReadFromControls(p, pc);
+            //ReadFromControls(p, pc);
 
-            try
-            {
-                ph.UpdatePlugg(p, pc);  //Update PluggPage, Plugg and PluggContent (same for every language)
-            }
-            catch (Exception ex)
-            {
-                lblError.Text = "Failed to update Plugg: " + ex.Message;
-                Exceptions.LogException(ex);
-                HideControl();
-                p.PluggId = 0;
-            }
+            //try
+            //{
+            //    ph.UpdatePlugg(p, pc);  //Update PluggPage, Plugg and PluggContent (same for every language)
+            //}
+            //catch (Exception ex)
+            //{
+            //    lblError.Text = "Failed to update Plugg: " + ex.Message;
+            //    Exceptions.LogException(ex);
+            //    HideControl();
+            //    p.PluggId = 0;
+            //}
 
-            return p;
+            //return p;
+            return new PluggContainer();
         }
 
-        protected void ReadFromControls(Plugg p, PluggContent pc)
+        protected void ReadFromControls(PluggContainer p)
         {
-            p.CreatedInCultureCode = DDLanguage.SelectedValue;
+            p.ThePlugg.CreatedInCultureCode = DDLanguage.SelectedValue;
             if (rdEditPlug.Text == "Any registered user")
-                p.WhoCanEdit = EWhoCanEdit.Anyone;
+                p.ThePlugg.WhoCanEdit = EWhoCanEdit.Anyone;
             else
-                p.WhoCanEdit = EWhoCanEdit.OnlyMe;
+                p.ThePlugg.WhoCanEdit = EWhoCanEdit.OnlyMe;
 
             if (!string.IsNullOrEmpty(hdnNodeSubjectId.Value))
-                p.SubjectId = Convert.ToInt32(hdnNodeSubjectId.Value);
+                p.ThePlugg.SubjectId = Convert.ToInt32(hdnNodeSubjectId.Value);
 
-            Youtube myYouTube = new Youtube(txtYouTube.Text);
-            if (myYouTube.IsValid)
-                p.YouTubeCode = myYouTube.YouTubeCode;
+            p.TheVideo = new Youtube(txtYouTube.Text);
+            if (p.TheVideo.IsValid)
+                p.ThePlugg.YouTubeCode = p.TheVideo.YouTubeCode;
 
-            p.Title = txtTitle.Text;
-            p.ModifiedOnDate = DateTime.Now;
-            p.ModifiedByUserId = UserId;
+            p.SetTitle(txtTitle.Text);
+            p.ThePlugg.ModifiedOnDate = DateTime.Now;
+            p.ThePlugg.ModifiedByUserId = UserId;
 
             if (txtHtmlText.Text.Trim() != "")
-                pc.HtmlText = txtHtmlText.Text;
+                p.SetHtmlText(txtHtmlText.Text);
             if (txtDescription.Text.Trim() != "")
-                pc.LatexText = txtDescription.Text;
+                p.SetLatexText(txtDescription.Text);
         }
 
         protected void btnCancel_Click(object sender, EventArgs e)
@@ -261,8 +269,6 @@ namespace Plugghest.Modules.CreatePlugg
             btnSubmit.Visible = false;
             btnCancel.Visible = false;
             lbldescription.Visible = false;
-            LinkButton2.Visible = false;
-            LinkButton3.Visible = false;
         }
 
         public ModuleActionCollection ModuleActions
