@@ -230,13 +230,13 @@ namespace Plugghest.Base
 
         #region Course
 
-        public void CreateCourse(Course c, List<CourseItem> cis)
+        public void CreateCourse(Course c, List<CourseItemEntity> cis)
         {
             rep.CreateCourse(c);
 
             try
             {
-                foreach (CourseItem ci in cis)
+                foreach (CourseItemEntity ci in cis)
                 {
                     ci.CourseId = c.CourseId;
                     rep.CreateCourseItem(ci);
@@ -544,6 +544,20 @@ namespace Plugghest.Base
         {
             rep.UpdateHeading(h);
         }
+
+        #endregion
+
+
+        #region CourseItemComment
+        public IEnumerable<CourseItemComment> GetCourseItemComment(int CourseID, int ItemID)
+        {
+            return rep.GetCourseItemComment(CourseID, ItemID);
+        }
+        public void UpdateCourseItemComment(CourseItemComment CIC)
+        {
+            rep.UpdateCourseItemComment(CIC);
+        }
+
 
         #endregion
     }

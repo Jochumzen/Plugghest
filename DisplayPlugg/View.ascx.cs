@@ -44,7 +44,7 @@ namespace Plugghest.Modules.DisplayPlugg
     /// -----------------------------------------------------------------------------
     public partial class View : DisplayPluggModuleBase, IActionable
     {
-            
+
         protected void Page_Load(object sender, EventArgs e)
         {
             try
@@ -65,35 +65,37 @@ namespace Plugghest.Modules.DisplayPlugg
             BaseHandler plugghandler = new BaseHandler();
 
             int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
-
-            //Get current culture
             string curlan = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
 
-            Plugg p = plugghandler.GetPlugg(pluggid);
-            PluggContent pc = plugghandler.GetPluggContent(pluggid, curlan);
+            PluggContainer p = new PluggContainer();
+            p.ThePlugg = plugghandler.GetPlugg(pluggid);
+            p.CultureCode = curlan;
 
-            SetPageText(curlan, p, pc);
+            SetPageText(curlan, p);
         }
 
-        private void SetPageText(string curlan, Plugg p, PluggContent pc)
+        private void SetPageText(string curlan, PluggContainer p)
         {
-            if (p.YouTubeCode == null)
+            if (p.ThePlugg.YouTubeCode == null)
             {
                 lblYoutube.Text = "[No Video]";
             }
             else
             {
-                Youtube myYouTube = new Youtube(p.YouTubeCode);
-                if (myYouTube.IsValid)
-                    lblYoutube.Text = myYouTube.GetIframeString(curlan.Substring(3, 2));
+                p.TheVideo = new Youtube(p.ThePlugg.YouTubeCode);
+                if (p.TheVideo.IsValid)
+                    lblYoutube.Text = p.TheVideo.GetIframeString(curlan.Substring(3, 2));
             }
-            hdLatextText.Value = pc.LatexText;
-            lblHtmlText.Text = Server.HtmlDecode(pc.HtmlText); ;
-            lblLatexTextInHtml.Text = Server.HtmlDecode(pc.LatexTextInHtml);
-            string strPluggTitle = "";
-            strPluggTitle = p.Title;
-            bool IsAuthorized = false;
-            IsAuthorized = (p.WhoCanEdit == EWhoCanEdit.Anyone || p.CreatedByUserId == this.UserId || UserInfo.IsInRole("Administator"));
+            p.LoadAllText();
+            if (p.TheLatex != null)
+            {
+                hdLatextText.Value = p.TheLatex.Text;
+                lblLatexTextInHtml.Text = Server.HtmlDecode(p.TheLatex.HtmlText);                
+            }
+            if (p.TheHtmlText != null)
+                lblHtmlText.Text = Server.HtmlDecode(p.TheLatex.HtmlText); ;
+
+            bool IsAuthorized = (p.ThePlugg.WhoCanEdit == EWhoCanEdit.Anyone || p.ThePlugg.CreatedByUserId == this.UserId || UserInfo.IsInRole("Administator"));
             string editQS = Request.QueryString["edit"];
             if (editQS != null && !string.IsNullOrWhiteSpace(editQS) && editQS.ToLower() == "true" && IsAuthorized)
             {
@@ -101,7 +103,8 @@ namespace Plugghest.Modules.DisplayPlugg
                 lblLatexSepretor.Style.Add("display", "block");
                 btnEditLatextText.Style.Add("display", "block");
                 btnEditHtmlText.Style.Add("display", "block");
-                lblTitle.Text = strPluggTitle;
+                btnExitEditMode.Visible = true;
+                lblTitle.Text = p.TheTitle.Text;
             }
             else
             {
@@ -112,6 +115,7 @@ namespace Plugghest.Modules.DisplayPlugg
                 divTitle.Style.Add("display", "none");
                 lblLatexSepretor.Style.Add("display", "none");
                 btnEditLatextText.Style.Add("display", "none");
+                btnExitEditMode.Visible = false;
                 btnEditHtmlText.Style.Add("display", "none");
             }
             btnCancelLatext.Style.Add("display", "none");
@@ -124,37 +128,41 @@ namespace Plugghest.Modules.DisplayPlugg
         protected void btnSaveTitle_Click(object sender, EventArgs e)
         {
             BaseHandler plugghandler = new BaseHandler();
-
             int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
 
-            string curlan = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
-
-            Plugg p = plugghandler.GetPlugg(pluggid);
-            PluggContent pc = plugghandler.GetPluggContent(pluggid, curlan);
-
-            p.Title = txtSaveTitle.Text;
-            plugghandler.UpdatePlugg(p, pc);
-            SetPageText(curlan, p, pc);
+            PluggContainer p = new PluggContainer();
+            p.ThePlugg = plugghandler.GetPlugg(pluggid);
+            string curlan = (Page as PageBase).PageCulture.Name;
+            p.CultureCode = curlan;
+            p.LoadTitle();
+            if (p.TheTitle.Text != txtSaveTitle.Text)
+            {
+                p.TheTitle.Text = txtSaveTitle.Text;
+                plugghandler.SavePhText(p.TheTitle);
+            }
+            SetPageText(curlan, p);
 
             btnSaveTitle.Style.Add("display", "none");
             txtSaveTitle.Style.Add("display", "none");
-
         }
 
         protected void btnSaveLatext_Click(object sender, EventArgs e)
         {
             BaseHandler plugghandler = new BaseHandler();
-
             int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
 
-            string curlan = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
+            PluggContainer p = new PluggContainer();
+            p.ThePlugg = plugghandler.GetPlugg(pluggid);
+            string curlan = (Page as PageBase).PageCulture.Name;
+            p.CultureCode = curlan;
+            p.LoadLatexText() ;
+            if (p.TheLatex.Text != txtLatextText.Text)
+            {
+                p.TheTitle.Text = txtLatextText.Text;
+                plugghandler.SaveLatexText(p.TheLatex);
+            }
 
-            Plugg p = plugghandler.GetPlugg(pluggid);
-            PluggContent pc = plugghandler.GetPluggContent(pluggid, curlan);
-
-            pc.LatexText = txtLatextText.Text;
-            plugghandler.UpdatePlugg(p, pc);
-            SetPageText(curlan, p, pc);
+            SetPageText(curlan, p);
             btnSaveLatext.Style.Add("display", "none");
             txtLatextText.Style.Add("display", "none");
         }
@@ -162,28 +170,31 @@ namespace Plugghest.Modules.DisplayPlugg
         protected void btnSaveHtmltext_Click(object sender, EventArgs e)
         {
             BaseHandler plugghandler = new BaseHandler();
-
             int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
 
-            string curlan = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
+            PluggContainer p = new PluggContainer();
+            p.ThePlugg = plugghandler.GetPlugg(pluggid);
+            string curlan = (Page as PageBase).PageCulture.Name;
+            p.CultureCode = curlan;
+            p.LoadHtmlText();
+            if (p.TheHtmlText.Text != txtHtmlText.Text)
+            {
+                p.TheHtmlText.Text = txtHtmlText.Text;
+                plugghandler.SavePhText(p.TheHtmlText);
+            }
 
-            Plugg p = plugghandler.GetPlugg(pluggid);
-            PluggContent pc = plugghandler.GetPluggContent(pluggid, curlan);
-
-            pc.HtmlText = txtHtmlText.Text;
-            plugghandler.UpdatePlugg(p, pc);
-            SetPageText(curlan, p, pc);
+            SetPageText(curlan, p);
             btnSaveHtmltext.Style.Add("display", "none");
-
         }
 
         protected void btnEditPlugg_Click(object sender, EventArgs e)
         {
-            int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
-            //DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=true");
             Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=true"));
-            //Response.Redirect("/" + pluggid + "/tabid/"+this.TabId+"/c/edit");
+        }
 
+        protected void btnExitEditMode_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, ""));
         }
 
         public ModuleActionCollection ModuleActions
@@ -200,5 +211,7 @@ namespace Plugghest.Modules.DisplayPlugg
                 return actions;
             }
         }
+
+
     }
 }

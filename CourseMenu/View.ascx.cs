@@ -23,6 +23,7 @@ using System.Web;
 using System.Collections.Generic;
 using Plugghest.Base;
 using DotNetNuke.Entities.Tabs;
+using System.Web.Script.Serialization;
 
 namespace Plugghest.Modules.CourseMenu
 {
@@ -45,7 +46,7 @@ namespace Plugghest.Modules.CourseMenu
         {
             try
             {
-                if(!IsPostBack)
+                if (!IsPostBack)
                     GetMenu();
             }
             catch (Exception exc) //Module failed to load
@@ -61,18 +62,18 @@ namespace Plugghest.Modules.CourseMenu
 
             lbltest.Text = "Menu must be updated to deal with hierarchy";
 
-            //string courseIdStr = Page.Request.QueryString["c"];
-            //if (courseIdStr == null)    //This is a Plugg outside a course: no menu
-            //    return;
+            string courseIdStr = Page.Request.QueryString["c"];
+            if (courseIdStr == null)    //This is a Plugg outside a course: no menu
+                return;
 
-            //int courseId;
-            //bool isNum = int.TryParse(courseIdStr, out courseId);
-            //if (!isNum)
-            //{
-            //    lbltest.Text = "Incorrect format for URL. Format should be http://plugghest.com/12/c/6 where the first number is the PluggID and the second number is the CourseID";
-            //    return;
-            //}
-
+            int courseId;
+            bool isNum = int.TryParse(courseIdStr, out courseId);
+            if (!isNum)
+            {
+                lbltest.Text = "Incorrect format for URL. Format should be http://plugghest.com/12/c/6 where the first number is the PluggID and the second number is the CourseID";
+                return;
+            }
+            BindTree(courseId);
             //BaseHandler bh = new BaseHandler();
             //Course c = bh.GetCourse(courseId);
 
@@ -109,7 +110,7 @@ namespace Plugghest.Modules.CourseMenu
             //    }
             //}
 
-        } 
+        }
 
         public ModuleActionCollection ModuleActions
         {
@@ -123,6 +124,35 @@ namespace Plugghest.Modules.CourseMenu
                         }
                     };
                 return actions;
+            }
+        }
+
+
+
+        public void BindTree(int courseId)
+        {
+            BaseHandler bh = new BaseHandler();
+            List<CourseItem> tree = (List<CourseItem>)bh.GetCourseItemsAsTree(courseId);
+            PopulateTreeNodes(tree, TreeViewMain.Nodes);
+        }
+
+        private void PopulateTreeNodes(List<CourseItem> LstCourseItem, TreeNodeCollection RootNodes)
+        {
+            foreach (CourseItem ObjCourseItem in LstCourseItem)
+            {
+                TreeNode NodeToAdd = new TreeNode();
+                if (ObjCourseItem.ItemType.ToString() == ECourseItemType.Plugg.ToString())
+                {
+                    NodeToAdd.Text = "<a  style='text-decoration: underline;cursor: pointer; ' href='/" + ObjCourseItem.ItemId + "' >" + ObjCourseItem.label + "</a>";
+                }
+                else
+                {
+                    NodeToAdd.Text = Convert.ToString(ObjCourseItem.label);
+                }
+                NodeToAdd.SelectAction = TreeNodeSelectAction.None;
+                RootNodes.Add(NodeToAdd);
+                if (ObjCourseItem.children != null)
+                    PopulateTreeNodes((List<CourseItem>)ObjCourseItem.children, NodeToAdd.ChildNodes);
             }
         }
     }

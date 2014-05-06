@@ -61,20 +61,19 @@ namespace Plugghest.Modules.DisplayCourse
                         var tc = new TabController();
 
                         //Todo: Fix "Begin Course" button. Link to first Plugg in course. First Item may be a Heading.
-                        //IEnumerable<CourseItem> cps = bh.GetItemsInCourse(c.CourseId);
-                        //if (cps != null)
-                        //{
-                        //    Plugg p = bh.GetPlugg(cps.First().ItemId);
-                        //    TabInfo ti = tc.GetTabByName(p.PluggId.ToString() + ": " + p.Title , PortalId);
-                        //    if (ti != null)
-                        //        LnkBeginCourse.NavigateUrl = DotNetNuke.Common.Globals.NavigateURL(ti.TabID, "", "",
-                        //            "&c=" + courseId);
-                        //    else
-                        //    {
-                        //        LnkBeginCourse.Text = "Could not find PluggPage for first Plugg";
-                        //        LnkBeginCourse.CssClass = "btn btn-warning";
-                        //    }
-                        //}
+                        IEnumerable<CourseItem> cps = bh.GetItemsInCourse(c.CourseId);
+                        if (cps != null)
+                        {
+                            Plugg p = bh.GetPlugg(cps.First(x => x.ItemType == ECourseItemType.Plugg).ItemId);
+                            if (p != null)
+                                LnkBeginCourse.NavigateUrl = DotNetNuke.Common.Globals.NavigateURL(p.TabId, "", "",
+                                    "&c=" + courseId);
+                            else
+                            {
+                                LnkBeginCourse.Text = "Could not find PluggPage for first Plugg";
+                                LnkBeginCourse.CssClass = "btn btn-warning";
+                            }
+                        }
                     }
                 }
             }

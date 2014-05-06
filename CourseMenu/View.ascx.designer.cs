@@ -13,13 +13,13 @@ namespace Plugghest.Modules.CourseMenu {
     public partial class View {
         
         /// <summary>
-        /// Menu_Pluggs control.
+        /// TreeViewMain control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Menu Menu_Pluggs;
+        protected global::System.Web.UI.WebControls.TreeView TreeViewMain;
         
         /// <summary>
         /// lbltest control.

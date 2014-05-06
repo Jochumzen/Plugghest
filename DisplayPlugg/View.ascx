@@ -31,6 +31,7 @@
 
 <div style="width: 642px">
     <asp:Button ID="btnEditPlugg" runat="server" Text="Edit Plugg"  Visible="False" OnClick="btnEditPlugg_Click" />
+    <asp:Button ID="btnExitEditMode" runat="server" Text="Exit Edit Mode"  Visible="False" OnClick="btnExitEditMode_Click" />
     <div class="dispalyplug">
         <asp:Label runat="server" ID="lblYoutube"></asp:Label>
     </div>

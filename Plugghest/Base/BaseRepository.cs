@@ -237,12 +237,12 @@ namespace Plugghest.Base
             {
                 string sqlPlugg = "SELECT Title AS label, CourseItemId, CourseId, ItemId, CIOrder, ItemType, MotherId FROM CourseItems INNER JOIN Pluggs ON PluggID=ItemId WHERE ItemType=" + (int)ECourseItemType.Plugg + " AND CourseId=" + courseId;
                 string sqlHeading = "SELECT Title AS label, CourseItemId, CourseId, ItemId, CIOrder, ItemType, MotherId FROM CourseItems INNER JOIN CourseMenuHeadings ON HeadingID=ItemId WHERE ItemType=" + (int)ECourseItemType.Heading + " AND CourseId=" + courseId;
-                var rec = context.ExecuteQuery<CourseItem>(CommandType.Text , sqlPlugg + " UNION " + sqlHeading + " ORDER BY CIOrder");
+                var rec = context.ExecuteQuery<CourseItem>(CommandType.Text, sqlPlugg + " UNION " + sqlHeading + " ORDER BY CIOrder");
 
                 foreach (var ci in rec)
                 {
-                    cps.Add(new CourseItem { CourseItemId = ci.CourseItemId, CourseId = ci.CourseId, ItemId = ci.ItemId, CIOrder = ci.CIOrder, ItemType = ci.ItemType, MotherId = ci.MotherId, label = ci.label, name = ci.label});
-                } 
+                    cps.Add(new CourseItem { CourseItemId = ci.CourseItemId, CourseId = ci.CourseId, ItemId = ci.ItemId, CIOrder = ci.CIOrder, ItemType = ci.ItemType, MotherId = ci.MotherId, label = ci.label, name = ci.label });
+                }
             }
             return cps;
         }
@@ -415,7 +415,7 @@ namespace Plugghest.Base
 
         public IEnumerable<PluggInfoForDNNGrid> GetPluggRecords(string cultureCode)
         {
-            IEnumerable<PluggInfoForDNNGrid> pluggs; 
+            IEnumerable<PluggInfoForDNNGrid> pluggs;
             using (IDataContext ctx = DataContext.Instance())
             {
                 pluggs = ctx.ExecuteQuery<PluggInfoForDNNGrid>(CommandType.Text, "SELECT PluggId, Text, Username FROM Pluggs JOIN Users ON Users.UserID=Pluggs.CreatedByUserId JOIN PHTexts ON ItemId=Pluggs.PluggId WHERE ItemType=" + (int)ETextItemType.PluggTitle + " AND CultureCode='" + cultureCode + "'");
@@ -470,6 +470,30 @@ namespace Plugghest.Base
             {
                 var rep = ctx.GetRepository<CourseMenuHeadings>();
                 rep.Delete(t);
+            }
+        }
+        #endregion
+
+
+        #region CourseItemComment
+        public IEnumerable<CourseItemComment> GetCourseItemComment(int courseId, int itemId)
+        {
+            IEnumerable<CourseItemComment> cic;
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<CourseItemComment>();
+                cic = rep.Find("WHERE CourseId = @0 AND ItemId = @1", courseId, itemId);
+            }
+            return cic;
+        }
+
+
+        public void UpdateCourseItemComment(CourseItemComment CIC)
+        {
+            using (IDataContext db = DataContext.Instance())
+            {
+                var rep = db.GetRepository<CourseItemComment>();
+                rep.Update(CIC);
             }
         }
         #endregion

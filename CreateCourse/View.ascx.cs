@@ -82,20 +82,13 @@ namespace Plugghest.Modules.CreateCourse
             c = SaveCourse();
             if (c.CourseId != 0) //0 means Error in Update/Save
                 Response.Redirect(Globals.NavigateURL(c.TabId));
-
-
-            //DNNHelper h = new DNNHelper();
-            //h.AddCoursePage("C" + c.CourseId.ToString() + ": " + c.Title, "C" + c.CourseId);
-
-            //Response.Redirect("/" + (Page as DotNetNuke.Framework.PageBase).PageCulture.Name + "/" + "C" + c.CourseId + ".aspx");
-
         }
 
         protected Course SaveCourse()
         {
             BaseHandler bh = new BaseHandler();
             Course c = new Course();
-            List<CourseItem> cis = new List<CourseItem>();
+            List<CourseItemEntity> cis = new List<CourseItemEntity>();
             ReadFromControls(c, cis);
 
             try
@@ -112,7 +105,7 @@ namespace Plugghest.Modules.CreateCourse
             return c;
         }
 
-        protected void ReadFromControls(Course c, List<CourseItem>  cis)
+        protected void ReadFromControls(Course c, List<CourseItemEntity> cis)
         {
             c.Title = txtTitle.Text;
             c.CreatedInCultureCode = DDLanguage.SelectedValue;
@@ -133,17 +126,17 @@ namespace Plugghest.Modules.CreateCourse
 
             // Todo: Check that pluggtext is in the correct format before creating the Course
 
-            CourseItem ci;
+            CourseItemEntity ci;
             if (!string.IsNullOrEmpty(pluggtext))
             {
                 string[] itempluggs = pluggtext.Split(',');
 
                 for (int i = 0; i < itempluggs.Length; i++)
                 {
-                    ci = new CourseItem();
+                    ci = new CourseItemEntity();
                     ci.ItemId = Convert.ToInt32(itempluggs[i]);
                     ci.CIOrder = i + 1;
-                    ci.ItemType = 0;
+                    ci.ItemType = ECourseItemType.Plugg;
                     ci.MotherId = 0;
                     cis.Add(ci);
                 }
@@ -174,11 +167,13 @@ namespace Plugghest.Modules.CreateCourse
                     bool isNumeric = int.TryParse(itempluggs[i], out num);//check number.....
                     if (isNumeric)
                     {
-                        Plugg p = ph.GetPlugg(num);
-
-                        if (p != null)
+                        PluggContainer p = new PluggContainer();
+                        p.ThePlugg = ph.GetPlugg(num);
+                        if (p.ThePlugg != null)
                         {
-                            CIInfo.Text += num + ": " + p.Title + "<br />";
+                            p.CultureCode = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
+                            p.LoadTitle();                            
+                            CIInfo.Text += num + ": " + p.TheTitle.Text + "<br />";
                         }
                         else
                         {

@@ -111,7 +111,7 @@ namespace Plugghest.Base
             if (ThePlugg == null || ThePlugg.PluggId == 0 || CultureCode == null)
                 throw new Exception("Cannot load title. Need PluggId and CultureCode");
             BaseRepository rep = new BaseRepository();
-            TheTitle = rep.GetPhText(CultureCode, ThePlugg.PluggId, (int) ETextItemType.PluggTitle);
+            TheTitle = rep.GetPhText(CultureCode, ThePlugg.PluggId, (int)ETextItemType.PluggTitle);
         }
 
         public void LoadHtmlText()
@@ -127,7 +127,7 @@ namespace Plugghest.Base
             if (ThePlugg == null || ThePlugg.PluggId == 0 || CultureCode == null)
                 throw new Exception("Cannot load Latex. Need PluggId and CultureCode");
             BaseRepository rep = new BaseRepository();
-            TheLatex = rep.GetLatexText(CultureCode, ThePlugg.PluggId, (int)ETextItemType.PluggHtml);
+            TheLatex = rep.GetLatexText(CultureCode, ThePlugg.PluggId, (int)ELatexType.Plugg);
         }
 
         public void SetHtmlText(string htmlText)
@@ -228,7 +228,7 @@ namespace Plugghest.Base
 
         public PHLatex()
         { }
-        
+
         public PHLatex(string text, string cultureCode, ELatexType itemType)
         {
             Text = text;
@@ -266,5 +266,19 @@ namespace Plugghest.Base
 
         public string Title { get; set; }
     }
+    #endregion
+
+    #region CourseItemComments
+    [TableName("CourseItemComment")]
+    [PrimaryKey("CourseItemCommentID", AutoIncrement = true)]
+    public class CourseItemComment
+    {
+        public int CourseItemCommentID { get; set; }
+        public int CourseID { get; set; }
+        public int ItemId { get; set; }
+        public int ItemType { get; set; }
+        public string HtmlText { get; set; }
+    }
+
     #endregion
 }
