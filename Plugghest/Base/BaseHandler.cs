@@ -8,6 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Net;
+using System.IO;
+using System.Web.Script.Serialization;
 
 namespace Plugghest.Base
 {
@@ -85,9 +88,9 @@ namespace Plugghest.Base
                     if (locale.Key != p.ThePlugg.CreatedInCultureCode)
                     {
                         GoogleTranslate(p.TheTitle, locale.Key);
-                        if(p.TheHtmlText != null)
+                        if (p.TheHtmlText != null)
                             GoogleTranslate(p.TheHtmlText, locale.Key);
-                        if(p.TheLatex != null)
+                        if (p.TheLatex != null)
                             GoogleTranslate(p.TheLatex, locale.Key);
                     }
                 }
@@ -354,8 +357,8 @@ namespace Plugghest.Base
                     cie.ItemId = ch.HeadingID;
                 }
                 else
-                    cie.ItemId = ci.ItemId; 
-                
+                    cie.ItemId = ci.ItemId;
+
                 cie.CourseId = courseId;
                 cie.CIOrder = ciOrder;
                 cie.ItemType = ci.ItemType;
@@ -380,7 +383,7 @@ namespace Plugghest.Base
         public void DeleteCourseItem(CourseItem ci)
         {
             if (ci.ItemType == ECourseItemType.Heading)
-                rep.DeleteHeading(new CourseMenuHeadings() {HeadingID =ci.ItemId});
+                rep.DeleteHeading(new CourseMenuHeadings() { HeadingID = ci.ItemId });
             rep.DeleteCourseItem(ci);
         }
 
@@ -413,7 +416,7 @@ namespace Plugghest.Base
                     rep.UpdatePhText(prevText);
                 }
                 t.CreatedOnDate = DateTime.Now;
-                rep.CreatePhText(t);                 
+                rep.CreatePhText(t);
             }
             else
             {
@@ -478,6 +481,7 @@ namespace Plugghest.Base
 
             if (currentText == null)
             {
+                t.Text = TranslateText(t.CultureCode, cc, t.Text)??t.Text;
                 //Todo: Translate. For now: same
                 t.CultureCode = cc;
                 //t.Text = (Translation of t.Text from t.CultureCode into cc)
@@ -559,6 +563,54 @@ namespace Plugghest.Base
         }
 
 
+        #endregion
+
+
+
+
+        #region Translate Function and class
+        private string TranslateText(string strFromLanguage, string strToLanguage, string strTextToTranslate)
+        {
+            string url = "https://www.googleapis.com/language/translate/v2?key=AIzaSyBJHrFbepkPej62Q1o0GUiDuL2ceYuFcW8&format=html&source=" + strFromLanguage + "&target=" + strToLanguage + "&q=" + strTextToTranslate;
+
+            WebRequest request = HttpWebRequest.Create(url);
+
+            try
+            {
+                WebResponse response = request.GetResponse();
+
+                StreamReader reader = new StreamReader(response.GetResponseStream());
+
+                string urlText = reader.ReadToEnd();
+
+
+                JavaScriptSerializer TheSerializer = new JavaScriptSerializer();
+
+
+
+
+                TranslaterResult ObjResult = (TranslaterResult)new JavaScriptSerializer().Deserialize(urlText, typeof(TranslaterResult));
+                string strtranslatedText = ObjResult.data.translations[0].translatedText;
+                return strtranslatedText;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+        private class TranslaterResult
+        {
+            public Data data { get; set; }
+
+            public class Translation
+            {
+                public string translatedText { get; set; }
+            }
+            public class Data
+            {
+                public List<Translation> translations { get; set; }
+            }
+        }
         #endregion
     }
 }

@@ -1,7 +1,7 @@
 ﻿<div class="License">
 	<h3>License</h3>
 	<p class="Owner">
-		Christoc.com  <a href=http://www.christoc.com>http://www.christoc.com</a></br>
+		Pluggest <a href=http://www.christoc.com>http://www.christoc.com</a></br>
 		Copyright (c) 2014</br>	
 		by Christoc.com</br>
 	</p>

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Plugghest.Modules.CreatePlugg
+namespace Christoc.Modules.DisplayPluggeTitle
 {
 
 

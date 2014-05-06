@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using Plugghest.Base;
 using DotNetNuke.Entities.Tabs;
 using System.Web.Script.Serialization;
+using DotNetNuke.Framework;
 
 namespace Plugghest.Modules.CourseMenu
 {
@@ -143,7 +144,13 @@ namespace Plugghest.Modules.CourseMenu
                 TreeNode NodeToAdd = new TreeNode();
                 if (ObjCourseItem.ItemType.ToString() == ECourseItemType.Plugg.ToString())
                 {
-                    NodeToAdd.Text = "<a  style='text-decoration: underline;cursor: pointer; ' href='/" + ObjCourseItem.ItemId + "' >" + ObjCourseItem.label + "</a>";
+                    BaseHandler plugghandler = new BaseHandler();
+                    PluggContainer p = new PluggContainer();
+                    p.ThePlugg = plugghandler.GetPlugg(ObjCourseItem.ItemId);
+                    string curlan = (Page as PageBase).PageCulture.Name;
+                    p.CultureCode = curlan;
+                    p.LoadTitle();
+                    NodeToAdd.Text = "<a  style='text-decoration: underline;cursor: pointer; ' href='/" + ObjCourseItem.ItemId + "' >" + p.TheTitle.Text + "</a>";
                 }
                 else
                 {

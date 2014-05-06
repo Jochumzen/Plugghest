@@ -1,5 +1,5 @@
 ﻿/*
-' Copyright (c) 2014  Plugghest.com
+' Copyright (c) 2014  Christoc.com
 '  All rights reserved.
 ' 
 ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
@@ -10,23 +10,11 @@
 ' 
 */
 
-using System;
 using DotNetNuke.Entities.Modules;
 
-namespace Plugghest.Modules.CreatePlugg
+namespace Christoc.Modules.DisplayPluggeTitle
 {
-    public class CreatePluggModuleBase : PortalModuleBase
+    public class DisplayPluggeTitleModuleSettingsBase : ModuleSettingsBase
     {
-        public int ItemId
-        {
-            get
-            {
-                var qs = Request.QueryString["tid"];
-                if (qs != null)
-                    return Convert.ToInt32(qs);
-                return -1;
-            }
-
-        }
     }
 }

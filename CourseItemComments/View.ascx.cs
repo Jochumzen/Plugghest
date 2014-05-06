@@ -102,9 +102,9 @@ namespace Pluggest.Modules.CourseItemComments
                 List<CourseItemComment> objCourseItemComment = (List<CourseItemComment>)bh.GetCourseItemComment(courseid, Itemid);
                 if (objCourseItemComment.Count > 0)
                 {
-                    objCourseItemComment[0].HtmlText = txtHTML.Text;
+                    objCourseItemComment[0].HtmlText = hdHTML.Value;
                     bh.UpdateCourseItemComment(objCourseItemComment[0]);
-                   txtHTML.Text= objCourseItemComment[0].HtmlText  ;
+                   labHtmlText.Text= objCourseItemComment[0].HtmlText  ;
                 }
             }
         }

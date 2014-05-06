@@ -1,14 +1,14 @@
 <dotnetnuke type="Package" version="5.0">
   <packages>
-    <package name="CreatePlugg" type="Module" version="00.00.01">
-      <friendlyName>CreatePlugg</friendlyName>
-      <description>Plugghest.com CreatePlugg module</description>
+    <package name="CourseItemComment" type="Module" version="00.00.01">
+      <friendlyName>CourseItemComment</friendlyName>
+      <description>Christoc.com CourseItemComment module</description>
       <iconFile>Images/icon_extensions.gif</iconFile>
       <owner>
-        <name>Plugghest.com</name>
-        <organization>Plugghest.com</organization>
-        <url>http://www.Plugghest.com</url>
-        <email>modules@Plugghest.com</email>
+        <name>Christoc.com</name>
+        <organization>Christoc.com</organization>
+        <url>http://www.christoc.com</url>
+        <email>modules@christoc.com</email>
       </owner>
       <license src="License.txt"></license>
       <releaseNotes src="ReleaseNotes.txt"></releaseNotes>
@@ -19,7 +19,7 @@
       <components>
         <component type="Script">
           <scripts>
-            <basePath>DesktopModules\CreatePlugg</basePath>
+            <basePath>DesktopModules\CourseItemComment</basePath>
             <script type="Install">
               <path>Providers\DataProviders\SqlDataProvider</path>
               <name>00.00.01.SqlDataProvider</name>
@@ -35,7 +35,7 @@
 
         <component type="ResourceFile">
           <resourceFiles>
-            <basePath>DesktopModules/CreatePlugg</basePath>
+            <basePath>DesktopModules/CourseItemComment</basePath>
             <resourceFile>
               <name>Resources.zip</name>
             </resourceFile>
@@ -44,18 +44,18 @@
 
         <component type="Module">
           <desktopModule>
-            <moduleName>CreatePlugg</moduleName>
-            <foldername>CreatePlugg</foldername>
-            <businessControllerClass>Plugghest.Modules.CreatePlugg.Components.FeatureController</businessControllerClass>
+            <moduleName>CourseItemComment</moduleName>
+            <foldername>CourseItemComment</foldername>
+            <businessControllerClass>Christoc.Modules.CourseItemComment.Components.FeatureController</businessControllerClass>
             <supportedFeatures />
             <moduleDefinitions>
               <moduleDefinition>
-                <friendlyName>CreatePlugg</friendlyName>
+                <friendlyName>CourseItemComment</friendlyName>
                 <defaultCacheTime>0</defaultCacheTime>
                 <moduleControls>
                   <moduleControl>
                     <controlKey />
-                    <controlSrc>DesktopModules/CreatePlugg/View.ascx</controlSrc>
+                    <controlSrc>DesktopModules/CourseItemComment/View.ascx</controlSrc>
                     <supportsPartialRendering>False</supportsPartialRendering>
                     <controlTitle />
                     <controlType>View</controlType>
@@ -65,7 +65,7 @@
                   </moduleControl>
                   <moduleControl>
                     <controlKey>Edit</controlKey>
-                    <controlSrc>DesktopModules/CreatePlugg/Edit.ascx</controlSrc>
+                    <controlSrc>DesktopModules/CourseItemComment/Edit.ascx</controlSrc>
                     <supportsPartialRendering>False</supportsPartialRendering>
                     <controlTitle>Edit Content</controlTitle>
                     <controlType>Edit</controlType>
@@ -76,9 +76,9 @@
                   </moduleControl>
                   <moduleControl>
                     <controlKey>Settings</controlKey>
-                    <controlSrc>DesktopModules/CreatePlugg/Settings.ascx</controlSrc>
+                    <controlSrc>DesktopModules/CourseItemComment/Settings.ascx</controlSrc>
                     <supportsPartialRendering>False</supportsPartialRendering>
-                    <controlTitle>CreatePlugg Settings</controlTitle>
+                    <controlTitle>CourseItemComment Settings</controlTitle>
                     <controlType>Edit</controlType>
                     <iconFile />
                     <helpUrl />
@@ -92,7 +92,7 @@
         <component type="Assembly">
           <assemblies>
             <assembly>
-              <name>CreatePlugg.dll</name>
+              <name>CourseItemComment.dll</name>
               <path>bin</path>
             </assembly>
           </assemblies>

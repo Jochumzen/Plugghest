@@ -102,6 +102,10 @@
     <Content Include="License.txt" />
     <Content Include="module.css" />
     <Content Include="ReleaseNotes.txt" />
+    <Content Include="Script\bootstrap-wysiwyg.js" />
+    <Content Include="Script\external\jquery.hotkeys.js" />
+    <Content Include="Script\external\prettify.css" />
+    <Content Include="Script\index.css" />
     <Content Include="Settings.ascx" />
     <Content Include="View.ascx" />
   </ItemGroup>

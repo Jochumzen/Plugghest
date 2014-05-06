@@ -1,5 +1,5 @@
 ﻿/*
-' Copyright (c) 2014  Plugghest.com
+' Copyright (c) 2014  Christoc.com
 '  All rights reserved.
 ' 
 ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
@@ -14,7 +14,7 @@ using System;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Services.Exceptions;
 
-namespace Plugghest.Modules.CreatePlugg
+namespace Christoc.Modules.DisplayPluggeTitle
 {
     /// -----------------------------------------------------------------------------
     /// <summary>
@@ -32,11 +32,11 @@ namespace Plugghest.Modules.CreatePlugg
     /// 
     /// Below we have some examples of how to access these settings but you will need to uncomment to use.
     /// 
-    /// Because the control inherits from CreatePluggSettingsBase you have access to any custom properties
+    /// Because the control inherits from DisplayPluggeTitleSettingsBase you have access to any custom properties
     /// defined there, as well as properties from DNN such as PortalId, ModuleId, TabId, UserId and many more.
     /// </summary>
     /// -----------------------------------------------------------------------------
-    public partial class Settings : CreatePluggModuleSettingsBase
+    public partial class Settings : DisplayPluggeTitleModuleSettingsBase
     {
         #region Base Method Implementations
 
