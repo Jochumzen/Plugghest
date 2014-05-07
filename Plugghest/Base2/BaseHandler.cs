@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Plugghest.Base
+namespace Plugghest.Base2
 {
     public class BaseHandler
     {
