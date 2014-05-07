@@ -1,0 +1,4 @@
+D:\DNN\DNN_test\bin\DisplayPluggeTitle.dll
+D:\DNN\DNN_test\bin\DisplayPluggeTitle.pdb
+D:\DNN\DNN_test\DesktopModules\DisplayPluggeTitle\obj\Release\DisplayPluggeTitle.dll
+D:\DNN\DNN_test\DesktopModules\DisplayPluggeTitle\obj\Release\DisplayPluggeTitle.pdb
