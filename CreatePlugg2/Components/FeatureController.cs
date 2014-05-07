@@ -1,5 +1,5 @@
 /*
-' Copyright (c) 2014 Plugghest.com
+' Copyright (c) 2014 Christoc.com
 '  All rights reserved.
 ' 
 ' THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
@@ -15,12 +15,12 @@ using System.Collections.Generic;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Services.Search;
 
-namespace Plugghest.Modules.CreatePlugg.Components
+namespace Christoc.Modules.CreatePlugg2.Components
 {
 
     /// -----------------------------------------------------------------------------
     /// <summary>
-    /// The Controller class for DNNTemplate
+    /// The Controller class for CreatePlugg2
     /// 
     /// The FeatureController class is defined as the BusinessController in the manifest file (.dnn)
     /// DotNetNuke will poll this class to find out which Interfaces the class implements. 
@@ -53,18 +53,18 @@ namespace Plugghest.Modules.CreatePlugg.Components
         //{
         //string strXML = "";
 
-        //List<DNNTemplateInfo> colDNNTemplates = GetDNNTemplates(ModuleID);
-        //if (colDNNTemplates.Count != 0)
+        //List<CreatePlugg2Info> colCreatePlugg2s = GetCreatePlugg2s(ModuleID);
+        //if (colCreatePlugg2s.Count != 0)
         //{
-        //    strXML += "<DNNTemplates>";
+        //    strXML += "<CreatePlugg2s>";
 
-        //    foreach (DNNTemplateInfo objDNNTemplate in colDNNTemplates)
+        //    foreach (CreatePlugg2Info objCreatePlugg2 in colCreatePlugg2s)
         //    {
-        //        strXML += "<DNNTemplate>";
-        //        strXML += "<content>" + DotNetNuke.Common.Utilities.XmlUtils.XMLEncode(objDNNTemplate.Content) + "</content>";
-        //        strXML += "</DNNTemplate>";
+        //        strXML += "<CreatePlugg2>";
+        //        strXML += "<content>" + DotNetNuke.Common.Utilities.XmlUtils.XMLEncode(objCreatePlugg2.Content) + "</content>";
+        //        strXML += "</CreatePlugg2>";
         //    }
-        //    strXML += "</DNNTemplates>";
+        //    strXML += "</CreatePlugg2s>";
         //}
 
         //return strXML;
@@ -83,14 +83,14 @@ namespace Plugghest.Modules.CreatePlugg.Components
         /// -----------------------------------------------------------------------------
         //public void ImportModule(int ModuleID, string Content, string Version, int UserID)
         //{
-        //XmlNode xmlDNNTemplates = DotNetNuke.Common.Globals.GetContent(Content, "DNNTemplates");
-        //foreach (XmlNode xmlDNNTemplate in xmlDNNTemplates.SelectNodes("DNNTemplate"))
+        //XmlNode xmlCreatePlugg2s = DotNetNuke.Common.Globals.GetContent(Content, "CreatePlugg2s");
+        //foreach (XmlNode xmlCreatePlugg2 in xmlCreatePlugg2s.SelectNodes("CreatePlugg2"))
         //{
-        //    DNNTemplateInfo objDNNTemplate = new DNNTemplateInfo();
-        //    objDNNTemplate.ModuleId = ModuleID;
-        //    objDNNTemplate.Content = xmlDNNTemplate.SelectSingleNode("content").InnerText;
-        //    objDNNTemplate.CreatedByUser = UserID;
-        //    AddDNNTemplate(objDNNTemplate);
+        //    CreatePlugg2Info objCreatePlugg2 = new CreatePlugg2Info();
+        //    objCreatePlugg2.ModuleId = ModuleID;
+        //    objCreatePlugg2.Content = xmlCreatePlugg2.SelectSingleNode("content").InnerText;
+        //    objCreatePlugg2.CreatedByUser = UserID;
+        //    AddCreatePlugg2(objCreatePlugg2);
         //}
 
         //	throw new System.NotImplementedException("The method or operation is not implemented.");
@@ -106,11 +106,11 @@ namespace Plugghest.Modules.CreatePlugg.Components
         //{
         //SearchItemInfoCollection SearchItemCollection = new SearchItemInfoCollection();
 
-        //List<DNNTemplateInfo> colDNNTemplates = GetDNNTemplates(ModInfo.ModuleID);
+        //List<CreatePlugg2Info> colCreatePlugg2s = GetCreatePlugg2s(ModInfo.ModuleID);
 
-        //foreach (DNNTemplateInfo objDNNTemplate in colDNNTemplates)
+        //foreach (CreatePlugg2Info objCreatePlugg2 in colCreatePlugg2s)
         //{
-        //    SearchItemInfo SearchItem = new SearchItemInfo(ModInfo.ModuleTitle, objDNNTemplate.Content, objDNNTemplate.CreatedByUser, objDNNTemplate.CreatedDate, ModInfo.ModuleID, objDNNTemplate.ItemId.ToString(), objDNNTemplate.Content, "ItemId=" + objDNNTemplate.ItemId.ToString());
+        //    SearchItemInfo SearchItem = new SearchItemInfo(ModInfo.ModuleTitle, objCreatePlugg2.Content, objCreatePlugg2.CreatedByUser, objCreatePlugg2.CreatedDate, ModInfo.ModuleID, objCreatePlugg2.ItemId.ToString(), objCreatePlugg2.Content, "ItemId=" + objCreatePlugg2.ItemId.ToString());
         //    SearchItemCollection.Add(SearchItem);
         //}
 

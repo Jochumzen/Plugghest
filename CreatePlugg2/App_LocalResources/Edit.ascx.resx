@@ -124,7 +124,7 @@
     <value>Save</value>
   </data>
   <data name="ControlTitle_edit.Text" xml:space="preserve">
-    <value>Edit Control for CreatePlugg</value>
+    <value>Edit Control for CreatePlugg2</value>
   </data>
   <data name="lblAssignedUser.Help" xml:space="preserve">
     <value>Choose a user to assign this object to.</value>
@@ -145,7 +145,7 @@
     <value>Name</value>
   </data>
   <data name="BasicSettings.Text" xml:space="preserve">
-    <value>CreatePlugg Item Basic Settings</value>
+    <value>CreatePlugg2 Item Basic Settings</value>
   </data>
   <data name="ExpandAll.Text" xml:space="preserve">
     <value>Expand All</value>
