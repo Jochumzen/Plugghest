@@ -22,7 +22,8 @@ namespace Plugghest.DNN
             DisplayCourse,
             CourseMenu,
             Rating,
-            Comments
+            Comments,
+            DisplayPluggeTitle
         }
 
         public void DeleteTab(TabInfo t)
@@ -86,6 +87,8 @@ namespace Plugghest.DNN
 
             AddModuleToPage(newTab, ModuleType.Comments);
 
+            AddModuleToPage(newTab, ModuleType.DisplayPluggeTitle);
+            
             return newTab;
         }
 
@@ -216,6 +219,12 @@ namespace Plugghest.DNN
                     DesktopModuleFriendlyName = "DNNCentric RnC";
                     ModuleDefFriendlyName = "DNNCentric.RatingAndComments";
                     break;
+                case ModuleType.DisplayPluggeTitle:
+                    moduleInfo.PaneName = "RowTwo_Grid4_Pane";
+                    DesktopModuleFriendlyName = "DisplayPluggeTitle";
+                    ModuleDefFriendlyName = "DisplayPluggeTitle";
+                    break;
+                    
            }
 
             DesktopModuleInfo myModule = null;

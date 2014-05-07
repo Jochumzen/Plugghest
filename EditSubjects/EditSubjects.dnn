@@ -2,7 +2,7 @@
   <packages>
     <package name="EditSubjects" type="Module" version="00.00.01">
       <friendlyName>EditSubjects</friendlyName>
-      <description>Christoc.com EditSubjects module</description>
+      <description>PluggestEditSubjects module</description>
       <iconFile>Images/icon_extensions.gif</iconFile>
       <owner>
         <name>Christoc.com</name>
