@@ -1,0 +1,5 @@
+D:\DNN\DNN_test\bin\CreatePlugg2.dll
+D:\DNN\DNN_test\bin\CreatePlugg2.pdb
+D:\DNN\DNN_test\DesktopModules\CreatePlugg2\obj\Release\CreatePlugg2.csprojResolveAssemblyReference.cache
+D:\DNN\DNN_test\DesktopModules\CreatePlugg2\obj\Release\CreatePlugg2.dll
+D:\DNN\DNN_test\DesktopModules\CreatePlugg2\obj\Release\CreatePlugg2.pdb
