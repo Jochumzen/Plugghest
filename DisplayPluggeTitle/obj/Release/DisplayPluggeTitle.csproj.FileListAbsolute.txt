@@ -2,3 +2,8 @@ D:\DNN\DNN_test\bin\DisplayPluggeTitle.dll
 D:\DNN\DNN_test\bin\DisplayPluggeTitle.pdb
 D:\DNN\DNN_test\DesktopModules\DisplayPluggeTitle\obj\Release\DisplayPluggeTitle.dll
 D:\DNN\DNN_test\DesktopModules\DisplayPluggeTitle\obj\Release\DisplayPluggeTitle.pdb
+C:\websites\dnndev.me\bin\DisplayPluggeTitle.dll
+C:\websites\dnndev.me\bin\DisplayPluggeTitle.pdb
+C:\websites\dnndev.me\DesktopModules\DisplayPluggeTitle\obj\Release\DisplayPluggeTitle.csprojResolveAssemblyReference.cache
+C:\websites\dnndev.me\DesktopModules\DisplayPluggeTitle\obj\Release\DisplayPluggeTitle.dll
+C:\websites\dnndev.me\DesktopModules\DisplayPluggeTitle\obj\Release\DisplayPluggeTitle.pdb

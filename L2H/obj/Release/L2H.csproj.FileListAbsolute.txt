@@ -9,3 +9,4 @@ C:\websites\dnndev.me\DesktopModules\L2H\bin\Release\L2H.pdb
 C:\websites\dnndev.me\DesktopModules\L2H\bin\Release\log4net.dll
 C:\websites\dnndev.me\DesktopModules\L2H\obj\Release\L2H.dll
 C:\websites\dnndev.me\DesktopModules\L2H\obj\Release\L2H.pdb
+C:\websites\dnndev.me\DesktopModules\L2H\obj\Release\L2H.csprojResolveAssemblyReference.cache

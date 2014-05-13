@@ -9,4 +9,3 @@ C:\websites\dnndev.me\bin\L2H.dll
 C:\websites\dnndev.me\bin\L2H.pdb
 C:\websites\dnndev.me\DesktopModules\L2H\obj\Debug\L2H.dll
 C:\websites\dnndev.me\DesktopModules\L2H\obj\Debug\L2H.pdb
-C:\websites\dnndev.me\DesktopModules\L2H\obj\Debug\L2H.csprojResolveAssemblyReference.cache

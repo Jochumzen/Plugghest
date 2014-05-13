@@ -9,16 +9,16 @@
 <head>
 
 
-    <%--    	<link href="Script/css/ui-lightness/jquery-ui-1.10.4.custom.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="Script/css/ui-lightness/style.css" media="screen" />
-	<script src="Script/js/jquery-1.10.2.js"></script>
-	<script src="Script/js/jquery-ui-1.10.4.custom.js"></script>--%>
+    <link href="/DesktopModules/CreatePlugg2/Script/css/ui-lightness/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/DesktopModules/CreatePlugg2/Script/css/ui-lightness/style.css" media="screen" />
+	<script src="/DesktopModules/CreatePlugg2/Script/js/jquery-1.10.2.js"></script>
+	<script src="/DesktopModules/CreatePlugg2/Script/js/jquery-ui-1.10.4.custom.js"></script>
 
-    <link href="http://dnndev.me/Script/css/ui-lightness/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+    <%-- ><link href="http://dnndev.me/Script/css/ui-lightness/jquery-ui-1.10.4.custom.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="http://dnndev.me/Script/css/ui-lightness/style.css" media="screen" />
 
     <script src="http://dnndev.me/Script/js/jquery-1.10.2.js"></script>
-    <script src="http://dnndev.me/Script/js/jquery-ui-1.10.4.custom.js"></script>
+    <script src="http://dnndev.me/Script/js/jquery-ui-1.10.4.custom.js"></script> --%>
 
 
     <link href="/DesktopModules/CreatePlugg2/Script/js/jqtree.css" rel="stylesheet" />

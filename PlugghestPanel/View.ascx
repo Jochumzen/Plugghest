@@ -1,6 +1,9 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="View.ascx.cs" Inherits="Plugghest.Modules.PlugghestPanel.View" %>
 
 <p>
+    <asp:Button ID="btnTest" runat="server" OnClick="btnTest_Click" Text="Test" />
+</p>
+<p>
     Read Plugg from file:&nbsp;
     <asp:FileUpload ID="fuLatexFile" runat="server" />
 &nbsp;&nbsp;

@@ -3,3 +3,8 @@ D:\DNN\DNN_test\bin\CreatePlugg2.pdb
 D:\DNN\DNN_test\DesktopModules\CreatePlugg2\obj\Release\CreatePlugg2.csprojResolveAssemblyReference.cache
 D:\DNN\DNN_test\DesktopModules\CreatePlugg2\obj\Release\CreatePlugg2.dll
 D:\DNN\DNN_test\DesktopModules\CreatePlugg2\obj\Release\CreatePlugg2.pdb
+C:\websites\dnndev.me\bin\CreatePlugg2.dll
+C:\websites\dnndev.me\bin\CreatePlugg2.pdb
+C:\websites\dnndev.me\DesktopModules\CreatePlugg2\obj\Release\CreatePlugg2.csprojResolveAssemblyReference.cache
+C:\websites\dnndev.me\DesktopModules\CreatePlugg2\obj\Release\CreatePlugg2.dll
+C:\websites\dnndev.me\DesktopModules\CreatePlugg2\obj\Release\CreatePlugg2.pdb

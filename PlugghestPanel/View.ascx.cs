@@ -11,6 +11,7 @@
 */
 
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Web.UI.WebControls;
@@ -22,7 +23,7 @@ using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Modules.Actions;
 using DotNetNuke.Services.Localization;
 using DotNetNuke.UI.Utilities;
-using Plugghest.Base;
+using Plugghest.Base2;
 using Plugghest.DNN;
 using System.IO;
 using Ionic.Zip;
@@ -107,8 +108,8 @@ namespace Plugghest.Modules.PlugghestPanel
 
         protected void btnDeleteAllPluggs_Click(object sender, EventArgs e)
         {
-            BaseHandler bh = new BaseHandler();
-            bh.DeleteAllPluggs();
+            //BaseHandler bh = new BaseHandler();
+            //bh.DeleteAllPluggs();
         }
 
         protected void lbReadLatexFile_Click(object sender, EventArgs e)
@@ -164,73 +165,73 @@ namespace Plugghest.Modules.PlugghestPanel
 
         protected void ReadSingleFile(StreamReader file)
         {
-            string latex = file.ReadToEnd();
-            string pluggIdStr = GetCommand(latex, "pluggid");
+            //string latex = file.ReadToEnd();
+            //string pluggIdStr = GetCommand(latex, "pluggid");
 
-            BaseHandler bh = new BaseHandler();
-            if (pluggIdStr != "")
-            {
-                int pluggId;
-                bool isNum = int.TryParse(pluggIdStr, out pluggId);
-                if (!isNum)
-                {
-                    lblError.Text = "PluggId is not an integer";
-                    return;
-                }
-                Plugg p = bh.GetPlugg(pluggId);
-                if (p == null)
-                {
-                    lblError.Text = "File has a PluggId which does not exist";
-                    return;
-                }
-                //Todo: Handle Update of Latex file. 
-            }
-            else
-            {
-                PluggContainer p = new PluggContainer();
+            //BaseHandler bh = new BaseHandler();
+            //if (pluggIdStr != "")
+            //{
+            //    int pluggId;
+            //    bool isNum = int.TryParse(pluggIdStr, out pluggId);
+            //    if (!isNum)
+            //    {
+            //        lblError.Text = "PluggId is not an integer";
+            //        return;
+            //    }
+            //    Plugg p = bh.GetPlugg(pluggId);
+            //    if (p == null)
+            //    {
+            //        lblError.Text = "File has a PluggId which does not exist";
+            //        return;
+            //    }
+            //    //Todo: Handle Update of Latex file. 
+            //}
+            //else
+            //{
+            //    PluggContainer p = new PluggContainer();
 
-                string CultureCode = GetCommand(latex, "culture");
-                if (CultureCode != "")
-                    p.ThePlugg.CreatedInCultureCode = CultureCode;
-                else
-                    p.ThePlugg.CreatedInCultureCode = "en-US"; 
+            //    string CultureCode = GetCommand(latex, "culture");
+            //    if (CultureCode != "")
+            //        p.ThePlugg.CreatedInCultureCode = CultureCode;
+            //    else
+            //        p.ThePlugg.CreatedInCultureCode = "en-US"; 
                                 
-                string title = GetCommand(latex, "pluggtitle");
-                string section = GetCommand(latex, "section");
-                if (title != "")
-                    p.SetTitle(title);
-                else if (section != "")
-                    p.SetTitle(section);
-                else
-                    p.SetTitle("Untitled");
+            //    string title = GetCommand(latex, "pluggtitle");
+            //    string section = GetCommand(latex, "section");
+            //    if (title != "")
+            //        p.SetTitle(title);
+            //    else if (section != "")
+            //        p.SetTitle(section);
+            //    else
+            //        p.SetTitle("Untitled");
 
-                string whoCanEdit = GetCommand(latex, "edit");
-                if (whoCanEdit == "me")
-                    p.ThePlugg.WhoCanEdit = EWhoCanEdit.OnlyMe;
-                else if (whoCanEdit == "anyone")
-                    p.ThePlugg.WhoCanEdit = EWhoCanEdit.Anyone;
-                else
-                    p.ThePlugg.WhoCanEdit = EWhoCanEdit.Anyone;
+            //    string whoCanEdit = GetCommand(latex, "edit");
+            //    if (whoCanEdit == "me")
+            //        p.ThePlugg.WhoCanEdit = EWhoCanEdit.OnlyMe;
+            //    else if (whoCanEdit == "anyone")
+            //        p.ThePlugg.WhoCanEdit = EWhoCanEdit.Anyone;
+            //    else
+            //        p.ThePlugg.WhoCanEdit = EWhoCanEdit.Anyone;
 
-                string youTubeCode = GetCommand(latex, "youtube");
-                if (youTubeCode != "")
-                    p.ThePlugg.YouTubeCode = youTubeCode;
+            //    string youTubeCode = GetCommand(latex, "youtube");
+            //    if (youTubeCode != "")
+            //        p.ThePlugg.YouTubeCode = youTubeCode;
 
-                string html = GetCommand(latex, "html");
-                if (html != "")
-                    p.SetHtmlText(html);
+            //    string html = GetCommand(latex, "html");
+            //    if (html != "")
+            //        p.SetHtmlText(html);
 
-                p.SetLatexText(latex);
+            //    p.SetLatexText(latex);
 
-                p.ThePlugg.CreatedByUserId = UserId;
-                p.ThePlugg.CreatedOnDate = DateTime.Now;
-                p.ThePlugg.ModifiedByUserId = UserId;
-                p.ThePlugg.ModifiedOnDate = DateTime.Now;
+            //    p.ThePlugg.CreatedByUserId = UserId;
+            //    p.ThePlugg.CreatedOnDate = DateTime.Now;
+            //    p.ThePlugg.ModifiedByUserId = UserId;
+            //    p.ThePlugg.ModifiedOnDate = DateTime.Now;
 
-                p.ThePlugg.SubjectId = 0;
+            //    p.ThePlugg.SubjectId = 0;
 
-                bh.SavePlugg(p);
-            }            
+            //    bh.SavePlugg(p);
+            //}            
         }
 
         protected string GetCommand(string latex, string cmd)
@@ -243,7 +244,6 @@ namespace Plugghest.Modules.PlugghestPanel
             string s = latex.Substring(pos1 + 1, pos2 - pos1 - 1);
             return s;
         }
-
 
         public ModuleActionCollection ModuleActions
         {
@@ -258,6 +258,64 @@ namespace Plugghest.Modules.PlugghestPanel
                     };
                 return actions;
             }
+        }
+
+        protected void btnTest_Click(object sender, EventArgs e)
+        {
+
+            BaseHandler bh = new BaseHandler();
+            PluggContainer pc = new PluggContainer("en-US");
+
+            pc.ThePlugg.CreatedByUserId = 1;
+            pc.ThePlugg.ModifiedByUserId = 1;
+            pc.ThePlugg.WhoCanEdit = EWhoCanEdit.Anyone;
+
+            pc.SetTitle("This is my Title");
+            pc.SetDescription("This is my description");
+
+            List<object> cmpData = new List<object>();
+
+            YouTube v = new YouTube(); 
+            v.YouTubeAuthor="";
+            v.YouTubeCode="asdasdasdas";
+            v.YouTubeComment="";
+            v.YouTubeCreatedOn=DateTime.Now;
+            v.YouTubeDuration=100;
+            v.YouTubeTitle="This is my Title";
+            cmpData.Add(v);
+
+            PHText htmlText = new PHText();
+            htmlText.Text = "This is my Html text";
+            htmlText.ItemType = ETextItemType.PluggComponentRichRichText;
+            cmpData.Add(htmlText);
+
+            bh.SavePlugg(pc, cmpData);
+
+            //PHLatex latexText = new PHLatex();
+            //latexText.Text = "This is my Latex text";
+            //latexText.ItemType = ELatexItemType.PluggComponentLatex;
+            //cmpData.Add(latexText);
+           
+
+            //pc.LoadComponents();
+            //switch (pc.TheComponents.GetType().Name)
+            //{
+            //    case "Aba":
+            //        break;
+            //}
+
+            //pc.ThePlugg = bh.GetPlugg(1);
+            //pc.LoadComponents();
+            //foreach (var c in pc.TheComponents)
+            //{
+            //    switch (c.GetType().Name)
+            //    {
+            //        case "PHText":
+            //            PHText xx = (PHText)c;
+            //            string x = theTitle;
+            //            break;
+            //    }
+            //}
         }
     
     }

@@ -1,4 +1,5 @@
-﻿using DotNetNuke.ComponentModel.DataAnnotations;
+﻿using System.Runtime.InteropServices;
+using DotNetNuke.ComponentModel.DataAnnotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,149 +7,363 @@ using System.Text;
 using System.Web.Caching;
 using Plugghest.Helpers;
 
+//Put entity classes - classes mirroring tables here
 
 namespace Plugghest.Base2
 {
-    public enum EWhoCanEdit
-    {
-        NotSet = 0,
-        Anyone,
-        OnlyMe
-    }
-
-    public enum ECourseItemType
-    {
-        NotSet = 0,
-        Plugg,
-        Heading
-    }
-
-    public enum ETextItemType
-    {
-        NotSet = 0,
-        PluggTitle,
-        PluggHtml
-    }
-
-    public enum ELatexType
-    {
-        NotSet = 0,
-        Plugg,
-        Course
-    }
-
-    public enum ECCStatus
-    {
-        NotSet = 0,
-        InCreationLanguage,
-        GoogleTranslated,
-        HumanTranslated,
-        NotTranslated
-    }
-
-    public enum EComponentType
-    {
-        NotSet = 0,
-        RichRichText,   //Full DNN Rich text editor with images, tables and what not
-        RichText,       //Simpler Rich Text editor with bullets, bold, italic and links
-        Label,
-        Latex,
-        YouTube
-    }
-
-    // https://github.com/Jochumzen/Plugghest/wiki/NewPlugg
+    /// <summary>
+    /// The entity class for a Plugg
+    /// To work with a complete Plugg with its title and components, use PluggContainer
+    /// </summary>
     [TableName("Pluggs")]
-    //setup the primary key for table
     [PrimaryKey("PluggId", AutoIncrement = true)]
+    [Cacheable("Pluggs", CacheItemPriority.Normal, 20)]
     public class Plugg
     {
+        ///<summary>
+        /// The ID of the Plugg. Key and AutoInc
+        ///</summary>
         public int PluggId { get; set; }
+
+        ///<summary>
+        /// The Language in which the Plugg was created, ex "en-US". 
+        /// see http://msdn.microsoft.com/en-us/library/ee825488(v=cs.20).aspx
+        ///</summary>
         public string CreatedInCultureCode { get; set; }
+
+        ///<summary>
+        /// Who is allowed to edit the Plugg. Applies to everything in the Plugg as well
+        ///</summary>
         public EWhoCanEdit WhoCanEdit { get; set; }
+
+        ///<summary>
+        /// The ID of tab/page where this Plugg is located
+        ///</summary>
         public int TabId { get; set; }
+
+        ///<summary>
+        /// What subject this Plugg deals with. See namespace Plugghest.Subjects
+        ///</summary>
         public int? SubjectId { get; set; }
+
+        ///<summary>
+        /// True if "soft-deleted". Not actually deleted in DB but presented as deleted.
+        ///</summary>
+        public bool IsDeleted { get; set; }
+
+        ///<summary>
+        /// True if Plugg is to be listed and searchable. 
+        /// If false, you will still see the plugg if you go to PluggPage directly.
+        ///</summary>
+        public bool IsListed { get; set; }
+        
+        ///<summary>
+        /// 
+        ///</summary>
         public DateTime CreatedOnDate { get; set; }
+
+        ///<summary>
+        /// The DNN UserId from dbo.Users
+        ///</summary>
         public int CreatedByUserId { get; set; }
+
+        ///<summary>
+        /// 
+        ///</summary>
         public DateTime ModifiedOnDate { get; set; }
+
+        ///<summary>
+        /// The DNN UserId from dbo.Users
+        ///</summary>
         public int ModifiedByUserId { get; set; }
     }
 
+    /// <summary>
+    /// The entity class for a Plugg Component
+    /// A PluggComponent is a part of a Plugg, for example a video or some rich text
+    /// To work with a complete Plugg with its title and all its components, use PluggContainer
+    /// </summary>
     [TableName("PluggComponents")]
     [PrimaryKey("PluggComponentId", AutoIncrement = true)]
     [Cacheable("PluggComponents", CacheItemPriority.Normal, 20)]
     public class PluggComponent
     {
+        ///<summary>
+        /// The ID of the PluggComponent. Key and AutoInc. 
+        ///</summary>
         public int PluggComponentId { get; set; }
+
+        ///<summary>
+        /// The Id of the Plugg which this component is located in
+        ///</summary>
         public int PluggId { get; set; }
-        public int ComponentId { get; set; }
-        public int ComponentOrder { get; set; }
+
+        ///<summary>
+        /// The type of component
+        ///</summary>
         public EComponentType ComponentType { get; set; }
+
+        ///<summary>
+        /// The order of the Component inside the Plugg
+        ///</summary>
+        public int ComponentOrder { get; set; }
     }
 
-    public class PluggContainer
+    /// <summary>
+    /// PHTexts contains all text in Plugghest - everything from PluggTitles to Rich Html text
+    /// Allows for translation and versioning
+    /// </summary>
+    [TableName("PHTexts")]
+    [PrimaryKey("TextId", AutoIncrement = true)]
+    [Cacheable("PHTexts", CacheItemPriority.Normal, 20)]
+    public class PHText
     {
-        public Plugg ThePlugg;
-        public string CultureCode;
-        public IEnumerable<PluggContent> TheContent;
-        public Youtube TheVideo;
-        public PHText TheTitle;
-        public PHText TheHtmlText;
-        public PHLatex TheLatex;
+        ///<summary>
+        /// The ID of the PHText. Key and AutoInc
+        ///</summary>
+        public int TextId { get; set; }
 
-        public PluggContainer()
-        {
-            ThePlugg = new Plugg();
-        }
+        /// <summary>
+        /// The Language of the text, ex "en-US". 
+        /// see http://msdn.microsoft.com/en-us/library/ee825488(v=cs.20).aspx
+        /// </summary>
+        public string CultureCode { get; set; }
 
-        public void SetTitle(string htmlText)
-        {
-            TheTitle = new PHText(htmlText, ThePlugg.CreatedInCultureCode, ETextItemType.PluggTitle);
-        }
+        /// <summary>
+        /// The actual text. May be html text
+        /// </summary>
+        public string Text { get; set; }
 
-        public void LoadAllText()
-        {
-            LoadTitle();
-            LoadHtmlText();
-            LoadLatexText();
-        }
+        /// <summary>
+        /// The Item Type of the text. Tells us what type of text this is, for example a Plugg Title
+        /// </summary>
+        public ETextItemType ItemType { get; set; }
 
-        public void LoadTitle()
-        {
-            if (ThePlugg == null || ThePlugg.PluggId == 0 || CultureCode == null)
-                throw new Exception("Cannot load title. Need PluggId and CultureCode");
-            BaseRepository rep = new BaseRepository();
-            TheTitle = rep.GetPhText(CultureCode, ThePlugg.PluggId, (int)ETextItemType.PluggTitle);
-        }
+        /// <summary>
+        /// Foreign key. Primary key depend on ItemType.
+        /// For PluggTitle, PluggDescription: PluggId
+        /// For PluggComponentRichRichText, PluggComponentRichText, PluggComponentLabel: PluggComponentId
+        /// For CourseTitle, CourseDescription, CourseRichRichText: CourseId
+        /// For CoursePluggText: CoursePluggId
+        /// For CourseMenuHeadingText: CourseItemId
+        /// </summary>
+        public int ItemId { get; set; }
 
-        public void LoadHtmlText()
-        {
-            if (ThePlugg == null || ThePlugg.PluggId == 0 || CultureCode == null)
-                throw new Exception("Cannot laod HtmlText. Need PluggId and CultureCode");
-            BaseRepository rep = new BaseRepository();
-            TheHtmlText = rep.GetPhText(CultureCode, ThePlugg.PluggId, (int)ETextItemType.PluggHtml);
-        }
+        /// <summary>
+        /// The culture code status
+        /// </summary>
+        public ECultureCodeStatus CultureCodeStatus { get; set; }
 
-        public void LoadLatexText()
-        {
-            if (ThePlugg == null || ThePlugg.PluggId == 0 || CultureCode == null)
-                throw new Exception("Cannot load Latex. Need PluggId and CultureCode");
-            BaseRepository rep = new BaseRepository();
-            TheLatex = rep.GetLatexText(CultureCode, ThePlugg.PluggId, (int)ELatexType.Plugg);
-        }
+        /// <summary>
+        /// The version number of this text. For unversioned text, Version is always 0.
+        /// </summary>
+        public int Version { get; set; }
 
-        public void SetHtmlText(string htmlText)
-        {
-            TheHtmlText = new PHText(htmlText, ThePlugg.CreatedInCultureCode, ETextItemType.PluggHtml);
-        }
+        /// <summary>
+        /// Whether this is the current version or not (always true for unversioned text)
+        /// </summary>
+        public bool CurrentVersion { get; set; }
 
-        public void SetLatexText(string htmlText)
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime CreatedOnDate { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int CreatedByUserId { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime ModifiedOnDate { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int ModifiedByUserId { get; set; }
+
+        /// <summary>
+        /// Empty constructor
+        /// </summary>
+        public PHText()
+        { }
+
+        /// <summary>
+        /// Constructs a new PHText
+        /// </summary>
+        /// <param name="htmlText"></param>
+        /// <param name="cultureCode"></param>
+        /// <param name="itemType"></param>
+        public PHText(string htmlText, string cultureCode, ETextItemType itemType)
         {
-            TheLatex = new PHLatex(htmlText, ThePlugg.CreatedInCultureCode, ELatexType.Plugg);
+            Text = htmlText;
+            CultureCode = cultureCode;
+            ItemType = itemType;
         }
+    }
+
+    /// <summary>
+    /// PHLatex contains all Latex text in Plugghest
+    /// Allows for translation, versioning and conversion to Html.
+    /// </summary>
+    [TableName("PHLatex")]
+    [PrimaryKey("LatexId", AutoIncrement = true)]
+    [Cacheable("PHLatex", CacheItemPriority.Normal, 20)]
+    public class PHLatex
+    {
+        ///<summary>
+        /// The ID of the PHLatex. Key and AutoInc
+        ///</summary>
+        public int LatexId { get; set; }
+
+        /// <summary>
+        /// The Language of the text, ex "en-US". see http://msdn.microsoft.com/en-us/library/ee825488(v=cs.20).aspx
+        /// </summary>
+        public string CultureCode { get; set; }
+
+        /// <summary>
+        /// The actual Latex text.
+        /// </summary>
+        public string Text { get; set; }
+
+        /// <summary>
+        /// The Latex text translated into Html
+        /// </summary>
+        public string HtmlText { get; set; }
+
+        /// <summary>
+        /// The Item Type of the Latex text. 
+        /// Tells us what type of Latex text this is, for example latex text from the component PluggComponentLatex
+        /// </summary>
+        public ELatexItemType ItemType { get; set; }
+
+        /// <summary>
+        /// Foreign key. Primary key depend on ItemType.
+        /// For PluggComponentLatex: PluggComponentId
+        /// For CourseLatexText: CourseId
+        /// </summary>
+        public int ItemId { get; set; }
+
+        /// <summary>
+        /// The culture code status
+        /// </summary>
+        public ECultureCodeStatus CultureCodeStatus { get; set; }
+
+        /// <summary>
+        /// The version number of this text.
+        /// </summary>
+        public int Version { get; set; }
+
+        /// <summary>
+        /// Whether this is the current version or not
+        /// </summary>
+        public bool CurrentVersion { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime CreatedOnDate { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int CreatedByUserId { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public DateTime ModifiedOnDate { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int ModifiedByUserId { get; set; }
+
+        /// <summary>
+        /// Empty constructor
+        /// </summary>
+        public PHLatex()
+        { }
+
+        /// <summary>
+        /// Constructs a PHLatex
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="cultureCode"></param>
+        /// <param name="itemType"></param>
+        public PHLatex(string text, string cultureCode, ELatexItemType itemType)
+        {
+            Text = text;
+            CultureCode = cultureCode;
+            ItemType = itemType;
+        }
+    }
+
+
+    /// <summary>
+    /// The entity class for a YouTube video.
+    /// </summary>
+    [TableName("YouTube")]
+    [PrimaryKey("YouTubeId", AutoIncrement = true)]
+    [Cacheable("YouTube", CacheItemPriority.Normal, 20)]
+    public class YouTube
+    {
+        ///<summary>
+        /// The ID of the YouTube. Key and AutoInc
+        ///</summary>
+        public int YouTubeId { get; set; }
+
+        /// <summary>
+        /// The 11 character YouTube code. For example "9CMrj0zuJGA"
+        /// </summary>
+        public string YouTubeCode { get; set; }
+
+        /// <summary>
+        /// The Id of the PluggComponent to which this video belongs
+        /// </summary>
+        public int PluggComponentId { get; set; }
+
+        /// <summary>
+        /// The  YouTube Title displayed directly below the clip on YouTube.com
+        /// </summary>
+        public string YouTubeTitle { get; set; }
+
+        /// <summary>
+        /// The  YouTube comment displayed above the comments on YouTube.com
+        /// </summary>
+        public string YouTubeComment { get; set; }
+
+        /// <summary>
+        /// The duration of the clip in seconds
+        /// </summary>
+        public int YouTubeDuration { get; set; }
+
+        /// <summary>
+        /// The Author of the clip on YouTube
+        /// </summary>
+        public string YouTubeAuthor { get; set; }
+
+        /// <summary>
+        /// When the clip was created on youtube.com
+        /// </summary>
+        public DateTime YouTubeCreatedOn { get; set; }
+
+        /// <summary>
+        /// When the video was added to Plugghest
+        /// </summary>
+        public DateTime CreatedOn { get; set; }
+
+        /// <summary>
+        /// The DNN UserId of the person adding video to Plugghest
+        /// </summary>
+        public int CreatedByUserId { get; set; }
     }
 
     [TableName("Courses")]
     [PrimaryKey("CourseId", AutoIncrement = true)]
+    [Cacheable("Courses", CacheItemPriority.Normal, 20)]
     public class Course
     {
         public int CourseId { get; set; }
@@ -176,107 +391,19 @@ namespace Plugghest.Base2
         public int MotherId { get; set; }
     }
 
-    public class CourseItem : CourseItemEntity
-    {
-        public CourseItem Mother { get; set; }
-        public IList<CourseItem> children { get; set; }
-        public string label { get; set; }
-        public string name { get; set; }
-    }
+    //[TableName("CourseMenuHeadings")]
+    //[PrimaryKey("HeadingID", AutoIncrement = true)]
+    //[Cacheable("CourseMenuHeadings", CacheItemPriority.Normal, 20)]
+    //public class CourseMenuHeadings
+    //{
+    //    public int HeadingID { get; set; }
 
-    [TableName("PHTexts")]
-    //setup the primary key for table
-    [PrimaryKey("TextId", AutoIncrement = true)]
-    public class PHText
-    {
-        public int TextId { get; set; }
-        public string CultureCode { get; set; }
-        public string Text { get; set; }
-        public int ItemId { get; set; }
-        public ETextItemType ItemType { get; set; }
-        public ECCStatus CcStatus { get; set; }
-        public int Version { get; set; }
-        public bool CurrentVersion { get; set; }
-        public DateTime CreatedOnDate { get; set; }
-        public int CreatedByUserId { get; set; }
-        public DateTime ModifiedOnDate { get; set; }
-        public int ModifiedByUserId { get; set; }
+    //    public string Title { get; set; }
+    //}
 
-        public PHText()
-        { }
-
-        public PHText(string htmlText, string cultureCode, ETextItemType itemType)
-        {
-            Text = htmlText;
-            CultureCode = cultureCode;
-            ItemType = itemType;
-        }
-    }
-
-    [TableName("PHLatex")]
-    //setup the primary key for table
-    [PrimaryKey("LatexId", AutoIncrement = true)]
-    public class PHLatex
-    {
-        public int LatexId { get; set; }
-        public string CultureCode { get; set; }
-        public string Text { get; set; }
-        public string HtmlText { get; set; }
-        public int ItemId { get; set; }
-        public ELatexType ItemType { get; set; }
-        public ECCStatus CcStatus { get; set; }
-        public int Version { get; set; }
-        public bool CurrentVersion { get; set; }
-        public DateTime CreatedOnDate { get; set; }
-        public int CreatedByUserId { get; set; }
-        public DateTime ModifiedOnDate { get; set; }
-        public int ModifiedByUserId { get; set; }
-
-        public PHLatex()
-        { }
-
-        public PHLatex(string text, string cultureCode, ELatexType itemType)
-        {
-            Text = text;
-            CultureCode = cultureCode;
-            ItemType = itemType;
-        }
-    }
-
-    #region TemporaryDNN
-
-    public class PluggInfoForDNNGrid
-    {
-        public int PluggId { get; set; }
-        public string Text { get; set; }
-        public string UserName { get; set; }
-    }
-
-    public class CourseInfoForDNNGrid
-    {
-        public int CourseId { get; set; }
-        public string CourseName { get; set; }
-        public string UserName { get; set; }
-    }
-    #endregion
-
-    //class for Create Course tree...
-
-
-    #region  CourseHeading
-    [TableName("CourseMenuHeadings")]
-    [PrimaryKey("HeadingID", AutoIncrement = true)]
-    public class CourseMenuHeadings
-    {
-        public int HeadingID { get; set; }
-
-        public string Title { get; set; }
-    }
-    #endregion
-
-    #region CourseItemComments
     [TableName("CourseItemComment")]
     [PrimaryKey("CourseItemCommentID", AutoIncrement = true)]
+    [Cacheable("CourseItemComment", CacheItemPriority.Normal, 20)]
     public class CourseItemComment
     {
         public int CourseItemCommentID { get; set; }
@@ -286,5 +413,104 @@ namespace Plugghest.Base2
         public string HtmlText { get; set; }
     }
 
-    #endregion
+
+    //public class Youtube
+    //{
+    //    private string _youTubeCode; //11 character code
+
+    //    public Youtube()
+    //    {
+    //        IsValid = false;
+    //    }
+
+    //    public Youtube(string code)
+    //    {
+    //        code = code.Trim();
+    //        if (code.Length == 11)
+    //        {
+    //            YouTubeCode = code;
+    //            IsValid = true;
+    //        }
+    //        else
+    //        {
+    //            if (code.IndexOf("www.youtube.com") > -1)
+    //            //Assume that code is the final 11 characters
+    //            {
+    //                YouTubeCode = code.Substring(code.Length - 11, 11);
+    //                IsValid = true;
+    //            }
+    //            else
+    //            {
+    //                IsValid = false;
+    //            }
+    //        }
+    //    }
+
+    //    public string YouTubeCode
+    //    {
+    //        get { return _youTubeCode; }
+    //        set
+    //        {
+    //            if (value.Length == 11)
+    //            {
+    //                _youTubeCode = value;
+    //                IsValid = true;
+    //            }
+    //            else
+    //                throw new Exception("Youtube code must have 11 characters");
+    //        }
+    //    }
+
+    //    public bool IsValid { get; set; }
+
+    //    public string GetIframeString(string CultureCode)
+    //    {
+    //        if (CultureCode.Length != 2)
+    //            throw new Exception("Culture code must have 2 characters");
+    //        return "<iframe width=\"640\" height=\"390\" src=http://www.youtube.com/embed/" + YouTubeCode + "?cc_load_policy=1&amp;cc_lang_pref=" + CultureCode + "en\" frameborder=\"0\"></iframe>";
+    //    }
+
+    //    //public string GetYouTubeData(string FilterBy, string videoID)
+    //    //{
+    //    //    int lb = 0;
+    //    //    int ub = 0;
+    //    //    string videoHTML = "";
+    //    //    string videoData = "";
+    //    //    string vidMarker = "";
+    //    //    HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://gdata.youtube.com/feeds/api/videos?q=" + videoID);
+    //    //    StreamReader sr = new StreamReader(request.GetResponse().GetResponseStream());
+    //    //    switch (FilterBy)
+    //    //    {
+    //    //        case "Title":
+    //    //            vidMarker = "<media:title type='plain'>";
+    //    //            if (string.IsNullOrEmpty(vidMarker)) return string.Empty;
+    //    //            videoHTML = sr.ReadToEnd();
+    //    //            lb = videoHTML.IndexOf(vidMarker) + vidMarker.Length;
+    //    //            ub = videoHTML.IndexOf("</media:title>", lb);
+    //    //            videoData = videoHTML.Substring(lb, ub - lb);
+    //    //            break;
+    //    //        case "Views":
+    //    //            vidMarker = "viewCount='";
+    //    //            if (string.IsNullOrEmpty(vidMarker)) return string.Empty;
+    //    //            videoHTML = sr.ReadToEnd();
+    //    //            lb = videoHTML.IndexOf(vidMarker) + vidMarker.Length;
+    //    //            ub = videoHTML.IndexOf("'", lb);
+    //    //            videoData = videoHTML.Substring(lb, ub - lb);
+    //    //            break;
+    //    //        case "Length":
+    //    //            vidMarker = "<yt:duration seconds='";
+    //    //            if (string.IsNullOrEmpty(vidMarker)) return string.Empty;
+    //    //            videoHTML = sr.ReadToEnd();
+    //    //            lb = videoHTML.IndexOf(vidMarker) + vidMarker.Length;
+    //    //            ub = videoHTML.IndexOf("'", lb);
+    //    //            string Seconds = videoHTML.Substring(lb, ub - lb);
+    //    //            TimeSpan t = TimeSpan.FromSeconds(int.Parse(Seconds));
+    //    //            videoData = t.Minutes + ":" + t.Seconds;
+    //    //            break;
+    //    //    }
+    //    //    return videoData;
+    //    //}
+
+
+    //}
 }
