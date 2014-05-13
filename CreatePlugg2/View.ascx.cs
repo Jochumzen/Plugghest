@@ -23,6 +23,7 @@ using Plugghest.Base2;
 using System.Text;
 using Plugghest.Subjects;
 using System.Web.Script.Serialization;
+using System.Collections.Generic;
 
 namespace Christoc.Modules.CreatePlugg2
 {
@@ -47,14 +48,14 @@ namespace Christoc.Modules.CreatePlugg2
             {
                 if (!Page.IsPostBack)
                 {
-                   
+
                     StringBuilder strStaticListHtml1 = new StringBuilder(@" <ul class='sortable-list'>
                                                                          <ul class='sortable-list ui-sortable'>");
                     foreach (string name in Enum.GetNames(typeof(EComponentType)))
                     {
-                        if (name!="NotSet")
+                        if (name != "NotSet")
                         {
-                            strStaticListHtml1.Append("<li style='' class='sortable-item' id='" + name + "'>" + name + "<span class='del-spn' onclick='RemoveCon(this)'>x</span></li>"); 
+                            strStaticListHtml1.Append("<li style='' class='sortable-item' id='" + name + "'>" + name + "<span class='del-spn' onclick='RemoveCon(this)'>x</span></li>");
                         }
                     }
                     strStaticListHtml1.Append("</ul></ul>");
@@ -64,10 +65,10 @@ namespace Christoc.Modules.CreatePlugg2
 
                     string strRichRichTextHTML = CreateRichRichTextHTMLString();
 
-                    hdRichTextHtml.Value = strRichRichTextHTML;
+
 
                 }
-              
+
             }
             catch (Exception exc) //Module failed to load
             {
@@ -234,7 +235,7 @@ namespace Christoc.Modules.CreatePlugg2
             JavaScriptSerializer TheSerializer = new JavaScriptSerializer();
             hdnTreeData.Value = TheSerializer.Serialize(tree);
         }
-      
+
 
         public ModuleActionCollection ModuleActions
         {
@@ -249,6 +250,68 @@ namespace Christoc.Modules.CreatePlugg2
                     };
                 return actions;
             }
+        }
+
+
+
+
+        protected void btnSaveTitle_Click(object sender, EventArgs e)
+        {
+            BaseHandler bh = new BaseHandler();
+            PluggContainer pc = new PluggContainer(new Localization().CurrentCulture);
+            pc.ThePlugg.CreatedByUserId = this.UserId;
+            pc.ThePlugg.ModifiedByUserId = this.UserId;
+            pc.ThePlugg.PluggId = 0;
+            pc.ThePlugg.WhoCanEdit = (EWhoCanEdit)Enum.Parse(typeof(EWhoCanEdit), rdEditPlug.SelectedValue);
+            pc.SetTitle(txtTitle.Text);
+            pc.SetDescription(txtDescription.Text);
+
+            List<object> cmpData = new List<object>();
+
+
+            foreach (string StrCmpData in hdcmpData.Value.Split(new string[] { "$#%#$%" }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                string[] straCmpData = StrCmpData.Split(new string[] { "$$$&$$$" }, StringSplitOptions.RemoveEmptyEntries);
+
+                switch (straCmpData[0])
+                {
+                    case "RichRichText":
+                        PHText RichRichText = new PHText();
+                        RichRichText.Text = straCmpData[1];
+                        RichRichText.ItemType = ETextItemType.PluggComponentRichRichText;
+                        cmpData.Add(RichRichText);
+                        break;
+                    case "RichText":
+                        PHText RichText = new PHText();
+                        RichText.Text = straCmpData[1];
+                        RichText.ItemType = ETextItemType.PluggComponentRichText;
+                        cmpData.Add(RichText);
+                        break;
+                    case "Label":
+                        PHText Label = new PHText();
+                        Label.Text = straCmpData[1];
+                        Label.ItemType = ETextItemType.PluggComponentLabel;
+                        cmpData.Add(Label);
+                        break;
+                    case "Latex":
+                        PHLatex Latex = new PHLatex(straCmpData[1], new Localization().CurrentCulture,ELatexItemType.PluggComponentLatex);
+                        cmpData.Add(Latex);
+                        break;
+                    case "YouTube":
+                        Plugghest.Base2.YouTube objYouTube = new Plugghest.Base2.YouTube();
+                        string[] strYoutubeval = straCmpData[1].Split(new string[] { "&&&$$&&&" }, StringSplitOptions.RemoveEmptyEntries);
+                        objYouTube.YouTubeAuthor = strYoutubeval[3];
+                        objYouTube.YouTubeCode = strYoutubeval[2];
+                        objYouTube.YouTubeComment = strYoutubeval[5];
+                        objYouTube.YouTubeCreatedOn = Convert.ToDateTime(strYoutubeval[4]);
+                        objYouTube.YouTubeDuration = Convert.ToInt32(strYoutubeval[1]);
+                        objYouTube.YouTubeTitle = strYoutubeval[0];
+                        cmpData.Add(objYouTube);
+                        break;
+                }
+
+            }
+            bh.SavePlugg(pc, cmpData);
         }
     }
 }

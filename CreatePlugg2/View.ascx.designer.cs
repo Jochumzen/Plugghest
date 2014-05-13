@@ -13,15 +13,6 @@ namespace Christoc.Modules.CreatePlugg2 {
     public partial class View {
         
         /// <summary>
-        /// hdRichTextHtml control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdRichTextHtml;
-        
-        /// <summary>
         /// hdStaticListHTML control.
         /// </summary>
         /// <remarks>
@@ -29,6 +20,15 @@ namespace Christoc.Modules.CreatePlugg2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdStaticListHTML;
+        
+        /// <summary>
+        /// hdcmpData control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdcmpData;
         
         /// <summary>
         /// labTitle control.
@@ -67,33 +67,6 @@ namespace Christoc.Modules.CreatePlugg2 {
         protected global::System.Web.UI.WebControls.TextBox txtDescription;
         
         /// <summary>
-        /// txtHtmlText control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DotNetNuke.UI.UserControls.TextEditor txtHtmlText;
-        
-        /// <summary>
-        /// lblYouTube control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DotNetNuke.UI.UserControls.LabelControl lblYouTube;
-        
-        /// <summary>
-        /// txtYouTube control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtYouTube;
-        
-        /// <summary>
         /// hdnTreeData control.
         /// </summary>
         /// <remarks>
@@ -119,5 +92,14 @@ namespace Christoc.Modules.CreatePlugg2 {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.RadioButtonList rdEditPlug;
+        
+        /// <summary>
+        /// btnSave control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSave;
     }
 }

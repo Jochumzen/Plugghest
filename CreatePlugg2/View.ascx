@@ -1,43 +1,138 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="View.ascx.cs" Inherits="Christoc.Modules.CreatePlugg2.View" %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="View.ascx.cs" Inherits="Christoc.Modules.CreatePlugg2.View" Strict="false" WarningLevel="0"%>
 <%@ Register TagPrefix="dnn" TagName="TextEditor" Src="~/controls/TextEditor.ascx" %>
 <%@ Register TagPrefix="dnn" TagName="label" Src="~/controls/LabelControl.ascx" %>
-<asp:HiddenField ID="hdRichTextHtml" runat="server" />
 <asp:HiddenField ID="hdStaticListHTML" runat="server" />
+<asp:HiddenField ID="hdcmpData" runat="server" />
 
 
 <html lang="us">
 <head>
 
 
-    	<link href="Script/css/ui-lightness/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+    <%--    	<link href="Script/css/ui-lightness/jquery-ui-1.10.4.custom.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="Script/css/ui-lightness/style.css" media="screen" />
 	<script src="Script/js/jquery-1.10.2.js"></script>
-	<script src="Script/js/jquery-ui-1.10.4.custom.js"></script>
+	<script src="Script/js/jquery-ui-1.10.4.custom.js"></script>--%>
 
-<%--    <link href="http://dnndev.me/Script/css/ui-lightness/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+    <link href="http://dnndev.me/Script/css/ui-lightness/jquery-ui-1.10.4.custom.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="http://dnndev.me/Script/css/ui-lightness/style.css" media="screen" />
 
     <script src="http://dnndev.me/Script/js/jquery-1.10.2.js"></script>
-    <script src="http://dnndev.me/Script/js/jquery-ui-1.10.4.custom.js"></script>--%>
+    <script src="http://dnndev.me/Script/js/jquery-ui-1.10.4.custom.js"></script>
 
 
-      <link href="/DesktopModules/CreatePlugg2/Script/js/jqtree.css" rel="stylesheet" />
-<script src="/DesktopModules/CreatePlugg2/Script/js/tree.jquery.js"></script>
-<%--    <link href="http://dnndev.me/Script/js/jqtree.css" rel="stylesheet" />
-    <script src="http://dnndev.me/Script/js/tree.jquery.js"></script>--%>
+    <link href="/DesktopModules/CreatePlugg2/Script/js/jqtree.css" rel="stylesheet" />
+    <script src="/DesktopModules/CreatePlugg2/Script/js/tree.jquery.js"></script>
+    <link href="http://dnndev.me/Script/js/jqtree.css" rel="stylesheet" />
+    <script src="http://dnndev.me/Script/js/tree.jquery.js"></script>
 
 
 
     <script>
+        var liToRemove = "";
+        var divToRemove = "";
         $(function () {
             $("#tabs").tabs().addClass("ui-tabs-vertical ui-helper-clearfix");
             $("#tabs li").removeClass("ui-corner-top").addClass("ui-corner-left");
         });
+
+        function btnStepOneFunc() {
+            var tabs = $("#tabs").tabs();
+            var ul = tabs.find("ul")[0];
+            var i = 1;
+            $("#divDynamicList").find('li').each(function () {
+                var IId = $(this).attr('id');
+
+                var TabPosition = $("#tabs").find(".ui-tabs-nav li:eq("+i+")");
+                TabPosition.after("<li id = 'li" + IId + i + "' ><a href='#" + IId + i + "'>" + IId + "</a></li>");
+                //$("<li id = 'li"+IId + i+"' ><a href='#" + IId + i + "'>" + IId  + "</a></li>").appendTo(ul);
+                $("<div class='toAdd' id='" + IId + i + "'>" + " <iframe width='100%' height='100%'src='" + IId + ".aspx'></iframe>" + "</div>").appendTo(tabs);
+
+                liToRemove += "li" + IId + i + "#$%";
+                divToRemove += IId + i+"#$%";
+
+
+                i += 1;
+            });
+            tabs.tabs("refresh");
+            tabs.addClass("ui-tabs-vertical ui-helper-clearfix");
+            $("#tabs li").removeClass("ui-corner-top").addClass("ui-corner-left");
+            $('#divStep2').show();
+            $('#divList').hide();
+        };
+
+
+        function PreviousButtonFunc() {
+
+            $.each(liToRemove.split("#$%"), function (index, value) {
+                $("#"+value).remove();
+            });
+            $.each(divToRemove.split("#$%"), function (index, value) {
+                $("#"+value).remove();
+            });
+            //tabs.tabs("refresh");
+            //tabs.addClass("ui-tabs-vertical ui-helper-clearfix");
+            //$("#tabs li").removeClass("ui-corner-top").addClass("ui-corner-left");
+            liToRemove = "";
+            divToRemove = "";
+
+            $('#divStep2').hide();
+            $('#divList').show();
+        };
+
+        function btnSaveFunc() {
+  var finalStr = "";
+            $('.toAdd').each(function () {
+
+                var id = $(this).attr("id").slice(0,-1);
+
+                var body = $(this).find('iframe').contents().find('body');
+                var value = "";
+              
+                switch (id) {
+                    case ("RichRichText"):
+                        value = $(body).find('iframe').contents().find('body').html();
+                        finalStr += "RichRichText" + "$$$&$$$" + value;
+                        break;
+                    case ("RichText"):
+                        value = $($(body).find('#editor')).html();
+                        finalStr += "RichText" + "$$$&$$$" + value;
+                        break;
+                    case ("Label"):
+                        value = $(body).find('input[type=text]').val();
+                        finalStr += "Label" + "$$$&$$$" + value;
+                        break;
+                    case ("Latex"):
+                        value = $(body).find('textarea').val();
+                        finalStr += "Latex" + "$$$&$$$" + value;
+                        break;
+                    case ("YouTube"):
+                        value += $($(body).find('.title')).find('span').html()+ "&&&$$&&&";
+                        value += $($(body).find('.duration')).find('span').html()+ "&&&$$&&&";
+                        value += $($(body).find('.YouTubeCode')).find('span').html()+ "&&&$$&&&";
+                        value += $($(body).find('.Author')).find('span').html() + "&&&$$&&&";
+                        value += $($(body).find('.YouTubeCreatedOn')).find('span').html() + "&&&$$&&&";
+                        value += $($(body).find('.YouTubeComment')).find('span').html();
+             
+                        finalStr += "YouTube" + "$$$&$$$" + value;
+                        break;
+                }
+                finalStr += "$#%#$%";
+                $("#" + '<%=hdcmpData.ClientID%>').val(finalStr);
+  
+
+            });
+
+        };
     </script>
     <script type="text/javascript">
 
         $(document).ready(function () {
             $("#divStaticList").html($("#" + '<%=hdStaticListHTML.ClientID%>').val());
+
+
+            $('#divStep2').hide();
+        
             //$("#tabs").hide();
             $('#divList .sortable-list').sortable({
                 connectWith: '#divList .sortable-list',
@@ -72,41 +167,7 @@
             $($($(Control)).parent()).remove();
         };
 
-        function CheckURL(Control) {
 
-            var code = "";
-            var url = $($(Control).parent()).find('input[type=text]').val();
-            if (url.length == 11) {
-                code = url;
-            }
-            else if (url.indexOf("www.youtube.com") > -1) {
-
-                code = url.substr(url.length - 11, 11);
-            }
-            else {
-                alert("Invalid URL");
-            }
-            alert(code);
-            if ($(Control).parent().find("iframe").length > 0) {
-                $(Control).parent().find("iframe").remove();
-            }
-            $($($(Control).parent()).find("h3")).after("  <iframe width='420' height='345'src='http://www.youtube.com/embed/" + code + "'></iframe>");
-            //$.ajax({
-            //    url: "http://gdata.youtube.com/feeds/api/videos/" + code + "?v=2&alt=json",
-            //    dataType: "jsonp",
-            //    success: function (data) {
-            //        alert(data);
-            //    }
-            //});
-            $.getJSON('http://gdata.youtube.com/feeds/api/videos/' + code + '?v=2&alt=jsonc', function (data, status, xhr) {
-
-                alert(data.data.title);
-                alert(data.data.duration);
-                $($($(Control).parent()).find("h2")).html("title :" + data.data.title);
-                $($($(Control).parent()).find("h3")).html("duration :" + data.data.duration + " Seconds");
-                // data contains the JSON-Object below
-            });
-        };
     </script>
     <script type="text/javascript">
 
@@ -197,25 +258,7 @@
 
 
 
-      <link href="/DesktopModules/CreatePlugg2/Script/external/prettify.css" rel="stylesheet" />
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
-		<link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
-   
-          <script src="/DesktopModules/CreatePlugg2/Script/external/jquery.hotkeys.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-		<link href="/DesktopModules/CreatePlugg2/Script/index.css" rel="stylesheet" />
-     <script src="/DesktopModules/CreatePlugg2/Script/bootstrap-wysiwyg.js"></script>
 
-<%--    <link href="http://dnndev.me/Script/external/prettify.css" rel="stylesheet" />
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
-    <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
-
-    <script src="http://dnndev.me/Script/external/jquery.hotkeys.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-    <link href="http://dnndev.me/Script/index.css" rel="stylesheet" />
-    <script src="http://dnndev.me/Script/bootstrap-wysiwyg.js"></script>--%>
 
 </head>
 <body>
@@ -244,22 +287,20 @@
             </ul>
 
         </div>
-
-
+        <div style="clear:both">
+            <br />
+        </div>
+        <input style="float:right" type="button" onclick="btnStepOneFunc();" value="Continue" />
 
     </div>
-
+    <div id="divStep2">
     <div id="tabs">
         <ul>
             <li><a href="#Title">Title</a></li>
-            <li><a href="#Description">Description</a></li>
-            <li><a href="#tabs-1">Rich Rich Text</a></li>
-            <li><a href="#tabs-2">Rich Text</a></li>
-            <li><a href="#tabs-3">You Tube</a></li>
-            <li><a href="#tabs-4">Label</a></li>
-            <li><a href="#tabs-5">Latex</a></li>
-            <li><a href="#tabs-6">Subject</a></li>
-            <li><a href="#tabs-7">Advanced</a></li>
+            <li><a id="AddHeader" href="#Description">Description</a></li>
+
+            <li><a href="#Subject">Subject</a></li>
+            <li><a href="#Advanced">Advanced</a></li>
         </ul>
 
         <div id="Title">
@@ -273,153 +314,28 @@
 
 
 
-        <div id="tabs-1">
-            <dnn:TextEditor ID="txtHtmlText" runat="server" Width="100%" Height="400px" />
-        </div>
-        <div id="tabs-2">
-            <div class='container'>
-                <div class='hero-unit'>
+   
+  
 
-                    <div id='alerts'></div>
-                    <div class='btn-toolbar' data-role='editor-toolbar' data-target='#editor'>
-
-
-                        <div class='btn-group'>
-                            <a class='btn' data-edit='bold' title='Bold (Ctrl/Cmd+B)'><i class='icon-bold'></i></a>
-                            <a class='btn' data-edit='italic' title='Italic (Ctrl/Cmd+I)'><i class='icon-italic'></i></a>
-
-                        </div>
-                        <div class='btn-group'>
-                            <a class='btn' data-edit='insertunorderedlist' title='Bullet list'><i class='icon-list-ul'></i></a>
-                            <a class='btn' data-edit='insertorderedlist' title='Number list'><i class='icon-list-ol'></i></a>
-
-                        </div>
-
-                        <div class='btn-group'>
-                            <a class='btn dropdown-toggle' data-toggle='dropdown' title='Hyperlink'><i class='icon-link'></i></a>
-                            <div class='dropdown-menu input-append'>
-                                <input class='span2' placeholder='URL' type='text' data-edit='createLink' />
-                                <button class='btn' type='button'>Add</button>
-                            </div>
-                            <a class='btn' data-edit='unlink' title='Remove Hyperlink'><i class='icon-cut'></i></a>
-
-                        </div>
-
-
-                        <div class='btn-group'>
-                            <a class='btn' data-edit='undo' title='Undo (Ctrl/Cmd+Z)'><i class='icon-undo'></i></a>
-                            <a class='btn' data-edit='redo' title='Redo (Ctrl/Cmd+Y)'><i class='icon-repeat'></i></a>
-                        </div>
-
-                    </div>
-
-                    <div id='editor'>
-                        Go ahead&hellip;
-                    </div>
-                    <br />
-
-                </div>
-
-
-
-            </div>
-        </div>
-        <div id="tabs-3">
-            <dnn:label HelpKey="help" helptext="Enter the you tube URL Example: http://www.youtube.com/watch?v=HQODPOTikic" text="Youtube" id="lblYouTube" runat="server" />
-            <asp:TextBox ID="txtYouTube" runat="server" />
-
-            <input type="button" id="btnGetYoutubeVideo" value="Get Video" onclick="CheckURL(this);" />
-            <h2></h2>
-            <h3></h3>
-
-        </div>
-        <div id="tabs-4">
-            <input type="text" />
-        </div>
-        <div id="tabs-5">
-            <textarea cols="20" rows="2"></textarea>
-        </div>
-        <div id="tabs-6">
+        <div id="Subject">
             <div class="tree">
                 <div id="tree2"></div>
             </div>
             <asp:HiddenField ID="hdnTreeData" runat="server" Value="" />
         </div>
-        <div id="tabs-7">
+        <div id="Advanced">
             <dnn:label id="lblEditPlug" runat="server" controlname="rdEditPlug" HelpKey="helpEditPlug" helptext="Select one option ." text="Who can edit plugg?" />
             <asp:RadioButtonList ID="rdEditPlug" runat="server" RepeatDirection="Horizontal" RepeatLayout="Flow">
-                <asp:ListItem resourcekey="Asynchronous" Value="Any registered user" Selected="True" />
-                <asp:ListItem resourcekey="Synchronous" Value="Only me" />
+                <asp:ListItem resourcekey="Asynchronous" Value="Anyone" Text="Anyone" Selected="True" />
+                <asp:ListItem resourcekey="Synchronous" Value="OnlyMe" Text="Only Me" />
             </asp:RadioButtonList>
         </div>
     </div>
-
-
+         <input type="button" onclick="PreviousButtonFunc();" value="Go to Step 1" />
+        <asp:Button ID="btnSave" OnClick="btnSaveTitle_Click"  OnClientClick="btnSaveFunc();" runat="server" Text="Save"  />
+        </div>
 </body>
 </html>
 
 
 
-
-<script>
-    $(function () {
-        function initToolbarBootstrapBindings() {
-            var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
-                  'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
-                  'Times New Roman', 'Verdana'],
-                  fontTarget = $('[title=Font]').siblings('.dropdown-menu');
-            $.each(fonts, function (idx, fontName) {
-                fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
-            });
-            $('a[title]').tooltip({ container: 'body' });
-            $('.dropdown-menu input').click(function () { return false; })
-                .change(function () { $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle'); })
-            .keydown('esc', function () { this.value = ''; $(this).change(); });
-
-            $('[data-role=magic-overlay]').each(function () {
-                var overlay = $(this), target = $(overlay.data('target'));
-                overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
-            });
-            if ("onwebkitspeechchange" in document.createElement("input")) {
-                var editorOffset = $('#editor').offset();
-                $('#voiceBtn').css('position', 'absolute').offset({ top: editorOffset.top, left: editorOffset.left + $('#editor').innerWidth() - 35 });
-            } else {
-                $('#voiceBtn').hide();
-            }
-        };
-        function showErrorAlert(reason, detail) {
-            var msg = '';
-            if (reason === 'unsupported-file-type') { msg = "Unsupported format " + detail; }
-            else {
-                console.log("error uploading file", reason, detail);
-            }
-            $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>' +
-             '<strong>File upload error</strong> ' + msg + ' </div>').prependTo('#alerts');
-        };
-        initToolbarBootstrapBindings();
-        $('#editor').wysiwyg({ fileUploadError: showErrorAlert });
-        window.prettyPrint && prettyPrint();
-    });
-</script>
-
-
-<script>
-    (function (i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date(); a = s.createElement(o),
-        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-    ga('create', 'UA-37452180-6', 'github.io');
-    ga('send', 'pageview');
-</script>
-<script>(function (d, s, id) {
-    var js, fjs = d.getElementsByTagName(s)[0];
-    if (d.getElementById(id)) return;
-    js = d.createElement(s); js.id = id;
-    js.src = "http://connect.facebook.net/en_GB/all.js#xfbml=1";
-    fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
-</script>
-
-<script>!function (d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "http://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); } }(document, "script", "twitter-wjs");</script>

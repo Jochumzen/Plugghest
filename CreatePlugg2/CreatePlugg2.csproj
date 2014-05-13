@@ -80,6 +80,20 @@
     <Compile Include="Edit.ascx.designer.cs">
       <DependentUpon>Edit.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Label.aspx.cs">
+      <DependentUpon>Label.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Label.aspx.designer.cs">
+      <DependentUpon>Label.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Latex.aspx.cs">
+      <DependentUpon>Latex.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Latex.aspx.designer.cs">
+      <DependentUpon>Latex.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RichRichText.aspx.cs">
       <DependentUpon>RichRichText.aspx</DependentUpon>
@@ -87,6 +101,13 @@
     </Compile>
     <Compile Include="RichRichText.aspx.designer.cs">
       <DependentUpon>RichRichText.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="RichText.aspx.cs">
+      <DependentUpon>RichText.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RichText.aspx.designer.cs">
+      <DependentUpon>RichText.aspx</DependentUpon>
     </Compile>
     <Compile Include="Settings.ascx.cs">
       <DependentUpon>Settings.ascx</DependentUpon>
@@ -102,15 +123,25 @@
     <Compile Include="View.ascx.designer.cs">
       <DependentUpon>View.ascx</DependentUpon>
     </Compile>
+    <Compile Include="YouTube.aspx.cs">
+      <DependentUpon>YouTube.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="YouTube.aspx.designer.cs">
+      <DependentUpon>YouTube.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Documentation\Documentation.css" />
     <Content Include="Documentation\Documentation.html" />
     <Content Include="Edit.ascx" />
+    <Content Include="Label.aspx" />
+    <Content Include="Latex.aspx" />
     <Content Include="License.txt" />
     <Content Include="module.css" />
     <Content Include="ReleaseNotes.txt" />
     <Content Include="RichRichText.aspx" />
+    <Content Include="RichText.aspx" />
     <Content Include="Script\images\animated-overlay.gif" />
     <Content Include="Script\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
     <Content Include="Script\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
@@ -130,6 +161,7 @@
     <Content Include="Script\jquery-ui-1.10.4.custom.min.css" />
     <Content Include="Settings.ascx" />
     <Content Include="View.ascx" />
+    <Content Include="YouTube.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="CreatePlugg2.dnn" />
