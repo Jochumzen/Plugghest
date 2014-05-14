@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="YouTube.aspx.cs" Inherits="Christoc.Modules.CreatePlugg2.YouTube" %>
 
-<%--    <%@ Register TagPrefix="dnn" TagName="label" Src="~/controls/LabelControl.ascx" %>--%>
+    <%@ Register TagPrefix="dnn" TagName="label" Src="~/controls/LabelControl.ascx" %>
 
 
 <!DOCTYPE html>
@@ -8,8 +8,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head id="Head1" runat="server">
 
-    <script src="Script/js/jquery-1.10.2.js"></script>
-    <script src="Script/js/jquery-ui-1.10.4.custom.js"></script>
+    <script src="/DesktopModules/CreatePlugg2/Script/js/jquery-1.10.2.js"></script>
+    <script src="/DesktopModules/CreatePlugg2/Script/js/jquery-ui-1.10.4.custom.js"></script>
     <style>
         body > #feedHeaderContainer
         {
@@ -22,7 +22,7 @@
 
 
 
-        <%--  <dnn:label HelpKey="help" helptext="Enter the you tube URL Example: http://www.youtube.com/watch?v=HQODPOTikic" text="Youtube" id="lblYouTube" runat="server" />--%>
+          <dnn:label HelpKey="help" helptext="Enter the you tube URL Example: http://www.youtube.com/watch?v=HQODPOTikic" text="Youtube" id="lblYouTube" runat="server" />
         <asp:TextBox ID="txtYouTube" runat="server" />
 
         <input type="button" id="btnGetYoutubeVideo" value="Get Video" onclick="CheckURL(this);" />
