@@ -1,10 +1,10 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="RichText.aspx.cs" Inherits="Christoc.Modules.CreatePlugg2.RichText" %>
 
 
-	<script src="Script/js/jquery-1.10.2.js"></script>
-	<script src="Script/js/jquery-ui-1.10.4.custom.js"></script>
+	<script src="/DesktopModules/CreatePlugg2/Script/js/jquery-1.10.2.js"></script>
+	<script src="/DesktopModules/CreatePlugg2/Script/js/jquery-ui-1.10.4.custom.js"></script>
 
-<%--      <link href="/DesktopModules/CreatePlugg2/Script/external/prettify.css" rel="stylesheet" />
+      <link href="/DesktopModules/CreatePlugg2/Script/external/prettify.css" rel="stylesheet" />
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
 		<link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
@@ -12,10 +12,10 @@
           <script src="/DesktopModules/CreatePlugg2/Script/external/jquery.hotkeys.js"></script>
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 		<link href="/DesktopModules/CreatePlugg2/Script/index.css" rel="stylesheet" />
-     <script src="/DesktopModules/CreatePlugg2/Script/bootstrap-wysiwyg.js"></script>--%>
+     <script src="/DesktopModules/CreatePlugg2/Script/bootstrap-wysiwyg.js"></script>
 
 
-    <link href="http://dnndev.me/Script/external/prettify.css" rel="stylesheet" />
+<%--    <link href="http://dnndev.me/Script/external/prettify.css" rel="stylesheet" />
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
@@ -23,7 +23,7 @@
     <script src="http://dnndev.me/Script/external/jquery.hotkeys.js"></script>
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
     <link href="http://dnndev.me/Script/index.css" rel="stylesheet" />
-    <script src="http://dnndev.me/Script/bootstrap-wysiwyg.js"></script>
+    <script src="http://dnndev.me/Script/bootstrap-wysiwyg.js"></script>--%>
 
 
 

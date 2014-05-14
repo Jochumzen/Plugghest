@@ -9,22 +9,22 @@
 <head>
 
 
-    <link href="/DesktopModules/CreatePlugg2/Script/css/ui-lightness/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+        	<link href="/DesktopModules/CreatePlugg2/Script/css/ui-lightness/jquery-ui-1.10.4.custom.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/DesktopModules/CreatePlugg2/Script/css/ui-lightness/style.css" media="screen" />
 	<script src="/DesktopModules/CreatePlugg2/Script/js/jquery-1.10.2.js"></script>
 	<script src="/DesktopModules/CreatePlugg2/Script/js/jquery-ui-1.10.4.custom.js"></script>
 
-    <%-- ><link href="http://dnndev.me/Script/css/ui-lightness/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+   <%-- <link href="http://dnndev.me/Script/css/ui-lightness/jquery-ui-1.10.4.custom.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="http://dnndev.me/Script/css/ui-lightness/style.css" media="screen" />
 
     <script src="http://dnndev.me/Script/js/jquery-1.10.2.js"></script>
-    <script src="http://dnndev.me/Script/js/jquery-ui-1.10.4.custom.js"></script> --%>
+    <script src="http://dnndev.me/Script/js/jquery-ui-1.10.4.custom.js"></script>--%>
 
 
     <link href="/DesktopModules/CreatePlugg2/Script/js/jqtree.css" rel="stylesheet" />
     <script src="/DesktopModules/CreatePlugg2/Script/js/tree.jquery.js"></script>
-    <link href="http://dnndev.me/Script/js/jqtree.css" rel="stylesheet" />
-    <script src="http://dnndev.me/Script/js/tree.jquery.js"></script>
+<%--    <link href="http://dnndev.me/Script/js/jqtree.css" rel="stylesheet" />
+    <script src="http://dnndev.me/Script/js/tree.jquery.js"></script>--%>
 
 
 
@@ -46,7 +46,7 @@
                 var TabPosition = $("#tabs").find(".ui-tabs-nav li:eq("+i+")");
                 TabPosition.after("<li id = 'li" + IId + i + "' ><a href='#" + IId + i + "'>" + IId + "</a></li>");
                 //$("<li id = 'li"+IId + i+"' ><a href='#" + IId + i + "'>" + IId  + "</a></li>").appendTo(ul);
-                $("<div class='toAdd' id='" + IId + i + "'>" + " <iframe width='100%' height='100%'src='" + IId + ".aspx'></iframe>" + "</div>").appendTo(tabs);
+                $("<div class='toAdd' id='" + IId + i + "'>" + " <iframe width='100%' height='100%'src='/DesktopModules/CreatePlugg2/" + IId + ".aspx'></iframe>" + "</div>").appendTo(tabs);
 
                 liToRemove += "li" + IId + i + "#$%";
                 divToRemove += IId + i+"#$%";
