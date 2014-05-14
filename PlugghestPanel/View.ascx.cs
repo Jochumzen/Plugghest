@@ -59,12 +59,12 @@ namespace Plugghest.Modules.PlugghestPanel
         protected void btnDeleteCourse_Click(object sender, EventArgs e)
         {
 
-            
+
         }
 
         protected void btnDeleteTab_Click(object sender, EventArgs e)
         {
-            DNNHelper h =  new DNNHelper();
+            DNNHelper h = new DNNHelper();
             TabInfo t;
             string s = tbDeleteTabID.Text;
 
@@ -78,7 +78,7 @@ namespace Plugghest.Modules.PlugghestPanel
                     t = new TabInfo();
                     t.TabID = Convert.ToInt32(tabIDs[i]);
                     h.DeleteTab(t);
-                }                
+                }
             }
             else
             {
@@ -86,7 +86,7 @@ namespace Plugghest.Modules.PlugghestPanel
                 if (posOfDash > -1)
                 {
                     string starts = s.Substring(0, posOfDash);
-                    string ends = s.Substring(posOfDash+1,s.Length-posOfDash-1);
+                    string ends = s.Substring(posOfDash + 1, s.Length - posOfDash - 1);
                     int startint = Convert.ToInt32(starts);
                     int endint = Convert.ToInt32(ends);
                     for (int tID = startint; tID <= endint; tID++)
@@ -195,7 +195,7 @@ namespace Plugghest.Modules.PlugghestPanel
             //        p.ThePlugg.CreatedInCultureCode = CultureCode;
             //    else
             //        p.ThePlugg.CreatedInCultureCode = "en-US"; 
-                                
+
             //    string title = GetCommand(latex, "pluggtitle");
             //    string section = GetCommand(latex, "section");
             //    if (title != "")
@@ -264,38 +264,46 @@ namespace Plugghest.Modules.PlugghestPanel
         {
 
             BaseHandler bh = new BaseHandler();
-            PluggContainer pc = new PluggContainer("en-US");
+            PluggContainer pc = new PluggContainer("en-US",31);
+            pc.LoadTitle();
+            List<PluggComponent> comps = pc.GetComponentList();
 
-            pc.ThePlugg.CreatedByUserId = 1;
-            pc.ThePlugg.ModifiedByUserId = 1;
-            pc.ThePlugg.WhoCanEdit = EWhoCanEdit.Anyone;
+            int x;
+            PluggComponent vv = comps[0];
+            foreach(PluggComponent c in comps)
+            {
+                x = c.PluggComponentId;
+            }
+            //pc.ThePlugg.CreatedByUserId = 1;
+            //pc.ThePlugg.ModifiedByUserId = 1;
+            //pc.ThePlugg.WhoCanEdit = EWhoCanEdit.Anyone;
 
-            pc.SetTitle("This is my Title");
-            pc.SetDescription("This is my description");
+            //pc.SetTitle("This is my Title");
+            //pc.SetDescription("This is my description");
 
-            List<object> cmpData = new List<object>();
+            //List<object> cmpData = new List<object>();
 
-            YouTube v = new YouTube(); 
-            v.YouTubeAuthor="";
-            v.YouTubeCode="asdasdasdas";
-            v.YouTubeComment="";
-            v.YouTubeCreatedOn=DateTime.Now;
-            v.YouTubeDuration=100;
-            v.YouTubeTitle="This is my Title";
-            cmpData.Add(v);
+            //YouTube v = new YouTube();
+            //v.YouTubeAuthor = "";
+            //v.YouTubeCode = "asdasdasdas";
+            //v.YouTubeComment = "";
+            //v.YouTubeCreatedOn = DateTime.Now;
+            //v.YouTubeDuration = 100;
+            //v.YouTubeTitle = "This is my Title";
+            //cmpData.Add(v);
 
-            PHText htmlText = new PHText();
-            htmlText.Text = "This is my Html text";
-            htmlText.ItemType = ETextItemType.PluggComponentRichRichText;
-            cmpData.Add(htmlText);
+            //PHText htmlText = new PHText();
+            //htmlText.Text = "This is my Html text";
+            //htmlText.ItemType = ETextItemType.PluggComponentRichRichText;
+            //cmpData.Add(htmlText);
 
-            bh.SavePlugg(pc, cmpData);
+            //bh.SavePlugg(pc, cmpData);
 
             //PHLatex latexText = new PHLatex();
             //latexText.Text = "This is my Latex text";
             //latexText.ItemType = ELatexItemType.PluggComponentLatex;
             //cmpData.Add(latexText);
-           
+
 
             //pc.LoadComponents();
             //switch (pc.TheComponents.GetType().Name)
@@ -317,6 +325,6 @@ namespace Plugghest.Modules.PlugghestPanel
             //    }
             //}
         }
-    
+
     }
 }

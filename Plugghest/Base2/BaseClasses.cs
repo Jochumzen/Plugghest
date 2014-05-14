@@ -120,6 +120,14 @@ namespace Plugghest.Base2
             TheComponents = rep.GetAllComponentsInPlugg(ThePlugg.PluggId);
         }
 
+        public List<PluggComponent> GetComponentList()
+        {
+            if (TheComponents == null)
+                LoadComponents();
+            return TheComponents.ToList();
+        }
+
+
  
     }
 
