@@ -74,115 +74,115 @@ namespace Plugghest.Modules.DisplayPlugg
 
         private void SetPageText(string curlan, PluggContainer p)
         {
-            if (p.ThePlugg.YouTubeCode == null)
-            {
-                lblYoutube.Text = "[No Video]";
-            }
-            else
-            {
-                p.TheVideo = new Youtube(p.ThePlugg.YouTubeCode);
-                if (p.TheVideo.IsValid)
-                    lblYoutube.Text = p.TheVideo.GetIframeString(curlan.Substring(3, 2));
-            }
-            p.LoadAllText();
-            if (p.TheLatex != null)
-            {
-                hdLatextText.Value = p.TheLatex.Text;
-                lblLatexTextInHtml.Text = Server.HtmlDecode(p.TheLatex.HtmlText);                
-            }
-            if (p.TheHtmlText != null)
-                lblHtmlText.Text = Server.HtmlDecode(p.TheLatex.HtmlText); ;
+            //if (p.ThePlugg.YouTubeCode == null)
+            //{
+            //    lblYoutube.Text = "[No Video]";
+            //}
+            //else
+            //{
+            //    p.TheVideo = new Youtube(p.ThePlugg.YouTubeCode);
+            //    if (p.TheVideo.IsValid)
+            //        lblYoutube.Text = p.TheVideo.GetIframeString(curlan.Substring(3, 2));
+            //}
+            //p.LoadAllText();
+            //if (p.TheLatex != null)
+            //{
+            //    hdLatextText.Value = p.TheLatex.Text;
+            //    lblLatexTextInHtml.Text = Server.HtmlDecode(p.TheLatex.HtmlText);                
+            //}
+            //if (p.TheHtmlText != null)
+            //    lblHtmlText.Text = Server.HtmlDecode(p.TheLatex.HtmlText); ;
 
-            bool IsAuthorized = (p.ThePlugg.WhoCanEdit == EWhoCanEdit.Anyone || p.ThePlugg.CreatedByUserId == this.UserId || UserInfo.IsInRole("Administator"));
-            string editQS = Request.QueryString["edit"];
-            if (editQS != null && !string.IsNullOrWhiteSpace(editQS) && editQS.ToLower() == "true" && IsAuthorized)
-            {
-                divTitle.Style.Add("display", "block");
-                lblLatexSepretor.Style.Add("display", "block");
-                btnEditLatextText.Style.Add("display", "block");
-                btnEditHtmlText.Style.Add("display", "block");
-                btnExitEditMode.Visible = true;
-                lblTitle.Text = p.TheTitle.Text;
-            }
-            else
-            {
-                if (IsAuthorized)
-                {
-                    btnEditPlugg.Visible = true;
-                }
-                divTitle.Style.Add("display", "none");
-                lblLatexSepretor.Style.Add("display", "none");
-                btnEditLatextText.Style.Add("display", "none");
-                btnExitEditMode.Visible = false;
-                btnEditHtmlText.Style.Add("display", "none");
-            }
-            btnCancelLatext.Style.Add("display", "none");
-            btnCancelTitle.Style.Add("display", "none");
-            btnCancelHtmlText.Style.Add("display", "none");
+            //bool IsAuthorized = (p.ThePlugg.WhoCanEdit == EWhoCanEdit.Anyone || p.ThePlugg.CreatedByUserId == this.UserId || UserInfo.IsInRole("Administator"));
+            //string editQS = Request.QueryString["edit"];
+            //if (editQS != null && !string.IsNullOrWhiteSpace(editQS) && editQS.ToLower() == "true" && IsAuthorized)
+            //{
+            //    divTitle.Style.Add("display", "block");
+            //    lblLatexSepretor.Style.Add("display", "block");
+            //    btnEditLatextText.Style.Add("display", "block");
+            //    btnEditHtmlText.Style.Add("display", "block");
+            //    btnExitEditMode.Visible = true;
+            //    lblTitle.Text = p.TheTitle.Text;
+            //}
+            //else
+            //{
+            //    if (IsAuthorized)
+            //    {
+            //        btnEditPlugg.Visible = true;
+            //    }
+            //    divTitle.Style.Add("display", "none");
+            //    lblLatexSepretor.Style.Add("display", "none");
+            //    btnEditLatextText.Style.Add("display", "none");
+            //    btnExitEditMode.Visible = false;
+            //    btnEditHtmlText.Style.Add("display", "none");
+            //}
+            //btnCancelLatext.Style.Add("display", "none");
+            //btnCancelTitle.Style.Add("display", "none");
+            //btnCancelHtmlText.Style.Add("display", "none");
 
-            System.Web.UI.ScriptManager.RegisterStartupScript(UpdatePanel2, UpdatePanel2.GetType(), "inithide", "$('.dnnForm.dnnTextEditor.dnnClear').hide();", true);
+            //System.Web.UI.ScriptManager.RegisterStartupScript(UpdatePanel2, UpdatePanel2.GetType(), "inithide", "$('.dnnForm.dnnTextEditor.dnnClear').hide();", true);
         }
 
         protected void btnSaveTitle_Click(object sender, EventArgs e)
         {
-            BaseHandler plugghandler = new BaseHandler();
-            int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
+            //BaseHandler plugghandler = new BaseHandler();
+            //int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
 
-            PluggContainer p = new PluggContainer();
-            p.ThePlugg = plugghandler.GetPlugg(pluggid);
-            string curlan = (Page as PageBase).PageCulture.Name;
-            p.CultureCode = curlan;
-            p.LoadTitle();
-            if (p.TheTitle.Text != txtSaveTitle.Text)
-            {
-                p.TheTitle.Text = txtSaveTitle.Text;
-                plugghandler.SavePhText(p.TheTitle);
-            }
-            SetPageText(curlan, p);
+            //PluggContainer p = new PluggContainer();
+            //p.ThePlugg = plugghandler.GetPlugg(pluggid);
+            //string curlan = (Page as PageBase).PageCulture.Name;
+            //p.CultureCode = curlan;
+            //p.LoadTitle();
+            //if (p.TheTitle.Text != txtSaveTitle.Text)
+            //{
+            //    p.TheTitle.Text = txtSaveTitle.Text;
+            //    plugghandler.SavePhText(p.TheTitle);
+            //}
+            //SetPageText(curlan, p);
 
-            btnSaveTitle.Style.Add("display", "none");
-            txtSaveTitle.Style.Add("display", "none");
+            //btnSaveTitle.Style.Add("display", "none");
+            //txtSaveTitle.Style.Add("display", "none");
         }
 
         protected void btnSaveLatext_Click(object sender, EventArgs e)
         {
-            BaseHandler plugghandler = new BaseHandler();
-            int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
+            //BaseHandler plugghandler = new BaseHandler();
+            //int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
 
-            PluggContainer p = new PluggContainer();
-            p.ThePlugg = plugghandler.GetPlugg(pluggid);
-            string curlan = (Page as PageBase).PageCulture.Name;
-            p.CultureCode = curlan;
-            p.LoadLatexText() ;
-            if (p.TheLatex.Text != txtLatextText.Text)
-            {
-                p.TheTitle.Text = txtLatextText.Text;
-                plugghandler.SaveLatexText(p.TheLatex);
-            }
+            //PluggContainer p = new PluggContainer();
+            //p.ThePlugg = plugghandler.GetPlugg(pluggid);
+            //string curlan = (Page as PageBase).PageCulture.Name;
+            //p.CultureCode = curlan;
+            //p.LoadLatexText() ;
+            //if (p.TheLatex.Text != txtLatextText.Text)
+            //{
+            //    p.TheTitle.Text = txtLatextText.Text;
+            //    plugghandler.SaveLatexText(p.TheLatex);
+            //}
 
-            SetPageText(curlan, p);
-            btnSaveLatext.Style.Add("display", "none");
-            txtLatextText.Style.Add("display", "none");
+            //SetPageText(curlan, p);
+            //btnSaveLatext.Style.Add("display", "none");
+            //txtLatextText.Style.Add("display", "none");
         }
 
         protected void btnSaveHtmltext_Click(object sender, EventArgs e)
         {
-            BaseHandler plugghandler = new BaseHandler();
-            int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
+            //BaseHandler plugghandler = new BaseHandler();
+            //int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
 
-            PluggContainer p = new PluggContainer();
-            p.ThePlugg = plugghandler.GetPlugg(pluggid);
-            string curlan = (Page as PageBase).PageCulture.Name;
-            p.CultureCode = curlan;
-            p.LoadHtmlText();
-            if (p.TheHtmlText.Text != txtHtmlText.Text)
-            {
-                p.TheHtmlText.Text = txtHtmlText.Text;
-                plugghandler.SavePhText(p.TheHtmlText);
-            }
+            //PluggContainer p = new PluggContainer();
+            //p.ThePlugg = plugghandler.GetPlugg(pluggid);
+            //string curlan = (Page as PageBase).PageCulture.Name;
+            //p.CultureCode = curlan;
+            //p.LoadHtmlText();
+            //if (p.TheHtmlText.Text != txtHtmlText.Text)
+            //{
+            //    p.TheHtmlText.Text = txtHtmlText.Text;
+            //    plugghandler.SavePhText(p.TheHtmlText);
+            //}
 
-            SetPageText(curlan, p);
-            btnSaveHtmltext.Style.Add("display", "none");
+            //SetPageText(curlan, p);
+            //btnSaveHtmltext.Style.Add("display", "none");
         }
 
         protected void btnEditPlugg_Click(object sender, EventArgs e)
