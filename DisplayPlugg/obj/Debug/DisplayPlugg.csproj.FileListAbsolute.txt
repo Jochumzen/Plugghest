@@ -1,0 +1,10 @@
+D:\bin\DisplayPlugg.dll
+D:\bin\DisplayPlugg.pdb
+D:\Rohit\DisplayPlugg\obj\Debug\DisplayPlugg.dll
+D:\Rohit\DisplayPlugg\obj\Debug\DisplayPlugg.pdb
+D:\Rohit\DisplayPlugg\obj\Debug\DisplayPlugg.csprojResolveAssemblyReference.cache
+D:\DNN\DNN_test\bin\DisplayPlugg.dll
+D:\DNN\DNN_test\bin\DisplayPlugg.pdb
+D:\DNN\DNN_test\DesktopModules\DisplayPlugg\obj\Debug\DisplayPlugg.csprojResolveAssemblyReference.cache
+D:\DNN\DNN_test\DesktopModules\DisplayPlugg\obj\Debug\DisplayPlugg.dll
+D:\DNN\DNN_test\DesktopModules\DisplayPlugg\obj\Debug\DisplayPlugg.pdb

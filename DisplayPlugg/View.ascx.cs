@@ -26,6 +26,9 @@ using Plugghest.Helpers;
 using Plugghest.Base2;
 using System.Collections.Generic;
 using Plugghest.DNN;
+using System.Web.UI.HtmlControls;
+using System.Web.UI;
+using System.Text;
 
 namespace Plugghest.Modules.DisplayPlugg
 {
@@ -71,6 +74,15 @@ namespace Plugghest.Modules.DisplayPlugg
             if (p.CultureCode == p.ThePlugg.CreatedInCultureCode )
             SetPageText(curlan, p);
         }
+        //private void AddPlug_Click(object sender, EventArgs e)
+        //{ 
+        
+        //}
+
+        protected void AddPlug_Click(Object sender, EventArgs e)
+        {
+          
+        }
 
         private void SetPageText(string curlan, PluggContainer p)
         {
@@ -88,10 +100,115 @@ namespace Plugghest.Modules.DisplayPlugg
             //if (p.TheLatex != null)
             //{
             //    hdLatextText.Value = p.TheLatex.Text;
-            //    lblLatexTextInHtml.Text = Server.HtmlDecode(p.TheLatex.HtmlText);                
+            //    lblLatexTextInHtml.Text = Server.HtmlDecode(p.TheLatex.HtmlText);
             //}
             //if (p.TheHtmlText != null)
             //    lblHtmlText.Text = Server.HtmlDecode(p.TheLatex.HtmlText); ;
+
+
+            List<PluggComponent> comps = p.GetComponentList();
+            BaseHandler bh = new BaseHandler();
+
+            string ddl = "";
+            foreach (string name in Enum.GetNames(typeof(EComponentType)))
+            {
+                if (name != "NotSet")
+                {
+                   string dl = "<option value=" + name + " >" + name + "</option>";
+                   ddl = ddl + dl;
+                   
+                }
+            }
+
+            
+            foreach (PluggComponent comp in comps)
+            {
+                Label dynamicLabel = new Label();
+                int i = 0;
+                switch (comp.ComponentType)
+                {
+                
+                       
+                    case EComponentType.Label:
+                        PHText lbl = bh.GetCurrentVersionText(curlan, comp.PluggComponentId, ETextItemType.PluggComponentLabel);
+
+                        string yourHTMLstring0 = "";
+                         if (lbl == null)
+                             yourHTMLstring0 = "<div  id='Label" + i + "' class='Main'>Label:</br><select id='ddlLbl"+i+"'>";
+                        else
+                             yourHTMLstring0 = "<div id='Label' " + i + " class='Main'> Label:" + lbl.Text + "</br><select>";
+                           
+                        yourHTMLstring0 = yourHTMLstring0 + ddl;
+                        string n1 = "</select> <input type='button' value='Add' id='btladd' OnClick='AddPlug_Click()' /></div>";
+                        yourHTMLstring0 = yourHTMLstring0 + n1;
+
+                        Button btnToadd = new Button();
+                        object sender = new object();
+                        EventArgs e = new EventArgs();
+                        btnToadd.Click += new System.EventHandler(btnExitEditMode_Click);;
+                        divTitle.Controls.Add(btnToadd);
+                     
+                        break;
+                    case EComponentType.RichText:
+                        PHText rt = bh.GetCurrentVersionText(curlan, comp.PluggComponentId, ETextItemType.PluggComponentRichText);
+                        //Handle rich text
+
+                        string yourHTMLstring = "";
+                        if (rt == null)
+                            yourHTMLstring = "<div  id='RichText" + i + "' class='Main'>RichText:</br><select>";
+                        else
+                            yourHTMLstring = "<div id='RichText' " + i + " class='Main'> RichText:" + rt.Text + "</br><select>";
+                            
+                        yourHTMLstring = yourHTMLstring + ddl;
+
+                        string n2 = "</select> <button id='btladd' class='cls' OnClick='AddPlug_Click()'  >Add</button></div>";
+                        yourHTMLstring = yourHTMLstring + n2;
+                        
+                        divTitle.Controls.Add(new LiteralControl(yourHTMLstring));
+
+                        break;
+                    case EComponentType.RichRichText:
+                        PHText rrt = bh.GetCurrentVersionText(curlan, comp.PluggComponentId, ETextItemType.PluggComponentRichRichText);
+                        //Handle richrich text
+                        string yourHTMLstring1 = "";
+                        if (rrt == null)
+                            yourHTMLstring1 = "<div  id='RichRichText" + i + "' class='Main'>RichRichText:</br><select>";
+                        else
+                            yourHTMLstring1 = "<div id='RichRichText' " + i + " class='Main'> RichRichText:" + rrt.Text + "</br><select>";
+                                              
+                        yourHTMLstring1 = yourHTMLstring1 + ddl;
+                      
+                        string n3 = "</select> <button id='btladd' class='cls'  >Add</button></div>";
+                        yourHTMLstring1 = yourHTMLstring1 + n3;
+                        
+                        divTitle.Controls.Add(new LiteralControl(yourHTMLstring1));
+                        break;
+                    case EComponentType.Latex:
+                        PHLatex lt = bh.GetCurrentVersionLatexText(curlan, comp.PluggComponentId, ELatexItemType.PluggComponentLatex);
+                        //Handle Latex text
+                        string yourHTMLstring2 = "";
+                        if (lt == null)
+                            yourHTMLstring2 = "<div  id='Latex" + i + "' class='Main'>Latex:</br><select>";   
+                        else
+                            yourHTMLstring2 = "<div id='Latex' " + i + " class='Main'> Latex:" + lt.Text + "</br><select>";
+                        yourHTMLstring2 = yourHTMLstring2 + ddl;                      
+                        string n4 = "</select> <button id='btladd' class='cls'  >Add</button></div>";
+                        yourHTMLstring2 = yourHTMLstring2 + n4;
+
+                        divTitle.Controls.Add(new LiteralControl(yourHTMLstring2));
+                        break;
+
+
+                    case EComponentType.YouTube:
+                        YouTube yt = bh.GetYouTubeByComponentId(comp.PluggComponentId);
+                        //Handle YouTube. The iframe is in:
+                        //public string GetIframeString(string p.CultureCode) 
+                        break;
+                       
+                }
+                i++;
+            }
+
 
             //bool IsAuthorized = (p.ThePlugg.WhoCanEdit == EWhoCanEdit.Anyone || p.ThePlugg.CreatedByUserId == this.UserId || UserInfo.IsInRole("Administator"));
             //string editQS = Request.QueryString["edit"];
@@ -153,7 +270,7 @@ namespace Plugghest.Modules.DisplayPlugg
             //p.ThePlugg = plugghandler.GetPlugg(pluggid);
             //string curlan = (Page as PageBase).PageCulture.Name;
             //p.CultureCode = curlan;
-            //p.LoadLatexText() ;
+            //p.LoadLatexText();
             //if (p.TheLatex.Text != txtLatextText.Text)
             //{
             //    p.TheTitle.Text = txtLatextText.Text;
