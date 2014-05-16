@@ -7,3 +7,8 @@ D:\Rohit\DemoApps\Dnn7TestApp\bin\CreatePlugg2.pdb
 D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\CreatePlugg2\obj\Debug\CreatePlugg2.csprojResolveAssemblyReference.cache
 D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\CreatePlugg2\obj\Debug\CreatePlugg2.dll
 D:\Rohit\DemoApps\Dnn7TestApp\DesktopModules\CreatePlugg2\obj\Debug\CreatePlugg2.pdb
+C:\websites\dnndev.me\bin\CreatePlugg2.dll
+C:\websites\dnndev.me\bin\CreatePlugg2.pdb
+C:\websites\dnndev.me\DesktopModules\CreatePlugg2\obj\Debug\CreatePlugg2.csprojResolveAssemblyReference.cache
+C:\websites\dnndev.me\DesktopModules\CreatePlugg2\obj\Debug\CreatePlugg2.dll
+C:\websites\dnndev.me\DesktopModules\CreatePlugg2\obj\Debug\CreatePlugg2.pdb

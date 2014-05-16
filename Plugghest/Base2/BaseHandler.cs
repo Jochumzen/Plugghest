@@ -20,7 +20,7 @@ namespace Plugghest.Base2
 
         BaseRepository rep = new BaseRepository();
 
-        #region Plugg
+        #region Plugg/PluggContainer
 
         public void SavePlugg(PluggContainer p, List<object> cs)
         {
@@ -37,14 +37,18 @@ namespace Plugghest.Base2
                 p.ThePlugg.CreatedByUserId = 1;
                 p.ThePlugg.ModifiedByUserId = 1;
 
-                p.ThePlugg.CreatedOnDate = DateTime.Now;
+                //Save Plugg entity
                 p.ThePlugg.ModifiedOnDate = DateTime.Now;
 
                 if (isNew)
+                {
+                    p.ThePlugg.CreatedOnDate = DateTime.Now;
                     rep.CreatePlugg(p.ThePlugg);
+                }
                 else
                     rep.UpdatePlugg(p.ThePlugg);
 
+                //Save Title
                 if (p.TheTitle == null || p.TheTitle.Text == null)
                     throw new Exception("Cannot Save Plugg. TheTitle cannot be null");
 
@@ -136,10 +140,8 @@ namespace Plugghest.Base2
             }
         }
 
-
-
-        //public void DeletePlugg(Plugg p)
-        //{
+        public void DeletePlugg(Plugg p)
+        {
         //    // Todo: Don't delete Plugg if: It has comments or ratings, Its included in a course.
         //    // Todo: Soft delete of Plugg
         //    if (p == null)
@@ -162,7 +164,7 @@ namespace Plugghest.Base2
         //    rep.DeleteAllLatexForItem(p.PluggId, (int)ELatexType.Plugg);
 
         //    rep.DeletePlugg(p);
-        //}
+        }
 
         //public void UpdatePlugg(Plugg p, PluggContent pc)
         //{
@@ -452,7 +454,7 @@ namespace Plugghest.Base2
 
             if (isVersioned)
             {
-                var prevText = rep.GetPhText(t.CultureCode, t.ItemId, t.ItemType);
+                var prevText = rep.GetCurrentVersionText(t.CultureCode, t.ItemId, t.ItemType);
                 if (prevText == null)
                 {
                     t.Version = 1;
@@ -518,7 +520,7 @@ namespace Plugghest.Base2
 
             if (isVersioned)
             {
-                var prevText = rep.GetLatexText(t.CultureCode, t.ItemId, t.ItemType);
+                var prevText = rep.GetCurrentVersionLatexText(t.CultureCode, t.ItemId, t.ItemType);
                 if (prevText == null)
                 {
                     t.Version = 1;
@@ -545,6 +547,26 @@ namespace Plugghest.Base2
             }
         }
 
+        public PHText GetCurrentVersionText(string cultureCode, int itemId, ETextItemType itemType)
+        {
+            return rep.GetCurrentVersionText(cultureCode, itemId, itemType);
+        }
+
+        public IEnumerable<PHText> GetAllVersionsText(string cultureCode, int itemId, ETextItemType itemType)
+        {
+            return rep.GetAllVersionsText(cultureCode, itemId, itemType);
+        }
+
+        public PHLatex GetCurrentVersionLatexText(string cultureCode, int itemId, ELatexItemType itemType)
+        {
+            return rep.GetCurrentVersionLatexText(cultureCode, itemId, itemType);
+        }
+
+        public IEnumerable<PHLatex> GetAllVersionsLatexText(string cultureCode, int itemId, ELatexItemType itemType)
+        {
+            return rep.GetAllVersionsLatexText(cultureCode, itemId, itemType);
+        }    
+
         #endregion
 
         #region YouTube
@@ -561,6 +583,11 @@ namespace Plugghest.Base2
             }
             else
                 rep.UpdateYouTube(y);
+        }
+
+        public YouTube GetYouTubeByComponentId(int pluggComponentId)
+        {
+            return rep.GetYouTubeByComponentId(pluggComponentId);
         }
 
         #endregion

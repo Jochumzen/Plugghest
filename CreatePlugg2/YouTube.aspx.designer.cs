@@ -31,15 +31,6 @@ namespace Christoc.Modules.CreatePlugg2 {
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// lblYouTube control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DotNetNuke.UI.UserControls.LabelControl lblYouTube;
-        
-        /// <summary>
         /// txtYouTube control.
         /// </summary>
         /// <remarks>

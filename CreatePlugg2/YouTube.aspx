@@ -1,6 +1,5 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="YouTube.aspx.cs" Inherits="Christoc.Modules.CreatePlugg2.YouTube" %>
 
-    <%@ Register TagPrefix="dnn" TagName="label" Src="~/controls/LabelControl.ascx" %>
 
 
 <!DOCTYPE html>
@@ -22,7 +21,7 @@
 
 
 
-          <dnn:label HelpKey="help" helptext="Enter the you tube URL Example: http://www.youtube.com/watch?v=HQODPOTikic" text="Youtube" id="lblYouTube" runat="server" />
+        
         <asp:TextBox ID="txtYouTube" runat="server" />
 
         <input type="button" id="btnGetYoutubeVideo" value="Get Video" onclick="CheckURL(this);" />

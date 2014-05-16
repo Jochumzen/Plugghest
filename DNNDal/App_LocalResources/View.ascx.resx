@@ -135,4 +135,10 @@
   <data name="EditModule.Text" xml:space="preserve">
     <value>Add Item</value>
   </data>
+  <data name="lblAspL.Text" xml:space="preserve">
+    <value>Peter</value>
+  </data>
+  <data name="lblHello.Text" xml:space="preserve">
+    <value>Hello Label</value>
+  </data>
 </root>

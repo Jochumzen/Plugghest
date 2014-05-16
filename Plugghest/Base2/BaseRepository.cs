@@ -125,195 +125,6 @@ namespace Plugghest.Base2
 
         #endregion
 
-        //#region PluggContent
-
-        //public void CreatePluggContent(PluggContent t)
-        //{
-        //    using (IDataContext ctx = DataContext.Instance())
-        //    {
-        //        var rep = ctx.GetRepository<PluggContent>();
-        //        rep.Insert(t);
-        //    }
-        //}
-
-        //public PluggContent GetPluggContent(int pluggContentId)
-        //{
-        //    PluggContent pc;
-        //    using (IDataContext ctx = DataContext.Instance())
-        //    {
-        //        var rep = ctx.GetRepository<PluggContent>();
-        //        pc = rep.GetById(pluggContentId);
-        //    }
-        //    return pc;
-        //}
-
-        //public PluggContent GetPluggContent(int pluggId, string cultureCode)
-        //{
-        //    PluggContent ThePC = null;
-        //    IEnumerable<PluggContent> pcs;
-        //    using (IDataContext ctx = DataContext.Instance())
-        //    {
-        //        var rep = ctx.GetRepository<PluggContent>();
-        //        pcs = rep.Find("Where PluggId = @0 AND CultureCode = @1", pluggId, cultureCode);
-        //    }
-        //    if (pcs.Any())
-        //        ThePC = pcs.First();  //There can be only one. PetaPoco does not handle composite key
-        //    return ThePC;
-        //}
-
-        //public void UpdatePluggContent(PluggContent pc)
-        //{
-        //    using (IDataContext db = DataContext.Instance())
-        //    {
-        //        var rep = db.GetRepository<PluggContent>();
-        //        rep.Update(pc);
-        //    }
-        //}
-
-        //public void DeletePluggContent(PluggContent pc)
-        //{
-        //    using (IDataContext db = DataContext.Instance())
-        //    {
-        //        var rep = db.GetRepository<PluggContent>();
-        //        rep.Delete(pc);
-        //    }
-        //}
-
-        //public IEnumerable<PluggContent> GetAllContentInPlugg(int pluggId)
-        //{
-        //    IEnumerable<PluggContent> pc;
-        //    using (IDataContext ctx = DataContext.Instance())
-        //    {
-        //        var repository = ctx.GetRepository<PluggContent>();
-        //        pc = repository.Find("WHERE PluggId = @0", pluggId);
-        //    }
-        //    return pc;
-        //}
-
-        //public void DeleteAllPluggContent()
-        //{
-        //    using (IDataContext ctx = DataContext.Instance())
-        //    {
-        //        ctx.ExecuteQuery<PluggContent>(CommandType.TableDirect, "truncate table PluggsContent");
-        //    }
-        //}
-
-        //#endregion
-
-        //#region Course
-
-        //public void CreateCourse(Course t)
-        //{
-        //    using (IDataContext ctx = DataContext.Instance())
-        //    {
-        //        var rep = ctx.GetRepository<Course>();
-        //        rep.Insert(t);
-        //    }
-        //}
-
-        //public void DeleteCourse(Course t)
-        //{
-        //    using (IDataContext ctx = DataContext.Instance())
-        //    {
-        //        var rep = ctx.GetRepository<Course>();
-        //        rep.Delete(t);
-        //    }
-        //}
-
-        //public void UpdateCourse(Course t)
-        //{
-        //    using (IDataContext ctx = DataContext.Instance())
-        //    {
-        //        var rep = ctx.GetRepository<Course>();
-        //        rep.Update(t);
-        //    }
-        //}
-
-        //public Course GetCourse(int? courseId)
-        //{
-        //    Course p;
-        //    using (IDataContext ctx = DataContext.Instance())
-        //    {
-        //        var rep = ctx.GetRepository<Course>();
-        //        p = rep.GetById(courseId);
-        //    }
-        //    return p;
-        //}
-
-        //#endregion
-
-        //#region CourseItem
-
-        //public void CreateCourseItem(CourseItemEntity t)
-        //{
-        //    using (IDataContext ctx = DataContext.Instance())
-        //    {
-        //        var rep = ctx.GetRepository<CourseItemEntity>();
-        //        rep.Insert(t);
-        //    }
-        //}
-
-        //public void UpdateCourseItem(CourseItemEntity t)
-        //{
-        //    using (IDataContext ctx = DataContext.Instance())
-        //    {
-        //        var rep = ctx.GetRepository<CourseItemEntity>();
-        //        rep.Update(t);
-        //    }
-        //}
-
-        //public void DeleteCourseItem(CourseItemEntity t)
-        //{
-        //    using (IDataContext ctx = DataContext.Instance())
-        //    {
-        //        var rep = ctx.GetRepository<CourseItemEntity>();
-        //        rep.Delete(t);
-        //    }
-        //}
-
-        //public CourseItemEntity GetCourseItem(int courseItemId)
-        //{
-        //    CourseItemEntity p;
-        //    using (IDataContext ctx = DataContext.Instance())
-        //    {
-        //        var rep = ctx.GetRepository<CourseItemEntity>();
-        //        p = rep.GetById(courseItemId);
-        //    }
-        //    return p;
-        //}
-
-        //public List<CourseItem> GetItemsInCourse(int courseId)
-        //{
-        //    List<CourseItem> cps = new List<CourseItem>();
-
-        //    using (IDataContext context = DataContext.Instance())
-        //    {
-        //        string sqlPlugg = "SELECT Title AS label, CourseItemId, CourseId, ItemId, CIOrder, ItemType, MotherId FROM CourseItems INNER JOIN Pluggs ON PluggID=ItemId WHERE ItemType=" + (int)ECourseItemType.Plugg + " AND CourseId=" + courseId;
-        //        string sqlHeading = "SELECT Title AS label, CourseItemId, CourseId, ItemId, CIOrder, ItemType, MotherId FROM CourseItems INNER JOIN CourseMenuHeadings ON HeadingID=ItemId WHERE ItemType=" + (int)ECourseItemType.Heading + " AND CourseId=" + courseId;
-        //        var rec = context.ExecuteQuery<CourseItem>(CommandType.Text, sqlPlugg + " UNION " + sqlHeading + " ORDER BY CIOrder");
-
-        //        foreach (var ci in rec)
-        //        {
-        //            cps.Add(new CourseItem { CourseItemId = ci.CourseItemId, CourseId = ci.CourseId, ItemId = ci.ItemId, CIOrder = ci.CIOrder, ItemType = ci.ItemType, MotherId = ci.MotherId, label = ci.label, name = ci.label });
-        //        }
-        //    }
-        //    return cps;
-        //}
-
-        ////The same item may go into a course several times so collection is correct
-        //public IEnumerable<CourseItem> GetCourseItems(int courseId, int itemId)
-        //{
-        //    IEnumerable<CourseItem> cis;
-        //    using (IDataContext ctx = DataContext.Instance())
-        //    {
-        //        var rep = ctx.GetRepository<CourseItem>();
-        //        cis = rep.Find("WHERE CourseId = @0 AND ItemId = @1", courseId, itemId);
-        //    }
-        //    return cis;
-        //}
-
-        //#endregion
-
         #region PHText
 
         public void CreatePhText(PHText p)
@@ -336,20 +147,32 @@ namespace Plugghest.Base2
             return p;
         }
 
-        public PHText GetPhText(string cultureCode, int itemId, ETextItemType itemType)
+        public PHText GetCurrentVersionText(string cultureCode, int itemId, ETextItemType itemType)
         {
             IEnumerable<PHText> txt;
             PHText theText = null;
             using (IDataContext ctx = DataContext.Instance())
             {
                 var rep = ctx.GetRepository<PHText>();
-                txt = rep.Find("WHERE CultureCode = @0 AND ItemId = @1 AND ItemType = @2", cultureCode, itemId, (int)itemType);
+                txt = rep.Find("WHERE CultureCode = @0 AND ItemId = @1 AND ItemType = @2 AND CurrentVersion = 'True'", cultureCode, itemId, (int)itemType);
             }
 
             if (txt.Any())
-                theText = txt.First(); //Can only be at most one. PetaPoco does not handle composite key
+                theText = txt.First(); //Can only be at most one. 
 
             return theText;
+        }
+
+        public IEnumerable<PHText> GetAllVersionsText(string cultureCode, int itemId, ETextItemType itemType)
+        {
+            IEnumerable<PHText> txt;
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<PHText>();
+                txt = rep.Find("WHERE CultureCode = @0 AND ItemId = @1 AND ItemType = @2", cultureCode, itemId, (int)itemType);
+            }
+
+            return txt;
         }
 
         public void UpdatePhText(PHText p)
@@ -403,20 +226,32 @@ namespace Plugghest.Base2
             return p;
         }
 
-        public PHLatex GetLatexText(string cultureCode, int itemId, ELatexItemType itemType)
+        public PHLatex GetCurrentVersionLatexText(string cultureCode, int itemId, ELatexItemType itemType)
         {
             IEnumerable<PHLatex> txt;
             PHLatex theText = null;
             using (IDataContext ctx = DataContext.Instance())
             {
                 var rep = ctx.GetRepository<PHLatex>();
-                txt = rep.Find("WHERE CultureCode = @0 AND ItemId = @1 AND ItemType = @2", cultureCode, itemId, (int)itemType);
+                txt = rep.Find("WHERE CultureCode = @0 AND ItemId = @1 AND ItemType = @2 AND CurrentVersion = 'True'", cultureCode, itemId, (int)itemType);
             }
 
             if (txt.Any())
                 theText = txt.First(); //Can only be at most one. PetaPoco does not handle composite key
 
             return theText;
+        }
+
+        public IEnumerable<PHLatex> GetAllVersionsLatexText(string cultureCode, int itemId, ELatexItemType itemType)
+        {
+            IEnumerable<PHLatex> txt;
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<PHLatex>();
+                txt = rep.Find("WHERE CultureCode = @0 AND ItemId = @1 AND ItemType = @2", cultureCode, itemId, (int)itemType);
+            }
+
+            return txt;
         }
 
         public void UpdateLatexText(PHLatex p)
@@ -470,6 +305,22 @@ namespace Plugghest.Base2
             return p;
         }
 
+        public YouTube GetYouTubeByComponentId(int componentId)
+        {
+            IEnumerable<YouTube> yt;
+            YouTube theYt = null;
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<YouTube>();
+                yt = rep.Find("WHERE PluggComponentId = @0", componentId);
+            }
+
+            if (yt.Any())
+                theYt = yt.First(); //Can only be at most one. 
+
+            return theYt;
+        }
+
         public void UpdateYouTube(YouTube p)
         {
             using (IDataContext db = DataContext.Instance())
@@ -486,6 +337,120 @@ namespace Plugghest.Base2
                 var rep = db.GetRepository<YouTube>();
                 rep.Delete(p);
             }
+        }
+
+        #endregion
+
+        #region Course
+
+        public void CreateCourse(Course t)
+        {
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<Course>();
+                rep.Insert(t);
+            }
+        }
+
+        public void DeleteCourse(Course t)
+        {
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<Course>();
+                rep.Delete(t);
+            }
+        }
+
+        public void UpdateCourse(Course t)
+        {
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<Course>();
+                rep.Update(t);
+            }
+        }
+
+        public Course GetCourse(int? courseId)
+        {
+            Course p;
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<Course>();
+                p = rep.GetById(courseId);
+            }
+            return p;
+        }
+
+        #endregion
+
+        #region CourseItem
+
+        public void CreateCourseItem(CourseItemEntity t)
+        {
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<CourseItemEntity>();
+                rep.Insert(t);
+            }
+        }
+
+        public void UpdateCourseItem(CourseItemEntity t)
+        {
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<CourseItemEntity>();
+                rep.Update(t);
+            }
+        }
+
+        public void DeleteCourseItem(CourseItemEntity t)
+        {
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<CourseItemEntity>();
+                rep.Delete(t);
+            }
+        }
+
+        public CourseItemEntity GetCourseItem(int courseItemId)
+        {
+            CourseItemEntity p;
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<CourseItemEntity>();
+                p = rep.GetById(courseItemId);
+            }
+            return p;
+        }
+
+        public List<CourseItem> GetItemsInCourse(int courseId)
+        {
+            List<CourseItem> cps = new List<CourseItem>();
+
+            using (IDataContext context = DataContext.Instance())
+            {
+                string sqlPlugg = "SELECT Title AS label, CourseItemId, CourseId, ItemId, CIOrder, ItemType, MotherId FROM CourseItems INNER JOIN Pluggs ON PluggID=ItemId WHERE ItemType=" + (int)ECourseItemType.Plugg + " AND CourseId=" + courseId;
+                string sqlHeading = "SELECT Title AS label, CourseItemId, CourseId, ItemId, CIOrder, ItemType, MotherId FROM CourseItems INNER JOIN CourseMenuHeadings ON HeadingID=ItemId WHERE ItemType=" + (int)ECourseItemType.Heading + " AND CourseId=" + courseId;
+                var rec = context.ExecuteQuery<CourseItem>(CommandType.Text, sqlPlugg + " UNION " + sqlHeading + " ORDER BY CIOrder");
+
+                foreach (var ci in rec)
+                {
+                    cps.Add(new CourseItem { CourseItemId = ci.CourseItemId, CourseId = ci.CourseId, ItemId = ci.ItemId, CIOrder = ci.CIOrder, ItemType = ci.ItemType, MotherId = ci.MotherId, label = ci.label, name = ci.label });
+                }
+            }
+            return cps;
+        }
+
+        //The same item may go into a course several times so collection is correct
+        public IEnumerable<CourseItem> GetCourseItems(int courseId, int itemId)
+        {
+            IEnumerable<CourseItem> cis;
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<CourseItem>();
+                cis = rep.Find("WHERE CourseId = @0 AND ItemId = @1", courseId, itemId);
+            }
+            return cis;
         }
 
         #endregion

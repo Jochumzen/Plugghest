@@ -359,6 +359,18 @@ namespace Plugghest.Base2
         /// The DNN UserId of the person adding video to Plugghest
         /// </summary>
         public int CreatedByUserId { get; set; }
+
+        /// <summary>
+        /// Gets the iframe string to display the video
+        /// </summary>
+        /// <param name="cultureCode"></param>
+        /// <returns></returns>
+        public string GetIframeString(string cultureCode)
+        {
+            cultureCode = cultureCode.Substring(0, 2);
+            return "<iframe width=\"640\" height=\"390\" src=http://www.youtube.com/embed/" + YouTubeCode + "?cc_load_policy=1&amp;cc_lang_pref=" + cultureCode + "en\" frameborder=\"0\"></iframe>";
+        }
+
     }
 
     [TableName("Courses")]

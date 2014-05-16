@@ -264,16 +264,44 @@ namespace Plugghest.Modules.PlugghestPanel
         {
 
             BaseHandler bh = new BaseHandler();
-            PluggContainer pc = new PluggContainer("en-US",31);
-            pc.LoadTitle();
-            List<PluggComponent> comps = pc.GetComponentList();
+            PluggContainer pc = new PluggContainer("en-US", 31);
+List<PluggComponent> comps = pc.GetComponentList();
 
-            int x;
-            PluggComponent vv = comps[0];
-            foreach(PluggComponent c in comps)
-            {
-                x = c.PluggComponentId;
-            }
+foreach(PluggComponent comp in comps)
+{
+    switch (comp.ComponentType)
+    {
+        case EComponentType.Label:
+            PHText lbl = bh.GetCurrentVersionText(pc.CultureCode, comp.PluggComponentId, ETextItemType.PluggComponentLabel);
+            //Handle label
+            break;
+        case EComponentType.RichText:
+            PHText rt = bh.GetCurrentVersionText(pc.CultureCode, comp.PluggComponentId, ETextItemType.PluggComponentRichText);
+            //Handle rich text
+            break;
+        case EComponentType.RichRichText:
+            PHText rrt = bh.GetCurrentVersionText(pc.CultureCode, comp.PluggComponentId, ETextItemType.PluggComponentRichRichText);
+            //Handle richrich text
+            break;
+        case EComponentType.Latex:
+            PHLatex lt = bh.GetCurrentVersionLatexText(pc.CultureCode, comp.PluggComponentId, ELatexItemType.PluggComponentLatex);
+            //Handle Latex text
+            break;
+        case EComponentType.YouTube:
+            YouTube yt = bh.GetYouTubeByComponentId(comp.PluggComponentId);
+            //Handle YouTube
+            break;
+    }
+}
+            PHText rrText = bh.GetCurrentVersionText(pc.CultureCode, comps[0].PluggComponentId, ETextItemType.PluggComponentRichRichText);
+            string myText = rrText.Text;
+
+            //int x;
+            //PluggComponent vv = comps[0];
+            //foreach(PluggComponent c in comps)
+            //{
+            //    x = c.PluggComponentId;
+            //}
             //pc.ThePlugg.CreatedByUserId = 1;
             //pc.ThePlugg.ModifiedByUserId = 1;
             //pc.ThePlugg.WhoCanEdit = EWhoCanEdit.Anyone;

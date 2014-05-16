@@ -1,4 +1,8 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="View.ascx.cs" Inherits="Plugghest.Modules.PlugghestPanel.View" %>
+<%@ Register TagPrefix="dnn" TagName="label" Src="~/controls/LabelControl.ascx" %>
+
+<dnn:label ID="lblName" runat="server" ResourceKey="lblHello"/><br />
+<asp:Label ID="lblAspL" runat="server" ResourceKey="lblAspL"/><br />
 
 <p>
     <asp:Button ID="btnTest" runat="server" OnClick="btnTest_Click" Text="Test" />

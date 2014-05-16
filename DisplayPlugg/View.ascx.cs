@@ -23,7 +23,7 @@ using DotNetNuke.Entities.Modules.Actions;
 using DotNetNuke.Services.Localization;
 using DotNetNuke.UI.Utilities;
 using Plugghest.Helpers;
-using Plugghest.Base;
+using Plugghest.Base2;
 using System.Collections.Generic;
 using Plugghest.DNN;
 
@@ -62,15 +62,13 @@ namespace Plugghest.Modules.DisplayPlugg
 
         private void PageLoadFun()
         {
-            BaseHandler plugghandler = new BaseHandler();
-
             int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
             string curlan = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
+            BaseHandler plugghandler = new BaseHandler();
+            PluggContainer p = new PluggContainer(curlan,pluggid);
+            bool IsAuthorized = (p.ThePlugg.WhoCanEdit == EWhoCanEdit.Anyone || p.ThePlugg.CreatedByUserId == this.UserId || UserInfo.IsInRole("Administator"));
 
-            PluggContainer p = new PluggContainer();
-            p.ThePlugg = plugghandler.GetPlugg(pluggid);
-            p.CultureCode = curlan;
-
+            if (p.CultureCode == p.ThePlugg.CreatedInCultureCode )
             SetPageText(curlan, p);
         }
 

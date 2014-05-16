@@ -82,8 +82,7 @@ namespace Plugghest.Base2
             if (ThePlugg == null || ThePlugg.PluggId == 0)
                 throw new Exception("Cannot load title. Need PluggId");
             BaseRepository rep = new BaseRepository();
-            TheTitle = rep.GetPhText(CultureCode, ThePlugg.PluggId, ETextItemType.PluggTitle);
-            List<int> myList;
+            TheTitle = rep.GetCurrentVersionText(CultureCode, ThePlugg.PluggId, ETextItemType.PluggTitle);
         }
 
         ///<summary>
@@ -106,7 +105,7 @@ namespace Plugghest.Base2
             if (ThePlugg == null || ThePlugg.PluggId == 0 || CultureCode == null)
                 throw new Exception("Cannot load Description. Need PluggId and CultureCode");
             BaseRepository rep = new BaseRepository();
-            TheTitle = rep.GetPhText(CultureCode, ThePlugg.PluggId, ETextItemType.PluggDescription);
+            TheTitle = rep.GetCurrentVersionText(CultureCode, ThePlugg.PluggId, ETextItemType.PluggDescription);
         }
 
         ///<summary>
@@ -126,32 +125,7 @@ namespace Plugghest.Base2
                 LoadComponents();
             return TheComponents.ToList();
         }
-
-
  
-    }
-
-    public class PluggContainerBase
-    {
-        public int PluggId { get; set; }
-        public int ItemId { get; set; }
-        public virtual void LoadComponent()
-        { }
-    }
-
-    public class PluggContainerRichRichText : PluggContainerBase 
-    {
-        PHText Text { get; set; }
-
-        public void LoadComponents()
-        {
-            
-        }
-    }
-
-    public class PluggContainerRichText : PluggContainerBase
-    {
-        PHText Text { get; set; }
     }
 
     public class CourseItem : CourseItemEntity

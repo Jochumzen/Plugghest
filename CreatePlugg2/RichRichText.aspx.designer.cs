@@ -7,18 +7,18 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Christoc.Modules.CreatePlugg2 {
+namespace Plugghest.Modules.DNNDal {
     
     
-    public partial class RichRichText {
+    public partial class Edit {
         
         /// <summary>
-        /// txtHtmlText control.
+        /// lblDescription control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DotNetNuke.UI.UserControls.TextEditor txtHtmlText;
+        protected global::DotNetNuke.UI.UserControls.LabelControl lblDescription;
     }
 }

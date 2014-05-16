@@ -13,6 +13,24 @@ namespace Plugghest.Modules.PlugghestPanel {
     public partial class View {
         
         /// <summary>
+        /// lblName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::DotNetNuke.UI.UserControls.LabelControl lblName;
+        
+        /// <summary>
+        /// lblAspL control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblAspL;
+        
+        /// <summary>
         /// btnTest control.
         /// </summary>
         /// <remarks>
