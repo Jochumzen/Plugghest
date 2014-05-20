@@ -12,6 +12,8 @@
 
 using System;
 using DotNetNuke.Entities.Modules;
+using System.Threading;
+using System.Globalization;
 
 namespace Plugghest.Modules.DisplayPlugg
 {
