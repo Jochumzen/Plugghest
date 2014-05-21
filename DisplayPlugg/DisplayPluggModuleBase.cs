@@ -30,5 +30,10 @@ namespace Plugghest.Modules.DisplayPlugg
             }
 
         }
+
+        internal void InitializeCulture()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

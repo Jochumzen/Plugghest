@@ -1,4 +1,4 @@
-﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="View.ascx.cs" Inherits="Plugghest.Modules.DisplayPlugg.View"   %>
+﻿<%@ Control Language="C#" AutoEventWireup="true" CodeBehind="View.ascx.cs" Inherits="Plugghest.Modules.DisplayPlugg.View"    %>
 <%@ Register TagPrefix="dnn" TagName="TextEditor" Src="~/controls/TextEditor.ascx" %>
 
 
@@ -247,8 +247,9 @@ cursor:pointer;
 
 
 <div >
-   <asp:Button CssClass="cls" ID="btnlocal" Text="Localization" runat="server"  />
-  <asp:Button CssClass="cls" ID="btncanceltrans" Text="Cancel translation" runat="server"  />
+  
+   <asp:Button CssClass="cls" ID="btnlocal" Text="View this Plugg in the language it was created " runat="server" OnClick="btnlocal_Click"  />
+  <asp:Button CssClass="cls" ID="btncanceltrans" Text="Cancel translation" runat="server" OnClick="btncanceltrans_Click"  />
     
  <asp:Button CssClass="btneditplug" ID="btnSaveSubjects" resourcekey="btnSaveSubjects" Text="Edit Plug" runat="server" OnClick="btnExitEditMode_Click"  />
     <asp:Button CssClass="btneditplug" ID="btncanceledit"  resourcekey="btncanceledit" Text="Cancel Plug" runat="server" OnClick="btncanceledit_Click"  />
@@ -318,14 +319,13 @@ cursor:pointer;
 
 
 <asp:Panel runat="server" ID="pnlletex">
-<asp:TextBox TextMode="MultiLine" runat="server" ID="txtletex" ></asp:TextBox>
-  <asp:Button ID="Button1" runat="server" Text="Save" /><asp:Button ID="Button2" runat="server" Text="Cancel" OnClick="Button2_Click" />
 </asp:Panel>
             
                   <%--   <asp:Button ID="btnEditPlugg" runat="server" Text="Edit Plugg"  Visible="False" OnClick="btnEditPlugg_Click" />
     <asp:Button ID="btnExitEditMode" runat="server" Text="Exit Edit Mode"  Visible="False" OnClick="btnExitEditMode_Click" />--%>
                    <asp:HiddenField ID="hdn" Value="aa" runat="server" />
             
+
 <table class="auto-style1" >
     <tr>
         <td><div id="divTitle" runat="server" class="dispalyplug"></div></td>

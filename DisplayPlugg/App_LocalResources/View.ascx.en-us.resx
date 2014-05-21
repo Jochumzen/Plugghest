@@ -117,55 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add" xml:space="preserve">
+  <data name="Add.Text" xml:space="preserve">
     <value>Add</value>
   </data>
-  <data name="btncanceledit" xml:space="preserve">
-    <value>Cancel Plug</value>
+  <data name="btncanceledit.Text" xml:space="preserve">
+    <value>Cancel edit</value>
   </data>
-  <data name="btncanceltrans" xml:space="preserve">
+  <data name="btncanceltrans.Text" xml:space="preserve">
     <value>Cancel translation</value>
   </data>
-  <data name="btnlocal" xml:space="preserve">
-    <value>Localization</value>
+  <data name="btnlocal.Text" xml:space="preserve">
+    <value>View this Plugg in the language it was created</value>
   </data>
-  <data name="btnSaveSubjects" xml:space="preserve">
+  <data name="btnSaveSubjects.Text" xml:space="preserve">
     <value>Edit Plug</value>
   </data>
-  <data name="btntransplug" xml:space="preserve">
+  <data name="btntransplug.Text" xml:space="preserve">
     <value>Help us with the translation of this Plugg</value>
   </data>
-  <data name="Cancel" xml:space="preserve">
+  <data name="Cancel.Text" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="GoogleTransTxtOk" xml:space="preserve">
-    <value>Google Translation Text Ok</value>
+  <data name="GoogleTransTxtOk.Text" xml:space="preserve">
+    <value>Goggle translation is OK</value>
   </data>
-  <data name="ImpgoogleTrans" xml:space="preserve">
+  <data name="ImpgoogleTrans.Text" xml:space="preserve">
     <value>Improve google Translation</value>
   </data>
-  <data name="ImproveHumTransTxt" xml:space="preserve">
+  <data name="ImproveHumTransTxt.Text" xml:space="preserve">
     <value>Improve Human Translation Text</value>
   </data>
-  <data name="Label" xml:space="preserve">
+  <data name="Label.Text" xml:space="preserve">
     <value>Label</value>
   </data>
-  <data name="Latex" xml:space="preserve">
+  <data name="Latex.Text" xml:space="preserve">
     <value>Latex</value>
   </data>
-  <data name="Remove" xml:space="preserve">
-    <value>Remove</value>
+  <data name="Remove.Text" xml:space="preserve">
+    <value>Remove component</value>
   </data>
-  <data name="RichRichText" xml:space="preserve">
+  <data name="RichRichText.Text" xml:space="preserve">
     <value>RichRichText</value>
   </data>
-  <data name="RichText" xml:space="preserve">
+  <data name="RichText.Text" xml:space="preserve">
     <value>RichText</value>
   </data>
-  <data name="Save" xml:space="preserve">
+  <data name="Save.Text" xml:space="preserve">
     <value>Save</value>
   </data>
-  <data name="YouTube" xml:space="preserve">
+  <data name="YouTube.Text" xml:space="preserve">
     <value>YouTube</value>
   </data>
 </root>

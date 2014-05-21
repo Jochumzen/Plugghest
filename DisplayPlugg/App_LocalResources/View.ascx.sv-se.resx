@@ -118,34 +118,34 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Add.Text" xml:space="preserve">
-    <value>Añadir</value>
+    <value>Lägg till</value>
   </data>
   <data name="btncanceledit.Text" xml:space="preserve">
-    <value>Cancelar editar</value>
+    <value>Avbryt redigering</value>
   </data>
   <data name="btncanceltrans.Text" xml:space="preserve">
-    <value>Cancelar traducción</value>
+    <value>Avsluta översättning”</value>
   </data>
   <data name="btnlocal.Text" xml:space="preserve">
-    <value>Visa Pluggen i det språk den skapade iMostrar el Plugg en</value>
+    <value>el idioma que fue escrito en</value>
   </data>
   <data name="btnSaveSubjects.Text" xml:space="preserve">
-    <value>Edición de Plugg</value>
+    <value>Redigera Plugg</value>
   </data>
   <data name="btntransplug.Text" xml:space="preserve">
-    <value>Ayúdanos con la traducción de este Plugg</value>
+    <value>Hjälp oss med översättning av denna Plugg</value>
   </data>
   <data name="Cancel.Text" xml:space="preserve">
-    <value>testCancel1</value>
+    <value>testCancel213</value>
   </data>
   <data name="GoogleTransTxtOk.Text" xml:space="preserve">
-    <value>Traducción de Google está bien</value>
+    <value>Google översättning är OK</value>
   </data>
   <data name="ImpgoogleTrans.Text" xml:space="preserve">
-    <value>Mejorar Goggle texto traducido</value>
+    <value>Förbättra Google-översättning</value>
   </data>
   <data name="ImproveHumTransTxt.Text" xml:space="preserve">
-    <value>Mejorar texto traducido</value>
+    <value>Förbättra översättning</value>
   </data>
   <data name="Label.Text" xml:space="preserve">
     <value>Label</value>
@@ -154,7 +154,7 @@
     <value>Latex</value>
   </data>
   <data name="Remove.Text" xml:space="preserve">
-    <value>Desmontar los componentes</value>
+    <value>Ta bort komponent</value>
   </data>
   <data name="RichRichText.Text" xml:space="preserve">
     <value>RichRichText</value>

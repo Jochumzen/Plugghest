@@ -54,18 +54,15 @@ namespace Plugghest.Modules.DisplayPlugg
         string EditStr = ""; string curlan = "";
         bool IsAuthorized = false;
         private System.Resources.ResourceManager rm;
-        //  string curlan, Add1,btnSaveSubjects1, btncanceledit1, btncanceltrans1, btnlocal1, btntransplug1, Cancel1, GoogleTransTxtOk1, ImpgoogleTrans1, ImproveHumTransTxt1, Label1, Latex1, Remove1, RichRichText1, RichText1, Save1, YouTube1;
+         string  Add1,btnSaveSubjects1, btncanceledit1, btncanceltrans1, btnlocal1, btntransplug1, Cancel1, GoogleTransTxtOk1, ImpgoogleTrans1, ImproveHumTransTxt1, Label1, Latex1, Remove1, RichRichText1, RichText1, Save1, YouTube1;
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
-
-                //CallLocalization();
                 curlan = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
-                                
-                var btncanceledit1 = Localization.GetString("btncanceledit", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-
-
+                CallLocalization(curlan);
+               
+                
                 EditStr = Page.Request.QueryString["edit"];
 
                 if (!IsPostBack)
@@ -76,6 +73,7 @@ namespace Plugghest.Modules.DisplayPlugg
                     pnllabel.Visible = false;
                     pnlletex.Visible = false;
                     richtextbox.Visible = false;
+                   
 
                 }
                 else
@@ -94,41 +92,38 @@ namespace Plugghest.Modules.DisplayPlugg
             }
         }
 
-        //private void CallLocalization()
-        //{       
-        //    string curlan = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name; 
-
-        //    btncanceledit1 = Localization.GetString("btntransplug", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-        //   Add1 = Localization.GetString("Add", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-        //  btncanceltrans1 = Localization.GetString("btncanceltrans", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-        //  Cancel1 = Localization.GetString("Cancel", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-        //  GoogleTransTxtOk1 = Localization.GetString("GoogleTransTxtOk", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-        //  ImpgoogleTrans1 = Localization.GetString("ImpgoogleTrans", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-        //  ImproveHumTransTxt1 = Localization.GetString("ImproveHumTransTxt", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-        //  Label1 = Localization.GetString("Label", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-        //  Latex1 = Localization.GetString("Latex", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-        //  Remove1 = Localization.GetString("Remove", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-        //  RichRichText1 = Localization.GetString("RichRichText", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-        //  RichText1 = Localization.GetString("RichText", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-        //  Save1 = Localization.GetString("Save", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-        //  YouTube1 = Localization.GetString("YouTube", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-        //     btnlocal1 = Localization.GetString("btnlocal", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-        //  btntransplug1 = Localization.GetString("btntransplug", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-        //  btnlocal.Text = btnlocal1;
-        //  btncanceltrans.Text = btncanceltrans1;
-        //  btntransplug.Text = btntransplug1;
-        //  btncanceledit.Text = btncanceledit1;
-        //  btnSaveSubjects.Text = btnSaveSubjects1;
-        //  Button5.Text = Save1;
-        //  Button6.Text = Cancel1;
-        //  Save.Text = Save1;
-        //  Button1.Text = Save1;
-        //  Cancel.Text = Cancel1;
-        //  Button2.Text = Cancel1;
-        //  btnSaveSubjects.Text = btnSaveSubjects1;
-        //}
-
-
+        private void CallLocalization(string curlan)
+        {
+          
+            btnSaveSubjects1 = Localization.GetString("btnSaveSubjects", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            
+            btncanceledit1 = Localization.GetString("btncanceledit", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            Add1 = Localization.GetString("Add", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            btncanceltrans1 = Localization.GetString("btncanceltrans", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            Cancel1 = Localization.GetString("Cancel", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            GoogleTransTxtOk1 = Localization.GetString("GoogleTransTxtOk", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            ImpgoogleTrans1 = Localization.GetString("ImpgoogleTrans", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            ImproveHumTransTxt1 = Localization.GetString("ImproveHumTransTxt", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            Label1 = Localization.GetString("Label", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            Latex1 = Localization.GetString("Latex", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            Remove1 = Localization.GetString("Remove", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            RichRichText1 = Localization.GetString("RichRichText", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            RichText1 = Localization.GetString("RichText", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            Save1 = Localization.GetString("Save", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            YouTube1 = Localization.GetString("YouTube", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            btnlocal1 = Localization.GetString("btnlocal", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            btntransplug1 = Localization.GetString("btntransplug", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            btnlocal.Text = btnlocal1;
+            btnSaveSubjects.Text = btnSaveSubjects1;
+            btncanceledit.Text = btncanceledit1;
+            btncanceltrans.Text = btncanceltrans1;
+            btntransplug.Text = btntransplug1;
+            btncanceledit.Text = btncanceledit1;
+            Button5.Text = Save1;
+            Button6.Text = Cancel1;
+            Save.Text = Save1;        
+            Cancel.Text = Cancel1;       
+        }
 
         private void PageLoadFun()
         {
@@ -137,7 +132,7 @@ namespace Plugghest.Modules.DisplayPlugg
             BaseHandler plugghandler = new BaseHandler();
             PluggContainer p = new PluggContainer(curlan, pluggid);
             IsAuthorized = (p.ThePlugg.WhoCanEdit == EWhoCanEdit.Anyone || p.ThePlugg.CreatedByUserId == this.UserId || UserInfo.IsInRole("Administator"));
-
+            
             // if (p.CultureCode == p.ThePlugg.CreatedInCultureCode )
             SetPageText(curlan, p);
             ViewState.Add("falg", true);
@@ -158,16 +153,28 @@ namespace Plugghest.Modules.DisplayPlugg
             {
                 btnSaveSubjects.Visible = true;
                 btncanceledit.Visible = false;
+                btncanceltrans.Visible = false;
             }
             else
             {
                 btnSaveSubjects.Visible = false;
                 btncanceledit.Visible = false;
+                btncanceltrans.Visible = false;
             }
             if (EditStr == "1" && IsAuthorized == true)
             {
                 btncanceledit.Visible = true;
                 btnSaveSubjects.Visible = false;
+                btncanceltrans.Visible = false;
+            }
+            else
+            {
+
+            }
+            if (EditStr == "2" && IsAuthorized == true)
+            {
+                btncanceltrans.Visible = true;
+                btntransplug.Visible = false;
             }
             else
             {
@@ -212,80 +219,35 @@ namespace Plugghest.Modules.DisplayPlugg
             int i = 0;
             foreach (PluggComponent comp in comps)
             {
-
-
-
-
                 switch (comp.ComponentType)
                 {
-
-
-
-
                     case EComponentType.Label:
 
                         PHText lbl = bh.GetCurrentVersionText(curlan, comp.PluggComponentId, ETextItemType.PluggComponentLabel);
-
-
                         var divid = "Label" + i;
                         var ddlid = "ddl" + i;
                         var orderid = comp.ComponentOrder;
                         string yourHTMLstring0 = "";
-
+                        
 
                         if (EditStr == "1" && IsAuthorized == true)
                         {
 
                             if (lbl == null)
                             {
-                                yourHTMLstring0 = "<div><div id=" + divid + " class='Main'> <label  id='lbllabel" + i + "' runat='server' >Label:</label>";
+                                yourHTMLstring0 = "<div><div id=" + divid + " class='Main'> <label  id='lbllabel" + i + "' runat='server' >"+Label1+":</label>";
                                 lbl.Text = "";
                             }
                             else
-                                yourHTMLstring0 = "<div><div id=" + divid + " class='Main'><label  id='lbllabel" + i + "' runat='server'  >Label:" + lbl.Text + "</label>";
+                                yourHTMLstring0 = "<div><div id=" + divid + " class='Main'><label  id='lbllabel" + i + "' runat='server'  >" + Label1 + ":" + lbl.Text + "</label>";
 
                             divTitle.Controls.Add(new LiteralControl(yourHTMLstring0));
-                            if (lbl.CultureCodeStatus == ECultureCodeStatus.GoogleTranslated)
-                            {
-                                Button btn = new Button();
-                                btn.CssClass = "googletrans";
-                                btn.ID = "btnIGT" + i;
-                                btn.Text = "Improve google Translation";
-                                // btn.Text = ImpgoogleTrans1;
-                                //btn.Text = "<%$ Resources:WebResources, btnIGT" + i+" %>";
-                                //btn.meta:resourcekey="fd";
-                                btn.Click += (s, e) => { ImpGoogleTrans(orderid, comp, lbl, "1"); };
-                                divTitle.Controls.Add(btn);
-
-                                Button btn1 = new Button();
-                                btn1.CssClass = "googleTrasok";
-                                btn1.ID = "btnGTText" + i;
-                                btn1.Text = "Google Translation Text Ok ";
-                                // btn1.Text = GoogleTransTxtOk1;
-                                btn1.Click += (s, e) => { GoogleTranText(orderid, lbl); };
-                                divTitle.Controls.Add(btn1);
-
-
-
-                                // lbl.CultureCodeStatus = ECultureCodeStatus.HumanTranslated;
-                            }
-                            if (lbl.CultureCodeStatus == ECultureCodeStatus.HumanTranslated)
-                            {
-                                Button btn = new Button();
-                                btn.CssClass = "btnhumantrans";
-                                btn.ID = "btnIHT" + i;
-                                btn.Text = "Improve Human Translation Text";
-                                // btn.Text = ImproveHumTransTxt1;
-                                btn.Click += (s, e) => { ImpGoogleTrans(orderid, comp, lbl, "2"); };
-                                divTitle.Controls.Add(btn);
-
-                            }
+                           
 
                             Button delbtn = new Button();
                             delbtn.CssClass = "btncsdel";
                             delbtn.ID = "btnlbDel" + i;
-                            delbtn.Text = "Remove";
-                            // delbtn.Text = Remove1;
+                            delbtn.Text = Remove1;
 
                             delbtn.Click += (s, e) => { callingDel(orderid); };
                             divTitle.Controls.Add(delbtn);
@@ -296,21 +258,82 @@ namespace Plugghest.Modules.DisplayPlugg
 
                             Button Addbutton = new Button();
                             Addbutton.CssClass = "btncs";
-                            Addbutton.ID = "btnlbAdd" + i;
-                            Addbutton.Text = "Add";
-                            // Addbutton.Text = Add1;
+                            Addbutton.ID = "btnlbAdd" + i;                         
+                            Addbutton.Text = Add1;
                             Addbutton.Click += (s, e) => { calling(orderid); };
                             divTitle.Controls.Add(Addbutton);
 
                             string n1 = "</select></div>";
                             divTitle.Controls.Add(new LiteralControl(n1));
                         }
+                        else if (EditStr == "2" && IsAuthorized == true)
+                        {
+                            if (lbl == null)
+                            {
+                                yourHTMLstring0 = "<div><div id=" + divid + " class='Main'> <label  id='lbllabel" + i + "' runat='server' >" + Label1 + ":</label>";
+                                lbl.Text = "";
+                            }
+                            else
+                                yourHTMLstring0 = "<div><div id=" + divid + " class='Main'><label  id='lbllabel" + i + "' runat='server'  >" + Label1 + ":" + lbl.Text + "</label>";
+
+                            divTitle.Controls.Add(new LiteralControl(yourHTMLstring0));
+                            if (lbl.CultureCodeStatus == ECultureCodeStatus.GoogleTranslated)
+                            {
+                                Button btn = new Button();
+                                btn.CssClass = "googletrans";
+                                btn.ID = "btnIGT" + i;
+                                btn.Text = ImpgoogleTrans1;
+                                btn.Click += (s, e) => { ImpGoogleTrans(orderid, comp, lbl, "1"); };
+                                divTitle.Controls.Add(btn);
+
+                                Button btn1 = new Button();
+                                btn1.CssClass = "googleTrasok";
+                                btn1.ID = "btnGTText" + i;
+                                btn1.Text = GoogleTransTxtOk1;
+                                btn1.Click += (s, e) => { GoogleTranText(orderid, lbl); };
+                                divTitle.Controls.Add(btn1);
+
+                            }
+                            if (lbl.CultureCodeStatus == ECultureCodeStatus.HumanTranslated)
+                            {
+                                Button btn = new Button();
+                                btn.CssClass = "btnhumantrans";
+                                btn.ID = "btnIHT" + i;
+                                btn.Text = ImproveHumTransTxt1;
+                                btn.Click += (s, e) => { ImpGoogleTrans(orderid, comp, lbl, "2"); };
+                                divTitle.Controls.Add(btn);
+
+                            }
+
+                            //Button delbtn = new Button();
+                            //delbtn.CssClass = "btncsdel";
+                            //delbtn.ID = "btnlbDel" + i;
+                            //delbtn.Text = Remove1;
+
+                            //delbtn.Click += (s, e) => { callingDel(orderid); };
+                            //divTitle.Controls.Add(delbtn);
+
+                            //yourHTMLstring0 = "</div><select class='ddlclass' id=" + ddlid + ">";
+                            //yourHTMLstring0 = yourHTMLstring0 + ddl;
+                            //divTitle.Controls.Add(new LiteralControl(yourHTMLstring0));
+
+                            //Button Addbutton = new Button();
+                            //Addbutton.CssClass = "btncs";
+                            //Addbutton.ID = "btnlbAdd" + i;
+                            //Addbutton.Text = Add1;
+                            //Addbutton.Click += (s, e) => { calling(orderid); };
+                            //divTitle.Controls.Add(Addbutton);
+
+                            string n1 = "</select></div>";
+                            divTitle.Controls.Add(new LiteralControl(n1));
+                        }
+
                         else
                         {
                             if (lbl == null)
-                                yourHTMLstring0 = "<div><div id=" + divid + " class='Main'>Label: </div></div>";
+                                yourHTMLstring0 = "<div><div id=" + divid + " class='Main'" + Label1 + ": </div></div>";
                             else
-                                yourHTMLstring0 = "<div><div id=" + divid + " class='Main'> Label:" + lbl.Text + "</div></div>";
+                                yourHTMLstring0 = "<div><div id=" + divid + " class='Main'>" + Label1 + ":" + lbl.Text + "</div></div>";
                             divTitle.Controls.Add(new LiteralControl(yourHTMLstring0));
 
                         }
@@ -331,11 +354,47 @@ namespace Plugghest.Modules.DisplayPlugg
                         {
                             if (rt == null)
                             {
-                                yourHTMLstring = "<div><div id=" + RTdivid + " class='Main'>RichText: ";
+                                yourHTMLstring = "<div><div id=" + RTdivid + " class='Main'>" + RichText1 + ": ";
                                 rt.Text = "";
                             }
                             else
-                                yourHTMLstring = "<div><div id=" + RTdivid + " class='Main'> RichText:" + rt.Text + "";
+                                yourHTMLstring = "<div><div id=" + RTdivid + " class='Main'> " + RichText1 + ":" + rt.Text + "";
+
+                            divTitle.Controls.Add(new LiteralControl(yourHTMLstring));
+
+                           
+                            Button delrtbtn = new Button();
+                            delrtbtn.CssClass = "btncsdel";
+                            delrtbtn.ID = "btnrtDel" + i;
+                            //delrtbtn.Text = "Remove";
+                            delrtbtn.Text = Remove1;
+                            delrtbtn.Click += (s, e) => { callingDel(RTorderid); };
+                            divTitle.Controls.Add(delrtbtn);
+
+                            yourHTMLstring = "</div><select class='ddlclass' id=" + RTddlid + ">";
+                            yourHTMLstring = yourHTMLstring + ddl;
+                            divTitle.Controls.Add(new LiteralControl(yourHTMLstring));
+
+                            Button Addrtbutton = new Button();
+                            Addrtbutton.CssClass = "btncs";
+                            Addrtbutton.ID = "btnrtAdd" + i;
+                            //Addrtbutton.Text = "Add";
+                            Addrtbutton.Text = Add1;
+                            Addrtbutton.Click += (s, e) => { calling(RTorderid); };
+                            divTitle.Controls.Add(Addrtbutton);
+
+                            string rtn1 = "</select></div>";
+                            divTitle.Controls.Add(new LiteralControl(rtn1));
+                        }
+                        else if (EditStr == "2" && IsAuthorized == true)
+                        {
+                            if (rt == null)
+                            {
+                                yourHTMLstring = "<div><div id=" + RTdivid + " class='Main'>" + RichText1 + ": ";
+                                rt.Text = "";
+                            }
+                            else
+                                yourHTMLstring = "<div><div id=" + RTdivid + " class='Main'> " + RichText1 + ":" + rt.Text + "";
 
                             divTitle.Controls.Add(new LiteralControl(yourHTMLstring));
 
@@ -344,14 +403,16 @@ namespace Plugghest.Modules.DisplayPlugg
                                 Button btn = new Button();
                                 btn.CssClass = "googletrans";
                                 btn.ID = "btnrtIGT" + i;
-                                btn.Text = "Improve google Translation";
+                                // btn.Text = "Improve google Translation";
+                                btn.Text = ImpgoogleTrans1;
                                 btn.Click += (s, e) => { ImpGoogleTrans(RTorderid, comp, rt, "1"); };
                                 divTitle.Controls.Add(btn);
 
                                 Button btn1 = new Button();
                                 btn1.CssClass = "googleTrasok";
                                 btn1.ID = "btnrtGTText" + i;
-                                btn1.Text = "Google Translation Text Ok ";
+                                // btn1.Text = "Google Translation Text Ok ";
+                                btn1.Text = GoogleTransTxtOk1;
                                 btn1.Click += (s, e) => { GoogleTranText(RTorderid, rt); };
                                 divTitle.Controls.Add(btn1);
 
@@ -363,28 +424,31 @@ namespace Plugghest.Modules.DisplayPlugg
                                 Button btn = new Button();
                                 btn.CssClass = "btnhumantrans";
                                 btn.ID = "btnrtIHT" + i;
-                                btn.Text = "Improve Human Translation Text";
+                                //btn.Text = "Improve Human Translation Text";
+                                btn.Text = ImproveHumTransTxt1;
                                 btn.Click += (s, e) => { ImpGoogleTrans(RTorderid, comp, rt, "2"); };
                                 divTitle.Controls.Add(btn);
 
                             }
-                            Button delrtbtn = new Button();
-                            delrtbtn.CssClass = "btncsdel";
-                            delrtbtn.ID = "btnrtDel" + i;
-                            delrtbtn.Text = "Remove";
-                            delrtbtn.Click += (s, e) => { callingDel(RTorderid); };
-                            divTitle.Controls.Add(delrtbtn);
+                            //Button delrtbtn = new Button();
+                            //delrtbtn.CssClass = "btncsdel";
+                            //delrtbtn.ID = "btnrtDel" + i;
+                            ////delrtbtn.Text = "Remove";
+                            //delrtbtn.Text = Remove1;
+                            //delrtbtn.Click += (s, e) => { callingDel(RTorderid); };
+                            //divTitle.Controls.Add(delrtbtn);
 
-                            yourHTMLstring = "</div><select class='ddlclass' id=" + RTddlid + ">";
-                            yourHTMLstring = yourHTMLstring + ddl;
-                            divTitle.Controls.Add(new LiteralControl(yourHTMLstring));
+                            //yourHTMLstring = "</div><select class='ddlclass' id=" + RTddlid + ">";
+                            //yourHTMLstring = yourHTMLstring + ddl;
+                            //divTitle.Controls.Add(new LiteralControl(yourHTMLstring));
 
-                            Button Addrtbutton = new Button();
-                            Addrtbutton.CssClass = "btncs";
-                            Addrtbutton.ID = "btnrtAdd" + i;
-                            Addrtbutton.Text = "Add";
-                            Addrtbutton.Click += (s, e) => { calling(RTorderid); };
-                            divTitle.Controls.Add(Addrtbutton);
+                            //Button Addrtbutton = new Button();
+                            //Addrtbutton.CssClass = "btncs";
+                            //Addrtbutton.ID = "btnrtAdd" + i;
+                            ////Addrtbutton.Text = "Add";
+                            //Addrtbutton.Text = Add1;
+                            //Addrtbutton.Click += (s, e) => { calling(RTorderid); };
+                            //divTitle.Controls.Add(Addrtbutton);
 
                             string rtn1 = "</select></div>";
                             divTitle.Controls.Add(new LiteralControl(rtn1));
@@ -392,9 +456,9 @@ namespace Plugghest.Modules.DisplayPlugg
                         else
                         {
                             if (rt == null)
-                                yourHTMLstring = "<div><div id=" + RTdivid + " class='Main'>RichText: </div></div>";
+                                yourHTMLstring = "<div><div id=" + RTdivid + " class='Main'>" + RichText1 + ": </div></div>";
                             else
-                                yourHTMLstring = "<div><div id=" + RTdivid + " class='Main'> RichText:" + rt.Text + "</div></div>";
+                                yourHTMLstring = "<div><div id=" + RTdivid + " class='Main'> " + RichText1 + ":" + rt.Text + "</div></div>";
                             divTitle.Controls.Add(new LiteralControl(yourHTMLstring));
 
                         }
@@ -410,11 +474,46 @@ namespace Plugghest.Modules.DisplayPlugg
                         {
                             if (rrt == null)
                             {
-                                yourHTMLstring1 = "<div><div id=" + RRTdivid + " class='Main'>RichRichText: ";
+                                yourHTMLstring1 = "<div><div id=" + RRTdivid + " class='Main'>" + RichRichText1 + ": ";
                                 rrt.Text = "";
                             }
                             else
-                                yourHTMLstring1 = "<div><div id=" + RRTdivid + " class='Main'> RichRichText:" + rrt.Text + "";
+                                yourHTMLstring1 = "<div><div id=" + RRTdivid + " class='Main'> " + RichRichText1 + ":" + rrt.Text + "";
+
+                            divTitle.Controls.Add(new LiteralControl(yourHTMLstring1));
+
+                            Button delrrtbtn = new Button();
+                            delrrtbtn.CssClass = "btncsdel";
+                            delrrtbtn.ID = "btnrrtDel" + i;
+                            //delrrtbtn.Text = "Remove";
+                            delrrtbtn.Text = Remove1;
+                            delrrtbtn.Click += (s, e) => { callingDel(RRTorderid); };
+                            divTitle.Controls.Add(delrrtbtn);
+
+                            yourHTMLstring1 = "</div><select class='ddlclass' id=" + RRTddlid + ">";
+                            yourHTMLstring1 = yourHTMLstring1 + ddl;
+                            divTitle.Controls.Add(new LiteralControl(yourHTMLstring1));
+
+                            Button Addrrtbutton = new Button();
+                            Addrrtbutton.CssClass = "btncs";
+                            Addrrtbutton.ID = "btnrrtAdd" + i;
+                           // Addrrtbutton.Text = "Add";
+                            Addrrtbutton.Text = Add1;
+                            Addrrtbutton.Click += (s, e) => { calling(RRTorderid); };
+                            divTitle.Controls.Add(Addrrtbutton);
+
+                            string nrrt1 = "</select></div>";
+                            divTitle.Controls.Add(new LiteralControl(nrrt1));
+                        }
+                        else if (EditStr == "2" && IsAuthorized == true)
+                        {
+                            if (rrt == null)
+                            {
+                                yourHTMLstring1 = "<div><div id=" + RRTdivid + " class='Main'>" + RichRichText1 + ": ";
+                                rrt.Text = "";
+                            }
+                            else
+                                yourHTMLstring1 = "<div><div id=" + RRTdivid + " class='Main'> " + RichRichText1 + ":" + rrt.Text + "";
 
                             divTitle.Controls.Add(new LiteralControl(yourHTMLstring1));
 
@@ -423,14 +522,16 @@ namespace Plugghest.Modules.DisplayPlugg
                                 Button btn = new Button();
                                 btn.CssClass = "googletrans";
                                 btn.ID = "btnrrtIGT" + i;
-                                btn.Text = "Improve google Translation";
+                                // btn.Text = "Improve google Translation";
+                                btn.Text = ImpgoogleTrans1;
                                 btn.Click += (s, e) => { ImpGoogleTrans(RRTorderid, comp, rrt, "1"); };
                                 divTitle.Controls.Add(btn);
 
                                 Button btn1 = new Button();
                                 btn1.CssClass = "googleTrasok";
                                 btn1.ID = "btnrrtGTText" + i;
-                                btn1.Text = "Google Translation Text Ok ";
+                                //  btn1.Text = "Google Translation Text Ok ";
+                                btn1.Text = GoogleTransTxtOk1;
                                 btn1.Click += (s, e) => { GoogleTranText(RRTorderid, rrt); };
                                 divTitle.Controls.Add(btn1);
 
@@ -442,28 +543,31 @@ namespace Plugghest.Modules.DisplayPlugg
                                 Button btn = new Button();
                                 btn.CssClass = "btnhumantrans";
                                 btn.ID = "btnrrtIHT" + i;
-                                btn.Text = "Improve Human Translation Text";
+                                //btn.Text = "Improve Human Translation Text";
+                                btn.Text = ImproveHumTransTxt1;
                                 btn.Click += (s, e) => { ImpGoogleTrans(RRTorderid, comp, rrt, "2"); };
                                 divTitle.Controls.Add(btn);
 
                             }
-                            Button delrrtbtn = new Button();
-                            delrrtbtn.CssClass = "btncsdel";
-                            delrrtbtn.ID = "btnrrtDel" + i;
-                            delrrtbtn.Text = "Remove";
-                            delrrtbtn.Click += (s, e) => { callingDel(RRTorderid); };
-                            divTitle.Controls.Add(delrrtbtn);
+                            //Button delrrtbtn = new Button();
+                            //delrrtbtn.CssClass = "btncsdel";
+                            //delrrtbtn.ID = "btnrrtDel" + i;
+                            ////delrrtbtn.Text = "Remove";
+                            //delrrtbtn.Text = Remove1;
+                            //delrrtbtn.Click += (s, e) => { callingDel(RRTorderid); };
+                            //divTitle.Controls.Add(delrrtbtn);
 
-                            yourHTMLstring1 = "</div><select class='ddlclass' id=" + RRTddlid + ">";
-                            yourHTMLstring1 = yourHTMLstring1 + ddl;
-                            divTitle.Controls.Add(new LiteralControl(yourHTMLstring1));
+                            //yourHTMLstring1 = "</div><select class='ddlclass' id=" + RRTddlid + ">";
+                            //yourHTMLstring1 = yourHTMLstring1 + ddl;
+                            //divTitle.Controls.Add(new LiteralControl(yourHTMLstring1));
 
-                            Button Addrrtbutton = new Button();
-                            Addrrtbutton.CssClass = "btncs";
-                            Addrrtbutton.ID = "btnrrtAdd" + i;
-                            Addrrtbutton.Text = "Add";
-                            Addrrtbutton.Click += (s, e) => { calling(RRTorderid); };
-                            divTitle.Controls.Add(Addrrtbutton);
+                            //Button Addrrtbutton = new Button();
+                            //Addrrtbutton.CssClass = "btncs";
+                            //Addrrtbutton.ID = "btnrrtAdd" + i;
+                            //// Addrrtbutton.Text = "Add";
+                            //Addrrtbutton.Text = Add1;
+                            //Addrrtbutton.Click += (s, e) => { calling(RRTorderid); };
+                            //divTitle.Controls.Add(Addrrtbutton);
 
                             string nrrt1 = "</select></div>";
                             divTitle.Controls.Add(new LiteralControl(nrrt1));
@@ -471,9 +575,9 @@ namespace Plugghest.Modules.DisplayPlugg
                         else
                         {
                             if (rrt == null)
-                                yourHTMLstring1 = "<div><div id=" + RRTdivid + " class='Main'>RichRichText: </div></div>";
+                                yourHTMLstring1 = "<div><div id=" + RRTdivid + " class='Main'>" + RichRichText1 + ": </div></div>";
                             else
-                                yourHTMLstring1 = "<div><div id=" + RRTdivid + " class='Main'> RichRichText:" + rrt.Text + "</div></div>";
+                                yourHTMLstring1 = "<div><div id=" + RRTdivid + " class='Main'> " + RichRichText1 + ":" + rrt.Text + "</div></div>";
                             divTitle.Controls.Add(new LiteralControl(yourHTMLstring1));
 
                         }
@@ -489,18 +593,19 @@ namespace Plugghest.Modules.DisplayPlugg
                         {
                             if (lt == null)
                             {
-                                yourHTMLstring = "<div><div id=" + ltdivid + " class='Main'>Latex:</div>";
+                                yourHTMLstring = "<div><div id=" + ltdivid + " class='Main'>" + Latex1 + ":</div>";
                                 lt.Text = "";
                             }
                             else
-                                yourHTMLstring = "<div><div id=" + ltdivid + " class='Main'> Latex:" + lt.Text + "</div>";
+                                yourHTMLstring = "<div><div id=" + ltdivid + " class='Main'> " + Latex1 + ":" + lt.Text + "</div>";
 
                             divTitle.Controls.Add(new LiteralControl(yourHTMLstring2));
 
                             Button delltbtn = new Button();
                             delltbtn.CssClass = "btncsdel";
                             delltbtn.ID = "btnltDel" + i;
-                            delltbtn.Text = "Remove";
+                           // delltbtn.Text = "Remove";
+                            delltbtn.Text = Remove1;
                             delltbtn.Click += (s, e) => { callingDel(ltorderid); };
                             divTitle.Controls.Add(delltbtn);
 
@@ -511,7 +616,8 @@ namespace Plugghest.Modules.DisplayPlugg
                             Button Addltbutton = new Button();
                             Addltbutton.CssClass = "btncs";
                             Addltbutton.ID = "btnltAdd" + i;
-                            Addltbutton.Text = "Add";
+                            //Addltbutton.Text = "Add";
+                            Addltbutton.Text = Add1;
                             Addltbutton.Click += (s, e) => { calling(ltorderid); };
                             divTitle.Controls.Add(Addltbutton);
 
@@ -521,9 +627,9 @@ namespace Plugghest.Modules.DisplayPlugg
                         else
                         {
                             if (lt == null)
-                                yourHTMLstring2 = "<div><div id=" + ltdivid + " class='Main'>Latex: </div></div>";
+                                yourHTMLstring2 = "<div><div id=" + ltdivid + " class='Main'>"+Latex1+": </div></div>";
                             else
-                                yourHTMLstring2 = "<div><div id=" + ltdivid + " class='Main'> Latex:" + lt.Text + "</div></div>";
+                                yourHTMLstring2 = "<div><div id=" + ltdivid + " class='Main'> " + Latex1 + ":" + lt.Text + "</div></div>";
                             divTitle.Controls.Add(new LiteralControl(yourHTMLstring2));
 
                         }
@@ -645,9 +751,8 @@ namespace Plugghest.Modules.DisplayPlugg
                     pnlRRT.Visible = false;
                     pnllabel.Visible = false;
                     pnlletex.Visible = true;
-
                     richtextbox.Visible = false;
-                    txtletex.Text = text;
+                 
 
                     break;
 
@@ -807,7 +912,7 @@ namespace Plugghest.Modules.DisplayPlugg
             lbl.Text = txtlabel.Text;
             lbl.CultureCodeStatus = ECultureCodeStatus.HumanTranslated;
             bh.SavePhText(lbl);
-            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=1"));
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=2"));
 
 
 
@@ -815,27 +920,31 @@ namespace Plugghest.Modules.DisplayPlugg
 
         protected void Button6_Click(object sender, EventArgs e)
         {
-            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=1"));
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=2"));
         }
 
         protected void Cancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=1"));
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=2"));
         }
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=1"));
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=2"));
         }
 
         protected void Button4_Click(object sender, EventArgs e)
         {
-            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=1"));
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=2"));
         }
 
         protected void btntransplug_Click(object sender, EventArgs e)
         {
+            btntransplug.Visible = false;
+            btncanceltrans.Visible = true;
             Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=2"));
+
+            //Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=2"));
 
         }
 
@@ -857,7 +966,7 @@ namespace Plugghest.Modules.DisplayPlugg
             RichRichText.Text = richrichtext.Text;
             RichRichText.CultureCodeStatus = ECultureCodeStatus.HumanTranslated;
             bh.SavePhText(RichRichText);
-            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=1"));
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=2"));
         }
 
         protected void Button5_Click(object sender, EventArgs e)
@@ -879,8 +988,40 @@ namespace Plugghest.Modules.DisplayPlugg
             RichText.Text = hdnrichtext.Value;
             RichText.CultureCodeStatus = ECultureCodeStatus.HumanTranslated;
             bh.SavePhText(RichText);
-            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=1"));
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=2"));
 
+
+        }
+
+        protected void btnlocal_Click(object sender, EventArgs e)
+        {
+
+            int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
+            string curlan = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
+            BaseHandler plugghandler = new BaseHandler();
+            PluggContainer p = new PluggContainer(curlan, pluggid);
+            IsAuthorized = (p.ThePlugg.WhoCanEdit == EWhoCanEdit.Anyone || p.ThePlugg.CreatedByUserId == this.UserId || UserInfo.IsInRole("Administator"));
+
+            p.CultureCode = p.ThePlugg.CreatedInCultureCode;
+
+            PluggContainer p1 = new PluggContainer(p.CultureCode, pluggid);
+
+            curlan = p.CultureCode;
+            CallLocalization(curlan);
+
+            SetPageText(p.CultureCode, p1);
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL());
+
+               
+        }
+
+        protected void btncanceltrans_Click(object sender, EventArgs e)
+        {
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL());
+        }
+
+        protected void Button1_Click(object sender, EventArgs e)
+        {
 
         }
     }
