@@ -168,4 +168,7 @@
   <data name="YouTube.Text" xml:space="preserve">
     <value>YouTube</value>
   </data>
+  <data name="Edit.text" xml:space="preserve">
+    <value>Edit</value>
+  </data>
 </root>
