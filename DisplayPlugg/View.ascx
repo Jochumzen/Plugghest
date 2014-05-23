@@ -8,8 +8,7 @@
     }
 </script>
 
-<script src="Script/js/jquery-1.10.2.js"></script>
-<script src="Script/js/jquery-ui-1.10.4.custom.js"></script>
+
 
 <%--      <link href="/DesktopModules/CreatePlugg2/Script/external/prettify.css" rel="stylesheet" />
     <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
@@ -21,6 +20,101 @@
 		<link href="/DesktopModules/CreatePlugg2/Script/index.css" rel="stylesheet" />
      <script src="/DesktopModules/CreatePlugg2/Script/bootstrap-wysiwyg.js"></script>--%>
 
+ <%--   <link href="http://dnndev.me/Script/js/jqtree.css" rel="stylesheet" />
+    <script src="http://dnndev.me/Script/js/tree.jquery.js"></script>--%>
+<%--<%----------------------------------------tree -start-----------------------------------------%>
+<link href="/DesktopModules/DisplayPlugg/Script/js/jqtree.css" rel="stylesheet" />
+    <script src="/DesktopModules/DisplayPlugg/Script/js/tree.jquery.js"></script>
+
+<script src="/DesktopModules/EditSubjects/js/tree.jquery.js"></script>
+<link href="/DesktopModules/EditSubjects/js/jqtree.css" rel="stylesheet" />
+<link href="/DesktopModules/EditSubjects/module.css" rel="stylesheet" />
+<asp:Label runat="server" Visible="False" ID="lblNotEnglish"></asp:Label>
+
+  <script type="text/javascript">
+
+      $(document).ready(function () {
+          $("#" + '<%=pnlTree.ClientID%>').hide();
+          $(".btnTreeEdit").click(function () {
+              $("#" + '<%=pnlTree.ClientID%>').show();
+              var $tree = $('#tree2');
+              $('#tree2').tree({
+                  data: eval($("#" + '<%=hdnTreeData.ClientID%>').attr('value')),
+                  dragAndDrop: true,
+                  selectable: true,
+                  autoEscape: false,
+                  autoOpen: true,
+              });
+
+              $tree.bind(
+          'tree.select',
+          function (event) {
+              if (event.node) {
+                  var node = event.node;
+                  // alert(node.Mother.getjson)               
+                  $("#<%=hdnNodeSubjectId.ClientID%>").val(node.SubjectId);
+              }
+              else {
+                  // event.node is null
+                  // a node was deselected
+                  // e.previous_node contains the deselected node
+              }
+          }
+          );
+
+          });
+
+      });
+
+
+
+
+    </script>
+
+    <style>
+        .ui-tabs-vertical
+        {
+            width: 55em;
+        }
+
+            .ui-tabs-vertical .ui-tabs-nav
+            {
+                padding: .2em .1em .2em .2em;
+                float: left;
+                width: 12em;
+            }
+
+                .ui-tabs-vertical .ui-tabs-nav li
+                {
+                    clear: left;
+                    width: 100%;
+                    border-bottom-width: 1px !important;
+                    border-right-width: 0 !important;
+                    margin: 0 -1px .2em 0;
+                }
+
+                    .ui-tabs-vertical .ui-tabs-nav li a
+                    {
+                        display: block;
+                    }
+
+                    .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active
+                    {
+                        padding-bottom: 0;
+                        padding-right: .1em;
+                        border-right-width: 1px;
+                        border-right-width: 1px;
+                    }
+
+            .ui-tabs-vertical .ui-tabs-panel
+            {
+                padding: 1em;
+                float: right;
+                width: 40em;
+            }
+    </style>
+
+<%----------------------------------------tree -start-----------------------------------------%>
 <script src="Script/js/jquery-1.10.2.js"></script>
 <script src="Script/js/jquery-ui-1.10.4.custom.js"></script>
 <link href="http://dnndev.me/Script/external/prettify.css" rel="stylesheet" />
@@ -140,7 +234,7 @@
     
 </script>
  <script type="text/javascript">
-     function getYt() {
+     function getYt() {         
        
          var a = $("#title").text();
          $("#" + '<%=yttitle.ClientID%>').val(a);
@@ -150,6 +244,17 @@
          $("#" + '<%=ytYouTubeCreatedOn.ClientID%>').val( $("#YouTubeCreatedOn").text());
          $("#" + '<%=ytYouTubeComment.ClientID%>').val($("#YouTubeComment").text());
      }
+
+     function SelSub() {      
+         if ($("#<%=hdnNodeSubjectId.ClientID%>").val() != "") {                    
+           
+         }
+         else {
+             alert("Please select any one subject");
+             return false;
+         }      
+      }
+
     </script>
 
 <%-- you tube --%>
@@ -260,7 +365,9 @@ cursor:pointer;
                 You tube</div>--%>
 
 
-
+<asp:HiddenField ID="hdnTreeData" runat="server" Value="" />
+<asp:HiddenField ID="hdnNodeSubjectId" runat="server" />
+    <br />
 <div>
 
     <asp:Button CssClass="cls" ID="btnlocal" Text="View this Plugg in the language it was created " runat="server" OnClick="btnlocal_Click" />
@@ -395,15 +502,24 @@ cursor:pointer;
 </asp:Panel>
 <asp:Panel runat="server" ID="pnlletex">
 </asp:Panel>
-
+ <div class="tree">
+                <div id="tree2"></div>
+            </div>
+<asp:Panel runat="server" ID="pnlTree">
+      <asp:Button ID="btnSelSub" OnClientClick="SelSub()" runat="server" Text="Save" OnClick="btnSelSub_Click"  /><asp:Button ID="btnTreecancel" runat="server" Text="Cancel" OnClick="Cancel_Click" />
+</asp:Panel>
 <%--   <asp:Button ID="btnEditPlugg" runat="server" Text="Edit Plugg"  Visible="False" OnClick="btnEditPlugg_Click" />
     <asp:Button ID="btnExitEditMode" runat="server" Text="Exit Edit Mode"  Visible="False" OnClick="btnExitEditMode_Click" />--%>
 <asp:HiddenField ID="hdn" Value="aa" runat="server" />
-
+<br />
+<br />
 
 <table class="auto-style1">
     <tr>
         <td>
+            <div runat="server" ID="divTree">
+                <asp:Label ID="lbltree" runat="server"></asp:Label>              
+</div>
             <div id="divTitle" runat="server" class="dispalyplug"></div>
         </td>
         <td>

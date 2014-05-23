@@ -13,6 +13,33 @@ namespace Plugghest.Modules.DisplayPlugg {
     public partial class View {
         
         /// <summary>
+        /// lblNotEnglish control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNotEnglish;
+        
+        /// <summary>
+        /// hdnTreeData control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnTreeData;
+        
+        /// <summary>
+        /// hdnNodeSubjectId control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnNodeSubjectId;
+        
+        /// <summary>
         /// btnlocal control.
         /// </summary>
         /// <remarks>
@@ -256,6 +283,33 @@ namespace Plugghest.Modules.DisplayPlugg {
         protected global::System.Web.UI.WebControls.Panel pnlletex;
         
         /// <summary>
+        /// pnlTree control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlTree;
+        
+        /// <summary>
+        /// btnSelSub control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSelSub;
+        
+        /// <summary>
+        /// btnTreecancel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnTreecancel;
+        
+        /// <summary>
         /// hdn control.
         /// </summary>
         /// <remarks>
@@ -263,6 +317,24 @@ namespace Plugghest.Modules.DisplayPlugg {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdn;
+        
+        /// <summary>
+        /// divTree control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divTree;
+        
+        /// <summary>
+        /// lbltree control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lbltree;
         
         /// <summary>
         /// divTitle control.

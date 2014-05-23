@@ -105,6 +105,13 @@
     <Content Include="License.txt" />
     <Content Include="module.css" />
     <Content Include="ReleaseNotes.txt" />
+    <Content Include="Script\bPopup.js" />
+    <Content Include="Script\js\jqtree.css" />
+    <Content Include="Script\js\jquery-1.10.2.js" />
+    <Content Include="Script\js\jquery-ui-1.10.4.custom.js" />
+    <Content Include="Script\js\jquery-ui-1.10.4.custom.min.js" />
+    <Content Include="Script\js\jquery.min.js" />
+    <Content Include="Script\js\tree.jquery.js" />
     <Content Include="Settings.ascx" />
     <Content Include="View.ascx" />
   </ItemGroup>
