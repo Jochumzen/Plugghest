@@ -19,7 +19,6 @@
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 		<link href="/DesktopModules/CreatePlugg2/Script/index.css" rel="stylesheet" />
      <script src="/DesktopModules/CreatePlugg2/Script/bootstrap-wysiwyg.js"></script>--%>
-
 <%--    <link href="http://dnndev.me/Script/js/jqtree.css" rel="stylesheet" />
     <script src="http://dnndev.me/Script/js/tree.jquery.js"></script>--%>
 
@@ -370,6 +369,7 @@ cursor:pointer;
 
 <asp:HiddenField ID="hdnTreeData" runat="server" Value="" />
 <asp:HiddenField ID="hdnNodeSubjectId" runat="server" />
+<asp:HiddenField ID="hdnDelbtnId" runat="server" />
     <br />
 <div>
 

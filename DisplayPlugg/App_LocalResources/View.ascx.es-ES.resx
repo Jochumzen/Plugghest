@@ -127,7 +127,7 @@
     <value>Cancelar traducción</value>
   </data>
   <data name="btnlocal.Text" xml:space="preserve">
-    <value>Visa Pluggen i det språk den skapade iMostrar el Plugg en</value>
+    <value>Mostrar el Plugg en el idioma que fue escrito en</value>
   </data>
   <data name="btnSaveSubjects.Text" xml:space="preserve">
     <value>Edición de Plugg</value>
@@ -136,7 +136,7 @@
     <value>Ayúdanos con la traducción de este Plugg</value>
   </data>
   <data name="Cancel.Text" xml:space="preserve">
-    <value>testCancel1</value>
+    <value>Cancelar</value>
   </data>
   <data name="GoogleTransTxtOk.Text" xml:space="preserve">
     <value>Traducción de Google está bien</value>
@@ -163,12 +163,12 @@
     <value>RichText</value>
   </data>
   <data name="Save.Text" xml:space="preserve">
-    <value>Save</value>
+    <value>guardar</value>
   </data>
   <data name="YouTube.Text" xml:space="preserve">
     <value>YouTube</value>
   </data>
-  <data name="Edit.text" xml:space="preserve">
+  <data name="Edit.Text" xml:space="preserve">
     <value>Edición</value>
   </data>
 </root>

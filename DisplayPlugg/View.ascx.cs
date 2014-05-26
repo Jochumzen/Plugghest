@@ -135,9 +135,14 @@ namespace Plugghest.Modules.DisplayPlugg
             BaseHandler plugghandler = new BaseHandler();
             PluggContainer p = new PluggContainer(curlan, pluggid);
             IsAuthorized = (p.ThePlugg.WhoCanEdit == EWhoCanEdit.Anyone || p.ThePlugg.CreatedByUserId == this.UserId || UserInfo.IsInRole("Administator"));
-
             if (p.CultureCode == p.ThePlugg.CreatedInCultureCode)
+            {
                 btnlocal.Visible = false;
+                btntransplug.Visible = false;
+                btnSaveSubjects.Visible = true;
+            }
+            else
+                btnSaveSubjects.Visible = false;
             SetPageText(curlan, p);
             ViewState.Add("falg", true);
         }
@@ -152,7 +157,7 @@ namespace Plugghest.Modules.DisplayPlugg
 
             if (IsAuthorized == true)
             {
-                btnSaveSubjects.Visible = true;
+              
                 btncanceledit.Visible = false;
                 btncanceltrans.Visible = false;
 
@@ -209,7 +214,7 @@ namespace Plugghest.Modules.DisplayPlugg
                 string TreeHTMLstring = "";
 
                 int ID = Convert.ToInt32(subid);
-                BindTree(ID);           
+                 BindTree(ID);           
                 if (EditStr == "1" && IsAuthorized == true)
                 {
                     TreeHTMLstring = "<input type='button' id='btnTreeEdit" + i + "' class='btnTreeEdit' value='" + btnEditObj + "' />";
@@ -746,7 +751,7 @@ namespace Plugghest.Modules.DisplayPlugg
             BaseHandler objBaseHandler = new BaseHandler();
             //Subject  objSub = objsubhandler.GetSubject(subid);
           
-  List<Subject> SubList = (List<Subject>)objBaseHandler.GetSubjectsAsFlatList(curlan);
+       List<Subject> SubList = (List<Subject>)objBaseHandler.GetSubjectsAsFlatList(curlan);
             string childName = SubList.Find(x => x.SubjectId == subid).label;
             int id = Convert.ToInt32(SubList.Find(x => x.SubjectId == subid).MotherId);
             while (id != 0)
@@ -765,8 +770,7 @@ namespace Plugghest.Modules.DisplayPlugg
         }
 
         private void ImpGoogleTrans(PluggComponent comp, PHText CulTxt)
-        {
-
+        {         
             hdnlabel.Value = Convert.ToString(comp.PluggComponentId);
 
             string text = CulTxt.Text;
@@ -913,8 +917,16 @@ namespace Plugghest.Modules.DisplayPlugg
 
         protected void btnExitEditMode_Click(object sender, EventArgs e)
         {
-            // Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, ""));
-            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=1"));
+             Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "" ,"edit=1"));
+
+            
+            string s=DotNetNuke.Common.Globals.NavigateURL(TabId, "" ,"edit=1");
+           // s = DotNetNuke.Common.Globals.NavigateURL(this.TabId) + "?mykey=myvalue";
+           // string aurl = DotNetNuke.Entities.Tabs.TabController.CurrentPage.FullUrl; 
+           //// string a = " a sdsad sad";
+           // //char[] var = s.Split("language");
+           // string[] words = s.Split('1');
+           // Response.Redirect("http://dnndev.me/es-es/10/tabid/268/edit/1");
             btncanceledit.Visible = true;
             btnSaveSubjects.Visible = false;
         }
@@ -968,14 +980,10 @@ namespace Plugghest.Modules.DisplayPlugg
 
         }
 
-
-
         protected void Cancel_Click(object sender, EventArgs e)
         {
             Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=" + EditStr + ""));
         }
-
-
 
         protected void btntransplug_Click(object sender, EventArgs e)
         {
@@ -986,7 +994,6 @@ namespace Plugghest.Modules.DisplayPlugg
             //Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=2"));
 
         }
-
 
         protected void btnSaveRt_Click(object sender, EventArgs e)
         {
