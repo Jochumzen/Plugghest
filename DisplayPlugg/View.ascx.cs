@@ -33,7 +33,6 @@ using System.Reflection;
 using System.Resources;
 using System.Globalization;
 using System.Threading;
-using Plugghest.Subjects;
 using System.Web.Script.Serialization;
 using System.Web.Services;
 using System.Web.Script.Services;
@@ -132,8 +131,7 @@ namespace Plugghest.Modules.DisplayPlugg
 
         private void PageLoadFun()
         {
-            int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
-            string curlan = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
+            int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);    
             BaseHandler plugghandler = new BaseHandler();
             PluggContainer p = new PluggContainer(curlan, pluggid);
             IsAuthorized = (p.ThePlugg.WhoCanEdit == EWhoCanEdit.Anyone || p.ThePlugg.CreatedByUserId == this.UserId || UserInfo.IsInRole("Administator"));
@@ -143,10 +141,7 @@ namespace Plugghest.Modules.DisplayPlugg
             SetPageText(curlan, p);
             ViewState.Add("falg", true);
         }
-        //private void AddPlug_Click(object sender, EventArgs e)
-        //{ 
-
-        //}
+     
         void myFunction(object sender, CommandEventArgs e)
         {
             int RecordId = Int32.Parse(e.CommandArgument.ToString());
@@ -704,8 +699,6 @@ namespace Plugghest.Modules.DisplayPlugg
                     pnlYoutube.Visible = false;
                     richrichtext.Text = lat.Text;
                     break;
-
-
             }
         }
 
@@ -737,10 +730,10 @@ namespace Plugghest.Modules.DisplayPlugg
             }
         }
 
-        private void callingEdit(int orderid)
-        {
-            throw new NotImplementedException();
-        }
+        //private void callingEdit(int orderid)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         private void GoogleTranText( PHText txt)
         {
@@ -750,26 +743,22 @@ namespace Plugghest.Modules.DisplayPlugg
 
         public void BindTree(int subid)
         {
-
-            //BaseHandler sh = new BaseHandler();
-            //var tree = sh.GetSubjectsAsTree("en-US");
-            //JavaScriptSerializer TheSerializer = new JavaScriptSerializer();
-            //hdnTreeData.Value = TheSerializer.Serialize(tree);
-
-            SubjectHandler objsubhandler = new SubjectHandler();
-
-            var tree1 = objsubhandler.GetSubject(subid);
-            string cname = tree1.label;
-            int id = Convert.ToInt32(tree1.MotherId);
+            BaseHandler objBaseHandler = new BaseHandler();
+            //Subject  objSub = objsubhandler.GetSubject(subid);
+          
+  List<Subject> SubList = (List<Subject>)objBaseHandler.GetSubjectsAsFlatList(curlan);
+            string childName = SubList.Find(x => x.SubjectId == subid).label;
+            int id = Convert.ToInt32(SubList.Find(x => x.SubjectId == subid).MotherId);
             while (id != 0)
             {
-                var tree2 = objsubhandler.GetSubject(id);
-                cname = tree2.label + ">" + cname;
-                id = Convert.ToInt32(tree2.MotherId);
+                Subject newSub = SubList.Find(x => x.SubjectId == id);
+                childName = newSub.label + ">" + childName;
+                id = Convert.ToInt32(newSub.MotherId);
             }
-            lbltree.Text = "Subject:" + cname;
 
-            var tree = objsubhandler.GetSubjectsAsTree();
+            lbltree.Text = "Subject:" + childName;
+
+            var tree = objBaseHandler.GetSubjectsAsTree(curlan);
             JavaScriptSerializer TheSerializer = new JavaScriptSerializer();
             hdnTreeData.Value = TheSerializer.Serialize(tree);
 
@@ -783,10 +772,7 @@ namespace Plugghest.Modules.DisplayPlugg
             string text = CulTxt.Text;
             switch (comp.ComponentType)
             {
-
-
                 case EComponentType.Label:
-
                     pnlRRT.Visible = false;
                     pnllabel.Visible = true;
                     pnlletex.Visible = false;
@@ -794,7 +780,6 @@ namespace Plugghest.Modules.DisplayPlugg
                     pnlLatex.Visible = false;
                     pnlYoutube.Visible = false;
                     txtlabel.Text = text;
-
                     break;
 
                 case EComponentType.RichText:
@@ -805,12 +790,9 @@ namespace Plugghest.Modules.DisplayPlugg
                     pnlLatex.Visible = false;
                     pnlYoutube.Visible = false;
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "xx", " $(document).ready(function () {$('#editor').html('" + text.Replace("\r\n", "<br />") + "')});", true);
-
-
-
+                    
                     break;
-
-
+                    
                 case EComponentType.RichRichText:
 
                     pnlRRT.Visible = true;
@@ -832,11 +814,9 @@ namespace Plugghest.Modules.DisplayPlugg
 
         private void callingDel(int orderid)
         {
-            int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
-            string curlan = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
+            int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);          
             BaseHandler plugghandler = new BaseHandler();
             PluggContainer p = new PluggContainer(curlan, pluggid);
-
             plugghandler.DeleteComponent(p, orderid);
             PageLoadFun();
             Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=1"));

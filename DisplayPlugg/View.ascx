@@ -20,11 +20,14 @@
 		<link href="/DesktopModules/CreatePlugg2/Script/index.css" rel="stylesheet" />
      <script src="/DesktopModules/CreatePlugg2/Script/bootstrap-wysiwyg.js"></script>--%>
 
- <%--   <link href="http://dnndev.me/Script/js/jqtree.css" rel="stylesheet" />
+<%--    <link href="http://dnndev.me/Script/js/jqtree.css" rel="stylesheet" />
     <script src="http://dnndev.me/Script/js/tree.jquery.js"></script>--%>
-<%--<%----------------------------------------tree -start-----------------------------------------%>
-<link href="/DesktopModules/DisplayPlugg/Script/js/jqtree.css" rel="stylesheet" />
+
+ <link href="/DesktopModules/DisplayPlugg/Script/js/jqtree.css" rel="stylesheet" />
     <script src="/DesktopModules/DisplayPlugg/Script/js/tree.jquery.js"></script>
+<%--<%----------------------------------------tree -start-----------------------------------------%>
+<link href="/DesktopModules/CreatePlugg2/Script/js/jqtree.css" rel="stylesheet" />
+    <script src="/DesktopModules/CreatePlugg2/Script/js/tree.jquery.js"></script>
 
 <script src="/DesktopModules/EditSubjects/js/tree.jquery.js"></script>
 <link href="/DesktopModules/EditSubjects/js/jqtree.css" rel="stylesheet" />
