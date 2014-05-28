@@ -13,15 +13,6 @@ namespace Plugghest.Modules.DisplayPlugg {
     public partial class View {
         
         /// <summary>
-        /// lblNotEnglish control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNotEnglish;
-        
-        /// <summary>
         /// hdnTreeData control.
         /// </summary>
         /// <remarks>
@@ -67,13 +58,13 @@ namespace Plugghest.Modules.DisplayPlugg {
         protected global::System.Web.UI.WebControls.Button btncanceltrans;
         
         /// <summary>
-        /// btnSaveSubjects control.
+        /// btnEditPlug control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSaveSubjects;
+        protected global::System.Web.UI.WebControls.Button btnEditPlug;
         
         /// <summary>
         /// btncanceledit control.

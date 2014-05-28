@@ -18,8 +18,7 @@
           <script src="/DesktopModules/CreatePlugg2/Script/external/jquery.hotkeys.js"></script>
     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
 		<link href="/DesktopModules/CreatePlugg2/Script/index.css" rel="stylesheet" />
-     <script src="/DesktopModules/CreatePlugg2/Script/bootstrap-wysiwyg.js"></script>--%>
-<%--    <link href="http://dnndev.me/Script/js/jqtree.css" rel="stylesheet" />
+     <script src="/DesktopModules/CreatePlugg2/Script/bootstrap-wysiwyg.js"></script>--%><%--    <link href="http://dnndev.me/Script/js/jqtree.css" rel="stylesheet" />
     <script src="http://dnndev.me/Script/js/tree.jquery.js"></script>--%>
 
  <link href="/DesktopModules/DisplayPlugg/Script/js/jqtree.css" rel="stylesheet" />
@@ -31,12 +30,12 @@
 <script src="/DesktopModules/EditSubjects/js/tree.jquery.js"></script>
 <link href="/DesktopModules/EditSubjects/js/jqtree.css" rel="stylesheet" />
 <link href="/DesktopModules/EditSubjects/module.css" rel="stylesheet" />
-<asp:Label runat="server" Visible="False" ID="lblNotEnglish"></asp:Label>
+
 
   <script type="text/javascript">
 
       $(document).ready(function () {
-          $("#" + '<%=pnlTree.ClientID%>').hide();
+         $("#" + '<%=pnlTree.ClientID%>').hide();
           $(".btnTreeEdit").click(function () {
               $("#" + '<%=pnlTree.ClientID%>').show();
               var $tree = $('#tree2');
@@ -374,19 +373,19 @@ cursor:pointer;
 <div>
 
     <asp:Button CssClass="cls" ID="btnlocal" Text="View this Plugg in the language it was created " runat="server" OnClick="btnlocal_Click" />
-    <asp:Button CssClass="cls" ID="btncanceltrans" Text="Cancel translation" runat="server" OnClick="btncanceltrans_Click" />
+    <asp:Button CssClass="cls" ID="btncanceltrans" Text="Cancel translation" runat="server" OnClick="btncanceltrans_Click" Visible="False" />
 
-    <asp:Button CssClass="btneditplug" ID="btnSaveSubjects" resourcekey="btnSaveSubjects" Text="Edit Plug" runat="server" OnClick="btnExitEditMode_Click" />
-    <asp:Button CssClass="btneditplug" ID="btncanceledit" resourcekey="btncanceledit" Text="Cancel Plug" runat="server" OnClick="btncanceledit_Click" />
+    <asp:Button CssClass="btneditplug" ID="btnEditPlug" resourcekey="btnSaveSubjects" Text="Edit Plug" runat="server" OnClick="btnEditPlugg_Click" />
+    <asp:Button CssClass="btneditplug" ID="btncanceledit" resourcekey="btncanceledit" Text="Cancel Plug" runat="server" OnClick="btncanceledit_Click" Visible="False" />
     <asp:Button CssClass="btneditplug" ID="btntransplug" meta:resourcekey="btntransplug" Text="Help us with the translation of this Plugg" runat="server" OnClick="btntransplug_Click" />
 
 </div>
 <br />
-<asp:Panel runat="server" ID="pnlRRT">
+<asp:Panel runat="server" ID="pnlRRT" Visible="False">
     <dnn:texteditor runat="server" id="richrichtext"></dnn:texteditor>
     <asp:Button ID="btnSaveRRt" runat="server" Text="Save" OnClick="btnSaveRRt_Click" /><asp:Button ID="btnCanRRt" runat="server" Text="Cancel" OnClick="Cancel_Click" />
 </asp:Panel>
-<asp:Panel ID="richtextbox" runat="server">
+<asp:Panel ID="richtextbox" runat="server" Visible="False">
     <div class='container'>
         <div class='hero-unit'>
 
@@ -436,12 +435,12 @@ cursor:pointer;
     <asp:Button ID="btnSaveRt" OnClientClick="getRichtext()" runat="server" Text="Save" OnClick="btnSaveRt_Click" /><asp:Button ID="btnCanRt" runat="server" Text="Cancel" OnClick="Cancel_Click" Height="27px" />
 </asp:Panel>
 <%--<label  id="lbllabel" runat="server" resourcekey="lblExample" ></label>--%>
-<asp:Panel runat="server" ID="pnllabel">
+<asp:Panel runat="server" ID="pnllabel" Visible="False">
     <asp:TextBox runat="server" ID="txtlabel"></asp:TextBox>
     <asp:Button ID="btnLabelSave" runat="server" Text="Save" OnClick="btnLabelSave_Click" /><asp:Button ID="Cancel" runat="server" Text="Cancel" OnClick="Cancel_Click" />
     <asp:HiddenField ID="hdnlabel" runat="server" />
 </asp:Panel>
-<asp:Panel runat="server" ID="pnlYoutube">
+<asp:Panel runat="server" ID="pnlYoutube" Visible="false">
     <asp:TextBox ID="txtYouTube" runat="server" />
 
     <input type="button" id="btnGetYoutubeVideo" value="Get Video" onclick="CheckURL(this);" />
@@ -498,7 +497,7 @@ cursor:pointer;
     <asp:Button ID="btnYtSave" runat="server" Text="Save" OnClientClick="getYt()" OnClick="btnYtSave_Click" /><asp:Button ID="btnYtCaNCEL" runat="server" Text="Cancel" OnClick="Cancel_Click" />
 </asp:Panel>
 
-<asp:Panel runat="server" ID="pnlLatex">
+<asp:Panel runat="server" ID="pnlLatex" Visible="False">
     <asp:TextBox runat="server" ID="TextBox1"></asp:TextBox>
     <asp:Button ID="btnLatexSave" runat="server" Text="Save" OnClick="btnLatexSave_Click" /><asp:Button ID="btnLatexCancel" runat="server" Text="Cancel" OnClick="Cancel_Click" />
     <asp:HiddenField ID="HiddenField1" runat="server" />

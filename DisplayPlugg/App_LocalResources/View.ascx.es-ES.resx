@@ -129,7 +129,7 @@
   <data name="btnlocal.Text" xml:space="preserve">
     <value>Mostrar el Plugg en el idioma que fue escrito en</value>
   </data>
-  <data name="btnSaveSubjects.Text" xml:space="preserve">
+  <data name="btnEditPlug.Text" xml:space="preserve">
     <value>Edición de Plugg</value>
   </data>
   <data name="btntransplug.Text" xml:space="preserve">
@@ -170,5 +170,8 @@
   </data>
   <data name="Edit.Text" xml:space="preserve">
     <value>Edición</value>
+  </data>
+  <data name="AddNewCom.Text" xml:space="preserve">
+    <value>Añadir nuevo componente</value>
   </data>
 </root>

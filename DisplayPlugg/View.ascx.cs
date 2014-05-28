@@ -54,36 +54,27 @@ namespace Plugghest.Modules.DisplayPlugg
     /// -----------------------------------------------------------------------------
     public partial class View : DisplayPluggModuleBase, IActionable
     {
-        string EditStr = ""; string curlan = "";
-        bool IsAuthorized = false;
-        private System.Resources.ResourceManager rm;
-        string AddObj, btnSaveSubjectsObj,YoutubeObj, btnEditObj, btncanceleditObj, btncanceltransObj, btnlocalObj, btntransplugObj, CancelObj, GoogleTransTxtOkObj, ImpgoogleTransObj, ImproveHumTransTxtObj, LabelObj, LatexObj, RemoveObj, RichRichTextObj, RichTextObj, SaveObj, YouTubeObj;
+        string EditStr = ""; string curlan = ""; int pluggid;
+        bool IsAuthorized = false, IsCase3, IsCase2;
+        string BtnAddtxt, LabAddNewcomTxt, btnEditPlugTxt, BtnYoutubeTxt, BtnEditTxt, BtncanceleditTet, BtncanceltransTxt, BtnlocalTxt, BtntransplugTxt, BtnCancelTxt, BtnGoogleTransTxtOkTxt, BtnImpgoogleTransTxt, BtnImproveHumTransTxt, BtnLabelTxt, BtnLatexTxt, BtnRemoveTxt, BtnRichRichTxttxt, BtnRichTextTxt, BtnSaveTxt, BtnYouTubeTxt;
+        PluggContainer p;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             try
             {
                 curlan = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
-                CallLocalization(curlan);
+
+                pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
+                p = new PluggContainer(curlan, pluggid);
+                CallLocalization();
                 EditStr = Page.Request.QueryString["edit"];
-
-                if (!IsPostBack)
-                {
+                IsAuthorized = (p.ThePlugg.WhoCanEdit == EWhoCanEdit.Anyone || p.ThePlugg.CreatedByUserId == this.UserId || UserInfo.IsInRole("Administator"));
+                IsCase3 = (EditStr == "1" && IsAuthorized);
+                IsCase2 = (EditStr == "2" && IsAuthorized);
+               
                     PageLoadFun();
-                    pnlRRT.Visible = false;
-                    pnllabel.Visible = false;
-                    pnlletex.Visible = false;
-                    richtextbox.Visible = false;
-                    pnlLatex.Visible = false;
-                    pnlYoutube.Visible = false;
-                }
-                else
-                {
-                    if (ViewState["falg"] != null)
-                    {
-                        PageLoadFun();
-
-                    }
-                }
+             
 
             }
             catch (Exception exc) //Module failed to load
@@ -92,525 +83,254 @@ namespace Plugghest.Modules.DisplayPlugg
             }
         }
 
-        private void CallLocalization(string curlan)
+        private void CallLocalization()
         {
+            SetLocalizationText();
 
-            btnSaveSubjectsObj = Localization.GetString("btnSaveSubjects", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            SetStaticBtnText();
+        }
 
-            btncanceleditObj = Localization.GetString("btncanceledit", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-            AddObj = Localization.GetString("Add", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-            btncanceltransObj = Localization.GetString("btncanceltrans", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-            CancelObj = Localization.GetString("Cancel", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-            GoogleTransTxtOkObj = Localization.GetString("GoogleTransTxtOk", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-            ImpgoogleTransObj = Localization.GetString("ImpgoogleTrans", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-            ImproveHumTransTxtObj = Localization.GetString("ImproveHumTransTxt", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-            LabelObj = Localization.GetString("Label", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-            LatexObj = Localization.GetString("Latex", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-            YoutubeObj = Localization.GetString("YouTube", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-            RemoveObj = Localization.GetString("Remove", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-            RichRichTextObj = Localization.GetString("RichRichText", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-            RichTextObj = Localization.GetString("RichText", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-            SaveObj = Localization.GetString("Save", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-            YouTubeObj = Localization.GetString("YouTube", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-            btnlocalObj = Localization.GetString("btnlocal", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-            btntransplugObj = Localization.GetString("btntransplug", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+        private void SetStaticBtnText()
+        {
+            btnlocal.Text = BtnlocalTxt;
+            btnEditPlug.Text = btnEditPlugTxt;
+            btncanceledit.Text = BtncanceleditTet;
+            btncanceltrans.Text = BtncanceltransTxt;
+            btntransplug.Text = BtntransplugTxt;
 
-            btnEditObj = Localization.GetString("Edit", this.LocalResourceFile + ".ascx." + curlan + ".resx");
 
-            btnlocal.Text = btnlocalObj;
-            btnSaveSubjects.Text = btnSaveSubjectsObj;
-            btncanceledit.Text = btncanceleditObj;
-            btncanceltrans.Text = btncanceltransObj;
-            btntransplug.Text = btntransplugObj;
-            btncanceledit.Text = btncanceleditObj;
-            btnSaveRt.Text = SaveObj;
-            btnCanRt.Text = CancelObj;
-            btnLabelSave.Text = SaveObj;
-            Cancel.Text = CancelObj;
+            btnSaveRRt.Text = BtnSaveTxt;
+            btnSaveRt.Text = BtnSaveTxt;
+            btnLabelSave.Text = BtnSaveTxt;
+            btnYtSave.Text = BtnSaveTxt;
+            btnLatexSave.Text = BtnSaveTxt;
+            btnSelSub.Text = BtnSaveTxt;
+
+            btnCanRRt.Text = BtnCancelTxt;
+            btnCanRt.Text = BtnCancelTxt;
+            btnYtCaNCEL.Text = BtnCancelTxt;
+            btnLatexCancel.Text = BtnCancelTxt;
+            btnTreecancel.Text = BtnCancelTxt;
+            Cancel.Text = BtnCancelTxt;
+        }
+
+        private void SetLocalizationText()
+        {
+            btnEditPlugTxt = Localization.GetString("btnEditPlug", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+
+            BtncanceleditTet = Localization.GetString("btncanceledit", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            BtnAddtxt = Localization.GetString("Add", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            BtncanceltransTxt = Localization.GetString("btncanceltrans", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            BtnCancelTxt = Localization.GetString("Cancel", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            BtnGoogleTransTxtOkTxt = Localization.GetString("GoogleTransTxtOk", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            BtnImpgoogleTransTxt = Localization.GetString("ImpgoogleTrans", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            BtnImproveHumTransTxt = Localization.GetString("ImproveHumTransTxt", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            BtnLabelTxt = Localization.GetString("Label", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            BtnLatexTxt = Localization.GetString("Latex", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            BtnYoutubeTxt = Localization.GetString("YouTube", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            BtnRemoveTxt = Localization.GetString("Remove", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            BtnRichRichTxttxt = Localization.GetString("RichRichText", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            BtnRichTextTxt = Localization.GetString("RichText", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            BtnSaveTxt = Localization.GetString("Save", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            BtnYouTubeTxt = Localization.GetString("YouTube", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            BtnlocalTxt = Localization.GetString("btnlocal", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            BtnlocalTxt = BtnlocalTxt + "( " + p.ThePlugg.CreatedInCultureCode + " )";
+            BtntransplugTxt = Localization.GetString("btntransplug", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            LabAddNewcomTxt = Localization.GetString("AddNewCom", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            BtnEditTxt = Localization.GetString("Edit", this.LocalResourceFile + ".ascx." + curlan + ".resx");
         }
 
         private void PageLoadFun()
         {
-            int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);    
-            BaseHandler plugghandler = new BaseHandler();
-            PluggContainer p = new PluggContainer(curlan, pluggid);
-            IsAuthorized = (p.ThePlugg.WhoCanEdit == EWhoCanEdit.Anyone || p.ThePlugg.CreatedByUserId == this.UserId || UserInfo.IsInRole("Administator"));
+
             if (p.CultureCode == p.ThePlugg.CreatedInCultureCode)
             {
+                if (IsCase2)
+                    Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", new string[] { "edit=0", "language=" + p.ThePlugg.CreatedInCultureCode }));
+
+
                 btnlocal.Visible = false;
                 btntransplug.Visible = false;
-                btnSaveSubjects.Visible = true;
-            }
-            else
-                btnSaveSubjects.Visible = false;
-            SetPageText(curlan, p);
-            ViewState.Add("falg", true);
-        }
-     
-        void myFunction(object sender, CommandEventArgs e)
-        {
-            int RecordId = Int32.Parse(e.CommandArgument.ToString());
-            Response.Write(RecordId.ToString());
-        }
-        private void SetPageText(string curlan, PluggContainer p)
-        {
-
-            if (IsAuthorized == true)
-            {
-              
-                btncanceledit.Visible = false;
-                btncanceltrans.Visible = false;
-
+                btnEditPlug.Visible = true;
             }
             else
             {
-                btnSaveSubjects.Visible = false;
-                btncanceledit.Visible = false;
-                btncanceltrans.Visible = false;
+                if (IsCase3)
+                    Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", new string[] { "edit=" + EditStr, "language=" + p.ThePlugg.CreatedInCultureCode }));
 
+
+                btnEditPlug.Visible = false;
+                btncanceledit.Visible = false;
             }
-            if (EditStr == "1" && IsAuthorized == true)
+            //CheckEditCase();
+
+
+            if (!IsAuthorized)
             {
+                btnEditPlug.Visible = false;
+            }
+            if (IsCase3)
+            {
+
+                btnEditPlug.Visible = false;
                 btncanceledit.Visible = true;
-                btnSaveSubjects.Visible = false;
-                btncanceltrans.Visible = false;
             }
-            else
-            {
-
-            }
-            if (EditStr == "2" && IsAuthorized == true)
+            if (IsCase2)
             {
                 btncanceltrans.Visible = true;
                 btntransplug.Visible = false;
-            }
-            else
-            {
-
-            }
+            }     
+            DisPlayPluggComp();
+        }
 
 
+
+        private void DisPlayPluggComp()
+        {
             List<PluggComponent> comps = p.GetComponentList();
             BaseHandler bh = new BaseHandler();
+            string ddl = ""; string str = "</select></div>"; int i = 0;
 
-//creating  dropdownlist 
-            string ddl = "";
-            foreach (string name in Enum.GetNames(typeof(EComponentType)))
-            {
-                if (name != "NotSet")
-                {
-                    string dl = "<option  value=" + name + " >" + name + "</option>";
-                    ddl = ddl + dl;
 
-                }
-            }
+            ddl = CreateDropDown(ddl);
 
             Label dynamicLabel = new Label();
-            int i = 0;
 
-            var subid = p.ThePlugg.SubjectId;
-            if (subid != null)
-            {
-                string TreeHTMLstring = "";
 
-                int ID = Convert.ToInt32(subid);
-                 BindTree(ID);           
-                if (EditStr == "1" && IsAuthorized == true)
-                {
-                    TreeHTMLstring = "<input type='button' id='btnTreeEdit" + i + "' class='btnTreeEdit' value='" + btnEditObj + "' />";
-                    divTree.Controls.Add(new LiteralControl(TreeHTMLstring));
-                }
-            }
+            int? subid = p.ThePlugg.SubjectId;
+            CreateSubject(i, subid);
+
             foreach (PluggComponent comp in comps)
             {
-
                 switch (comp.ComponentType)
                 {
                     case EComponentType.Label:
 
                         PHText lbl = bh.GetCurrentVersionText(curlan, comp.PluggComponentId, ETextItemType.PluggComponentLabel);
-                        var divid = "Label" + i;
-                        var ddlid = "ddl" + i;
-                        var orderid = comp.ComponentOrder;
-                        string LabHTMLstring = "";
-
+                        string LabHTMLstring = CreateDiv(lbl, "Label" + i, BtnLabelTxt);
                         //This condition is used for editing plugg
-                        if (EditStr == "1" && IsAuthorized == true)
+                        if (IsCase3)
                         {
+                            int orderid = comp.ComponentOrder;
+                            CreateBtnDel(orderid, "btncsdel", "btnlbDel" + i + "");
+                            CreateBtnEdit(comp, lbl, "btncsdel", "btnlbEdit" + i + "");
 
-                            if (lbl == null)
-                            {
-                                LabHTMLstring = "<div><div id=" + divid + " class='Main'> <label  id='lbllabel" + i + "' runat='server' >" + LabelObj + ":</label>";
-                                lbl.Text = "";
-                            }
-                            else
-                                LabHTMLstring = "<div><div id=" + divid + " class='Main'><label  id='lbllabel" + i + "' runat='server'  >" + LabelObj + ":" + lbl.Text + "</label>";
-
-                            divTitle.Controls.Add(new LiteralControl(LabHTMLstring));
-
-
-                            Button delbtn = new Button();
-                            delbtn.CssClass = "btncsdel";
-                            delbtn.ID = "btnlbDel" + i;
-                            delbtn.Text = RemoveObj;
-                            delbtn.Click += (s, e) => { callingDel(orderid); };
-                            divTitle.Controls.Add(delbtn);
-
-                            Button editbtn = new Button();
-                            editbtn.CssClass = "btncsdel";
-                            editbtn.ID = "btnlbEdit" + i;
-                            editbtn.Text = btnEditObj;
-                            editbtn.Click += (s, e) => { ImpGoogleTrans( comp, lbl); };
-                            divTitle.Controls.Add(editbtn);
-
-
-
-                            LabHTMLstring = "</div><select class='ddlclass' id=" + ddlid + ">";
+                            LabHTMLstring = "</div>" + LabAddNewcomTxt + "<select class='ddlclass' id='ddl" + i + "'>";
                             LabHTMLstring = LabHTMLstring + ddl;
                             divTitle.Controls.Add(new LiteralControl(LabHTMLstring));
-
-                            Button Addbutton = new Button();
-                            Addbutton.CssClass = "btncs";
-                            Addbutton.ID = "btnlbAdd" + i;
-                            Addbutton.Text = AddObj;
-                            Addbutton.Click += (s, e) => { callingAdd(orderid); };
-                            divTitle.Controls.Add(Addbutton);
-
-                            string n1 = "</select></div>";
-                            divTitle.Controls.Add(new LiteralControl(n1));
+                            CreateBtnAdd(orderid, "btncs", "btnlbAdd" + i + "");
+                            divTitle.Controls.Add(new LiteralControl(str));
                         }
                         //This condition is used for Translation The Plugg Text(same for all cases)
-                        else if (EditStr == "2" && IsAuthorized == true)
+                        else if (IsCase2)
                         {
-                            if (lbl == null)
-                            {
-                                LabHTMLstring = "<div><div id=" + divid + " class='Main'> <label  id='lbllabel" + i + "' runat='server' >" + LabelObj + ":</label>";
-                                lbl.Text = "";
-                            }
-                            else
-                                LabHTMLstring = "<div><div id=" + divid + " class='Main'><label  id='lbllabel" + i + "' runat='server'  >" + LabelObj + ":" + lbl.Text + "</label>";
-
-                            divTitle.Controls.Add(new LiteralControl(LabHTMLstring));
                             if (lbl.CultureCodeStatus == ECultureCodeStatus.GoogleTranslated)
                             {
-                                Button btn = new Button();
-                                btn.CssClass = "googletrans";
-                                btn.ID = "btnIGT" + i;
-                                btn.Text = ImpgoogleTransObj;
-                                btn.Click += (s, e) => { ImpGoogleTrans(comp, lbl); };
-                                divTitle.Controls.Add(btn);
-
-                                Button btn1 = new Button();
-                                btn1.CssClass = "googleTrasok";
-                                btn1.ID = "btnGTText" + i;
-                                btn1.Text = GoogleTransTxtOkObj;
-                                btn1.Click += (s, e) => { GoogleTranText(lbl); };
-                                divTitle.Controls.Add(btn1);
-
+                                CreateBtnImproveHumGoogleTrans(comp, lbl, "googletrans", "btnrtIGT" + i + "");
+                                CreateBtnGoogleT(lbl, "googleTrasok", "btnGTText" + i + "");
                             }
                             if (lbl.CultureCodeStatus == ECultureCodeStatus.HumanTranslated)
                             {
-                                Button btn = new Button();
-                                btn.CssClass = "btnhumantrans";
-                                btn.ID = "btnIHT" + i;
-                                btn.Text = ImproveHumTransTxtObj;
-                                btn.Click += (s, e) => { ImpGoogleTrans(comp, lbl); };
-                                divTitle.Controls.Add(btn);
-
+                                CreateBtnImproveHumGoogleTrans(comp, lbl, "btnhumantrans", "btnlbl" + i + "");
                             }
-
-
-                            string n1 = "</select></div>";
-                            divTitle.Controls.Add(new LiteralControl(n1));
-                        }
-
-                        else
-                        {
-                            if (lbl == null)
-                                LabHTMLstring = "<div><div id=" + divid + " class='Main'" + LabelObj + ": </div></div>";
-                            else
-                                LabHTMLstring = "<div><div id=" + divid + " class='Main'>" + LabelObj + ":" + lbl.Text + "</div></div>";
-                            divTitle.Controls.Add(new LiteralControl(LabHTMLstring));
-
+                            divTitle.Controls.Add(new LiteralControl(str));
                         }
                         break;
 
                     case EComponentType.RichText:
                         PHText rt = bh.GetCurrentVersionText(curlan, comp.PluggComponentId, ETextItemType.PluggComponentRichText);
-                        //Handle rich text
-
-                        string RtHTMLstring = "";
-
-                        divTitle.Controls.Add(new LiteralControl(RtHTMLstring));
-                        var RTdivid = "RichText" + i;
-                        var RTddlid = "Rtddl" + i;
-                        var RTorderid = comp.ComponentOrder;
-
-                        if (EditStr == "1" && IsAuthorized == true)
+                        string RtHTMLstring = CreateDiv(rt, "RichText" + i, BtnRichTextTxt);
+                        if (IsCase3)
                         {
-                            if (rt == null)
-                            {
-                                RtHTMLstring = "<div><div id=" + RTdivid + " class='Main'>" + RichTextObj + ": ";
-                                rt.Text = "";
-                            }
-                            else
-                                RtHTMLstring = "<div><div id=" + RTdivid + " class='Main'> " + RichTextObj + ":" + rt.Text + "";
+                            int RTorderid = comp.ComponentOrder;
 
-                            divTitle.Controls.Add(new LiteralControl(RtHTMLstring));
-
-
-                            Button delrtbtn = new Button();
-                            delrtbtn.CssClass = "btncsdel";
-                            delrtbtn.ID = "btnrtDel" + i;
-                            //delrtbtn.Text = "Remove";
-                            delrtbtn.Text = RemoveObj;
-                            delrtbtn.Click += (s, e) => { callingDel(RTorderid); };
-                            divTitle.Controls.Add(delrtbtn);
-
-                            Button editbtn = new Button();
-                            editbtn.CssClass = "btncsdel";
-                            editbtn.ID = "btnrtEdit" + i;
-                            editbtn.Text = btnEditObj;
-                            editbtn.Click += (s, e) => { ImpGoogleTrans(comp, rt); };
-                            divTitle.Controls.Add(editbtn);
-
-                            RtHTMLstring = "</div><select class='ddlclass' id=" + RTddlid + ">";
+                            CreateBtnDel(RTorderid, "btncsdel", "btnrtDel" + i + "");
+                            CreateBtnEdit(comp, rt, "btncsdel", "btnrtEdit" + i + "");
+                            RtHTMLstring = "</div>" + LabAddNewcomTxt + "<select class='ddlclass' id='Rtddl" + i + "'>";
                             RtHTMLstring = RtHTMLstring + ddl;
                             divTitle.Controls.Add(new LiteralControl(RtHTMLstring));
-
-                            Button Addrtbutton = new Button();
-                            Addrtbutton.CssClass = "btncs";
-                            Addrtbutton.ID = "btnrtAdd" + i;
-                            //Addrtbutton.Text = "Add";
-                            Addrtbutton.Text = AddObj;
-                            Addrtbutton.Click += (s, e) => { callingAdd(RTorderid); };
-                            divTitle.Controls.Add(Addrtbutton);
-
-                            string rtn1 = "</select></div>";
-                            divTitle.Controls.Add(new LiteralControl(rtn1));
+                            CreateBtnAdd(RTorderid, "btncs", "btnrtAdd" + i + "");
+                            divTitle.Controls.Add(new LiteralControl(str));
                         }
-                        else if (EditStr == "2" && IsAuthorized == true)
+                        else if (IsCase2)
                         {
-                            if (rt == null)
-                            {
-                                RtHTMLstring = "<div><div id=" + RTdivid + " class='Main'>" + RichTextObj + ": ";
-                                rt.Text = "";
-                            }
-                            else
-                                RtHTMLstring = "<div><div id=" + RTdivid + " class='Main'> " + RichTextObj + ":" + rt.Text + "";
-
-                            divTitle.Controls.Add(new LiteralControl(RtHTMLstring));
-
                             if (rt.CultureCodeStatus == ECultureCodeStatus.GoogleTranslated)
                             {
-                                Button btn = new Button();
-                                btn.CssClass = "googletrans";
-                                btn.ID = "btnrtIGT" + i;
-                                // btn.Text = "Improve google Translation";
-                                btn.Text = ImpgoogleTransObj;
-                                btn.Click += (s, e) => { ImpGoogleTrans(comp, rt); };
-                                divTitle.Controls.Add(btn);
+                                CreateBtnImproveHumGoogleTrans(comp, rt, "googletrans", "btnrtIGT" + i + "");
+                                CreateBtnGoogleT(rt, "googleTrasok", "btnrtGTText" + i + "");
 
-                                Button btn1 = new Button();
-                                btn1.CssClass = "googleTrasok";
-                                btn1.ID = "btnrtGTText" + i;
-                                // btn1.Text = "Google Translation Text Ok ";
-                                btn1.Text = GoogleTransTxtOkObj;
-                                btn1.Click += (s, e) => { GoogleTranText( rt); };
-                                divTitle.Controls.Add(btn1);
-
-
-                                // lbl.CultureCodeStatus = ECultureCodeStatus.HumanTranslated;
                             }
                             if (rt.CultureCodeStatus == ECultureCodeStatus.HumanTranslated)
                             {
-                                Button btn = new Button();
-                                btn.CssClass = "btnhumantrans";
-                                btn.ID = "btnrtIHT" + i;
-                                //btn.Text = "Improve Human Translation Text";
-                                btn.Text = ImproveHumTransTxtObj;
-                                btn.Click += (s, e) => { ImpGoogleTrans(comp, rt); };
-                                divTitle.Controls.Add(btn);
-
+                                CreateBtnImproveHumGoogleTrans(comp, rt, "btnhumantrans", "btnrtIHT" + i + "");
                             }
-
-                            string rtn1 = "</select></div>";
-                            divTitle.Controls.Add(new LiteralControl(rtn1));
-                        }
-                        else
-                        {
-                            if (rt == null)
-                                RtHTMLstring = "<div><div id=" + RTdivid + " class='Main'>" + RichTextObj + ": </div></div>";
-                            else
-                                RtHTMLstring = "<div><div id=" + RTdivid + " class='Main'> " + RichTextObj + ":" + rt.Text + "</div></div>";
-                            divTitle.Controls.Add(new LiteralControl(RtHTMLstring));
-
+                            divTitle.Controls.Add(new LiteralControl(str));
                         }
                         break;
 
                     case EComponentType.RichRichText:
                         PHText rrt = bh.GetCurrentVersionText(curlan, comp.PluggComponentId, ETextItemType.PluggComponentRichRichText);
-                        var RRTdivid = "RichRichText" + i;
-                        var RRTddlid = "Rtddl" + i;
-                        var RRTorderid = comp.ComponentOrder;
-                        string RRTHTMLstring = "";
-                        if (EditStr == "1" && IsAuthorized == true)
+                        string RRTHTMLstring = CreateDiv(rrt, "RichRichText" + i, BtnRichRichTxttxt);
+                        if (IsCase3)
                         {
-                            if (rrt == null)
-                            {
-                                RRTHTMLstring = "<div><div id=" + RRTdivid + " class='Main'>" + RichRichTextObj + ": ";
-                                rrt.Text = "";
-                            }
-                            else
-                                RRTHTMLstring = "<div><div id=" + RRTdivid + " class='Main'> " + RichRichTextObj + ":" + rrt.Text + "";
+                            int RRTorderid = comp.ComponentOrder;
 
-                            divTitle.Controls.Add(new LiteralControl(RRTHTMLstring));
-
-                            Button delrrtbtn = new Button();
-                            delrrtbtn.CssClass = "btncsdel";
-                            delrrtbtn.ID = "btnrrtDel" + i;
-                            //delrrtbtn.Text = "Remove";
-                            delrrtbtn.Text = RemoveObj;
-                            delrrtbtn.Click += (s, e) => { callingDel(RRTorderid); };
-                            divTitle.Controls.Add(delrrtbtn);
-
-
-                            Button editbtn = new Button();
-                            editbtn.CssClass = "btncsdel";
-                            editbtn.ID = "btnrrtEdit" + i;
-                            editbtn.Text = btnEditObj;
-                            editbtn.Click += (s, e) => { ImpGoogleTrans(comp, rrt); };
-                            divTitle.Controls.Add(editbtn);
-
-                            RRTHTMLstring = "</div><select class='ddlclass' id=" + RRTddlid + ">";
+                            CreateBtnDel(RRTorderid, "btncsdel", "btnrrtDel" + i + "");
+                            CreateBtnEdit(comp, rrt, "btncsdel", "btnrrtEdit" + i + "");
+                            RRTHTMLstring = "</div>" + LabAddNewcomTxt + "<select class='ddlclass' id='Rtddl" + i + "'>";
                             RRTHTMLstring = RRTHTMLstring + ddl;
                             divTitle.Controls.Add(new LiteralControl(RRTHTMLstring));
 
-                            Button Addrrtbutton = new Button();
-                            Addrrtbutton.CssClass = "btncs";
-                            Addrrtbutton.ID = "btnrrtAdd" + i;
-                            // Addrrtbutton.Text = "Add";
-                            Addrrtbutton.Text = AddObj;
-                            Addrrtbutton.Click += (s, e) => { callingAdd(RRTorderid); };
-                            divTitle.Controls.Add(Addrrtbutton);
+                            CreateBtnAdd(RRTorderid, "btncs", "btnrrtAdd" + i + "");
 
-                            string nrrt1 = "</select></div>";
-                            divTitle.Controls.Add(new LiteralControl(nrrt1));
+
+                            divTitle.Controls.Add(new LiteralControl(str));
                         }
-                        else if (EditStr == "2" && IsAuthorized == true)
+                        else if (IsCase2)
                         {
-                            if (rrt == null)
-                            {
-                                RRTHTMLstring = "<div><div id=" + RRTdivid + " class='Main'>" + RichRichTextObj + ": ";
-                                rrt.Text = "";
-                            }
-                            else
-                                RRTHTMLstring = "<div><div id=" + RRTdivid + " class='Main'> " + RichRichTextObj + ":" + rrt.Text + "";
-
-                            divTitle.Controls.Add(new LiteralControl(RRTHTMLstring));
-
                             if (rrt.CultureCodeStatus == ECultureCodeStatus.GoogleTranslated)
                             {
-                                Button btn = new Button();
-                                btn.CssClass = "googletrans";
-                                btn.ID = "btnrrtIGT" + i;
-                                btn.Text = ImpgoogleTransObj;
-                                btn.Click += (s, e) => { ImpGoogleTrans(comp, rrt); };
-                                divTitle.Controls.Add(btn);
-
-                                Button btn1 = new Button();
-                                btn1.CssClass = "googleTrasok";
-                                btn1.ID = "btnrrtGTText" + i;
-                                btn1.Text = GoogleTransTxtOkObj;
-                                btn1.Click += (s, e) => { GoogleTranText( rrt); };
-                                divTitle.Controls.Add(btn1);
-
-
+                                CreateBtnImproveHumGoogleTrans(comp, rrt, "googletrans", "btnrrtIGT" + i + "");
+                                CreateBtnGoogleT(rrt, "googleTrasok", "btnrrtGTText" + i + "");
                             }
                             if (rrt.CultureCodeStatus == ECultureCodeStatus.HumanTranslated)
                             {
-                                Button btn = new Button();
-                                btn.CssClass = "btnhumantrans";
-                                btn.ID = "btnrrtIHT" + i;
-                                btn.Text = ImproveHumTransTxtObj;
-                                btn.Click += (s, e) => { ImpGoogleTrans(comp, rrt); };
-                                divTitle.Controls.Add(btn);
+                                CreateBtnImproveHumGoogleTrans(comp, rrt, "btnhumantrans", "btnrrtIHT" + i + "");
 
                             }
 
-                            string nrrt1 = "</select></div>";
-                            divTitle.Controls.Add(new LiteralControl(nrrt1));
+                            divTitle.Controls.Add(new LiteralControl(str));
                         }
-                        else
-                        {
-                            if (rrt == null)
-                                RRTHTMLstring = "<div><div id=" + RRTdivid + " class='Main'>" + RichRichTextObj + ": </div></div>";
-                            else
-                                RRTHTMLstring = "<div><div id=" + RRTdivid + " class='Main'> " + RichRichTextObj + ":" + rrt.Text + "</div></div>";
-                            divTitle.Controls.Add(new LiteralControl(RRTHTMLstring));
 
-                        }
                         break;
 
                     case EComponentType.Latex:
                         PHLatex lat = bh.GetCurrentVersionLatexText(curlan, comp.PluggComponentId, ELatexItemType.PluggComponentLatex);
-
-                        //PHLatex lt = bh.GetCurrentVersionLatexText(curlan, comp.PluggComponentId, ELatexItemType.PluggComponentLatex);
-                        var ltdivid = "Latex" + i;
-                        var ltddlid = "ltddl" + i;
-                        var ltorderid = comp.ComponentOrder;
-                        string LatHTMLstring = "";
-                        if (EditStr == "1" && IsAuthorized == true)
+                        string LatHTMLstring = CreateDivLat(lat, "Latex" + i);
+                        if (IsCase3)
                         {
-                            if (lat == null)
-                            {
-                                LatHTMLstring = "<div><div id=" + ltdivid + " class='Main'>" + LatexObj + ":";
-                                lat.Text = "";
-                            }
-                            else
-                                LatHTMLstring = "<div><div id=" + ltdivid + " class='Main'> " + LatexObj + ":" + lat.Text +"";
+                            int ltorderid = comp.ComponentOrder;
 
-                            divTitle.Controls.Add(new LiteralControl(LatHTMLstring));
 
-                            Button delltbtn = new Button();
-                            delltbtn.CssClass = "btncsdel";
-                            delltbtn.ID = "btnltDel" + i;
-                            // delltbtn.Text = "Remove";
-                            delltbtn.Text = RemoveObj;
-                            delltbtn.Click += (s, e) => { callingDel(ltorderid); };
-                            divTitle.Controls.Add(delltbtn);
+
+                            CreateBtnDel(ltorderid, "btncsdel", "btnltDel" + i + "");
 
                             Button editbtn = new Button();
                             editbtn.CssClass = "btncsdel";
                             editbtn.ID = "btnltEdit" + i;
-                            editbtn.Text = btnEditObj;
+                            editbtn.Text = BtnEditTxt;
                             editbtn.Click += (s, e) => { CallLatFun(ltorderid, comp, lat, "1"); };
                             divTitle.Controls.Add(editbtn);
-                           
-                            LatHTMLstring = "</div><select class='ddlclass' id=" + ltddlid + ">";
+
+                            LatHTMLstring = "</div>" + LabAddNewcomTxt + "<select class='ddlclass' id='ltddl" + i + "'>";
                             LatHTMLstring = LatHTMLstring + ddl;
                             divTitle.Controls.Add(new LiteralControl(LatHTMLstring));
 
-                            Button Addltbutton = new Button();
-                            Addltbutton.CssClass = "btncs";
-                            Addltbutton.ID = "btnltAdd" + i;
-                            //Addltbutton.Text = "Add";
-                            Addltbutton.Text = AddObj;
-                            Addltbutton.Click += (s, e) => { callingAdd(ltorderid); };
-                            divTitle.Controls.Add(Addltbutton);
 
-                            string nlt = "</select></div>";
-                            divTitle.Controls.Add(new LiteralControl(nlt));
+                            CreateBtnAdd(ltorderid, "btncs", "btnlatexAdd" + i + "");
+                            divTitle.Controls.Add(new LiteralControl(str));
                         }
-                        else
-                        {
-                            if (lat == null)
-                                LatHTMLstring = "<div><div id=" + ltdivid + " class='Main'>" + LatexObj + ": </div></div>";
-                            else
-                                LatHTMLstring = "<div><div id=" + ltdivid + " class='Main'> " + LatexObj + ":" + lat.Text + "</div></div>";
-                            divTitle.Controls.Add(new LiteralControl(LatHTMLstring));
 
-                        }
                         break;
 
 
@@ -637,77 +357,164 @@ namespace Plugghest.Modules.DisplayPlugg
                         var ytdivid = "Youtube" + i;
                         var ytddlid = "ytddl" + i;
                         var ytorderid = comp.ComponentOrder;
-                        string yourHTMLstring3 = "";
-                        if (EditStr == "1" && IsAuthorized == true)
+                        string ytHTMLstring = "";
+                        if (IsCase3)
                         {
-                            RRTHTMLstring = "<div><div id=" + ytdivid + " class='Main'>" + YoutubeObj + ":" + ytYouTubecode + "";
+                            ytHTMLstring = "<div><div id=" + ytdivid + " class='Main'>" + BtnYoutubeTxt + ":" + ytYouTubecode + "";
 
-                            divTitle.Controls.Add(new LiteralControl(RRTHTMLstring));
+                            divTitle.Controls.Add(new LiteralControl(ytHTMLstring));
 
-                            Button delrrtbtn = new Button();
-                            delrrtbtn.CssClass = "btncsdel";
-                            delrrtbtn.ID = "btnytDel" + i;
-                            //delrrtbtn.Text = "Remove";
-                            delrrtbtn.Text = RemoveObj;
-                            delrrtbtn.Click += (s, e) => { callingDel(ytorderid); };
-                            divTitle.Controls.Add(delrrtbtn);
+                            CreateBtnDel(ytorderid, "btncsdel", "btnytDel" + i + "");
 
+                            string IdYt = "btnrrtEdit" + i;
 
-                            Button editbtn = new Button();
-                            editbtn.CssClass = "btncsdel";
-                            editbtn.ID = "btnrrtEdit" + i;
-                            editbtn.Text = btnEditObj;
-                            editbtn.Click += (s, e) => { YouTubeEdit(ytorderid, comp, yt, "1"); };
-                            divTitle.Controls.Add(editbtn);
+                            CreateBtnYTEdit(comp, yt, ytorderid, "btncsdel", "IdYt" + i + "");
 
-                            RRTHTMLstring = "</div>" + strYoutubeIframe + "</br><select class='ddlclass' id=" + ytddlid + ">";
-                            RRTHTMLstring = RRTHTMLstring + ddl;
-                            divTitle.Controls.Add(new LiteralControl(RRTHTMLstring));
+                            ytHTMLstring = "</div>" + strYoutubeIframe + "</br>" + LabAddNewcomTxt + "<select class='ddlclass' id=" + ytddlid + ">";
+                            ytHTMLstring = ytHTMLstring + ddl;
+                            divTitle.Controls.Add(new LiteralControl(ytHTMLstring));
 
-                            Button Addrrtbutton = new Button();
-                            Addrrtbutton.CssClass = "btncs";
-                            Addrrtbutton.ID = "btnytAdd" + i;
-                            // Addrrtbutton.Text = "Add";
-                            Addrrtbutton.Text = AddObj;
-                            Addrrtbutton.Click += (s, e) => { callingAdd(ytorderid); };
-                            divTitle.Controls.Add(Addrrtbutton);
+                            CreateBtnAdd(ytorderid, "btncs", "btnytAdd" + i + "");
 
-                            string nrrt1 = "</select></div>";
-                            divTitle.Controls.Add(new LiteralControl(nrrt1));
+                            divTitle.Controls.Add(new LiteralControl(str));
                         }
                         else
                         {
-                            yourHTMLstring3 = "<div><div id=" + ytdivid + " class='Main'>  " + YoutubeObj + ":" + ytYouTubecode + "</div>" + strYoutubeIframe + "</div>";
-                            divTitle.Controls.Add(new LiteralControl(yourHTMLstring3));
+                            ytHTMLstring = "<div><div id=" + ytdivid + " class='Main'>  " + BtnYoutubeTxt + ":" + ytYouTubecode + "</div>" + strYoutubeIframe + "</div>";
+                            divTitle.Controls.Add(new LiteralControl(ytHTMLstring));
                         }
-
                         break;
-
                 }
                 i++;
             }
         }
 
+        private void CreateBtnImproveHumGoogleTrans(PluggComponent comp, PHText lbl, string css, string id)
+        {
+            Button btnImpHumTras = new Button();
+            btnImpHumTras.CssClass = css;
+            btnImpHumTras.ID = id;
+            btnImpHumTras.Text = BtnImproveHumTransTxt;
+            btnImpHumTras.Click += (s, e) => { ImpGoogleTrans(comp, lbl); };
+            divTitle.Controls.Add(btnImpHumTras);
+        }
+
+        private void CreateBtnAdd(int orderid, string CssClass, string ID)
+        {
+            Button Addbutton = new Button();
+            Addbutton.CssClass = CssClass;
+            Addbutton.ID = ID;
+            Addbutton.Text = BtnAddtxt;
+            Addbutton.Click += (s, e) => { callingAddPlugg(orderid); };
+            divTitle.Controls.Add(Addbutton);
+        }
+        private void CreateBtnYTEdit(PluggComponent comp, YouTube yt, int ytorderid, string CssClass, string ID)
+        {
+            Button editbtn = new Button();
+            editbtn.CssClass = CssClass;
+            editbtn.ID = ID;
+            editbtn.Text = BtnEditTxt;
+            editbtn.Click += (s, e) => { YouTubeEdit(ytorderid, comp, yt); };
+            divTitle.Controls.Add(editbtn);
+        }
+
+        private string CreateDivLat(PHLatex lat, string ltdivid)
+        {
+            string LatHTMLstring = "";
+            if (lat == null)
+                LatHTMLstring = "<div><div id=" + ltdivid + " class='Main'>" + BtnLatexTxt + ":";
+            else
+                LatHTMLstring = "<div><div id=" + ltdivid + " class='Main'> " + BtnLatexTxt + ":" + lat.Text + "";
+            divTitle.Controls.Add(new LiteralControl(LatHTMLstring));
+            return LatHTMLstring;
+        }
+
+        private void CreateSubject(int i, int? subid)
+        {
+            if (subid != null)
+            {
+                BindTree(Convert.ToInt32(subid));             
+
+                if (IsCase3)
+                {
+                    string TreeHTMLstring = "<input type='button' id='btnTreeEdit" + i + "' class='btnTreeEdit'  value=" + BtnEditTxt + " />";
+                    divTree.Controls.Add(new LiteralControl(TreeHTMLstring));
+                }
+            }
+
+        }
+
+        private string CreateDiv(PHText Phtxt, string divid, string obj)
+        {
+            string HTMLstring = "";
+            if (Phtxt == null)
+                HTMLstring = "<div><div id=" + divid + " class='Main'" + obj + ": ";
+            else
+                HTMLstring = "<div><div id=" + divid + " class='Main'>" + obj + ":" + Phtxt.Text + "";
+            divTitle.Controls.Add(new LiteralControl(HTMLstring));
+            return HTMLstring;
+        }
+
+        private void CreateBtnGoogleT(PHText rrt, string CssClassGT, string IDGT)
+        {
+            Button btnGT = new Button();
+            btnGT.CssClass = CssClassGT;
+            btnGT.ID = IDGT;
+            btnGT.Text = BtnGoogleTransTxtOkTxt;
+            btnGT.Click += (s, e) => { GoogleTranText(rrt); };
+            divTitle.Controls.Add(btnGT);
+        }
+
+        private void CreateBtnEdit(PluggComponent comp, PHText lbl, string CssClass, string ID)
+        {
+            Button editbtn = new Button();
+            editbtn.CssClass = CssClass;
+            editbtn.ID = ID;
+            editbtn.Text = BtnEditTxt;
+            editbtn.Click += (s, e) => { ImpGoogleTrans(comp, lbl); };
+            divTitle.Controls.Add(editbtn);
+        }
+
+        private void CreateBtnDel(int orderid, string CssClass, string ID)
+        {
+            Button delbtn = new Button();
+            delbtn.CssClass = CssClass;
+            delbtn.ID = ID;
+            delbtn.Text = BtnRemoveTxt;
+            delbtn.Click += (s, e) => { callingDelPlugg(orderid); };
+            divTitle.Controls.Add(delbtn);
+        }
+
+        private static string CreateDropDown(string ddl)
+        {
+            foreach (string name in Enum.GetNames(typeof(EComponentType)))
+            {
+                if (name != "NotSet")
+                {
+                    string dl = "<option  value=" + name + " >" + name + "</option>";
+                    ddl = ddl + dl;
+                }
+            }
+            return ddl;
+        }
+
         private void CallLatFun(int ltorderid, PluggComponent comp, PHLatex lat, string p)
         {
-
             hdnlabel.Value = Convert.ToString(comp.PluggComponentId);
 
-            switch (comp.ComponentType)
+            if (comp.ComponentType == EComponentType.Latex)
             {
-                case EComponentType.Latex:
-                    pnlRRT.Visible = true;
-                    pnllabel.Visible = false;
-                    pnlletex.Visible = false;
-                    richtextbox.Visible = false;
-                    pnlLatex.Visible = false;
-                    pnlYoutube.Visible = false;
-                    richrichtext.Text = lat.Text;
-                    break;
+                pnlRRT.Visible = true;
+                pnllabel.Visible = false;
+                pnlletex.Visible = false;
+                richtextbox.Visible = false;
+                pnlLatex.Visible = false;
+                pnlYoutube.Visible = false;
+                richrichtext.Text = lat.Text;
             }
         }
 
-        private void YouTubeEdit(int ytorderid, PluggComponent comp, YouTube yt, string p)
+        private void YouTubeEdit(int ytorderid, PluggComponent comp, YouTube yt)
         {
             string ytcode = "";
             if (yt == null)
@@ -716,42 +523,30 @@ namespace Plugghest.Modules.DisplayPlugg
                 ytcode = yt.YouTubeCode;
             hdnlabel.Value = Convert.ToString(comp.PluggComponentId);
 
-            switch (comp.ComponentType)
+            if (comp.ComponentType == EComponentType.YouTube)
             {
-
-
-                case EComponentType.YouTube:
-
-                    pnlLatex.Visible = false;
-                    pnlYoutube.Visible = true;
-                    pnlRRT.Visible = false;
-                    pnllabel.Visible = false;
-                    pnlletex.Visible = false;
-                    richtextbox.Visible = false;
-                    txtYouTube.Text = ytcode;
-
-                    break;
-
+                pnlLatex.Visible = false;
+                pnlYoutube.Visible = true;
+                pnlRRT.Visible = false;
+                pnllabel.Visible = false;
+                pnlletex.Visible = false;
+                richtextbox.Visible = false;
+                txtYouTube.Text = ytcode;
             }
         }
 
-        //private void callingEdit(int orderid)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        private void GoogleTranText( PHText txt)
+        private void GoogleTranText(PHText txt)
         {
+            BaseHandler bh = new BaseHandler();
             txt.CultureCodeStatus = ECultureCodeStatus.HumanTranslated;
+            bh.SavePhText(txt);
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", new string[] { "edit=" + EditStr, "language=" + curlan }));
         }
-
 
         public void BindTree(int subid)
         {
             BaseHandler objBaseHandler = new BaseHandler();
-            //Subject  objSub = objsubhandler.GetSubject(subid);
-          
-       List<Subject> SubList = (List<Subject>)objBaseHandler.GetSubjectsAsFlatList(curlan);
+            List<Subject> SubList = (List<Subject>)objBaseHandler.GetSubjectsAsFlatList(curlan);
             string childName = SubList.Find(x => x.SubjectId == subid).label;
             int id = Convert.ToInt32(SubList.Find(x => x.SubjectId == subid).MotherId);
             while (id != 0)
@@ -760,7 +555,6 @@ namespace Plugghest.Modules.DisplayPlugg
                 childName = newSub.label + ">" + childName;
                 id = Convert.ToInt32(newSub.MotherId);
             }
-
             lbltree.Text = "Subject:" + childName;
 
             var tree = objBaseHandler.GetSubjectsAsTree(curlan);
@@ -770,167 +564,72 @@ namespace Plugghest.Modules.DisplayPlugg
         }
 
         private void ImpGoogleTrans(PluggComponent comp, PHText CulTxt)
-        {         
+        {
             hdnlabel.Value = Convert.ToString(comp.PluggComponentId);
 
             string text = CulTxt.Text;
             switch (comp.ComponentType)
             {
                 case EComponentType.Label:
-                    pnlRRT.Visible = false;
-                    pnllabel.Visible = true;
-                    pnlletex.Visible = false;
-                    richtextbox.Visible = false;
-                    pnlLatex.Visible = false;
-                    pnlYoutube.Visible = false;
+                    CompHide();
                     txtlabel.Text = text;
+                    pnllabel.Visible = true;
                     break;
 
                 case EComponentType.RichText:
-                    pnlRRT.Visible = false;
-                    pnllabel.Visible = false;
-                    pnlletex.Visible = false;
+                    CompHide();
                     richtextbox.Visible = true;
-                    pnlLatex.Visible = false;
-                    pnlYoutube.Visible = false;
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "xx", " $(document).ready(function () {$('#editor').html('" + text.Replace("\r\n", "<br />") + "')});", true);
-                    
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "", " $(document).ready(function () {$('#editor').html('" + text.Replace("\r\n", "<br />") + "')});", true);
                     break;
-                    
+
                 case EComponentType.RichRichText:
-
+                    CompHide();
                     pnlRRT.Visible = true;
-                    pnllabel.Visible = false;
-                    pnlletex.Visible = false;
-                    richtextbox.Visible = false;
-                    pnlLatex.Visible = false;
-                    pnlYoutube.Visible = false;
                     richrichtext.Text = text;
-
                     break;
-
-
             }
+        }
 
-
+        private void CompHide()
+        {
+            pnlRRT.Visible = false;
+            pnllabel.Visible = false;
+            pnlletex.Visible = false;
+            richtextbox.Visible = false;
+            pnlLatex.Visible = false;
+            pnlYoutube.Visible = false;
         }
 
 
-        private void callingDel(int orderid)
+        private void callingDelPlugg(int orderid)
         {
-            int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);          
             BaseHandler plugghandler = new BaseHandler();
-            PluggContainer p = new PluggContainer(curlan, pluggid);
             plugghandler.DeleteComponent(p, orderid);
-            PageLoadFun();
-            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=1"));
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", new string[] { "edit=1", "language=" + curlan }));
 
         }
 
-        private void callingAdd(int orderid)
+        private void callingAddPlugg(int orderid)
         {
-
             var id = hdn.Value;
-            int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
-            string curlan = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
+
             BaseHandler plugghandler = new BaseHandler();
-            PluggContainer p = new PluggContainer(curlan, pluggid);
             PluggComponent pc = new PluggComponent();
             pc.ComponentOrder = orderid + 1;
-            //pc.ComponentType = EComponentType.RichRichText;
             pc.ComponentType = (EComponentType)Enum.Parse(typeof(EComponentType), id);
             plugghandler.AddComponent(p, pc);
-            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=1"));
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", new string[] { "edit=1", "language=" + curlan }));
 
 
-        }
-
-        protected void btnSaveTitle_Click(object sender, EventArgs e)
-        {
-
-            //BaseHandler plugghandler = new BaseHandler();
-            //int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
-
-            //PluggContainer p = new PluggContainer();
-            //p.ThePlugg = plugghandler.GetPlugg(pluggid);
-            //string curlan = (Page as PageBase).PageCulture.Name;
-            //p.CultureCode = curlan;
-            //p.LoadTitle();
-            //if (p.TheTitle.Text != txtSaveTitle.Text)
-            //{
-            //    p.TheTitle.Text = txtSaveTitle.Text;
-            //    plugghandler.SavePhText(p.TheTitle);
-            //}
-            //SetPageText(curlan, p);
-
-            //btnSaveTitle.Style.Add("display", "none");
-            //txtSaveTitle.Style.Add("display", "none");
-        }
-
-        protected void btnSaveLatext_Click(object sender, EventArgs e)
-        {
-            //BaseHandler plugghandler = new BaseHandler();
-            //int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
-
-            //PluggContainer p = new PluggContainer();
-            //p.ThePlugg = plugghandler.GetPlugg(pluggid);
-            //string curlan = (Page as PageBase).PageCulture.Name;
-            //p.CultureCode = curlan;
-            //p.LoadLatexText();
-            //if (p.TheLatex.Text != txtLatextText.Text)
-            //{
-            //    p.TheTitle.Text = txtLatextText.Text;
-            //    plugghandler.SaveLatexText(p.TheLatex);
-            //}
-
-            //SetPageText(curlan, p);
-            //btnSaveLatext.Style.Add("display", "none");
-            //txtLatextText.Style.Add("display", "none");
-        }
-
-        protected void btnSaveHtmltext_Click(object sender, EventArgs e)
-        {
-            //BaseHandler plugghandler = new BaseHandler();
-            //int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
-
-            //PluggContainer p = new PluggContainer();
-            //p.ThePlugg = plugghandler.GetPlugg(pluggid);
-            //string curlan = (Page as PageBase).PageCulture.Name;
-            //p.CultureCode = curlan;
-            //p.LoadHtmlText();
-            //if (p.TheHtmlText.Text != txtHtmlText.Text)
-            //{
-            //    p.TheHtmlText.Text = txtHtmlText.Text;
-            //    plugghandler.SavePhText(p.TheHtmlText);
-            //}
-
-            //SetPageText(curlan, p);
-            //btnSaveHtmltext.Style.Add("display", "none");
         }
 
         protected void btnEditPlugg_Click(object sender, EventArgs e)
         {
-            //Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=true"));
-            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=2"));
-
-        }
-
-        protected void btnExitEditMode_Click(object sender, EventArgs e)
-        {
-             Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "" ,"edit=1"));
-
-            
-            string s=DotNetNuke.Common.Globals.NavigateURL(TabId, "" ,"edit=1");
-           // s = DotNetNuke.Common.Globals.NavigateURL(this.TabId) + "?mykey=myvalue";
-           // string aurl = DotNetNuke.Entities.Tabs.TabController.CurrentPage.FullUrl; 
-           //// string a = " a sdsad sad";
-           // //char[] var = s.Split("language");
-           // string[] words = s.Split('1');
-           // Response.Redirect("http://dnndev.me/es-es/10/tabid/268/edit/1");
             btncanceledit.Visible = true;
-            btnSaveSubjects.Visible = false;
-        }
+            btnEditPlug.Visible = false;
 
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", new string[] { "edit=1", "language=" + curlan }));
+        }
         public ModuleActionCollection ModuleActions
         {
             get
@@ -948,108 +647,69 @@ namespace Plugghest.Modules.DisplayPlugg
 
         protected void btncanceledit_Click(object sender, EventArgs e)
         {
-            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL());
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", new string[] { "test=2", "language=" + curlan }));
         }
 
         protected void btnLabelSave_Click(object sender, EventArgs e)
         {
+            ETextItemType ItemType = ETextItemType.PluggComponentLabel;
+            string txt = txtlabel.Text;
+            UpdatePHtext(ItemType, txt);
 
+        }
+
+        protected void btnSaveRt_Click(object sender, EventArgs e)
+        {
+            ETextItemType ItemType = ETextItemType.PluggComponentRichText;
+            string txt = hdnrichtext.Value;
+            UpdatePHtext(ItemType, txt);
+        }
+
+
+        private void UpdatePHtext(ETextItemType ItemType, string txt)
+        {
             var id = hdnlabel.Value;
             var itemid = Convert.ToInt32(id);
 
-
-            int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
-            PluggContainer p = new PluggContainer(curlan, pluggid);
             List<PluggComponent> comps = p.GetComponentList();
             PluggComponent cToAdd = comps.Find(x => x.PluggComponentId == Convert.ToInt32(id));
             BaseHandler bh = new BaseHandler();
 
             var comtype = cToAdd.ComponentType;
 
-            PHText lbl = bh.GetCurrentVersionText(curlan, itemid, ETextItemType.PluggComponentLabel);
+            PHText phText = bh.GetCurrentVersionText(curlan, itemid, ItemType);
 
-            lbl.Text = txtlabel.Text;
-            bh.SavePhText(lbl);
+            phText.Text = txt;
+
             if (EditStr == "2")
-            {
-                lbl.CultureCodeStatus = ECultureCodeStatus.HumanTranslated;
-                Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=2"));
-            }
-            if (EditStr == "1")
-                Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=1"));
+                phText.CultureCodeStatus = ECultureCodeStatus.HumanTranslated;
 
+            bh.SavePhText(phText);
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", new string[] { "edit=" + EditStr, "language=" + curlan }));
         }
-
         protected void Cancel_Click(object sender, EventArgs e)
         {
-            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=" + EditStr + ""));
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", new string[] { "edit=" + EditStr, "language=" + curlan }));
         }
 
         protected void btntransplug_Click(object sender, EventArgs e)
         {
             btntransplug.Visible = false;
             btncanceltrans.Visible = true;
-            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=2"));
-
-            //Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=2"));
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", new string[] { "edit=2", "language=" + curlan }));
 
         }
 
-        protected void btnSaveRt_Click(object sender, EventArgs e)
-        {
 
-            var id = hdnlabel.Value;
-            var itemid = Convert.ToInt32(id);
-
-            int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
-            PluggContainer p = new PluggContainer(curlan, pluggid);
-            List<PluggComponent> comps = p.GetComponentList();
-            PluggComponent cToAdd = comps.Find(x => x.PluggComponentId == Convert.ToInt32(id));
-            BaseHandler bh = new BaseHandler();
-
-            var comtype = cToAdd.ComponentType;
-
-            PHText RichText = bh.GetCurrentVersionText(curlan, itemid, ETextItemType.PluggComponentRichText);
-
-            RichText.Text = hdnrichtext.Value;
-
-            bh.SavePhText(RichText);
-            if (EditStr == "2")
-            {
-                RichText.CultureCodeStatus = ECultureCodeStatus.HumanTranslated;
-                Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=2"));
-            }
-            if (EditStr == "1")
-                Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=1"));
-
-
-        }
 
         protected void btnlocal_Click(object sender, EventArgs e)
         {
-
-            int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
-            string curlan = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
-            BaseHandler plugghandler = new BaseHandler();
-            PluggContainer p = new PluggContainer(curlan, pluggid);
-            IsAuthorized = (p.ThePlugg.WhoCanEdit == EWhoCanEdit.Anyone || p.ThePlugg.CreatedByUserId == this.UserId || UserInfo.IsInRole("Administator"));
-
-            p.CultureCode = p.ThePlugg.CreatedInCultureCode;
-
-            PluggContainer p1 = new PluggContainer(p.CultureCode, pluggid);
-
-            curlan = p.CultureCode;
-            CallLocalization(curlan);
-
-            SetPageText(p.CultureCode, p1);
-            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL());
-
-
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", new string[] { "test=2", "language=" + p.ThePlugg.CreatedInCultureCode }));
         }
 
         protected void btncanceltrans_Click(object sender, EventArgs e)
         {
-            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL());
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", new string[] { "test=2", "language=" + curlan }));
         }
 
         protected void btnSaveRRt_Click(object sender, EventArgs e)
@@ -1057,21 +717,20 @@ namespace Plugghest.Modules.DisplayPlugg
             var id = hdnlabel.Value;
             var itemid = Convert.ToInt32(id);
 
-            int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
-            PluggContainer p = new PluggContainer(curlan, pluggid);
             List<PluggComponent> comps = p.GetComponentList();
             PluggComponent cToAdd = comps.Find(x => x.PluggComponentId == Convert.ToInt32(id));
             BaseHandler bh = new BaseHandler();
 
             var comtype = cToAdd.ComponentType;
-            PHText RichRichText = null;
+
             switch (cToAdd.ComponentType)
             {
-
-
                 case EComponentType.RichRichText:
-                    RichRichText = bh.GetCurrentVersionText(curlan, itemid, ETextItemType.PluggComponentRichRichText);
+                    PHText RichRichText = bh.GetCurrentVersionText(curlan, itemid, ETextItemType.PluggComponentRichRichText);
                     RichRichText.Text = richrichtext.Text;
+                    if (EditStr == "2")
+                        RichRichText.CultureCodeStatus = ECultureCodeStatus.HumanTranslated;
+
                     bh.SavePhText(RichRichText);
                     break;
 
@@ -1084,13 +743,7 @@ namespace Plugghest.Modules.DisplayPlugg
                     break;
             }
 
-            if (EditStr == "2")
-            {
-                RichRichText.CultureCodeStatus = ECultureCodeStatus.HumanTranslated;
-                Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=2"));
-            }
-            if (EditStr == "1")
-                Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=1"));
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", new string[] { "edit=" + EditStr, "language=" + curlan }));
 
 
         }
@@ -1100,8 +753,6 @@ namespace Plugghest.Modules.DisplayPlugg
             var id = hdnlabel.Value;
             var itemid = Convert.ToInt32(id);
 
-            int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
-            PluggContainer p = new PluggContainer(curlan, pluggid);
             List<PluggComponent> comps = p.GetComponentList();
 
             BaseHandler bh = new BaseHandler();
@@ -1129,7 +780,7 @@ namespace Plugghest.Modules.DisplayPlugg
 
             bh.SaveYouTube(yt);
 
-            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=1"));
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", new string[] { "edit=1", "language=" + curlan }));
         }
 
         protected void btnLatexSave_Click(object sender, EventArgs e)
@@ -1138,8 +789,6 @@ namespace Plugghest.Modules.DisplayPlugg
             var id = hdnlabel.Value;
             var itemid = Convert.ToInt32(id);
 
-            int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
-            PluggContainer p = new PluggContainer(curlan, pluggid);
             List<PluggComponent> comps = p.GetComponentList();
 
             BaseHandler bh = new BaseHandler();
@@ -1151,7 +800,7 @@ namespace Plugghest.Modules.DisplayPlugg
             lt.HtmlText = richrichtext.Text;
             objToadd.Add(lt);
 
-            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=1"));
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", new string[] { "edit=1", "language=" + curlan }));
 
         }
 
@@ -1161,17 +810,12 @@ namespace Plugghest.Modules.DisplayPlugg
             if (!string.IsNullOrEmpty(hdnNodeSubjectId.Value))
             {
                 int id = Convert.ToInt32(hdnNodeSubjectId.Value);
-                int pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
-                string curlan = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
+
                 BaseHandler plugghandler = new BaseHandler();
-                PluggContainer p = new PluggContainer(curlan, pluggid);
                 p.ThePlugg.SubjectId = id;
                 p.LoadTitle();
                 List<object> blankList = new List<object>();
-                // PluggComponent cToAdd = comps.Find(x => x.PluggComponentId == Convert.ToInt32(id));
                 BaseHandler bh = new BaseHandler();
-
-                ///after updating record(subject id), it shwoing exception "Cannot create Page. Page with this PageName already exists" in AddPluggPage function.
                 try
                 {
                     bh.SavePlugg(p, blankList);
@@ -1180,14 +824,9 @@ namespace Plugghest.Modules.DisplayPlugg
                 {
                 }
             }
-            else
-            {
 
-            }
-            if (EditStr == "2")
-                Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=2"));
-            if (EditStr == "1")
-                Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", "edit=1"));
+            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", new string[] { "edit=" + EditStr, "language=" + curlan }));
+
         }
     }
 }
