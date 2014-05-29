@@ -611,7 +611,7 @@ namespace Plugghest.Modules.DisplayPlugg
 
         private void callingAddPlugg(int orderid)
         {
-            var id = hdn.Value;
+            var id = hdnDDLtxt.Value;
 
             BaseHandler plugghandler = new BaseHandler();
             PluggComponent pc = new PluggComponent();

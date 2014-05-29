@@ -2,46 +2,31 @@
 <%@ Register TagPrefix="dnn" TagName="TextEditor" Src="~/controls/TextEditor.ascx" %>
 
 
-<script>
-    function getRichtext() {
-        $('#' + '<%=hdnrichtext.ClientID%>').val($('#editor').html());
-    }
-</script>
-
-
-
-<%--      <link href="/DesktopModules/CreatePlugg2/Script/external/prettify.css" rel="stylesheet" />
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
-		<link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
-   
-          <script src="/DesktopModules/CreatePlugg2/Script/external/jquery.hotkeys.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-		<link href="/DesktopModules/CreatePlugg2/Script/index.css" rel="stylesheet" />
-     <script src="/DesktopModules/CreatePlugg2/Script/bootstrap-wysiwyg.js"></script>--%><%--    <link href="http://dnndev.me/Script/js/jqtree.css" rel="stylesheet" />
-    <script src="http://dnndev.me/Script/js/tree.jquery.js"></script>--%>
+<%----------------------------------------tree -start-----------------------------------------%>
 
  <link href="/DesktopModules/DisplayPlugg/Script/js/jqtree.css" rel="stylesheet" />
     <script src="/DesktopModules/DisplayPlugg/Script/js/tree.jquery.js"></script>
-<%--<%----------------------------------------tree -start-----------------------------------------%>
-<link href="/DesktopModules/CreatePlugg2/Script/js/jqtree.css" rel="stylesheet" />
-    <script src="/DesktopModules/CreatePlugg2/Script/js/tree.jquery.js"></script>
-
-<script src="/DesktopModules/EditSubjects/js/tree.jquery.js"></script>
-<link href="/DesktopModules/EditSubjects/js/jqtree.css" rel="stylesheet" />
-<link href="/DesktopModules/EditSubjects/module.css" rel="stylesheet" />
-
-
   <script type="text/javascript">
 
       $(document).ready(function () {
-         $("#" + '<%=pnlTree.ClientID%>').hide();
+          $("#" + '<%=pnlTree.ClientID%>').hide();
+
+         
+          $('.btncs').bind('click', function () {
+              var clickedID = this.id;
+              var string = "#" + clickedID;
+              var id = $($(string).prev()).attr("id");
+              var newid = $("#" + id).val();
+              $('#<%=hdnDDLtxt.ClientID%>').val(newid);
+          });
+          function getRichtext() {
+              $('#' + '<%=hdnrichtext.ClientID%>').val($('#editor').html());
+            }
           $(".btnTreeEdit").click(function () {
               $("#" + '<%=pnlTree.ClientID%>').show();
               var $tree = $('#tree2');
               $('#tree2').tree({
-                  data: eval($("#" + '<%=hdnTreeData.ClientID%>').attr('value')),
-                  dragAndDrop: true,
+                  data: eval($("#" + '<%=hdnTreeData.ClientID%>').attr('value')),                 
                   selectable: true,
                   autoEscape: false,
                   autoOpen: true,
@@ -54,22 +39,13 @@
                   var node = event.node;
                   // alert(node.Mother.getjson)               
                   $("#<%=hdnNodeSubjectId.ClientID%>").val(node.SubjectId);
-              }
-              else {
-                  // event.node is null
-                  // a node was deselected
-                  // e.previous_node contains the deselected node
-              }
+              }             
           }
           );
 
           });
 
       });
-
-
-
-
     </script>
 
     <style>
@@ -116,24 +92,17 @@
     </style>
 
 <%----------------------------------------tree -start-----------------------------------------%>
-<script src="Script/js/jquery-1.10.2.js"></script>
-<script src="Script/js/jquery-ui-1.10.4.custom.js"></script>
-<link href="http://dnndev.me/Script/external/prettify.css" rel="stylesheet" />
+
+<script src="/DesktopModules/DisplayPlugg/Script/js/jquery-ui-1.10.4.custom.js"></script>
+<link href="/DesktopModules/DisplayPlugg/Script/external/prettify.css" rel="stylesheet" />
 <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
 <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
 <link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
 
-<script src="http://dnndev.me/Script/external/jquery.hotkeys.js"></script>
+<script src="/DesktopModules/DisplayPlugg/Script/external/jquery.hotkeys.js"></script>
 <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
-<link href="http://dnndev.me/Script/index.css" rel="stylesheet" />
-<script src="http://dnndev.me/Script/bootstrap-wysiwyg.js"></script>
-
-
-
-
-
-
-
+<link href="/DesktopModules/DisplayPlugg/Script/index.css" rel="stylesheet" />
+<script src="/DesktopModules/DisplayPlugg/Script/bootstrap-wysiwyg.js"></script>
 
 <script>
     $(function () {
@@ -201,39 +170,6 @@
 
 
 
-
-
-
-
-
-<script>
-    $(document).ready(function () {
-        //$('.btncs').click(function () {
-        //    alert("abc");
-        //    //$('#element_to_pop_up').bPopup({
-        //    //    closeClass: 'b-close'
-        //    //});
-        //});
-        $('.btncs').live('click', function () {
-            var clickedID = this.id;
-            var string = "#" + clickedID;
-            var id = $($(string).prev()).attr("id");
-            var newid = $("#" + id).val();
-
-            $('#<%=hdn.ClientID%>').val(newid);
-
-
-            //hdn
-        });
-
-
-
-        function SomeMethod(id) {
-            alert(id);
-        }
-    });
-    
-</script>
  <script type="text/javascript">
      function getYt() {         
        
@@ -259,17 +195,13 @@
     </script>
 
 <%-- you tube --%>
-<script src="Script/js/jquery-1.10.2.js"></script>
-<script src="Script/js/jquery-ui-1.10.4.custom.js"></script>
+
+
 <style>
     body > #feedHeaderContainer
     {
         display: none;
     }
-</style>
-
-
-<style>
     .btneditplug
     {
         float: right;
@@ -307,63 +239,13 @@
     }
 
 
-    /*.element_to_pop_up, #popup2, .bMulti {
-        left: 433px;
-position: absolute;
-top: 100px;
-z-index: 9999;
-opacity: 1;
-display: block;
-background-color: #fff;
-border-radius: 10px 10px 10px 10px;
-box-shadow: 0 0 25px 5px #999;
-color: #111;
-display: none;
-min-width: 450px;
-padding: 25px;
-
-}
-
-    .button.b-close, .button.bClose {
-
-border-radius: 7px 7px 7px 7px;
-box-shadow: none;
-font: bold 131% sans-serif;
-padding: 0 6px 2px;
-position: absolute;
-right: -7px;
-top: -7px;
-cursor:pointer;
-}*/
+    
 </style>
 
 
 <!-- Element to pop up -->
 
-<%-- <div id="element_to_pop_up" class="element_to_pop_up">
-                <span class="button b-close"><span>X</span></span>
-                Content of popup</div>
 
-
-<div id="DivRRtxt" class="element_to_pop_up">
-                <span class="button b-close"><span>X</span></span>
-
-
-                Rich Rich Text</div>
-<div id="DivRtxt" class="element_to_pop_up">
-                <span class="button b-close"><span>X</span></span>
-
-                Rich text</div>
-<div id="Divlbl" class="element_to_pop_up">
-                <span class="button b-close"><span>X</span></span>
-               Label</div>
-<div id="DivLtex" class="element_to_pop_up">
-                <span class="button b-close"><span>X</span></span>
-               Latex</div>
-
-<div id="DivUtube" class="element_to_pop_up">
-                <span class="button b-close"><span>X</span></span>
-                You tube</div>--%>
 
 
 <asp:HiddenField ID="hdnTreeData" runat="server" Value="" />
@@ -512,7 +394,9 @@ cursor:pointer;
 </asp:Panel>
 <%--   <asp:Button ID="btnEditPlugg" runat="server" Text="Edit Plugg"  Visible="False" OnClick="btnEditPlugg_Click" />
     <asp:Button ID="btnExitEditMode" runat="server" Text="Exit Edit Mode"  Visible="False" OnClick="btnExitEditMode_Click" />--%>
-<asp:HiddenField ID="hdn" Value="aa" runat="server" />
+
+
+<asp:HiddenField ID="hdnDDLtxt" runat="server" />
 <br />
 <br />
 
@@ -541,82 +425,5 @@ cursor:pointer;
                                     <asp:HiddenField ID="ytYouTubeCreatedOn" runat="server" />
                                           <asp:HiddenField ID="ytYouTubeComment" runat="server" />
 
-<%--<script type="text/javascript">
-    $(document).ready(function () {
 
-        $("#" + '<%=btnSaveTitle.ClientID%>').hide();
-        $("#" + '<%=txtSaveTitle.ClientID%>').hide();
-
-        $("#" + '<%=btnSaveLatext.ClientID%>').hide();
-        $("#" + '<%=txtLatextText.ClientID%>').hide();
-
-        $("#" + '<%=btnSaveHtmltext.ClientID%>').hide();
-        $('.dnnForm.dnnTextEditor.dnnClear').hide();
-
-    });
-    function InitBlock() {
-
-        $("#" + '<%=btnSaveTitle.ClientID%>').hide();
-        $("#" + '<%=txtSaveTitle.ClientID%>').hide();
-
-        $("#" + '<%=btnSaveLatext.ClientID%>').hide();
-        $("#" + '<%=txtLatextText.ClientID%>').hide();
-
-        $("#" + '<%=btnSaveHtmltext.ClientID%>').hide();
-        $('.dnnForm.dnnTextEditor.dnnClear').hide();
-
-    };
-    function EditTitleFun() {
-        $("#" + '<%=lblTitle.ClientID%>').hide();
-        $("#" + '<%=btnEditTitle.ClientID%>').hide();
-        $("#" + '<%=btnSaveTitle.ClientID%>').show();
-        $("#" + '<%=txtSaveTitle.ClientID%>').show();
-        $("#" + '<%=btnCancelTitle.ClientID%>').show();
-        $("#" + '<%=txtSaveTitle.ClientID%>').val($("#" + '<%=lblTitle.ClientID%>').html());
-    };
-    function EditLatextTextFun() {
-        $("#" + '<%=lblLatexText.ClientID%>').hide();
-        $("#" + '<%=btnEditLatextText.ClientID%>').hide();
-        $("#" + '<%=btnSaveLatext.ClientID%>').show();
-        $("#" + '<%=btnCancelLatext.ClientID%>').show();
-        $("#" + '<%=txtLatextText.ClientID%>').show();
-        $("#" + '<%=txtLatextText.ClientID%>').val($("#" + '<%=hdLatextText.ClientID%>').val());
-    };
-
-    function EditHtmlTextFun() {
-        $("#" + '<%=lblHtmlText.ClientID%>').hide();
-        $("#" + '<%=btnEditHtmlText.ClientID%>').hide();
-        $("#" + '<%=btnSaveHtmltext.ClientID%>').show();
-        $("#" + '<%=btnCancelHtmlText.ClientID%>').show();
-        $('.dnnForm.dnnTextEditor.dnnClear').show();
-        $($(window.dnn_ctr618_View_txtHtmlText_txtHtmlText_contentIframe).contents().find('body')).html($("#" + '<%=lblHtmlText.ClientID%>').html())
-    };
-
-    function HideRichTextEditor() {
-        $('.dnnForm.dnnTextEditor.dnnClear').hide();
-    }
-
-    function CancelHtmlText() {
-        $('.dnnForm.dnnTextEditor.dnnClear').hide();
-        $("#" + '<%=btnEditHtmlText.ClientID%>').show();
-        $("#" + '<%=lblHtmlText.ClientID%>').show();
-        $("#" + '<%=btnCancelHtmlText.ClientID%>').hide();
-        $("#" + '<%=btnSaveHtmltext.ClientID%>').hide();
-    }
-    function CancelLatexText() {
-        $("#" + '<%=txtLatextText.ClientID%>').hide();
-        $("#" + '<%=btnEditLatextText.ClientID%>').show();
-        $("#" + '<%=lblLatexText.ClientID%>').show();
-        $("#" + '<%=btnCancelLatext.ClientID%>').hide();
-        $("#" + '<%=btnSaveLatext.ClientID%>').hide();
-    }
-    function CancelTitle() {
-        $("#" + '<%=txtSaveTitle.ClientID%>').hide();
-        $("#" + '<%=btnEditTitle.ClientID%>').show();
-        $("#" + '<%=lblTitle.ClientID%>').show();
-        $("#" + '<%=btnCancelTitle.ClientID%>').hide();
-        $("#" + '<%=btnSaveTitle.ClientID%>').hide();
-     }
-    
-</script>--%>
 

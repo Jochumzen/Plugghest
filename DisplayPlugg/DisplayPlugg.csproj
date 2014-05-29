@@ -107,7 +107,11 @@
     <Content Include="License.txt" />
     <Content Include="module.css" />
     <Content Include="ReleaseNotes.txt" />
+    <Content Include="Script\bootstrap-wysiwyg.js" />
     <Content Include="Script\bPopup.js" />
+    <Content Include="Script\external\jquery.hotkeys.js" />
+    <Content Include="Script\external\prettify.css" />
+    <Content Include="Script\index.css" />
     <Content Include="Script\js\jqtree.css" />
     <Content Include="Script\js\jquery-1.10.2.js" />
     <Content Include="Script\js\jquery-ui-1.10.4.custom.js" />
