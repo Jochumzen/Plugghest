@@ -124,7 +124,7 @@
     <value>Avbryt redigering</value>
   </data>
   <data name="btncanceltrans.Text" xml:space="preserve">
-    <value>Avsluta översättning”</value>
+    <value>Avsluta översättning</value>
   </data>
   <data name="btnlocal.Text" xml:space="preserve">
     <value>Visa Pluggen i det språk den skapade i</value>
@@ -173,5 +173,8 @@
   </data>
   <data name="AddNewCom.Text" xml:space="preserve">
     <value>Lägg till ny komponent</value>
+  </data>
+  <data name="lblNoComponent.Text" xml:space="preserve">
+    <value>This plug has no content.</value>
   </data>
 </root>

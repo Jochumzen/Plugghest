@@ -174,4 +174,7 @@
   <data name="AddNewCom.Text" xml:space="preserve">
     <value>Añadir nuevo componente</value>
   </data>
+  <data name="lblNoComponent.Text" xml:space="preserve">
+    <value>This plug has no content.</value>
+  </data>
 </root>

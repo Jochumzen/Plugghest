@@ -55,8 +55,8 @@ namespace Plugghest.Modules.DisplayPlugg
     public partial class View : DisplayPluggModuleBase, IActionable
     {
         string EditStr = ""; string curlan = ""; int pluggid;
-        bool IsAuthorized = false, IsCase3, IsCase2;
-        string BtnAddtxt, LabAddNewcomTxt, btnEditPlugTxt, BtnYoutubeTxt, BtnEditTxt, BtncanceleditTet, BtncanceltransTxt, BtnlocalTxt, BtntransplugTxt, BtnCancelTxt, BtnGoogleTransTxtOkTxt, BtnImpgoogleTransTxt, BtnImproveHumTransTxt, BtnLabelTxt, BtnLatexTxt, BtnRemoveTxt, BtnRichRichTxttxt, BtnRichTextTxt, BtnSaveTxt, BtnYouTubeTxt;
+        bool IsAuthorized = false, IsCase3, IsCase2; bool chkComTxt = false;
+        string BtnAddtxt, LabAddNewcomTxt, LabNoComtxt, btnEditPlugTxt, BtnYoutubeTxt, BtnEditTxt, BtncanceleditTet, BtncanceltransTxt, BtnlocalTxt, BtntransplugTxt, BtnCancelTxt, BtnGoogleTransTxtOkTxt, BtnImpgoogleTransTxt, BtnImproveHumTransTxt, BtnLabelTxt, BtnLatexTxt, BtnRemoveTxt, BtnRichRichTxttxt, BtnRichTextTxt, BtnSaveTxt, BtnYouTubeTxt;
         PluggContainer p;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -64,17 +64,20 @@ namespace Plugghest.Modules.DisplayPlugg
             try
             {
                 curlan = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
-
                 pluggid = Convert.ToInt32(((DotNetNuke.Framework.CDefault)this.Page).Title);
                 p = new PluggContainer(curlan, pluggid);
                 CallLocalization();
                 EditStr = Page.Request.QueryString["edit"];
                 IsAuthorized = (p.ThePlugg.WhoCanEdit == EWhoCanEdit.Anyone || p.ThePlugg.CreatedByUserId == this.UserId || UserInfo.IsInRole("Administator"));
+                if (this.UserId==-1)
+                {
+                    IsAuthorized = false;
+                }
                 IsCase3 = (EditStr == "1" && IsAuthorized);
                 IsCase2 = (EditStr == "2" && IsAuthorized);
-               
-                    PageLoadFun();
-             
+
+                PageLoadFun();
+
 
             }
             catch (Exception exc) //Module failed to load
@@ -116,6 +119,7 @@ namespace Plugghest.Modules.DisplayPlugg
         {
             btnEditPlugTxt = Localization.GetString("btnEditPlug", this.LocalResourceFile + ".ascx." + curlan + ".resx");
 
+            LabNoComtxt = Localization.GetString("lblNoComponent", this.LocalResourceFile + ".ascx." + curlan + ".resx");
             BtncanceleditTet = Localization.GetString("btncanceledit", this.LocalResourceFile + ".ascx." + curlan + ".resx");
             BtnAddtxt = Localization.GetString("Add", this.LocalResourceFile + ".ascx." + curlan + ".resx");
             BtncanceltransTxt = Localization.GetString("btncanceltrans", this.LocalResourceFile + ".ascx." + curlan + ".resx");
@@ -177,7 +181,7 @@ namespace Plugghest.Modules.DisplayPlugg
             {
                 btncanceltrans.Visible = true;
                 btntransplug.Visible = false;
-            }     
+            }
             DisPlayPluggComp();
         }
 
@@ -187,14 +191,20 @@ namespace Plugghest.Modules.DisplayPlugg
         {
             List<PluggComponent> comps = p.GetComponentList();
             BaseHandler bh = new BaseHandler();
-            string ddl = ""; string str = "</select></div>"; int i = 0;
-
+            string ddl = ""; string str = "</select></div><hr />"; int i = 0, IntCompOrder = 1;
+            if (comps.Count == 0)
+            {
+                ShowNoComMsg();
+            }
 
             ddl = CreateDropDown(ddl);
 
             Label dynamicLabel = new Label();
 
-
+            if (IsCase3)
+            {
+                chkComTxt = true;
+            }
             int? subid = p.ThePlugg.SubjectId;
             CreateSubject(i, subid);
 
@@ -205,23 +215,29 @@ namespace Plugghest.Modules.DisplayPlugg
                     case EComponentType.Label:
 
                         PHText lbl = bh.GetCurrentVersionText(curlan, comp.PluggComponentId, ETextItemType.PluggComponentLabel);
-                        string LabHTMLstring = CreateDiv(lbl, "Label" + i, BtnLabelTxt);
                         //This condition is used for editing plugg
+
                         if (IsCase3)
                         {
+                            string LabHTMLstring = CreateDiv(lbl, "Label" + i, "Component-" + IntCompOrder + ":" + BtnLabelTxt);
                             int orderid = comp.ComponentOrder;
                             CreateBtnDel(orderid, "btncsdel", "btnlbDel" + i + "");
                             CreateBtnEdit(comp, lbl, "btncsdel", "btnlbEdit" + i + "");
 
-                            LabHTMLstring = "</div>" + LabAddNewcomTxt + "<select class='ddlclass' id='ddl" + i + "'>";
+                            LabHTMLstring = "<hr /></div>" + LabAddNewcomTxt + " between component " + IntCompOrder + " and " + (IntCompOrder + 1).ToString() + " <select class='ddlclass' id='ddl" + i + "'>";
                             LabHTMLstring = LabHTMLstring + ddl;
                             divTitle.Controls.Add(new LiteralControl(LabHTMLstring));
                             CreateBtnAdd(orderid, "btncs", "btnlbAdd" + i + "");
                             divTitle.Controls.Add(new LiteralControl(str));
                         }
+                        else if (lbl.Text == "(No text)")
+                        {
+                            break;
+                        }
                         //This condition is used for Translation The Plugg Text(same for all cases)
                         else if (IsCase2)
                         {
+                            string LabHTMLstring = CreateDiv(lbl, "Label" + i, "Component-" + IntCompOrder + ":" + BtnLabelTxt);
                             if (lbl.CultureCodeStatus == ECultureCodeStatus.GoogleTranslated)
                             {
                                 CreateBtnImproveHumGoogleTrans(comp, lbl, "googletrans", "btnrtIGT" + i + "");
@@ -232,26 +248,42 @@ namespace Plugghest.Modules.DisplayPlugg
                                 CreateBtnImproveHumGoogleTrans(comp, lbl, "btnhumantrans", "btnlbl" + i + "");
                             }
                             divTitle.Controls.Add(new LiteralControl(str));
+                            chkComTxt = true;
                         }
+                        else
+                        {
+                            if (lbl.Text == "(No text)")
+                            {
+                                break;
+                            }
+                            string LabHTMLstring = CreateDiv(lbl, "Label" + i, BtnLabelTxt);
+                            chkComTxt = true;
+                        }
+
                         break;
 
                     case EComponentType.RichText:
                         PHText rt = bh.GetCurrentVersionText(curlan, comp.PluggComponentId, ETextItemType.PluggComponentRichText);
-                        string RtHTMLstring = CreateDiv(rt, "RichText" + i, BtnRichTextTxt);
                         if (IsCase3)
                         {
+                            string RtHTMLstring = CreateDiv(rt, "RichText" + i, "Component-" + IntCompOrder + ":" + BtnRichTextTxt);
                             int RTorderid = comp.ComponentOrder;
 
                             CreateBtnDel(RTorderid, "btncsdel", "btnrtDel" + i + "");
                             CreateBtnEdit(comp, rt, "btncsdel", "btnrtEdit" + i + "");
-                            RtHTMLstring = "</div>" + LabAddNewcomTxt + "<select class='ddlclass' id='Rtddl" + i + "'>";
+                            RtHTMLstring = "<hr /></div>" + LabAddNewcomTxt + " between component " + IntCompOrder + " and " + (IntCompOrder + 1).ToString() + " <select class='ddlclass' id='Rtddl" + i + "'>";
                             RtHTMLstring = RtHTMLstring + ddl;
                             divTitle.Controls.Add(new LiteralControl(RtHTMLstring));
                             CreateBtnAdd(RTorderid, "btncs", "btnrtAdd" + i + "");
                             divTitle.Controls.Add(new LiteralControl(str));
                         }
+                        else if (rt.Text == "(No text)")
+                        {
+                            break;
+                        }
                         else if (IsCase2)
                         {
+                            string RtHTMLstring = CreateDiv(rt, "RichText" + i, "Component-" + IntCompOrder + ":" + BtnRichTextTxt);
                             if (rt.CultureCodeStatus == ECultureCodeStatus.GoogleTranslated)
                             {
                                 CreateBtnImproveHumGoogleTrans(comp, rt, "googletrans", "btnrtIGT" + i + "");
@@ -263,19 +295,29 @@ namespace Plugghest.Modules.DisplayPlugg
                                 CreateBtnImproveHumGoogleTrans(comp, rt, "btnhumantrans", "btnrtIHT" + i + "");
                             }
                             divTitle.Controls.Add(new LiteralControl(str));
+                            chkComTxt = true;
+                        }
+                        else
+                        {
+                            if (rt.Text == "(No text)")
+                            {
+                                break;
+                            }
+                            string RtHTMLstring = CreateDiv(rt, "RichText" + i, BtnRichTextTxt);
+                            chkComTxt = true;
                         }
                         break;
 
                     case EComponentType.RichRichText:
                         PHText rrt = bh.GetCurrentVersionText(curlan, comp.PluggComponentId, ETextItemType.PluggComponentRichRichText);
-                        string RRTHTMLstring = CreateDiv(rrt, "RichRichText" + i, BtnRichRichTxttxt);
                         if (IsCase3)
                         {
+                            string RRTHTMLstring = CreateDiv(rrt, "RichRichText" + i, "Component-" + IntCompOrder + ":" + BtnRichRichTxttxt);
                             int RRTorderid = comp.ComponentOrder;
 
                             CreateBtnDel(RRTorderid, "btncsdel", "btnrrtDel" + i + "");
                             CreateBtnEdit(comp, rrt, "btncsdel", "btnrrtEdit" + i + "");
-                            RRTHTMLstring = "</div>" + LabAddNewcomTxt + "<select class='ddlclass' id='Rtddl" + i + "'>";
+                            RRTHTMLstring = "<hr /></div>" + LabAddNewcomTxt + " between component " + IntCompOrder + " and " + (IntCompOrder + 1).ToString() + " <select class='ddlclass' id='Rtddl" + i + "'>";
                             RRTHTMLstring = RRTHTMLstring + ddl;
                             divTitle.Controls.Add(new LiteralControl(RRTHTMLstring));
 
@@ -284,8 +326,13 @@ namespace Plugghest.Modules.DisplayPlugg
 
                             divTitle.Controls.Add(new LiteralControl(str));
                         }
+                        else if (rrt.Text == "(No text)")
+                        {
+                            break;
+                        }
                         else if (IsCase2)
                         {
+                            string RRTHTMLstring = CreateDiv(rrt, "RichRichText" + i, "Component-" + IntCompOrder + ":" + BtnRichRichTxttxt);
                             if (rrt.CultureCodeStatus == ECultureCodeStatus.GoogleTranslated)
                             {
                                 CreateBtnImproveHumGoogleTrans(comp, rrt, "googletrans", "btnrrtIGT" + i + "");
@@ -298,15 +345,24 @@ namespace Plugghest.Modules.DisplayPlugg
                             }
 
                             divTitle.Controls.Add(new LiteralControl(str));
+                            chkComTxt = true;
                         }
-
+                        else
+                        {
+                            if (rrt.Text == "(No text)")
+                            {
+                                break;
+                            }
+                            string RRTHTMLstring = CreateDiv(rrt, "RichRichText" + i, BtnRichRichTxttxt);
+                            chkComTxt = true;
+                        }
                         break;
 
                     case EComponentType.Latex:
                         PHLatex lat = bh.GetCurrentVersionLatexText(curlan, comp.PluggComponentId, ELatexItemType.PluggComponentLatex);
-                        string LatHTMLstring = CreateDivLat(lat, "Latex" + i);
                         if (IsCase3)
                         {
+                            string LatHTMLstring = CreateDivLat(lat, "Latex" + i, IntCompOrder);
                             int ltorderid = comp.ComponentOrder;
 
 
@@ -320,13 +376,26 @@ namespace Plugghest.Modules.DisplayPlugg
                             editbtn.Click += (s, e) => { CallLatFun(ltorderid, comp, lat, "1"); };
                             divTitle.Controls.Add(editbtn);
 
-                            LatHTMLstring = "</div>" + LabAddNewcomTxt + "<select class='ddlclass' id='ltddl" + i + "'>";
+                            LatHTMLstring = "<hr /></div>" + LabAddNewcomTxt + " between component " + IntCompOrder + " and " + (IntCompOrder + 1).ToString() + " <select class='ddlclass' id='ltddl" + i + "'>";
                             LatHTMLstring = LatHTMLstring + ddl;
                             divTitle.Controls.Add(new LiteralControl(LatHTMLstring));
 
 
                             CreateBtnAdd(ltorderid, "btncs", "btnlatexAdd" + i + "");
                             divTitle.Controls.Add(new LiteralControl(str));
+                        }
+                        else if (lat.Text == "(No text)")
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            if (lat.Text == "(No text)")
+                            {
+                                break;
+                            }
+                            string LatHTMLstring = CreateDivLat(lat, "Latex" + i);
+                            chkComTxt = true;
                         }
 
                         break;
@@ -342,7 +411,7 @@ namespace Plugghest.Modules.DisplayPlugg
                         }
                         catch
                         {
-                            strYoutubeIframe = "";
+                            strYoutubeIframe = "(No text)";
                         }
                         if (yt == null)
                         {
@@ -358,7 +427,7 @@ namespace Plugghest.Modules.DisplayPlugg
                         string ytHTMLstring = "";
                         if (IsCase3)
                         {
-                            ytHTMLstring = "<div><div id=" + ytdivid + " class='Main'>" + BtnYoutubeTxt + ":" + ytYouTubecode + "";
+                            ytHTMLstring = "<div><div id=" + ytdivid + " class='Main'>" + "Component-" + IntCompOrder + ":" + "Youtube";
 
                             divTitle.Controls.Add(new LiteralControl(ytHTMLstring));
 
@@ -368,7 +437,7 @@ namespace Plugghest.Modules.DisplayPlugg
 
                             CreateBtnYTEdit(comp, yt, ytorderid, "btncsdel", "IdYt" + i + "");
 
-                            ytHTMLstring = "</div>" + strYoutubeIframe + "</br>" + LabAddNewcomTxt + "<select class='ddlclass' id=" + ytddlid + ">";
+                            ytHTMLstring = "</div>" + strYoutubeIframe + "</br><hr />" + LabAddNewcomTxt + " between component " + IntCompOrder + " and " + (IntCompOrder + 1).ToString() + " <select class='ddlclass' id=" + ytddlid + ">";
                             ytHTMLstring = ytHTMLstring + ddl;
                             divTitle.Controls.Add(new LiteralControl(ytHTMLstring));
 
@@ -376,15 +445,33 @@ namespace Plugghest.Modules.DisplayPlugg
 
                             divTitle.Controls.Add(new LiteralControl(str));
                         }
+                        else if (strYoutubeIframe == "(No text)")
+                        {
+                            break;
+                        }
                         else
                         {
-                            ytHTMLstring = "<div><div id=" + ytdivid + " class='Main'>  " + BtnYoutubeTxt + ":" + ytYouTubecode + "</div>" + strYoutubeIframe + "</div>";
+                            if (strYoutubeIframe == "(No text)")
+                            {
+                                break;
+                            }
+                            ytHTMLstring = "<div>" + strYoutubeIframe + "</div>";
                             divTitle.Controls.Add(new LiteralControl(ytHTMLstring));
+                            chkComTxt = true;
                         }
                         break;
                 }
                 i++;
+                IntCompOrder++;
             }
+            if (!chkComTxt)
+                ShowNoComMsg();
+        }
+
+        private void ShowNoComMsg()
+        {
+            lblnoCom.Visible = true;
+            lblnoCom.Text = LabNoComtxt;
         }
 
         private void CreateBtnImproveHumGoogleTrans(PluggComponent comp, PHText lbl, string css, string id)
@@ -416,6 +503,16 @@ namespace Plugghest.Modules.DisplayPlugg
             divTitle.Controls.Add(editbtn);
         }
 
+        private string CreateDivLat(PHLatex lat, string ltdivid, int IntCompOrder)
+        {
+            string LatHTMLstring = "";
+            if (lat == null)
+                LatHTMLstring = "<div><div id=" + ltdivid + " class='Main'>" + "Component-" + IntCompOrder + ":" + BtnLatexTxt + ":";
+            else
+                LatHTMLstring = "<div><div id=" + ltdivid + " class='Main'> " + "Component-" + IntCompOrder + ":" + BtnLatexTxt + ":" + lat.Text + "";
+            divTitle.Controls.Add(new LiteralControl(LatHTMLstring));
+            return LatHTMLstring;
+        }
         private string CreateDivLat(PHLatex lat, string ltdivid)
         {
             string LatHTMLstring = "";
@@ -426,7 +523,6 @@ namespace Plugghest.Modules.DisplayPlugg
             divTitle.Controls.Add(new LiteralControl(LatHTMLstring));
             return LatHTMLstring;
         }
-
         private void CreateSubject(int i, int? subid)
         {
             if (subid != null)
@@ -480,6 +576,8 @@ namespace Plugghest.Modules.DisplayPlugg
             delbtn.ID = ID;
             delbtn.Text = BtnRemoveTxt;
             delbtn.Click += (s, e) => { callingDelPlugg(orderid); };
+
+            divTitle.Controls.Add(new LiteralControl("<br />"));
             divTitle.Controls.Add(delbtn);
         }
 
@@ -506,7 +604,7 @@ namespace Plugghest.Modules.DisplayPlugg
                 pnllabel.Visible = false;
                 pnlletex.Visible = false;
                 richtextbox.Visible = false;
-              
+
                 pnlYoutube.Visible = false;
                 richrichtext.Text = lat.Text;
             }
@@ -523,7 +621,7 @@ namespace Plugghest.Modules.DisplayPlugg
 
             if (comp.ComponentType == EComponentType.YouTube)
             {
-             
+
                 pnlYoutube.Visible = true;
                 pnlRRT.Visible = false;
                 pnllabel.Visible = false;
@@ -593,7 +691,7 @@ namespace Plugghest.Modules.DisplayPlugg
             pnlRRT.Visible = false;
             pnllabel.Visible = false;
             pnlletex.Visible = false;
-            richtextbox.Visible = false;          
+            richtextbox.Visible = false;
             pnlYoutube.Visible = false;
         }
 
@@ -694,6 +792,8 @@ namespace Plugghest.Modules.DisplayPlugg
         {
             btntransplug.Visible = false;
             btncanceltrans.Visible = true;
+            if (!chkComTxt)
+                ShowNoComMsg();
             Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", new string[] { "edit=2", "language=" + curlan }));
 
         }
@@ -727,21 +827,21 @@ namespace Plugghest.Modules.DisplayPlugg
                     //PHText RichRichText = bh.GetCurrentVersionText(curlan, itemid, ETextItemType.PluggComponentRichRichText);
                     //RichRichText.Text = richrichtext.Text;
 
-                    PHText objPHtext = new PHText(richrichtext.Text,curlan,ETextItemType.PluggComponentRichRichText);
+                    PHText objPHtext = new PHText(richrichtext.Text, curlan, ETextItemType.PluggComponentRichRichText);
                     objPHtext.CultureCodeStatus = ECultureCodeStatus.GoogleTranslated;
-                    objPHtext.ItemId=itemid;
+                    objPHtext.ItemId = itemid;
                     objPHtext.CreatedByUserId = this.UserId;
-                   
+
                     if (EditStr == "2")
                         objPHtext.CultureCodeStatus = ECultureCodeStatus.HumanTranslated;
-                   
-                  
+
+
                     bh.SavePhTextInAllCc(objPHtext);
                     break;
 
                 case EComponentType.Latex:
 
-                   PHLatex latex = bh.GetCurrentVersionLatexText(curlan, Convert.ToInt32(id), ELatexItemType.PluggComponentLatex);
+                    PHLatex latex = bh.GetCurrentVersionLatexText(curlan, Convert.ToInt32(id), ELatexItemType.PluggComponentLatex);
                     latex.CultureCodeStatus = ECultureCodeStatus.GoogleTranslated;
                     latex.ItemId = itemid;
                     latex.CreatedByUserId = this.UserId;
@@ -791,7 +891,7 @@ namespace Plugghest.Modules.DisplayPlugg
             Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", new string[] { "edit=1", "language=" + curlan }));
         }
 
-       
+
 
         protected void btnSelSub_Click(object sender, EventArgs e)
         {

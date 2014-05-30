@@ -50,6 +50,10 @@
     </script>
 
     <style>
+        .btncs
+        {
+            margin-left:15px;
+        }
         .ui-tabs-vertical
         {
             width: 55em;
@@ -199,6 +203,10 @@
 
 
 <style>
+    .small_fount
+    {
+        font-size:12px;
+    }
     body > #feedHeaderContainer
     {
         display: none;
@@ -255,15 +263,16 @@
     <br />
 <div>
 
-    <asp:Button CssClass="cls" ID="btnlocal" Text="View this Plugg in the language it was created " runat="server" OnClick="btnlocal_Click" />
+    <asp:Button CssClass="cls small_fount" ID="btnlocal" Text="View this Plugg in the language it was created " runat="server" OnClick="btnlocal_Click" />
     <asp:Button CssClass="cls" ID="btncanceltrans" Text="Cancel translation" runat="server" OnClick="btncanceltrans_Click" Visible="False" />
 
     <asp:Button CssClass="btneditplug" ID="btnEditPlug" resourcekey="btnSaveSubjects" Text="Edit Plug" runat="server" OnClick="btnEditPlugg_Click" />
     <asp:Button CssClass="btneditplug" ID="btncanceledit" resourcekey="btncanceledit" Text="Cancel Plug" runat="server" OnClick="btncanceledit_Click" Visible="False" />
-    <asp:Button CssClass="btneditplug" ID="btntransplug" meta:resourcekey="btntransplug" Text="Help us with the translation of this Plugg" runat="server" OnClick="btntransplug_Click" />
+    <asp:Button CssClass="btneditplug small_fount" ID="btntransplug" meta:resourcekey="btntransplug" Text="Help us with the translation of this Plugg" runat="server" OnClick="btntransplug_Click" />
 
 </div>
 <br />
+<asp:Label ID="lblnoCom" runat="server" Visible="false"></asp:Label>
 <asp:Panel runat="server" ID="pnlRRT" Visible="False">
     <dnn:texteditor runat="server" id="richrichtext"></dnn:texteditor>
     <asp:Button ID="btnSaveRRt" runat="server" Text="Save" OnClick="btnSaveRRt_Click" /><asp:Button ID="btnCanRRt" runat="server" Text="Cancel" OnClick="Cancel_Click" />
@@ -395,8 +404,7 @@
 
 
 <asp:HiddenField ID="hdnDDLtxt" runat="server" />
-<br />
-<br />
+
 
 <table class="auto-style1">
     <tr>
