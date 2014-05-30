@@ -103,13 +103,11 @@ namespace Plugghest.Modules.DisplayPlugg
             btnSaveRt.Text = BtnSaveTxt;
             btnLabelSave.Text = BtnSaveTxt;
             btnYtSave.Text = BtnSaveTxt;
-            btnLatexSave.Text = BtnSaveTxt;
             btnSelSub.Text = BtnSaveTxt;
 
             btnCanRRt.Text = BtnCancelTxt;
             btnCanRt.Text = BtnCancelTxt;
             btnYtCaNCEL.Text = BtnCancelTxt;
-            btnLatexCancel.Text = BtnCancelTxt;
             btnTreecancel.Text = BtnCancelTxt;
             Cancel.Text = BtnCancelTxt;
         }
@@ -134,7 +132,7 @@ namespace Plugghest.Modules.DisplayPlugg
             BtnSaveTxt = Localization.GetString("Save", this.LocalResourceFile + ".ascx." + curlan + ".resx");
             BtnYouTubeTxt = Localization.GetString("YouTube", this.LocalResourceFile + ".ascx." + curlan + ".resx");
             BtnlocalTxt = Localization.GetString("btnlocal", this.LocalResourceFile + ".ascx." + curlan + ".resx");
-            BtnlocalTxt = BtnlocalTxt + "( " + p.ThePlugg.CreatedInCultureCode + " )";
+            BtnlocalTxt = BtnlocalTxt + " (" + p.ThePlugg.CreatedInCultureCode + ")";
             BtntransplugTxt = Localization.GetString("btntransplug", this.LocalResourceFile + ".ascx." + curlan + ".resx");
             LabAddNewcomTxt = Localization.GetString("AddNewCom", this.LocalResourceFile + ".ascx." + curlan + ".resx");
             BtnEditTxt = Localization.GetString("Edit", this.LocalResourceFile + ".ascx." + curlan + ".resx");
@@ -508,7 +506,7 @@ namespace Plugghest.Modules.DisplayPlugg
                 pnllabel.Visible = false;
                 pnlletex.Visible = false;
                 richtextbox.Visible = false;
-                pnlLatex.Visible = false;
+              
                 pnlYoutube.Visible = false;
                 richrichtext.Text = lat.Text;
             }
@@ -525,7 +523,7 @@ namespace Plugghest.Modules.DisplayPlugg
 
             if (comp.ComponentType == EComponentType.YouTube)
             {
-                pnlLatex.Visible = false;
+             
                 pnlYoutube.Visible = true;
                 pnlRRT.Visible = false;
                 pnllabel.Visible = false;
@@ -595,8 +593,7 @@ namespace Plugghest.Modules.DisplayPlugg
             pnlRRT.Visible = false;
             pnllabel.Visible = false;
             pnlletex.Visible = false;
-            richtextbox.Visible = false;
-            pnlLatex.Visible = false;
+            richtextbox.Visible = false;          
             pnlYoutube.Visible = false;
         }
 
@@ -680,7 +677,8 @@ namespace Plugghest.Modules.DisplayPlugg
             PHText phText = bh.GetCurrentVersionText(curlan, itemid, ItemType);
 
             phText.Text = txt;
-
+            phText.CultureCodeStatus = ECultureCodeStatus.GoogleTranslated;
+            phText.CreatedByUserId = this.UserId;
             if (EditStr == "2")
                 phText.CultureCodeStatus = ECultureCodeStatus.HumanTranslated;
 
@@ -726,20 +724,30 @@ namespace Plugghest.Modules.DisplayPlugg
             switch (cToAdd.ComponentType)
             {
                 case EComponentType.RichRichText:
-                    PHText RichRichText = bh.GetCurrentVersionText(curlan, itemid, ETextItemType.PluggComponentRichRichText);
-                    RichRichText.Text = richrichtext.Text;
-                    if (EditStr == "2")
-                        RichRichText.CultureCodeStatus = ECultureCodeStatus.HumanTranslated;
+                    //PHText RichRichText = bh.GetCurrentVersionText(curlan, itemid, ETextItemType.PluggComponentRichRichText);
+                    //RichRichText.Text = richrichtext.Text;
 
-                    bh.SavePhText(RichRichText);
+                    PHText objPHtext = new PHText(richrichtext.Text,curlan,ETextItemType.PluggComponentRichRichText);
+                    objPHtext.CultureCodeStatus = ECultureCodeStatus.GoogleTranslated;
+                    objPHtext.ItemId=itemid;
+                    objPHtext.CreatedByUserId = this.UserId;
+                   
+                    if (EditStr == "2")
+                        objPHtext.CultureCodeStatus = ECultureCodeStatus.HumanTranslated;
+                   
+                  
+                    bh.SavePhTextInAllCc(objPHtext);
                     break;
 
                 case EComponentType.Latex:
 
-                    PHLatex latex = bh.GetCurrentVersionLatexText(curlan, Convert.ToInt32(id), ELatexItemType.PluggComponentLatex);
-
+                   PHLatex latex = bh.GetCurrentVersionLatexText(curlan, Convert.ToInt32(id), ELatexItemType.PluggComponentLatex);
+                    latex.CultureCodeStatus = ECultureCodeStatus.GoogleTranslated;
+                    latex.ItemId = itemid;
+                    latex.CreatedByUserId = this.UserId;
                     latex.Text = richrichtext.Text;
-                    bh.SaveLatexText(latex);
+                    //bh.SaveLatexText(latex);
+                    bh.SaveLatexTextInAllCc(latex);
                     break;
             }
 
@@ -783,26 +791,7 @@ namespace Plugghest.Modules.DisplayPlugg
             Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", new string[] { "edit=1", "language=" + curlan }));
         }
 
-        protected void btnLatexSave_Click(object sender, EventArgs e)
-        {
-
-            var id = hdnlabel.Value;
-            var itemid = Convert.ToInt32(id);
-
-            List<PluggComponent> comps = p.GetComponentList();
-
-            BaseHandler bh = new BaseHandler();
-
-
-            List<object> objToadd = new List<object>();
-
-            PHLatex lt = bh.GetCurrentVersionLatexText(curlan, Convert.ToInt32(id), ELatexItemType.PluggComponentLatex);
-            lt.HtmlText = richrichtext.Text;
-            objToadd.Add(lt);
-
-            Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(TabId, "", new string[] { "edit=1", "language=" + curlan }));
-
-        }
+       
 
         protected void btnSelSub_Click(object sender, EventArgs e)
         {

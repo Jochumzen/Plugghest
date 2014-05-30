@@ -19,9 +19,7 @@
               var newid = $("#" + id).val();
               $('#<%=hdnDDLtxt.ClientID%>').val(newid);
           });
-          function getRichtext() {
-              $('#' + '<%=hdnrichtext.ClientID%>').val($('#editor').html());
-            }
+        
           $(".btnTreeEdit").click(function () {
               $("#" + '<%=pnlTree.ClientID%>').show();
               var $tree = $('#tree2');
@@ -44,8 +42,11 @@
           );
 
           });
-
+          
       });
+      function getRichtext() {
+          $('#' + '<%=hdnrichtext.ClientID%>').val($('#editor').html());
+      }
     </script>
 
     <style>
@@ -379,11 +380,8 @@
     <asp:Button ID="btnYtSave" runat="server" Text="Save" OnClientClick="getYt()" OnClick="btnYtSave_Click" /><asp:Button ID="btnYtCaNCEL" runat="server" Text="Cancel" OnClick="Cancel_Click" />
 </asp:Panel>
 
-<asp:Panel runat="server" ID="pnlLatex" Visible="False">
-    <asp:TextBox runat="server" ID="TextBox1"></asp:TextBox>
-    <asp:Button ID="btnLatexSave" runat="server" Text="Save" OnClick="btnLatexSave_Click" /><asp:Button ID="btnLatexCancel" runat="server" Text="Cancel" OnClick="Cancel_Click" />
-    <asp:HiddenField ID="HiddenField1" runat="server" />
-</asp:Panel>
+
+
 <asp:Panel runat="server" ID="pnlletex">
 </asp:Panel>
  <div class="tree">
