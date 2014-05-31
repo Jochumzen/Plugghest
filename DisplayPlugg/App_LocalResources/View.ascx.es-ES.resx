@@ -121,7 +121,7 @@
     <value>Añadir</value>
   </data>
   <data name="btncanceledit.Text" xml:space="preserve">
-    <value>Cancelar editar</value>
+    <value>salir del modo de edición</value>
   </data>
   <data name="btncanceltrans.Text" xml:space="preserve">
     <value>Cancelar traducción</value>

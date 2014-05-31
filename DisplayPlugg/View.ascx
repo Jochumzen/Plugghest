@@ -260,7 +260,7 @@
 <asp:HiddenField ID="hdnTreeData" runat="server" Value="" />
 <asp:HiddenField ID="hdnNodeSubjectId" runat="server" />
 <asp:HiddenField ID="hdnDelbtnId" runat="server" />
-    <br />
+   
 <div>
 
     <asp:Button CssClass="cls small_fount" ID="btnlocal" Text="View this Plugg in the language it was created " runat="server" OnClick="btnlocal_Click" />
@@ -271,7 +271,7 @@
     <asp:Button CssClass="btneditplug small_fount" ID="btntransplug" meta:resourcekey="btntransplug" Text="Help us with the translation of this Plugg" runat="server" OnClick="btntransplug_Click" />
 
 </div>
-<br />
+
 <asp:Label ID="lblnoCom" runat="server" Visible="false"></asp:Label>
 <asp:Panel runat="server" ID="pnlRRT" Visible="False">
     <dnn:texteditor runat="server" id="richrichtext"></dnn:texteditor>
@@ -405,7 +405,7 @@
 
 <asp:HiddenField ID="hdnDDLtxt" runat="server" />
 
-
+<asp:Panel ID="pnlPluggCom" runat="server">
 <table class="auto-style1">
     <tr>
         <td>
@@ -421,7 +421,7 @@
 
     </tr>
 </table>
-
+</asp:Panel>
 
 <asp:HiddenField ID="hdnrichtext" runat="server" />
    <asp:HiddenField ID="yttitle" runat="server" />
