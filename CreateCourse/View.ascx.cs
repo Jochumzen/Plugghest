@@ -11,17 +11,16 @@
 */
 
 using System;
-using System.Collections.Generic;
 using System.Web.UI.WebControls;
+using Plugghest.Modules.CreateCourse.Components;
 using DotNetNuke.Security;
 using DotNetNuke.Services.Exceptions;
 using DotNetNuke.Entities.Modules;
 using DotNetNuke.Entities.Modules.Actions;
 using DotNetNuke.Services.Localization;
-using Plugghest.Base;
-using Plugghest.DNN;
-using DotNetNuke.Common;
-
+using DotNetNuke.UI.Utilities;
+using Plugghest.Base2;
+using System.Collections.Generic;
 
 namespace Plugghest.Modules.CreateCourse
 {
@@ -45,13 +44,20 @@ namespace Plugghest.Modules.CreateCourse
             try
             {
                 LoadCultureDropDownList();
+                SetLocalizationText();
+         
+                if (!IsPostBack)
+                {
+                    rdbtnWhoCanEdit.DataSource = Enum.GetNames(typeof(EWhoCanEdit));
+                    rdbtnWhoCanEdit.DataBind();
+                    rdbtnWhoCanEdit.Items[1].Selected = true;
+                }
             }
             catch (Exception exc) //Module failed to load
             {
                 Exceptions.ProcessModuleLoadException(this, exc);
             }
         }
-
         private void LoadCultureDropDownList()
         {
             try
@@ -64,62 +70,87 @@ namespace Plugghest.Modules.CreateCourse
                 Exceptions.LogException(ex);
             }
         }
+        private void SetLocalizationText()
+        {
+            string curlan = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
+            btnCancel.Text = Localization.GetString("Cancel", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            btnCheck.Text = Localization.GetString("Check", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            lblCreateCourse.Text = Localization.GetString("CreateCourse", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            lblCreateCourse1.Text = Localization.GetString("CreateCourse", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            //  lblDescription.Text = Localization.GetString("Description", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            lblPluggs.Text = Localization.GetString("Plug", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            lblPluggs.HelpKey = "lblPluggs";
+            lblPluggs.HelpText = Localization.GetString("PlugDes", this.LocalResourceFile + ".ascx." + curlan + ".resx");
 
+
+            btnSubmit.Text = Localization.GetString("Submit", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            lblTitle.Text = Localization.GetString("Title", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            lblTitle.HelpKey = "lblTitle";
+            lblTitle.HelpText = Localization.GetString("TitleDes", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+
+
+        }
         protected void btnCheck_Click(object sender, EventArgs e)
         {
             bool ischeck = CheckPlugg();
         }
 
-        protected void btnSubmit_Click(object sender, EventArgs e)
+        protected void btnSubmit_Click(object  sender, EventArgs e)
         {
-
             Boolean ischeck = CheckPlugg();
 
             if (!ischeck) //check validation
                 return;
 
-            Course c;
-            c = SaveCourse();
-            if (c.CourseId != 0) //0 means Error in Update/Save
-                Response.Redirect(Globals.NavigateURL(c.TabId));
+            CourseContainer cc;
+            cc = SaveCourse();
+            if (cc.TheCourse.CourseId != 0) //0 means Error in Update/Save
+            {
+                Page.ClientScript.RegisterClientScriptBlock(this.GetType(), "Success", "alert('New Course is created successfully')", true);
+             // Response.Redirect(DotNetNuke.Common.Globals.NavigateURL(cc.TheCourse.TabId, "", ""));
+            }           
         }
 
-        protected Course SaveCourse()
+        protected CourseContainer SaveCourse()
         {
             BaseHandler bh = new BaseHandler();
-            Course c = new Course();
+            CourseContainer cc = new CourseContainer(new Localization().CurrentCulture);
             List<CourseItemEntity> cis = new List<CourseItemEntity>();
-            ReadFromControls(c, cis);
-
+            ReadFromControls(cc, cis);
             try
             {
-                bh.CreateCourse(c, cis);  //Create CoursePage, Course and CourseItems (only Pluggs)
+                bh.CreateCourse(cc);  //Create CoursePage, Course and CourseItems (only Pluggs)
             }
             catch (Exception ex)
             {
                 lblError.Text = "Failed to create a Course: " + ex.Message;
                 Exceptions.LogException(ex);
-                c.CourseId = 0;
+                cc.TheCourse.CourseId = 0;
             }
 
-            return c;
-        }
+            return cc;
+        }               
 
-        protected void ReadFromControls(Course c, List<CourseItemEntity> cis)
+        protected void ReadFromControls(CourseContainer c, List<CourseItemEntity> cis)
         {
-            c.Title = txtTitle.Text;
-            c.CreatedInCultureCode = DDLanguage.SelectedValue;
 
-            if (rdEditPlug.Text == "Any registered user")
-                c.WhoCanEdit = EWhoCanEdit.Anyone;
-            else
-                c.WhoCanEdit = EWhoCanEdit.OnlyMe;
-            
-            c.CreatedOnDate = DateTime.Now;
-            c.CreatedByUserId = this.UserId;
-            c.ModifiedOnDate = DateTime.Now; ;
-            c.ModifiedByUserId = this.UserId;
-            c.Description = txtHtmlText.Text;
+            string subjectStr = Page.Request.QueryString["s"];
+            if (subjectStr != null)
+            {
+                int subjectId;
+                bool isNum = int.TryParse(subjectStr, out subjectId);
+                if (isNum)
+                    c.TheCourse.SubjectId = subjectId;
+            }
+
+            c.SetTitle(txtTitle.Text);
+            c.CultureCode = DDLanguage.SelectedValue;           
+            c.TheCourse.WhoCanEdit = (EWhoCanEdit)Enum.Parse(typeof(EWhoCanEdit), rdbtnWhoCanEdit.SelectedValue);  
+            c.TheCourse.CreatedOnDate = DateTime.Now;
+            c.TheCourse.CreatedByUserId = this.UserId;
+            c.TheCourse.ModifiedOnDate = DateTime.Now; ;
+            c.TheCourse.ModifiedByUserId = this.UserId;
+            c.SetDescription(txtHtmlText.Text); 
 
             // string is in form "44,45,48,52" holding PluggIDs
             string pluggtext = txtPluggs.Text.Trim();
@@ -142,7 +173,7 @@ namespace Plugghest.Modules.CreateCourse
                 }
             }
         }
-
+        
         protected void btnCancel_Click(object sender, EventArgs e)
         {
             Response.Redirect(DotNetNuke.Common.Globals.NavigateURL());
@@ -167,12 +198,13 @@ namespace Plugghest.Modules.CreateCourse
                     bool isNumeric = int.TryParse(itempluggs[i], out num);//check number.....
                     if (isNumeric)
                     {
-                        PluggContainer p = new PluggContainer();
-                        p.ThePlugg = ph.GetPlugg(num);
+                        PluggContainer p = new PluggContainer(new Localization().CurrentCulture, num);
+                       
+                       // p.ThePlugg = ph.GetPlugg(num);
                         if (p.ThePlugg != null)
                         {
                             p.CultureCode = (Page as DotNetNuke.Framework.PageBase).PageCulture.Name;
-                            p.LoadTitle();                            
+                            p.LoadTitle();
                             CIInfo.Text += num + ": " + p.TheTitle.Text + "<br />";
                         }
                         else
@@ -206,5 +238,7 @@ namespace Plugghest.Modules.CreateCourse
                 return actions;
             }
         }
+
+     
     }
 }

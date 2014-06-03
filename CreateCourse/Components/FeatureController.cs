@@ -20,7 +20,7 @@ namespace Plugghest.Modules.CreateCourse.Components
 
     /// -----------------------------------------------------------------------------
     /// <summary>
-    /// The Controller class for DNNTemplate
+    /// The Controller class for CreateCourse
     /// 
     /// The FeatureController class is defined as the BusinessController in the manifest file (.dnn)
     /// DotNetNuke will poll this class to find out which Interfaces the class implements. 
@@ -53,18 +53,18 @@ namespace Plugghest.Modules.CreateCourse.Components
         //{
         //string strXML = "";
 
-        //List<DNNTemplateInfo> colDNNTemplates = GetDNNTemplates(ModuleID);
-        //if (colDNNTemplates.Count != 0)
+        //List<CreateCourseInfo> colCreateCourses = GetCreateCourses(ModuleID);
+        //if (colCreateCourses.Count != 0)
         //{
-        //    strXML += "<DNNTemplates>";
+        //    strXML += "<CreateCourses>";
 
-        //    foreach (DNNTemplateInfo objDNNTemplate in colDNNTemplates)
+        //    foreach (CreateCourseInfo objCreateCourse in colCreateCourses)
         //    {
-        //        strXML += "<DNNTemplate>";
-        //        strXML += "<content>" + DotNetNuke.Common.Utilities.XmlUtils.XMLEncode(objDNNTemplate.Content) + "</content>";
-        //        strXML += "</DNNTemplate>";
+        //        strXML += "<CreateCourse>";
+        //        strXML += "<content>" + DotNetNuke.Common.Utilities.XmlUtils.XMLEncode(objCreateCourse.Content) + "</content>";
+        //        strXML += "</CreateCourse>";
         //    }
-        //    strXML += "</DNNTemplates>";
+        //    strXML += "</CreateCourses>";
         //}
 
         //return strXML;
@@ -83,14 +83,14 @@ namespace Plugghest.Modules.CreateCourse.Components
         /// -----------------------------------------------------------------------------
         //public void ImportModule(int ModuleID, string Content, string Version, int UserID)
         //{
-        //XmlNode xmlDNNTemplates = DotNetNuke.Common.Globals.GetContent(Content, "DNNTemplates");
-        //foreach (XmlNode xmlDNNTemplate in xmlDNNTemplates.SelectNodes("DNNTemplate"))
+        //XmlNode xmlCreateCourses = DotNetNuke.Common.Globals.GetContent(Content, "CreateCourses");
+        //foreach (XmlNode xmlCreateCourse in xmlCreateCourses.SelectNodes("CreateCourse"))
         //{
-        //    DNNTemplateInfo objDNNTemplate = new DNNTemplateInfo();
-        //    objDNNTemplate.ModuleId = ModuleID;
-        //    objDNNTemplate.Content = xmlDNNTemplate.SelectSingleNode("content").InnerText;
-        //    objDNNTemplate.CreatedByUser = UserID;
-        //    AddDNNTemplate(objDNNTemplate);
+        //    CreateCourseInfo objCreateCourse = new CreateCourseInfo();
+        //    objCreateCourse.ModuleId = ModuleID;
+        //    objCreateCourse.Content = xmlCreateCourse.SelectSingleNode("content").InnerText;
+        //    objCreateCourse.CreatedByUser = UserID;
+        //    AddCreateCourse(objCreateCourse);
         //}
 
         //	throw new System.NotImplementedException("The method or operation is not implemented.");
@@ -106,11 +106,11 @@ namespace Plugghest.Modules.CreateCourse.Components
         //{
         //SearchItemInfoCollection SearchItemCollection = new SearchItemInfoCollection();
 
-        //List<DNNTemplateInfo> colDNNTemplates = GetDNNTemplates(ModInfo.ModuleID);
+        //List<CreateCourseInfo> colCreateCourses = GetCreateCourses(ModInfo.ModuleID);
 
-        //foreach (DNNTemplateInfo objDNNTemplate in colDNNTemplates)
+        //foreach (CreateCourseInfo objCreateCourse in colCreateCourses)
         //{
-        //    SearchItemInfo SearchItem = new SearchItemInfo(ModInfo.ModuleTitle, objDNNTemplate.Content, objDNNTemplate.CreatedByUser, objDNNTemplate.CreatedDate, ModInfo.ModuleID, objDNNTemplate.ItemId.ToString(), objDNNTemplate.Content, "ItemId=" + objDNNTemplate.ItemId.ToString());
+        //    SearchItemInfo SearchItem = new SearchItemInfo(ModInfo.ModuleTitle, objCreateCourse.Content, objCreateCourse.CreatedByUser, objCreateCourse.CreatedDate, ModInfo.ModuleID, objCreateCourse.ItemId.ToString(), objCreateCourse.Content, "ItemId=" + objCreateCourse.ItemId.ToString());
         //    SearchItemCollection.Add(SearchItem);
         //}
 

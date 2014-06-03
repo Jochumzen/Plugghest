@@ -12,6 +12,7 @@
 
 using System;
 using DotNetNuke.Entities.Users;
+using Plugghest.Modules.CreateCourse.Components;
 using DotNetNuke.Services.Exceptions;
 
 namespace Plugghest.Modules.CreateCourse
@@ -34,6 +35,7 @@ namespace Plugghest.Modules.CreateCourse
         {
             try
             {
+
             }
             catch (Exception exc) //Module failed to load
             {

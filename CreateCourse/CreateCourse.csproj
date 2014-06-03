@@ -48,6 +48,10 @@
       <HintPath>..\..\bin\DotNetNuke.WebUtility.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Plugghest, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\dll\Plugghest.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -94,6 +98,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Documentation\Documentation.css" />
+    <Content Include="Documentation\Documentation.html" />
     <Content Include="Edit.ascx" />
     <Content Include="License.txt" />
     <Content Include="module.css" />
@@ -123,10 +129,9 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Plugghest\Plugghest.csproj">
-      <Project>{fb57af86-0993-4bbf-9281-784bf3232f41}</Project>
-      <Name>Plugghest</Name>
-    </ProjectReference>
+    <Content Include="App_LocalResources\View.ascx.en-us.resx" />
+    <Content Include="App_LocalResources\View.ascx.es-es.resx" />
+    <Content Include="App_LocalResources\View.ascx.sv-se.resx" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -141,7 +146,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
-          <DevelopmentServerPort>49736</DevelopmentServerPort>
+          <DevelopmentServerPort>51343</DevelopmentServerPort>
           <DevelopmentServerVPath>
           </DevelopmentServerVPath>
           <IISUrl>http://dnndev.me/desktopmodules/CreateCourse</IISUrl>

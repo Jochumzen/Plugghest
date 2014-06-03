@@ -117,22 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BasicSettings.Text" xml:space="preserve">
-    <value>Basic CreateCourse Settings</value>
+  <data name="Cancel.Text" xml:space="preserve">
+    <value>Cancelar</value>
   </data>
-  <data name="CollapseAll.Text" xml:space="preserve">
-    <value>Collapse All</value>
+  <data name="Check.Text" xml:space="preserve">
+    <value>Comprobar</value>
   </data>
-  <data name="ConfirmDelete.Text" xml:space="preserve">
-    <value>Are you sure you want to delete this Item</value>
+  <data name="CreateCourse.Text" xml:space="preserve">
+    <value>Crear Curso</value>
   </data>
-  <data name="DeleteItem.Text" xml:space="preserve">
-    <value>Delete</value>
+  <data name="Description.Text" xml:space="preserve">
+    <value>Descripción</value>
   </data>
-  <data name="EditItem.Text" xml:space="preserve">
-    <value>Edit</value>
+  <data name="Plug.Text" xml:space="preserve">
+    <value>Plugg</value>
   </data>
-  <data name="EditModule.Text" xml:space="preserve">
-    <value>Add Item</value>
+  <data name="PlugDes.Text" xml:space="preserve">
+    <value>this is plugg description1</value>
+  </data>
+  <data name="Submit.Text" xml:space="preserve">
+    <value>Presentar</value>
+  </data>
+  <data name="Title.Text" xml:space="preserve">
+    <value>Título</value>
+  </data>
+  <data name="TitleDes.Text" xml:space="preserve">
+    <value>this is title description1</value>
   </data>
 </root>
