@@ -7,28 +7,28 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Plugghest.Modules.CreatePlugg3 {
+namespace Christoc.Modules.CreatePlugg3 {
     
     
-    public partial class View {
+    public partial class CreatePlugg {
         
         /// <summary>
-        /// lblCreatePlugg control.
+        /// form1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCreatePlugg;
+        protected global::System.Web.UI.HtmlControls.HtmlForm form1;
         
         /// <summary>
-        /// lblCreatePlugg1 control.
+        /// btnOk control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCreatePlugg1;
+        protected global::System.Web.UI.WebControls.Button btnOk;
         
         /// <summary>
         /// lblTitle control.
@@ -37,7 +37,7 @@ namespace Plugghest.Modules.CreatePlugg3 {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DotNetNuke.UI.UserControls.LabelControl lblTitle;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblTitle;
         
         /// <summary>
         /// txtTitle control.
@@ -49,48 +49,21 @@ namespace Plugghest.Modules.CreatePlugg3 {
         protected global::System.Web.UI.WebControls.TextBox txtTitle;
         
         /// <summary>
-        /// lblDescrip control.
+        /// txtTitle0 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DotNetNuke.UI.UserControls.LabelControl lblDescrip;
+        protected global::System.Web.UI.WebControls.TextBox txtTitle0;
         
         /// <summary>
-        /// txtDescription control.
+        /// RadioButtonList1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtDescription;
-        
-        /// <summary>
-        /// lblWhoCanEdit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::DotNetNuke.UI.UserControls.LabelControl lblWhoCanEdit;
-        
-        /// <summary>
-        /// rdbtnWhoCanEdit control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RadioButtonList rdbtnWhoCanEdit;
-        
-        /// <summary>
-        /// btnOk control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnOk;
+        protected global::System.Web.UI.WebControls.RadioButtonList RadioButtonList1;
     }
 }
