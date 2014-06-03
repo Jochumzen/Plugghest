@@ -177,4 +177,7 @@
   <data name="lblNoComponent.Text" xml:space="preserve">
     <value>This plug has no content.</value>
   </data>
+  <data name="Subject.Text" xml:space="preserve">
+    <value>Subject</value>
+  </data>
 </root>

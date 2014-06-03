@@ -594,7 +594,7 @@ namespace Plugghest.Modules.DisplayPlugg
         {
             if (subid != null)
             {
-               // BindTree(Convert.ToInt32(subid));             
+               BindTree(Convert.ToInt32(subid));             
 
                 if (IsCase3)
                 {
@@ -611,7 +611,7 @@ namespace Plugghest.Modules.DisplayPlugg
             if (Phtxt == null)
                 HTMLstring = "<div><div id=" + divid + " class='Main'" + obj + " ";
             else
-                HTMLstring = "<div><div id=" + divid + " class='Main'>" + obj + " " + Phtxt.Text + " ";
+                HTMLstring = "<div><div id=" + divid + " class='Main'=>" + obj + " " + Phtxt.Text + " ";
             divTitle.Controls.Add(new LiteralControl(HTMLstring));
             return HTMLstring;
         }
@@ -718,10 +718,10 @@ namespace Plugghest.Modules.DisplayPlugg
             while (id != 0)
             {
                 Subject newSub = SubList.Find(x => x.SubjectId == id);
-                childName = newSub.label + ">" + childName;
+                childName = newSub.label + "->" + childName;
                 id = Convert.ToInt32(newSub.MotherId);
             }
-            lbltree.Text = "Subject:" + childName;
+            lbltree.Text = "Subject: " + childName;
 
             var tree = objBaseHandler.GetSubjectsAsTree(curlan);
             JavaScriptSerializer TheSerializer = new JavaScriptSerializer();

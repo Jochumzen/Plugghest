@@ -47,56 +47,9 @@
       function getRichtext() {
           $('#' + '<%=hdnrichtext.ClientID%>').val($('#editor').html());
       }
-    </script>
+    </script>   
 
-    <style>
-        .btncs
-        {
-            margin-left:15px;
-        }
-        .ui-tabs-vertical
-        {
-            width: 55em;
-        }
-
-            .ui-tabs-vertical .ui-tabs-nav
-            {
-                padding: .2em .1em .2em .2em;
-                float: left;
-                width: 12em;
-            }
-
-                .ui-tabs-vertical .ui-tabs-nav li
-                {
-                    clear: left;
-                    width: 100%;
-                    border-bottom-width: 1px !important;
-                    border-right-width: 0 !important;
-                    margin: 0 -1px .2em 0;
-                }
-
-                    .ui-tabs-vertical .ui-tabs-nav li a
-                    {
-                        display: block;
-                    }
-
-                    .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active
-                    {
-                        padding-bottom: 0;
-                        padding-right: .1em;
-                        border-right-width: 1px;
-                        border-right-width: 1px;
-                    }
-
-            .ui-tabs-vertical .ui-tabs-panel
-            {
-                padding: 1em;
-                float: right;
-                width: 40em;
-            }
-    </style>
-
-<%----------------------------------------tree -start-----------------------------------------%>
+<%----------------------------------------tree -end-----------------------------------------%>
 
 <script src="/DesktopModules/DisplayPlugg/Script/js/jquery-ui-1.10.4.custom.js"></script>
 <link href="/DesktopModules/DisplayPlugg/Script/external/prettify.css" rel="stylesheet" />
@@ -411,7 +364,7 @@
         <td>
             <div runat="server" ID="divTree">
                 <asp:Label ID="lbltree" runat="server"></asp:Label>              
-</div>
+</div>          
             <div id="divTitle" runat="server" class="dispalyplug"></div>
         </td>
         <td>
