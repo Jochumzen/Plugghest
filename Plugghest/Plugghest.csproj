@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\bin\</OutputPath>
+    <OutputPath>..\..\..\..\dll\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -32,6 +32,10 @@
   <ItemGroup>
     <Reference Include="DotNetNuke">
       <HintPath>..\..\bin\DotNetNuke.dll</HintPath>
+    </Reference>
+    <Reference Include="L2H, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\dll\L2H.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -57,9 +61,6 @@
     <Compile Include="DNN\DNNENtities.cs" />
     <Compile Include="Helpers\Youtube.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Subjects\SubjectHandler.cs" />
-    <Compile Include="Subjects\SubjectEntities.cs" />
-    <Compile Include="Subjects\SubjectController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Debug\Plugghest.dll" />
@@ -82,12 +83,6 @@
     <Content Include="bin\Release\Plugghest.pdb" />
     <Content Include="bin\Release\SharpZipLib.dll" />
     <Content Include="bin\Release\Telerik.Web.UI.dll" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\L2H\L2H.csproj">
-      <Project>{b92e9adb-b5b7-4063-935d-545fe5478252}</Project>
-      <Name>L2H</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

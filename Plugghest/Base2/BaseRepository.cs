@@ -118,7 +118,7 @@ namespace Plugghest.Base2
             using (IDataContext ctx = DataContext.Instance())
             {
                 var repository = ctx.GetRepository<PluggComponent>();
-                pc = repository.Find("WHERE PluggId = @0", pluggId);
+                pc = repository.Find("WHERE PluggId = @0 ORDER BY ComponentOrder", pluggId);
             }
             return pc;
         }
@@ -150,7 +150,7 @@ namespace Plugghest.Base2
         public PHText GetCurrentVersionText(string cultureCode, int itemId, ETextItemType itemType)
         {
             IEnumerable<PHText> txt;
-            PHText theText = null;
+            PHText theText =  null;
             using (IDataContext ctx = DataContext.Instance())
             {
                 var rep = ctx.GetRepository<PHText>();
@@ -169,7 +169,7 @@ namespace Plugghest.Base2
             using (IDataContext ctx = DataContext.Instance())
             {
                 var rep = ctx.GetRepository<PHText>();
-                txt = rep.Find("WHERE CultureCode = @0 AND ItemId = @1 AND ItemType = @2", cultureCode, itemId, (int)itemType);
+                txt = rep.Find("WHERE CultureCode = @0 AND ItemId = @1 AND ItemType = @2 ORDER BY Version", cultureCode, itemId, (int)itemType);
             }
 
             return txt;
@@ -193,12 +193,12 @@ namespace Plugghest.Base2
             }
         }
 
-        public void DeleteAllPhTextForItem(int itemId, int itemType)
+        public void DeleteAllPhTextForItem(int itemId, ETextItemType itemType)
         {
             using (IDataContext context = DataContext.Instance())
             {
                 var rec = context.ExecuteQuery<PHText>(CommandType.Text,
-                    "DELETE FROM PHTexts WHERE ItemId=@0 AND ItemType=@1", itemId, itemType);
+                    "DELETE FROM PHTexts WHERE ItemId=@0 AND ItemType=@1", itemId, (int)itemType);
             }
         }
 
@@ -248,7 +248,7 @@ namespace Plugghest.Base2
             using (IDataContext ctx = DataContext.Instance())
             {
                 var rep = ctx.GetRepository<PHLatex>();
-                txt = rep.Find("WHERE CultureCode = @0 AND ItemId = @1 AND ItemType = @2", cultureCode, itemId, (int)itemType);
+                txt = rep.Find("WHERE CultureCode = @0 AND ItemId = @1 AND ItemType = @2 ORDER BY Version", cultureCode, itemId, (int)itemType);
             }
 
             return txt;
@@ -272,12 +272,12 @@ namespace Plugghest.Base2
             }
         }
 
-        public void DeleteAllLatexForItem(int itemId, int itemType)
+        public void DeleteAllLatexForItem(int itemId, ELatexItemType itemType)
         {
             using (IDataContext context = DataContext.Instance())
             {
                 var rec = context.ExecuteQuery<PHText>(CommandType.Text,
-                    "DELETE FROM PHLatex WHERE ItemId=@0 AND ItemType=@1", itemId, itemType);
+                    "DELETE FROM PHLatex WHERE ItemId=@0 AND ItemType=@1", itemId, (int)itemType);
             }
         }
 
@@ -451,6 +451,70 @@ namespace Plugghest.Base2
                 cis = rep.Find("WHERE CourseId = @0 AND ItemId = @1", courseId, itemId);
             }
             return cis;
+        }
+
+        #endregion
+
+        #region Subjects
+
+        public void CreateSubject(Subject s)
+        {
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<Subject>();
+                rep.Insert(s);
+            }
+        }
+
+        public Subject GetSubject(int subjectId)
+        {
+            Subject s;
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<Subject>();
+                s = rep.GetById(subjectId);
+            }
+            return s;
+        }
+
+        public void UpdateSubject(Subject s)
+        {
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var rep = ctx.GetRepository<Subject>();
+                rep.Update(s);
+            }
+        }
+
+        public void DeleteSubject(Subject s)
+        {
+            using (IDataContext db = DataContext.Instance())
+            {
+                var rep = db.GetRepository<Subject>();
+                rep.Delete(s);
+            }
+        }
+
+        public IEnumerable<Subject> GetAllSubjects()
+        {
+            IEnumerable<Subject> objsubjectitem;
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var repository = ctx.GetRepository<Subject>();
+                objsubjectitem = repository.Find("ORDER BY SubjectOrder");
+            }
+            return objsubjectitem;
+        }
+
+        public IEnumerable<Subject> GetChildrenSubjects(int motherId)
+        {
+            IEnumerable<Subject> sublist;
+            using (IDataContext ctx = DataContext.Instance())
+            {
+                var repository = ctx.GetRepository<Subject>();
+                sublist = repository.Find("WHERE MotherId=" + motherId + " ORDER BY SubjectOrder");
+            }
+            return sublist;
         }
 
         #endregion

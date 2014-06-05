@@ -140,6 +140,63 @@ namespace Plugghest.Base2
             }
         }
 
+        public void CreateBasicPlugg(PluggContainer p)
+        {
+            if (p.CultureCode == null || p.CultureCode == "")
+                throw new Exception("Cannot Create Plugg. CutureCode cannot be null");
+
+            if (p.TheTitle == null || p.TheTitle.Text == null || p.TheTitle.Text == "")
+                throw new Exception("Cannot Save Plugg. Title cannot be null");
+
+            p.ThePlugg.CreatedInCultureCode = p.CultureCode;
+            p.ThePlugg.CreatedOnDate = DateTime.Now;
+            p.ThePlugg.ModifiedByUserId = p.ThePlugg.CreatedByUserId;
+            p.ThePlugg.ModifiedOnDate = p.ThePlugg.CreatedOnDate;
+            p.ThePlugg.IsDeleted = false;
+            p.ThePlugg.IsListed = true;
+            rep.CreatePlugg(p.ThePlugg);
+
+            //Save Title
+            p.TheTitle.ItemId = p.ThePlugg.PluggId;
+            p.TheTitle.ItemType = ETextItemType.PluggTitle;
+            p.TheTitle.CultureCode = p.CultureCode;
+            p.TheTitle.CultureCodeStatus = ECultureCodeStatus.InCreationLanguage;
+            p.TheTitle.CreatedByUserId = p.ThePlugg.CreatedByUserId;
+            p.TheTitle.ModifiedByUserId = p.ThePlugg.ModifiedByUserId;
+            SavePhTextInAllCc(p.TheTitle);  //Save or Update
+
+            //Save Description
+            if (p.TheDescription != null && p.TheDescription.Text != null && p.TheDescription.Text != "")
+            {
+                p.TheDescription.ItemId = p.ThePlugg.PluggId;
+                p.TheDescription.ItemType = ETextItemType.PluggDescription;
+                p.TheDescription.CultureCode = p.CultureCode;
+                p.TheDescription.CultureCodeStatus = ECultureCodeStatus.InCreationLanguage;
+                p.TheDescription.CreatedByUserId = p.ThePlugg.CreatedByUserId;
+                p.TheDescription.ModifiedByUserId = p.ThePlugg.ModifiedByUserId;
+                SavePhTextInAllCc(p.TheDescription);
+            }
+
+            PluggComponent video = new PluggComponent();
+            video.ComponentOrder = 1;
+            video.ComponentType = EComponentType.YouTube;
+            AddComponent(p, video);
+
+            PluggComponent rrText = new PluggComponent();
+            rrText.ComponentOrder = 2;
+            rrText.ComponentType = EComponentType.RichRichText;
+            p.TheComponents = null;
+            AddComponent(p, rrText);
+
+            //Create PluggPage
+            DNNHelper d = new DNNHelper();
+            string pageUrl = p.ThePlugg.PluggId.ToString();
+            string pageName = pageUrl + ": " + p.TheTitle.Text;
+            TabInfo newTab = d.AddPluggPage(pageName, pageUrl);
+            p.ThePlugg.TabId = newTab.TabID;
+            rep.UpdatePlugg(p.ThePlugg);
+        }
+
         public void DeletePlugg(Plugg p)
         {
         //    // Todo: Don't delete Plugg if: It has comments or ratings, Its included in a course.
@@ -166,171 +223,156 @@ namespace Plugghest.Base2
         //    rep.DeletePlugg(p);
         }
 
-        //public void UpdatePlugg(Plugg p, PluggContent pc)
-        //{
-        //    //For restore if something goes wrong
-        //    Plugg oldP = GetPlugg(p.PluggId);
-        //    IEnumerable<PluggContent> oldPCs = GetAllContentInPlugg(p.PluggId);
+        /// <summary>
+        /// Add a new component to a Plugg
+        /// Existing PluggComponents must be in p.TheComponents
+        /// newComponentData is of type PHText, PHLatex or YouTube
+        /// newComponent must have ComponentOrder and ComponentType set
+        /// </summary>
+        /// <param name="p"></param>
+        /// <param name="newComponent"></param>
+        /// <param name="newComponentData"></param>
+        public void AddComponent(PluggContainer p, PluggComponent newComponent, object newComponentData = null)
+        {
+            List<PluggComponent> cmps = p.GetComponentList();
+            if (newComponent.ComponentOrder < 1 || newComponent.ComponentOrder > cmps.Count + 1)
+                throw new Exception("ComponentOrder is out of range");
+            if (newComponent.ComponentType == EComponentType.NotSet)
+                throw new Exception("You must set ComponentType");
 
-        //    rep.UpdatePlugg(p); //No repair necessary if this fails
+            PluggComponent pcToUpdate;
+            for (int order = newComponent.ComponentOrder; order <= cmps.Count; order++ )
+            {
+                pcToUpdate = rep.GetPluggComponent(cmps[order-1].PluggComponentId);
+                pcToUpdate.ComponentOrder += 1;
+                rep.UpdatePluggComponent(pcToUpdate);
+            }
 
-        //    //For now, remove all PluggContent and recreate in all languages from pc. Fix this when we can deal with translations
-        //    try
-        //    {
-        //        foreach (PluggContent pcDelete in oldPCs)
-        //        {
-        //            rep.DeletePluggContent(pcDelete);
-        //        }
-
-        //        pc.PluggId = p.PluggId;
-        //        if (pc.LatexText != null)
-        //        {
-        //            LatexToMathMLConverter myConverter = new LatexToMathMLConverter(pc.LatexText);
-        //            myConverter.Convert();
-        //            pc.LatexTextInHtml = myConverter.HTMLOutput;
-        //        }
-
-        //        LocaleController lc = new LocaleController();
-        //        var locales = lc.GetLocales(PortalID);
-        //        foreach (var locale in locales)
-        //        {
-        //            pc.CultureCode = locale.Key;
-        //            rep.CreatePluggContent(pc);
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        //recreate old Plugg/PluggContent before rethrow
-        //        var pcs = GetAllContentInPlugg(p.PluggId);
-        //        foreach (PluggContent pcDelete in pcs)
-        //        {
-        //            rep.DeletePluggContent(pcDelete);
-        //        }
-        //        rep.DeletePlugg(p);
-
-        //        rep.CreatePlugg(oldP);
-        //        foreach (PluggContent oldPC in oldPCs)
-        //            rep.CreatePluggContent(oldPC);
-        //        throw;
-        //    }
-
-        //}
-
-        //public void DeleteAllPluggs()
-        //{
-        //    //Todo: Business logic for DeleteAllPluggs
-        //    var pluggs = rep.GetAllPluggs();
-        //    foreach (Plugg p in pluggs)
-        //        DeletePlugg(p);
-        //}
-
-        ////public IEnumerable<Plugg> GetPluggsInCourse(int courseId)
-        ////{
-        ////    return rep.GetPluggsInCourse(courseId);
-        ////}
-
-
+            newComponent.PluggId = p.ThePlugg.PluggId;
+            rep.CreatePluggComponent(newComponent);           
+        }
 
         /// <summary>
-        /// Note: It will not reset order.
+        /// Deletes the PluggComponent at position "delOrder".
+        /// Existing PluggComponents must be in p.TheComponents
+        /// Deletes ComponenData as well if exist
         /// </summary>
-        /// <param name="pc"></param>
-        public void DeletePluggCompnent(PluggComponent pc)
+        /// <param name="p"></param>
+        /// <param name="order"></param>
+        public void DeleteComponent(PluggContainer p, int delOrder)
         {
-            switch (pc.ComponentType)
+            List<PluggComponent> cmps = p.GetComponentList();
+            if (delOrder < 1 || delOrder > cmps.Count)
+                throw new Exception("order is out of range");
+
+            PluggComponent pcToDelete = cmps[delOrder-1];
+            if(pcToDelete.PluggComponentId != 0)
             {
-                case EComponentType.RichRichText:
-                    rep.DeleteAllPhTextForItem(pc.PluggId, (int)ETextItemType.PluggComponentRichRichText);
-                    break;
-                case EComponentType.RichText:
-                    rep.DeleteAllPhTextForItem(pc.PluggId, (int)ETextItemType.PluggComponentRichText);
-                    break;
-                case EComponentType.Label:
-                    rep.DeleteAllPhTextForItem(pc.PluggId, (int)ETextItemType.PluggComponentLabel);
-                    break;
-                case EComponentType.Latex:
-                    rep.DeleteAllLatexForItem(pc.PluggId, (int)ELatexItemType.PluggComponentLatex);
-                    break;
-                case EComponentType.YouTube:
-                    YouTube delYouTube = new YouTube();
-                    rep.DeleteYouTube(delYouTube);
-                    break;
+                switch(pcToDelete.ComponentType)
+                {
+                    case EComponentType.Label:
+                        rep.DeleteAllPhTextForItem(pcToDelete.PluggComponentId, ETextItemType.PluggComponentLabel);
+                        break;
+                    case EComponentType.RichText:
+                        rep.DeleteAllPhTextForItem(pcToDelete.PluggComponentId, ETextItemType.PluggComponentRichText);
+                        break;
+                    case EComponentType.RichRichText:
+                        rep.DeleteAllPhTextForItem(pcToDelete.PluggComponentId, ETextItemType.PluggComponentRichRichText);
+                        break;
+                    case EComponentType.Latex:
+                        rep.DeleteAllLatexForItem(pcToDelete.PluggComponentId, ELatexItemType.PluggComponentLatex);
+                        break;
+                    case EComponentType.YouTube:
+                        rep.DeleteYouTube(new YouTube() { YouTubeId = pcToDelete.PluggComponentId });
+                        break;
+                }
             }
-            rep.DeletePluggComponent(pc);
+
+            rep.DeletePluggComponent(pcToDelete);
+
+            PluggComponent pcToUpdate;
+            for (int order = delOrder+1; order <= cmps.Count; order++)
+            {
+                pcToUpdate = rep.GetPluggComponent(cmps[order-1].PluggComponentId);
+                pcToUpdate.ComponentOrder -= 1;
+                rep.UpdatePluggComponent(pcToUpdate);
+            }
         }
 
         #endregion
 
-        #region Course
+        #region Course/CourseContainer
 
-        //public void CreateCourse(Course c, List<CourseItemEntity> cis)
-        //{
-        //    rep.CreateCourse(c);
+        public void CreateCourse(CourseContainer c)
+        {
+            if (c.CultureCode == null || c.CultureCode == "")
+                throw new Exception("Cannot Create Course. CutureCode cannot be null");
 
-        //    try
-        //    {
-        //        foreach (CourseItemEntity ci in cis)
-        //        {
-        //            ci.CourseId = c.CourseId;
-        //            rep.CreateCourseItem(ci);
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        DeleteCourse(c);
-        //        throw;
-        //    }
+            if (c.TheTitle == null || c.TheTitle.Text == null || c.TheTitle.Text == "")
+                throw new Exception("Cannot Save Course. Title cannot be null");
 
-        //    //Create CoursePage
-        //    DNNHelper d = new DNNHelper();
-        //    string pageUrl = "C" + c.CourseId.ToString();
-        //    string pageName = pageUrl + ": " + c.Title;
-        //    try
-        //    {
-        //        TabInfo newTab = d.AddCoursePage(pageName, pageUrl);
-        //        c.TabId = newTab.TabID;
-        //        rep.UpdateCourse(c);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        DeleteCourse(c);
-        //        throw;
-        //    }
-        //}
+            c.TheCourse.CreatedInCultureCode = c.CultureCode;
+            c.TheCourse.CreatedOnDate = DateTime.Now;
+            c.TheCourse.ModifiedByUserId = c.TheCourse.CreatedByUserId;
+            c.TheCourse.ModifiedOnDate = c.TheCourse.CreatedOnDate;
+            c.TheCourse.IsDeleted = false;
+            c.TheCourse.IsListed = true;
 
-        //public Course GetCourse(int CourseID)
-        //{
-        //    return rep.GetCourse(CourseID);
-        //}
+            bool isNew = c.TheCourse.CourseId == 0;
 
-        //public void DeleteCourse(Course c)
-        //{
-        //    // Todo: Don't delete course if: It has comments or ratings
-        //    // Todo: Soft delete of Course
-        //    if (c == null)
-        //    {
-        //        throw new Exception("Cannot delete: Course not initialized");
-        //        return;
-        //    }
+          
+            if (isNew)
+            {
+                rep.CreateCourse(c.TheCourse);
+            }
+            else
+                rep.UpdateCourse(c.TheCourse);
 
-        //    TabController tabController = new TabController();
-        //    TabInfo getTab = tabController.GetTab(c.TabId);
 
-        //    if (getTab != null)
-        //    {
-        //        DNNHelper h = new DNNHelper();
-        //        h.DeleteTab(getTab);
-        //    }
+            //Save Title
+            c.TheTitle.ItemId = c.TheCourse.CourseId;
+            c.TheTitle.ItemType = ETextItemType.CourseTitle;
+            c.TheTitle.CultureCode = c.CultureCode;
+            c.TheTitle.CultureCodeStatus = ECultureCodeStatus.InCreationLanguage;
+            c.TheTitle.CreatedByUserId = c.TheCourse.CreatedByUserId;
+            c.TheTitle.ModifiedByUserId = c.TheCourse.ModifiedByUserId;
+            SavePhTextInAllCc(c.TheTitle);  //Save or Update
 
-        //    var cis = rep.GetItemsInCourse(c.CourseId);
-        //    foreach (CourseItem ciDelete in cis)
-        //    {
-        //        rep.DeleteCourseItem(ciDelete);
-        //    }
+            //Save Description
+            if (c.TheDescription != null && c.TheDescription.Text != null && c.TheDescription.Text != "")
+            {
+                c.TheDescription.ItemId = c.TheCourse.CourseId;
+                c.TheDescription.ItemType = ETextItemType.CourseDescription;
+                c.TheDescription.CultureCode = c.CultureCode;
+                c.TheDescription.CultureCodeStatus = ECultureCodeStatus.InCreationLanguage;
+                c.TheDescription.CreatedByUserId = c.TheCourse.CreatedByUserId;
+                c.TheDescription.ModifiedByUserId = c.TheCourse.ModifiedByUserId;
+                SavePhTextInAllCc(c.TheDescription);
+            }
+            if (c.TheRichRichText != null && c.TheRichRichText.Text != null && c.TheRichRichText.Text != "")
+            {
+                c.TheRichRichText.ItemId = c.TheCourse.CourseId;
+                c.TheRichRichText.ItemType = ETextItemType.CourseRichRichText;
+                c.TheRichRichText.CultureCode = c.CultureCode;
+                c.TheRichRichText.CultureCodeStatus = ECultureCodeStatus.InCreationLanguage;
+                c.TheRichRichText.CreatedByUserId = c.TheCourse.CreatedByUserId;
+                c.TheRichRichText.ModifiedByUserId = c.TheCourse.ModifiedByUserId;
+                SavePhTextInAllCc(c.TheRichRichText);
+            }
+            //Create CoursePage
+            if (isNew)
+            {
+                DNNHelper d = new DNNHelper();
+                string pageUrl = "C" + c.TheCourse.CourseId.ToString();
+                string pageName = pageUrl + ": " + c.TheTitle.Text;
+                TabInfo newTab = d.AddCoursePage(pageName, pageUrl);
+                c.TheCourse.TabId = newTab.TabID;
+                rep.UpdateCourse(c.TheCourse); 
+            }
+        }
 
-        //    rep.DeleteCourse(c);
-        //}
 
+     
         #endregion
 
         #region CourseItem
@@ -421,26 +463,42 @@ namespace Plugghest.Base2
 
         #region PHTextAndLatex
 
+        /// <summary>
+        /// This method will save the text in all Culture Codes
+        /// It expects the text to be created in t.CultureCode
+        /// It expects the text to be decoded (actual html)
+        /// It will call SavePhText(t)
+        /// It then translates t into all languages and calls SavePhText on each text
+        /// </summary>
+        /// <param name="t"></param>
         public void SavePhTextInAllCc(PHText t)
         {
             t.CultureCodeStatus = ECultureCodeStatus.InCreationLanguage;
             SavePhText(t);  //Save Text in created language
             LocaleController lc = new LocaleController();
             var locales = lc.GetLocales(PortalID);
+            PHText translatedText;
             foreach (var locale in locales)
             {
                 if (locale.Key != t.CultureCode)
                 {
-                    t.Text = TranslateText(t.CultureCode.Substring(0, 2), locale.Key.Substring(0, 2), t.Text);
-
-                    t.TextId = 0;
-                    t.CultureCode = locale.Key;
-                    t.CultureCodeStatus = ECultureCodeStatus.GoogleTranslated;
-                    SavePhText(t);
+                    translatedText = GetCurrentVersionText(locale.Key, t.ItemId, t.ItemType);
+                    translatedText.Text = TranslateText(t.CultureCode.Substring(0, 2), locale.Key.Substring(0, 2), t.Text);
+                    if (translatedText.CreatedByUserId == 0)
+                        translatedText.CreatedByUserId = t.CreatedByUserId;
+                    translatedText.CultureCodeStatus = ECultureCodeStatus.GoogleTranslated;
+                    SavePhText(translatedText);
                 }
             }
         }
 
+        /// <summary>
+        /// Must set Text, ItemId, ItemType, CultureCode, CultureCodeStatus and CreatedByUserId or it will not save anything
+        /// If text is html, it must be decoded (like <p>Hello</p>)
+        /// If text is versioned, it creates a new version
+        /// If text is not versioned, it creates new text or updates text depending on TextId.
+        /// </summary>
+        /// <param name="t"></param>
         public void SavePhText(PHText t)
         {
             if (t.Text == null || t.ItemId == 0 || t.ItemType == ETextItemType.NotSet || t.CultureCode == null || t.CultureCodeStatus == ECultureCodeStatus.NotSet || t.CreatedByUserId == 0)
@@ -461,7 +519,7 @@ namespace Plugghest.Base2
                 }
                 else
                 {
-                    t.Version = prevText.Version++;
+                    t.Version = prevText.Version + 1;
                     prevText.CurrentVersion = false;
                     rep.UpdatePhText(prevText);
                 }
@@ -481,6 +539,13 @@ namespace Plugghest.Base2
             }
         }
 
+        /// <summary>
+        /// This method will save the LatexText in all Culture Codes
+        /// It expects the text to be created in t.CultureCode
+        /// It will call SaveLatexText(t)
+        /// It then translates t into all languages and calls SaveLatexText on each text
+        /// </summary>
+        /// <param name="t"></param>
         public void SaveLatexTextInAllCc(PHLatex t)
         {
             SaveLatexText(t);  //Save LatexText in created language
@@ -500,6 +565,12 @@ namespace Plugghest.Base2
             }
         }
 
+        /// <summary>
+        /// Must set Text, ItemId, ItemType, CultureCode, CultureCodeStatus and CreatedByUserId or it will not save anything
+        /// If text is versioned, it creates a new version
+        /// If text is not versioned, it creates new text or updates text depending on TextId.        
+        /// </summary>
+        /// <param name="t"></param>
         public void SaveLatexText(PHLatex t)
         {
             if (t.Text == null || t.ItemId == 0 || t.ItemType == ELatexItemType.NotSet || t.CultureCode == null ||
@@ -547,21 +618,75 @@ namespace Plugghest.Base2
             }
         }
 
+        /// <summary>
+        /// Will get the latest version of text in language cultureCode for itemType/itemId
+        /// Text will be decoded (actual html)
+        /// If the text does not exist, it creates a new PHText object where TextId=0
+        /// </summary>
+        /// <param name="cultureCode"></param>
+        /// <param name="itemId"></param>
+        /// <param name="itemType"></param>
+        /// <returns></returns>
         public PHText GetCurrentVersionText(string cultureCode, int itemId, ETextItemType itemType)
         {
-            return rep.GetCurrentVersionText(cultureCode, itemId, itemType);
+            PHText txt = rep.GetCurrentVersionText(cultureCode, itemId, itemType);
+            if(txt == null)
+            {
+                txt = new PHText();
+                txt.Text = "(No text)";
+                txt.CultureCode = cultureCode;
+                txt.ItemId = itemId;
+                txt.ItemType = itemType;
+            }
+            return txt;
         }
 
+        /// <summary>
+        /// Will return all versions of text in language cultureCode for itemType/itemId
+        /// Text will be decoded (actual html)
+        /// May be null if no versions exist
+        /// </summary>
+        /// <param name="cultureCode"></param>
+        /// <param name="itemId"></param>
+        /// <param name="itemType"></param>
+        /// <returns></returns>
         public IEnumerable<PHText> GetAllVersionsText(string cultureCode, int itemId, ETextItemType itemType)
         {
             return rep.GetAllVersionsText(cultureCode, itemId, itemType);
         }
 
+        /// <summary>
+        /// Will get the latest version of LatexText in language cultureCode for itemType/itemId
+        /// If the text does not exist, it creates a LatexText where LatexId=0
+        /// htmltext will be decoded (actual html)
+        /// </summary>
+        /// <param name="cultureCode"></param>
+        /// <param name="itemId"></param>
+        /// <param name="itemType"></param>
+        /// <returns></returns>
         public PHLatex GetCurrentVersionLatexText(string cultureCode, int itemId, ELatexItemType itemType)
         {
-            return rep.GetCurrentVersionLatexText(cultureCode, itemId, itemType);
+            PHLatex txt = rep.GetCurrentVersionLatexText(cultureCode, itemId, itemType);
+            if (txt == null)
+            {
+                txt = new PHLatex();
+                txt.Text = "(No text)";
+                txt.HtmlText = "(No text)";
+                txt.CultureCode = cultureCode;
+                txt.ItemId = itemId;
+                txt.ItemType = itemType;
+            }
+            return txt;
         }
 
+        /// <summary>
+        /// Will return all versions of LatexText in language cultureCode for itemType/itemId
+        /// May be null if no versions exist
+        /// </summary>
+        /// <param name="cultureCode"></param>
+        /// <param name="itemId"></param>
+        /// <param name="itemType"></param>
+        /// <returns></returns>
         public IEnumerable<PHLatex> GetAllVersionsLatexText(string cultureCode, int itemId, ELatexItemType itemType)
         {
             return rep.GetAllVersionsLatexText(cultureCode, itemId, itemType);
@@ -588,6 +713,106 @@ namespace Plugghest.Base2
         public YouTube GetYouTubeByComponentId(int pluggComponentId)
         {
             return rep.GetYouTubeByComponentId(pluggComponentId);
+        }
+
+        #endregion
+
+        #region Subjects
+
+        public Subject GetSubject(int subjectId)
+        {
+            return rep.GetSubject(subjectId);
+        }
+
+        public IEnumerable<Subject> GetSubjectsAsFlatList(string cultureCode)
+        {
+            IEnumerable<Subject> ss = rep.GetAllSubjects();
+            foreach(Subject s in ss)
+            {
+                s.label = rep.GetCurrentVersionText(cultureCode, s.SubjectId, ETextItemType.Subject).Text;
+            }
+            return ss;
+        }
+
+        public IList<Subject> FlatToHierarchy(IEnumerable<Subject> list, int motherId = 0)
+        {
+            return (from i in list
+                    where i.MotherId == motherId
+                    select new Subject
+                    {
+                        SubjectId = i.SubjectId,
+                        SubjectOrder = i.SubjectOrder,
+                        MotherId = i.MotherId,
+                        label = i.label,
+                        Mother = i,
+                        children = FlatToHierarchy(list, i.SubjectId)
+                    }).ToList();
+        }
+
+        public IList<Subject> GetSubjectsAsTree(string cultureCode)
+        {
+            IEnumerable<Subject> source = GetSubjectsAsFlatList(cultureCode);
+            return FlatToHierarchy(source);
+        }
+
+        /// <summary>
+        /// This method updates the subject tree.
+        /// It assumes that only the positions in the tree of the subjects have changed.
+        /// It assumes that no new subjects have been added and no subjects have been deleted.
+        /// </summary>
+        /// <param name="ss">A hierarchy of subjects</param>
+        public void UpdateSubjectTree(IList<Subject> ss, int motherId = 0)
+        {            
+            int subjectOrder = 1;
+            foreach(Subject s in ss)
+            {
+                s.MotherId = motherId;
+                s.SubjectOrder = subjectOrder;
+                rep.UpdateSubject(s);
+                subjectOrder += 1;
+                if (s.children != null)
+                    UpdateSubjectTree(s.children, s.SubjectId);
+            }
+        }
+
+        public void CreateSubject(Subject s, int userId)
+        {
+            if (s == null || s.SubjectId != 0 || s.SubjectOrder == 0)
+                throw new Exception("Cannot create subject");
+            IEnumerable<Subject> sameMother = rep.GetChildrenSubjects(s.MotherId);
+            foreach(Subject tmpS in sameMother)
+            {
+                if (tmpS.SubjectOrder >= s.SubjectOrder)
+                {
+                    tmpS.SubjectOrder++;
+                    rep.UpdateSubject(tmpS);
+                }
+            }
+            rep.CreateSubject(s);
+            PHText sText = new PHText(s.label, "en-US", ETextItemType.Subject);
+            sText.CreatedByUserId = userId;
+            sText.ItemId = s.SubjectId;
+            sText.CultureCodeStatus = ECultureCodeStatus.InCreationLanguage;
+            SavePhTextInAllCc(sText);
+        }
+
+        public void DeleteSubject(Subject s)
+        {
+            if (s == null || s.SubjectId == 0)
+                throw new Exception("Cannot delete subject");
+            PHText sText = GetCurrentVersionText("en-US", s.SubjectId, ETextItemType.Subject);
+            rep.DeletePhText(sText);
+
+            IEnumerable<Subject> sameMother = rep.GetChildrenSubjects(s.MotherId);
+            foreach(Subject tmpS in sameMother)
+            {
+                if (tmpS.SubjectOrder > s.SubjectOrder)
+                {
+                    tmpS.SubjectOrder--;
+                    rep.UpdateSubject(tmpS);
+                }
+            }
+            rep.DeleteSubject(s);
         }
 
         #endregion
@@ -641,7 +866,7 @@ namespace Plugghest.Base2
         #region Translate Function and class
         private string TranslateText(string strFromLanguage, string strToLanguage, string strTextToTranslate)
         {
-            string url = "https://www.googleapis.com/language/translate/v2?key=AIzaSyBJHrFbepkPej62Q1o0GUiDuL2ceYuFcW8&format=html&source=" + strFromLanguage + "&target=" + strToLanguage + "&q=" + strTextToTranslate;
+            string url = "https://www.googleapis.com/language/translate/v2?key=AIzaSyBJHrFbepkPej62Q1o0GUiDuL2ceYuFcW8&format=html&source=" + strFromLanguage + "&target=" + strToLanguage + "&q=" + System.Web.HttpUtility.UrlEncode(strTextToTranslate);
 
             WebRequest request = HttpWebRequest.Create(url);
 
