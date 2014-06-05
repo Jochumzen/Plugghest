@@ -142,7 +142,7 @@
     <value>Traducción de Google está bien</value>
   </data>
   <data name="ImpgoogleTrans.Text" xml:space="preserve">
-    <value>Mejorar Goggle texto traducido</value>
+    <value>Mejorar Google texto traducido</value>
   </data>
   <data name="ImproveHumTransTxt.Text" xml:space="preserve">
     <value>Mejorar texto traducido</value>
@@ -178,6 +178,9 @@
     <value>This plug has no content.</value>
   </data>
   <data name="Subject.Text" xml:space="preserve">
-    <value>Subject</value>
+    <value>sujeto</value>
+  </data>
+  <data name="Component.Text" xml:space="preserve">
+    <value>componente</value>
   </data>
 </root>

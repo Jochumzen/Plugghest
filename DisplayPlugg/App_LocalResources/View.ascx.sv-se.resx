@@ -178,6 +178,9 @@
     <value>This plug has no content.</value>
   </data>
   <data name="Subject.Text" xml:space="preserve">
-    <value>Subject</value>
+    <value>ämne</value>
+  </data>
+  <data name="Component.Text" xml:space="preserve">
+    <value>komponent</value>
   </data>
 </root>

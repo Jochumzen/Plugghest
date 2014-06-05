@@ -102,7 +102,6 @@
     </Content>
     <Content Include="App_LocalResources\View.ascx.sv-se.resx" />
     <Content Include="App_LocalResources\View.ascx.resx" />
-    <Content Include="bPopup.js" />
     <Content Include="Edit.ascx" />
     <Content Include="License.txt" />
     <Content Include="module.css" />

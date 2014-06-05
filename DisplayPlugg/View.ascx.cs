@@ -57,7 +57,7 @@ namespace Plugghest.Modules.DisplayPlugg
         string EditStr = "", curlan = ""; 
         int pluggid;
         bool IsAuthorized = false, IsCase3, IsCase2, chkComTxt = false;
-        string BtnAddtxt, LabAddNewcomTxt, LabNoComtxt, btnEditPlugTxt, BtnYoutubeTxt, BtnEditTxt, BtncanceleditTet, BtncanceltransTxt, BtnlocalTxt, BtntransplugTxt, BtnCancelTxt, BtnGoogleTransTxtOkTxt, BtnImpgoogleTransTxt, BtnImproveHumTransTxt, BtnLabelTxt, BtnLatexTxt, BtnRemoveTxt, BtnRichRichTxttxt, BtnRichTextTxt, BtnSaveTxt, BtnYouTubeTxt;
+        string BtnAddtxt,LabSubjecttxt,LabComponenttxt, LabAddNewcomTxt, LabNoComtxt, btnEditPlugTxt, BtnYoutubeTxt, BtnEditTxt, BtncanceleditTet, BtncanceltransTxt, BtnlocalTxt, BtntransplugTxt, BtnCancelTxt, BtnGoogleTransTxtOkTxt, BtnImpgoogleTransTxt, BtnImproveHumTransTxt, BtnLabelTxt, BtnLatexTxt, BtnRemoveTxt, BtnRichRichTxttxt, BtnRichTextTxt, BtnSaveTxt, BtnYouTubeTxt;
         PluggContainer p;
 
         protected void Page_Load(object sender, EventArgs e)
@@ -120,6 +120,9 @@ namespace Plugghest.Modules.DisplayPlugg
         {
             btnEditPlugTxt = Localization.GetString("btnEditPlug", this.LocalResourceFile + ".ascx." + curlan + ".resx");
 
+
+            LabComponenttxt = Localization.GetString("Component", this.LocalResourceFile + ".ascx." + curlan + ".resx");
+            LabSubjecttxt = Localization.GetString("Subject", this.LocalResourceFile + ".ascx." + curlan + ".resx");
             LabNoComtxt = Localization.GetString("lblNoComponent", this.LocalResourceFile + ".ascx." + curlan + ".resx");
             BtncanceleditTet = Localization.GetString("btncanceledit", this.LocalResourceFile + ".ascx." + curlan + ".resx");
             BtnAddtxt = Localization.GetString("Add", this.LocalResourceFile + ".ascx." + curlan + ".resx");
@@ -223,18 +226,18 @@ namespace Plugghest.Modules.DisplayPlugg
                         {
                             if (lbl.Text == "(No text)")
                                 lbl.Text = "(currently no text)";
-                            LabHTMLstring = CreateDiv(lbl, "Label" + i, "Component " + IntCompOrder + ": " + BtnLabelTxt);
+                            LabHTMLstring = CreateDiv(lbl, "Label" + i, LabComponenttxt+" " + IntCompOrder + ": " + BtnLabelTxt);
                             int orderid = comp.ComponentOrder;
                             CreateBtnDel(orderid, "btncsdel", "btnlbDel" + i + "");
                             CreateBtnEdit(comp, lbl, "btncsdel", "btnlbEdit" + i + "");
 
                             if (isLastComp)
                             {
-                                LabHTMLstring = "<hr /></div>" + LabAddNewcomTxt + " after component " + IntCompOrder + ": <select class='ddlclass' id='ddl" + i + "'>";
+                                LabHTMLstring = "<hr /></div>" + LabAddNewcomTxt + " after "+LabComponenttxt+" " + IntCompOrder + ": <select class='ddlclass' id='ddl" + i + "'>";
                             }
                             else
                             {
-                                LabHTMLstring = "<hr /></div>" + LabAddNewcomTxt + " between component " + IntCompOrder + " and " + (IntCompOrder + 1).ToString() + ": <select class='ddlclass' id='ddl" + i + "'>";
+                                LabHTMLstring = "<hr /></div>" + LabAddNewcomTxt + " between " + LabComponenttxt + " " + IntCompOrder + " and " + (IntCompOrder + 1).ToString() + ": <select class='ddlclass' id='ddl" + i + "'>";
                             }
                             LabHTMLstring = LabHTMLstring + ddl;
                             divTitle.Controls.Add(new LiteralControl(LabHTMLstring));
@@ -249,7 +252,7 @@ namespace Plugghest.Modules.DisplayPlugg
                         //This condition is used for Translation The Plugg Text(same for all cases)
                         else if (IsCase2)
                         {
-                            LabHTMLstring = CreateDiv(lbl, "Label" + i, "Component " + IntCompOrder + ": " + BtnLabelTxt);
+                            LabHTMLstring = CreateDiv(lbl, "Label" + i, LabComponenttxt+" " + IntCompOrder + ": " + BtnLabelTxt);
                             if (lbl.CultureCodeStatus == ECultureCodeStatus.GoogleTranslated)
                             {
                                 CreateBtnImproveHumGoogleTrans(comp, lbl, "googletrans", "btnrtIGT" + i + "", BtnImpgoogleTransTxt);
@@ -285,18 +288,18 @@ namespace Plugghest.Modules.DisplayPlugg
                             if (rt.Text == "(No text)")
                                 rt.Text = "(currently no text)";
 
-                            string RtHTMLstring = CreateDiv(rt, "RichText" + i, "Component " + IntCompOrder + ": " + BtnRichTextTxt);
+                            string RtHTMLstring = CreateDiv(rt, "RichText" + i, LabComponenttxt+" " + IntCompOrder + ": " + BtnRichTextTxt);
                             int RTorderid = comp.ComponentOrder;
 
                             CreateBtnDel(RTorderid, "btncsdel", "btnrtDel" + i + "");
                             CreateBtnEdit(comp, rt, "btncsdel", "btnrtEdit" + i + "");
                             if (isLastComp)
                             {
-                                RtHTMLstring = "<hr /></div>" + LabAddNewcomTxt + " after component " + IntCompOrder  + ": <select class='ddlclass' id='Rtddl" + i + "'>";
+                                RtHTMLstring = "<hr /></div>" + LabAddNewcomTxt + " after " + LabComponenttxt + " " + IntCompOrder + ": <select class='ddlclass' id='Rtddl" + i + "'>";
                             }
                             else
                             {
-                                RtHTMLstring = "<hr /></div>" + LabAddNewcomTxt + " between component " + IntCompOrder + " and " + (IntCompOrder + 1).ToString() + ": <select class='ddlclass' id='Rtddl" + i + "'>";
+                                RtHTMLstring = "<hr /></div>" + LabAddNewcomTxt + " between " + LabComponenttxt + " " + IntCompOrder + " and " + (IntCompOrder + 1).ToString() + ": <select class='ddlclass' id='Rtddl" + i + "'>";
                             }
                             RtHTMLstring = RtHTMLstring + ddl;
                             divTitle.Controls.Add(new LiteralControl(RtHTMLstring));
@@ -311,7 +314,7 @@ namespace Plugghest.Modules.DisplayPlugg
                         else if (IsCase2)
                         {
 
-                            string RtHTMLstring = CreateDiv(rt, "RichText" + i, "Component " + IntCompOrder + ": " + BtnRichTextTxt);
+                            string RtHTMLstring = CreateDiv(rt, "RichText" + i, LabComponenttxt+" " + IntCompOrder + ": " + BtnRichTextTxt);
                             if (rt.CultureCodeStatus == ECultureCodeStatus.GoogleTranslated)
                             {
                                 CreateBtnImproveHumGoogleTrans(comp, rt, "googletrans", "btnrtIGT" + i + "", BtnImpgoogleTransTxt);
@@ -345,18 +348,18 @@ namespace Plugghest.Modules.DisplayPlugg
                             if (rrt.Text == "(No text)")
                                 rrt.Text = "(currently no text)";
 
-                            string RRTHTMLstring = CreateDiv(rrt, "RichRichText" + i, "Component " + IntCompOrder + ": " + BtnRichRichTxttxt);
+                            string RRTHTMLstring = CreateDiv(rrt, "RichRichText" + i, LabComponenttxt+" " + IntCompOrder + ": " + BtnRichRichTxttxt);
                             int RRTorderid = comp.ComponentOrder;
 
                             CreateBtnDel(RRTorderid, "btncsdel", "btnrrtDel" + i + "");
                             CreateBtnEdit(comp, rrt, "btncsdel", "btnrrtEdit" + i + "");
                             if (isLastComp)
                             {
-                                RRTHTMLstring = "<hr /></div>" + LabAddNewcomTxt + " after component " + IntCompOrder  + ": <select class='ddlclass' id='Rtddl" + i + "'>";
+                                RRTHTMLstring = "<hr /></div>" + LabAddNewcomTxt + " after " + LabComponenttxt + " " + IntCompOrder + ": <select class='ddlclass' id='Rtddl" + i + "'>";
                             }
                             else
                             {
-                                RRTHTMLstring = "<hr /></div>" + LabAddNewcomTxt + " between component " + IntCompOrder + " and " + (IntCompOrder + 1).ToString() + ": <select class='ddlclass' id='Rtddl" + i + "'>";
+                                RRTHTMLstring = "<hr /></div>" + LabAddNewcomTxt + " between " + LabComponenttxt + " " + IntCompOrder + " and " + (IntCompOrder + 1).ToString() + ": <select class='ddlclass' id='Rtddl" + i + "'>";
                             }
                             RRTHTMLstring = RRTHTMLstring + ddl;
                             divTitle.Controls.Add(new LiteralControl(RRTHTMLstring));
@@ -373,7 +376,7 @@ namespace Plugghest.Modules.DisplayPlugg
                         }
                         else if (IsCase2)
                         {
-                            string RRTHTMLstring = CreateDiv(rrt, "RichRichText" + i, "Component " + IntCompOrder + ": " + BtnRichRichTxttxt);
+                            string RRTHTMLstring = CreateDiv(rrt, "RichRichText" + i, LabComponenttxt+" " + IntCompOrder + ": " + BtnRichRichTxttxt);
                             if (rrt.CultureCodeStatus == ECultureCodeStatus.GoogleTranslated)
                             {
                                 CreateBtnImproveHumGoogleTrans(comp, rrt, "googletrans", "btnrrtIGT" + i + "",BtnImpgoogleTransTxt);
@@ -423,11 +426,11 @@ namespace Plugghest.Modules.DisplayPlugg
 
                             if (isLastComp)
                             {
-                                LatHTMLstring = "<hr /></div>" + LabAddNewcomTxt + " after component " + IntCompOrder + ": <select class='ddlclass' id='ltddl" + i + "'>";
+                                LatHTMLstring = "<hr /></div>" + LabAddNewcomTxt + " after " + LabComponenttxt + " " + IntCompOrder + ": <select class='ddlclass' id='ltddl" + i + "'>";
                             }
                             else
                             {
-                                LatHTMLstring = "<hr /></div>" + LabAddNewcomTxt + " between component " + IntCompOrder + " and " + (IntCompOrder + 1).ToString() + ": <select class='ddlclass' id='ltddl" + i + "'>";
+                                LatHTMLstring = "<hr /></div>" + LabAddNewcomTxt + " between " + LabComponenttxt + " " + IntCompOrder + " and " + (IntCompOrder + 1).ToString() + ": <select class='ddlclass' id='ltddl" + i + "'>";
                             }
                                 LatHTMLstring = LatHTMLstring + ddl;
                             divTitle.Controls.Add(new LiteralControl(LatHTMLstring));
@@ -477,7 +480,7 @@ namespace Plugghest.Modules.DisplayPlugg
                         string ytHTMLstring = "";
                         if (IsCase3)
                         {
-                            ytHTMLstring = "<div><div id=" + ytdivid + " class='Main'>" + "Component " + IntCompOrder + ": " + "YouTube";
+                            ytHTMLstring = "<div><div id=" + ytdivid + " class='Main'>" + LabComponenttxt+" " + IntCompOrder + ": " + "YouTube";
 
                             divTitle.Controls.Add(new LiteralControl(ytHTMLstring));
 
@@ -488,11 +491,11 @@ namespace Plugghest.Modules.DisplayPlugg
                             CreateBtnYTEdit(comp, yt, ytorderid, "btncsdel", "IdYt" + i + "");
                             if (isLastComp)
                             {
-                                ytHTMLstring = "</div>" + strYoutubeIframe + "</br><hr />" + LabAddNewcomTxt + " after component " + IntCompOrder + ": <select class='ddlclass' id=" + ytddlid + ">";
+                                ytHTMLstring = "</div>" + strYoutubeIframe + "</br><hr />" + LabAddNewcomTxt + " after " + LabComponenttxt + " " + IntCompOrder + ": <select class='ddlclass' id=" + ytddlid + ">";
                             }
                             else
                             {
-                                ytHTMLstring = "</div>" + strYoutubeIframe + "</br><hr />" + LabAddNewcomTxt + " between component " + IntCompOrder + " and " + (IntCompOrder + 1).ToString() + ": <select class='ddlclass' id=" + ytddlid + ">";
+                                ytHTMLstring = "</div>" + strYoutubeIframe + "</br><hr />" + LabAddNewcomTxt + " between " + LabComponenttxt + " " + IntCompOrder + " and " + (IntCompOrder + 1).ToString() + ": <select class='ddlclass' id=" + ytddlid + ">";
                             }
                             ytHTMLstring = ytHTMLstring + ddl;
                             divTitle.Controls.Add(new LiteralControl(ytHTMLstring));
@@ -516,7 +519,7 @@ namespace Plugghest.Modules.DisplayPlugg
                            ytHTMLstring = "<div>" + strYoutubeIframe + "</div>";
                               if (IsCase2)          
              
-                            divTitle.Controls.Add(new LiteralControl("<div><div id=" + ytdivid + " class='Main'>" + "Component " + IntCompOrder + ": " + "YouTube"));
+                            divTitle.Controls.Add(new LiteralControl("<div><div id=" + ytdivid + " class='Main'>" + LabComponenttxt+" " + IntCompOrder + ": " + "YouTube"));
                             
                             divTitle.Controls.Add(new LiteralControl(ytHTMLstring));
                               if (IsCase2)                       
@@ -721,7 +724,7 @@ namespace Plugghest.Modules.DisplayPlugg
                 childName = newSub.label + "->" + childName;
                 id = Convert.ToInt32(newSub.MotherId);
             }
-            lbltree.Text = "Subject: " + childName;
+            lbltree.Text = LabSubjecttxt+": " + childName;
 
             var tree = objBaseHandler.GetSubjectsAsTree(curlan);
             JavaScriptSerializer TheSerializer = new JavaScriptSerializer();

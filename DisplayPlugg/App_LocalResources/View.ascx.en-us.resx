@@ -180,4 +180,7 @@
   <data name="Subject.Text" xml:space="preserve">
     <value>Subject</value>
   </data>
+  <data name="Component.Text" xml:space="preserve">
+    <value>Component</value>
+  </data>
 </root>
